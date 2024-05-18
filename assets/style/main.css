@@ -167,4 +167,5 @@ input:focus::-webkit-input-placeholder {
 
 body {
   background-color: var(--yellow);
+  color: var(--brown);
 }
