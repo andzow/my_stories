@@ -1,8 +1,8 @@
 <template>
   <NuxtLink class="button" @mousemove="updateParallax" @mouseleave="resetParallax">
-    <button class="button__btn" :class="info" :style="squareStyle" ref="button">
+    <button class="button__btn" :class="variant" :style="squareStyle" ref="button">
       {{ info }}
-      <div class="button__cirlce" :style="circleStyle"></div>
+      <div class="button__cirlce" :class="variant + '__circle'" :style="circleStyle"></div>
     </button>
   </NuxtLink>
 </template>
@@ -11,7 +11,8 @@
 export default {
     props: {
         info: String,
-        path: String
+        path: String,
+        variant: String
     },
     data() {
         return {
@@ -64,12 +65,18 @@ export default {
     border: 1px solid var(--brown);
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     width: 100%;
   background-color: transparent;
   transition: all 0.4s ease;
   z-index: 10;
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
+}
+.green {
+  background-color: #EDE9DF;
 }
 .button__btn_line {
   border: 3px solid var(--brown);
@@ -89,6 +96,9 @@ export default {
   z-index: -1;
   pointer-events: none;
   transform: scale(0);
+}
+.green__circle {
+  background-color: #868975;
 }
 .button__btn:hover .button__cirlce {
   transform: scale(40);

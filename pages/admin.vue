@@ -1,6 +1,8 @@
 <template>
   <div>
-    sadsdasd
+    <AdminMyHeader/>
+    <AdminMyButtons/>
+    <AdminMyPromocode/>
   </div>
 </template>
 
