@@ -1,8 +1,8 @@
 <template>
   <NuxtLink class="button" @mousemove="updateParallax" @mouseleave="resetParallax">
-    <button class="button__btn" :class="variant" :style="squareStyle" ref="button">
+    <button class="button__btn" :class="[variant, size]" :style="squareStyle" ref="button">
       {{ info }}
-      <div class="button__cirlce" :class="variant + '__circle'" :style="circleStyle"></div>
+      <div class="button__cirlce" :class="[variant + '__circle']" :style="circleStyle"></div>
     </button>
   </NuxtLink>
 </template>
@@ -12,7 +12,8 @@ export default {
     props: {
         info: String,
         path: String,
-        variant: String
+        variant: String,
+        size: String
     },
     data() {
         return {
@@ -102,6 +103,12 @@ export default {
 }
 .button__btn:hover .button__cirlce {
   transform: scale(40);
+}
+.big .button__cirlce {
+  transition: transform 1s ease;
+}
+.big:hover .button__cirlce {
+  transform: scale(60);
 }
 .button__btn:hover {
   color: #fff

@@ -2,7 +2,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["~/assets/style/main.css"],
-  plugins: ["~/plugins/animate.connect.js"],
+  plugins: [
+    "~/plugins/animate.connect.js",
+    '~/plugins/v-click-outside.js',
+  ],
   app: {
     pageTransition: {
       name: "page",

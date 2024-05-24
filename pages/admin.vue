@@ -12,7 +12,7 @@ export default {
     definePageMeta({
       middleware: ["role"]
     })
-  }
+  },
 }
 </script>
 

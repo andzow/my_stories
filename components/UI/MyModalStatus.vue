@@ -35,14 +35,59 @@
         </div>
       </div>
     </Transition>
+    <Transition>
+      <div class="modalInfo__border" v-if="useStatus == 'deletePromo'" id="test">
+        <div class="modalInfo__card">
+          <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="34" cy="34" r="32" stroke="#AF9280" stroke-width="4" />
+            <path
+              d="M33.2351 51H33.2595M24 23.5496C25.3195 19.7383 28.9558 17 33.2351 17C38.628 17 43 21.3492 43 26.7143C43 30.7372 40.5419 34.1889 37.0385 35.6641C35.23 36.4257 34.3258 36.8065 34.0094 37.1006C33.6328 37.4508 33.5612 37.5581 33.384 38.0397C33.2351 38.444 33.2351 39.0675 33.2351 40.3143V43.7143"
+              stroke="#AF9280" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <h3 class="modalInfo__title">Вы уверены, что хотите удалить данный промокод</h3>
+          <p class="modalInfo__description">
+            Если вы нажмете "принять" данный промокод будет удален без возможности восстановления
+          </p>
+          <div class="modalInfo__position">
+            <UIMyButton class="modalInfo__btn" :info="'принять'" @click="deletePromo"/>
+            <UIMyButton class="modalInfo__btn" :info="'отмена'" @click="offActive"/>
+          </div>
+        </div>
+      </div>
+    </Transition>
+    <Transition>
+      <div class="modalInfo__border" v-if="useStatus == 'deletePromoNoReal'" id="test">
+        <div class="modalInfo__card">
+          <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="34" cy="34" r="32" stroke="#AF9280" stroke-width="4" />
+            <path
+              d="M33.2351 51H33.2595M24 23.5496C25.3195 19.7383 28.9558 17 33.2351 17C38.628 17 43 21.3492 43 26.7143C43 30.7372 40.5419 34.1889 37.0385 35.6641C35.23 36.4257 34.3258 36.8065 34.0094 37.1006C33.6328 37.4508 33.5612 37.5581 33.384 38.0397C33.2351 38.444 33.2351 39.0675 33.2351 40.3143V43.7143"
+              stroke="#AF9280" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <h3 class="modalInfo__title">Вы уверены, что хотите удалить данный промокод</h3>
+          <p class="modalInfo__description">
+            Если вы нажмете "принять" данный промокод будет удален без возможности восстановления
+          </p>
+          <div class="modalInfo__position">
+            <UIMyButton class="modalInfo__btn" :info="'принять'" @click="deletePromoNoReal"/>
+            <UIMyButton class="modalInfo__btn" :info="'отмена'" @click="offActive"/>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
   
   <script>
+  import PromoController from "@/http/controllers/PromoController";
+
   export default {
     data() {
       return {
         useStatus: useStatus(),
+        usePromoReal: usePromoReal(),
+        usePromoId: usePromoId(),
+        usePromoNoReal: usePromoNoReal()
       };
     },
     methods: {
@@ -51,6 +96,16 @@
       },
       toAdmin() {
         this.$router.push("/admin")
+        this.useStatus = null
+      },
+      async deletePromo() {
+        this.useStatus = true
+        await PromoController.deletePromo(this.usePromoId)
+        this.usePromoReal = await PromoController.getAll()
+        this.useStatus = null
+      },
+      deletePromoNoReal() {
+        this.usePromoNoReal.splice(this.usePromoId, 1);
         this.useStatus = null
       }
     },
@@ -155,12 +210,13 @@
   }
   .v-enter-active,
   .v-leave-active {
-    transition: opacity 0.5s ease;
+    transition: opacity transform 0.5s ease;
   }
   
   .v-enter-from,
   .v-leave-to {
     opacity: 0;
+    transform: translate(-50%, -55%);
   }
   .modalInfo__path {
     display: flex;
@@ -170,8 +226,16 @@
   .modalInfo__cancellation {
     margin-right: 20px;
   }
+  .modalInfo__position {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
   .modalInfo__btn {
     margin-top: 30px;
+  }
+  .modalInfo__btn:nth-child(2) {
+    margin-left: 10px;
   }
   @media(max-width: 660px) {
     .modalInfo__card {
