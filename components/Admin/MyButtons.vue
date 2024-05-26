@@ -2,7 +2,7 @@
     <section class="position">
         <div class="position__container">
             <div class="position__item">
-                <UIMyButton class="position__btn" :info="'разделы каталога'"/>
+                <UIMyButton class="position__btn" :info="'разделы каталога'" @click="useCategory = true"/>
                 <UIMyButton :info="'промокоды'" @click="useCode = true"/>
             </div>
             <div class="position__item">
@@ -19,7 +19,8 @@
 export default {
     data() {
         return {
-            useCode: useCode()
+            useCode: useCode(),
+            useCategory: useCategory()
         }
     }
 }
