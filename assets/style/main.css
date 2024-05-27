@@ -1,11 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
 
 :root {
-  --yellow: #EDE9DF;
-  --brown: #AF9280;
-  --green: #A8AB98;
-  --blue: #9BA8BD;
+  --yellow: #ede9df;
+  --brown: #af9280;
+  --green: #a8ab98;
+  --blue: #9ba8bd;
   --assistant: 10px;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+body {
+  overflow-x: hidden;
 }
 
 *,
@@ -139,24 +146,24 @@ input::-webkit-inner-spin-button {
 }
 
 input:focus::-webkit-input-placeholder {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  textarea:focus::-moz-placeholder,
-  input:focus::-moz-placeholder {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  textarea:focus:-moz-placeholder,
-  input:focus:-moz-placeholder {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  textarea:focus:-ms-input-placeholder,
-  input:focus:-ms-input-placeholder {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+textarea:focus::-moz-placeholder,
+input:focus::-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+textarea:focus:-moz-placeholder,
+input:focus:-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+textarea:focus:-ms-input-placeholder,
+input:focus:-ms-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
 .page-enter-active,
 .page-leave-active {

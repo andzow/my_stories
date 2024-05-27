@@ -1,15 +1,12 @@
 <template>
   <div>
-    <MainMyMain/>
+    <MainMyMain />
+    <!-- <UIMyNoise /> -->
   </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style scoped></style>
