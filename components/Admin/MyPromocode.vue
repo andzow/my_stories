@@ -30,7 +30,7 @@
               </svg>
             </div>
           </div>
-          <div class="promocode__body">
+          <div class="promocode__body" ref="promoContainer">
           <UIMyButton
             :class="{promocode__btn_add: isCandidate.length !== 0 || isPromo.length !== 0}"
             :info="'создать промокод'"
@@ -238,7 +238,6 @@ export default {
     },
     handleClickOutside() {
       this.useCode = false;
-      console.log("SADASDA")
     },
     addPromo() {
       const newPromo = {
@@ -252,6 +251,12 @@ export default {
         errorCount: false,
       };
       this.isCandidate.push(newPromo);
+
+      this.$nextTick(() => {
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 300); // Задержка в 1000 миллисекунд (1 секунда)
+      });
     },
     deletePromoReal(id) {
       this.useStatus = "deletePromo";
@@ -263,6 +268,13 @@ export default {
     },
     resetAll() {
       this.isCandidate = [];
+    },
+    scrollToBottom() {
+      const container = this.$refs.promoContainer;
+      container.scrollTo({
+      top: container.scrollHeight,
+      behavior: 'smooth'
+    });
     },
     async saveCandidate() {
       this.useStatus = true;
