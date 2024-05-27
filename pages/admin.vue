@@ -4,6 +4,7 @@
     <AdminMyButtons/>
     <AdminMyPromocode/>
     <AdminMyCategory/>
+    <AdminMyCategoryLine/>
   </div>
 </template>
 
