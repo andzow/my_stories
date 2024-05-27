@@ -1,9 +1,5 @@
 <template>
-  <NuxtLink
-    class="button"
-    @mousemove="updateParallax"
-    @mouseleave="resetParallax"
-  >
+  <div class="button" @mousemove="updateParallax" @mouseleave="resetParallax">
     <button
       class="button__btn"
       :class="[variant, size]"
@@ -17,7 +13,7 @@
         :style="circleStyle"
       ></div>
     </button>
-  </NuxtLink>
+  </div>
 </template>
 
 <script>
@@ -27,6 +23,7 @@ export default {
     path: String,
     variant: String,
     size: String,
+    fontSize: String,
   },
   data() {
     return {
@@ -41,7 +38,9 @@ export default {
       const tX = this.mouseX / 5;
       const tY = this.mouseY / 2;
       return {
+        fontSize: this.fontSize + "px",
         transform: `translateX(${tX}px) translateY(${tY}px)`,
+        transition: "all 0.4s ease",
       };
     },
     circleStyle() {
@@ -74,7 +73,6 @@ export default {
   width: 100%;
 }
 .button__btn {
-  font-size: 24px;
   text-align: center;
   border: 1px solid var(--brown);
   padding-top: 10px;
@@ -83,11 +81,11 @@ export default {
   padding-right: 20px;
   width: 100%;
   background-color: transparent;
-  transition: all 0.4s ease;
   z-index: 10;
   position: relative;
   overflow: hidden;
   white-space: nowrap;
+  cursor: none;
 }
 .green {
   background-color: #ede9df;
