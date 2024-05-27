@@ -6,7 +6,7 @@
                 <UIMyButton :info="'промокоды'" @click="useCode = true"/>
             </div>
             <div class="position__item">
-                <button class="position__btn_add">
+                <button class="position__btn_add" @click="useProduct = true">
                     <span class="position__text">добавить товар</span>
                     <img src="~/assets/images/Admin/add.svg" alt="">
                 </button>
@@ -20,7 +20,8 @@ export default {
     data() {
         return {
             useCode: useCode(),
-            useCategory: useCategory()
+            useCategory: useCategory(),
+            useProduct: useProduct()
         }
     }
 }

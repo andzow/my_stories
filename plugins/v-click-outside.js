@@ -1,7 +1,6 @@
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.directive('click-outside', {
       beforeMount(el, binding) {
-        // Флаг для предотвращения первого срабатывания
         el.preventFirstClick = true;
         
         el.clickOutsideEvent = function (event) {
