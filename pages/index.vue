@@ -1,7 +1,12 @@
 <template>
   <div>
     <MainMyMain />
-    <!-- <UIMyNoise /> -->
+    <section class="index">
+      <MainCollectionMyCollection />
+      <MainBrandMyBrand />
+      <UIMyAnimationLine />
+      <UIMyNoise />
+    </section>
   </div>
 </template>
 
@@ -9,4 +14,11 @@
 export default {};
 </script>
 
-<style scoped></style>
+<style scoped>
+.index {
+  position: relative;
+  background-color: var(--yellow);
+  width: 100vw;
+  z-index: 15;
+}
+</style>

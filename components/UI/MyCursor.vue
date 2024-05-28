@@ -12,21 +12,22 @@ export default {
     };
   },
   methods: {
-    setModifers(cursorCircle) {
+    setModifiers(cursorCircle) {
       const cursorModifiers = document.querySelectorAll("[cursor-class]");
 
-      cursorModifiers.forEach((curosrModifier) => {
-        curosrModifier.addEventListener("mouseenter", () => {
-          const className = curosrModifier.getAttribute("cursor-class");
+      cursorModifiers.forEach((cursorModifier) => {
+        cursorModifier.addEventListener("mouseenter", () => {
+          const className = cursorModifier.getAttribute("cursor-class");
           cursorCircle.classList.add(className);
         });
 
-        curosrModifier.addEventListener("mouseleave", () => {
-          const className = curosrModifier.getAttribute("cursor-class");
+        cursorModifier.addEventListener("mouseleave", () => {
+          const className = cursorModifier.getAttribute("cursor-class");
           cursorCircle.classList.remove(className);
         });
-        curosrModifier.addEventListener("click", () => {
-          const className = curosrModifier.getAttribute("cursor-class");
+
+        cursorModifier.addEventListener("click", () => {
+          const className = cursorModifier.getAttribute("cursor-class");
           cursorCircle.classList.remove(className);
         });
       });
@@ -38,7 +39,7 @@ export default {
 
     const mouse = { x: -100, y: -100 };
     const pos = { x: 0, y: 0 };
-    const speed = 0.1;
+    const speed = 0.2;
 
     const updateCoordinates = (e) => {
       mouse.x = e.clientX;
@@ -83,14 +84,14 @@ export default {
 
     requestAnimationFrame(loop);
 
-    this.setModifers(cursorCircle);
+    this.setModifiers(cursorCircle);
   },
   watch: {
     useCursor(val) {
       if (val) {
         const cursor = document.querySelector("#cursor-inside");
         const cursorCircle = cursor.querySelector(".cursor__inside");
-        this.setModifers(cursorCircle);
+        this.setModifiers(cursorCircle);
         this.useCursor = false;
       }
     },

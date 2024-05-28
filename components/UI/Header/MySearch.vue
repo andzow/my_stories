@@ -97,6 +97,7 @@ export default {
       arrSendMenu: [],
       searchVal: "",
       placeholderVal: "Поиск...",
+      useCursor: useCursor(),
     };
   },
   methods: {
@@ -125,6 +126,7 @@ export default {
         if (!click) {
           this.$emit("closeSearch");
         }
+        this.useCursor = true;
       });
     }, 0);
   },

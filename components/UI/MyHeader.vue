@@ -142,6 +142,7 @@ header {
   position: fixed;
   width: 100vw;
   padding: 24px 30px;
+  z-index: 19;
 }
 .header__content {
   display: flex;

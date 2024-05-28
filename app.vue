@@ -20,6 +20,7 @@ button {
   cursor: none;
 }
 .page {
-  height: 5000px;
+  width: 100%;
+  overflow: hidden;
 }
 </style>
