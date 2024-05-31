@@ -1,18 +1,25 @@
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const useCursor = () => useState("use_cursor", () => null);
-export const useGsapAnimationOpacity = (arr) => {
+export const useGsapAnimationOpacity = (arr, triggerEl, startMarker) => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  if (!Array.isArray(arr)) {
+    return;
+  }
   arr.forEach((el, idx) => {
     gsap.to(el, {
       scrollTrigger: {
-        trigger: ".collection",
-        start: "top 80%",
+        trigger: triggerEl,
+        start: `top ${startMarker ? "95%" : "80%"}`,
         markers: false,
       },
-      delay: idx * 0.1,
+
+      delay: 0,
       opacity: 1,
       ease: "none",
-      duration: 1.5,
+      duration: 1,
     });
   });
 };

@@ -6,6 +6,7 @@
     <UIMyCursor />
     <UIMyCursorCircle />
   </main>
+  <UIMyFooter />
 </template>
 
 <script>

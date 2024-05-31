@@ -1,5 +1,11 @@
 <template>
-  <div class="lines" ref="lines">
+  <div
+    class="lines"
+    ref="lines"
+    :style="{
+      transition: `all ${duration}s linear`,
+    }"
+  >
     <div class="lines__content">
       <div
         class="lines__line"
@@ -12,27 +18,61 @@
 </template>
 
 <script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 export default {
+  props: {
+    duration: String,
+  },
   data() {
     return {
       heightEl: null,
+      checkVarieble: true,
     };
   },
   mounted() {
-    this.calculateHeight();
-    window.addEventListener("resize", this.calculateHeight);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.calculateHeight);
+    setTimeout(() => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      this.initGsapScrollTrigger();
+    }, 0);
   },
   methods: {
+    initGsapScrollTrigger() {
+      gsap.to(".lines", {
+        scrollTrigger: {
+          trigger: ".lines",
+          start: "top 80%",
+          end: "105% 100%",
+          markers: false,
+          onEnter: () => {
+            if (!this.checkVarieble) return;
+            this.calculateHeight();
+            this.checkVarieble = false;
+          },
+        },
+      });
+    },
     calculateHeight() {
-      const linesElement = this.$refs.lines;
-      const linesTop = linesElement.getBoundingClientRect().top;
-      const documentHeight = document.documentElement.scrollHeight;
-      const height = documentHeight - linesTop;
+      const lines = document.querySelector(".lines");
+      const footer = document.querySelector("footer");
 
-      linesElement.style.height = height + "px";
+      if (lines && footer) {
+        const footerRect = footer.getBoundingClientRect();
+        const footerTop = footerRect.top + window.scrollY;
+
+        const linesRect = lines.getBoundingClientRect();
+        const linesBottom = linesRect.bottom + window.scrollY;
+
+        this.heightEl = footerTop - linesBottom;
+        lines.style.height = this.heightEl + "px";
+      }
+    },
+  },
+  watch: {
+    $route() {
+      this.heightEl = null;
     },
   },
 };
@@ -43,6 +83,7 @@ export default {
   position: absolute;
   top: 0;
   width: 100%;
+  height: 0px;
   z-index: 9;
 }
 .lines__content {

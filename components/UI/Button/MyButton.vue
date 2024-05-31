@@ -2,7 +2,7 @@
   <div class="button" @mousemove="updateParallax" @mouseleave="resetParallax">
     <button
       class="button__btn"
-      :class="[variant, size]"
+      :class="[variant, size, bigSize]"
       :style="squareStyle"
       ref="button"
     >
@@ -24,6 +24,7 @@ export default {
     variant: String,
     size: String,
     fontSize: String,
+    bigSize: String,
   },
   data() {
     return {
@@ -90,6 +91,12 @@ export default {
 .green {
   background-color: #ede9df;
 }
+.white {
+  background-color: none;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
 .button__btn_line {
   border: 3px solid var(--brown);
 }
@@ -112,8 +119,14 @@ export default {
 .green__circle {
   background-color: #868975;
 }
+.white__circle {
+  background-color: #868975;
+}
 .button__btn:hover .button__cirlce {
   transform: scale(40);
+}
+.bigSize:hover .button__cirlce {
+  transform: scale(140) !important;
 }
 .big .button__cirlce {
   transition: transform 1s ease;

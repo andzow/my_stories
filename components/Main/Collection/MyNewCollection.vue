@@ -1,11 +1,14 @@
 <template>
   <div class="collection__new">
     <div class="collection__new_content">
-      <h2 class="collection__new_title">( новая коллекция )</h2>
+      <h2 class="collection__new_title">( &nbsp;новая коллекция&nbsp; )</h2>
       <div class="collection__new_img">
         <img
           class="collection__new_image"
           src="@/assets/images/Main/collectionF.webp"
+          alt="Фотография новой коллекции"
+          onmousedown="return false"
+          onselectstart="return false"
         />
       </div>
     </div>

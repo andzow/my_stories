@@ -49,6 +49,16 @@ export default {
       requestAnimationFrame(loop);
     }
     requestAnimationFrame(loop);
+
+    document.addEventListener("mousemove", (e) => {
+      try {
+        if (e?.target?.className?.includes("footer")) {
+          cursorCircle.style.backgroundColor = "#fff";
+          return;
+        }
+        cursorCircle.style.backgroundColor = "#a8ab98";
+      } catch {}
+    });
   },
   watch: {},
 };
@@ -71,8 +81,9 @@ export default {
     margin-left: -50%;
     border-radius: 50%;
     background-color: #a8ab98;
-    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-      width 0.3s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s;
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+      width 0.4s cubic-bezier(0.25, 1, 0.5, 1), height 0.4s,
+      background-color 0.4s;
   }
 }
 </style>

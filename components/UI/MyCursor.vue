@@ -32,6 +32,18 @@ export default {
         });
       });
     },
+    setCursorStyle(e) {
+      const cursor = document.querySelector("#cursor-inside");
+      const cursorCircle = cursor.querySelector(".cursor__inside");
+
+      try {
+        if (e?.target?.className?.includes("footer")) {
+          cursorCircle.style.border = "1px solid #fff";
+          return;
+        }
+        cursorCircle.style.border = "1px solid #a8ab98";
+      } catch {}
+    },
   },
   mounted() {
     const cursor = document.querySelector("#cursor-inside");
@@ -59,7 +71,7 @@ export default {
       return Math.min(distance / accelerator, maxSqueeze);
     }
 
-    const updateCursor = () => {
+    const updateCursor = (e) => {
       const diffX = Math.round(mouse.x - pos.x);
       const diffY = Math.round(mouse.y - pos.y);
 
@@ -78,11 +90,15 @@ export default {
     };
 
     function loop() {
-      updateCursor();
+      updateCursor(event);
       requestAnimationFrame(loop);
     }
 
     requestAnimationFrame(loop);
+
+    document.addEventListener("mousemove", (e) => {
+      this.setCursorStyle(e);
+    });
 
     this.setModifiers(cursorCircle);
   },
@@ -116,9 +132,9 @@ export default {
     margin-left: -50%;
     border-radius: 50%;
     border: solid 1px #a8ab98;
-    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
       width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-      height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      height 0.4s cubic-bezier(0.25, 1, 0.5, 1), border 0.4s;
   }
   .animateCursor {
     width: 65px;

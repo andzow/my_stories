@@ -26,6 +26,9 @@
           <img
             class="collection__photo_img"
             src="@/assets/images/Main/collectionS.webp"
+            alt="Фотография новой коллекции"
+            onmousedown="return false"
+            onselectstart="return false"
           />
         </div>
       </div>
@@ -39,19 +42,36 @@ export default {
     return {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
       arrClassNameForAnimation: [
-        ".collection__text",
-        ".collection__name",
+        // ".collection__text",
+        // ".collection__name",
         ".collection__number",
         ".collection__new_title",
-        ".collection__new_img",
-        ".collection__btn",
+        // ".collection__new_img",
+        // ".collection__btn",
         ".collection__photo_img",
       ],
     };
   },
 
   mounted() {
-    this.useGsapAnimationOpacity(this.arrClassNameForAnimation);
+    this.useGsapAnimationOpacity(
+      [
+        ".collection__number",
+        ".collection__new_title",
+        ".collection__photo_img",
+      ],
+      ".collection"
+    );
+
+    this.useGsapAnimationOpacity(
+      [".collection__text", ".collection__name", ".collection__new_img"],
+      ".collection__new_img"
+    );
+    this.useGsapAnimationOpacity(
+      [".collection__btn"],
+      ".collection__btn",
+      true
+    );
   },
 };
 </script>
@@ -69,8 +89,6 @@ export default {
   width: 100%;
   margin: 0 auto;
   padding: 0 30px;
-}
-.collection__content {
   display: grid;
   grid-template-columns: repeat(3, 35% 40% 25%);
   column-gap: 30px;

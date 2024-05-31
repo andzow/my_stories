@@ -45,17 +45,9 @@ export default {
       });
     },
     animationOpacity() {
-      gsap.to(".main__img", {
+      gsap.to([".main__img", ".main__title", ".main__catalog"], {
         opacity: 1,
-        duration: 1.5,
-      });
-      gsap.to(".main__title", {
-        opacity: 1,
-        duration: 1.5,
-      });
-      gsap.to(".main__catalog", {
-        opacity: 1,
-        duration: 1.5,
+        duration: 1,
       });
     },
   },

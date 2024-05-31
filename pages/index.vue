@@ -4,7 +4,10 @@
     <section class="index">
       <MainCollectionMyCollection />
       <MainBrandMyBrand />
-      <UIMyAnimationLine />
+      <MainMyAddition />
+      <MainCatalogMyCatalog />
+      <MainNewMyNew />
+      <UIMyAnimationLine duration="8" />
       <UIMyNoise />
     </section>
   </div>
