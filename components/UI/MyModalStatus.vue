@@ -95,6 +95,48 @@
         </div>
       </div>
     </Transition>
+    <Transition>
+      <div class="modalInfo__border" v-if="useStatus === 'addLine'" id="test">
+        <div class="modalInfo__card">
+          <h3 class="modalInfo__title">введите навание и значение</h3>
+          <div class="modalInfo__position">
+            <div class="modalInfo__info modalInfo__info_special">
+              <span class="modalInfo__prefix">название</span>
+              <input class="modalInfo__input" v-model="isSize" type="text" placeholder="пусто">
+            </div>
+            <div class="modalInfo__info">
+              <span class="modalInfo__prefix">значение</span>
+              <input class="modalInfo__input" v-model="isValue" type="number" placeholder="пусто">
+            </div>
+          </div>
+          <div class="modalInfo__position">
+            <UIMyButton class="modalInfo__btn" :info="'принять'" @click="addSize"/>
+            <UIMyButton class="modalInfo__btn" :info="'отмена'" @click="offActive"/>
+          </div>
+        </div>
+      </div>
+    </Transition>
+    <Transition>
+      <div class="modalInfo__border" v-if="useStatus === 'addDimension'" id="test">
+        <div class="modalInfo__card">
+          <h3 class="modalInfo__title">введите навание и значение</h3>
+          <div class="modalInfo__position">
+            <div class="modalInfo__info modalInfo__info_special">
+              <span class="modalInfo__prefix">название</span>
+              <input class="modalInfo__input" v-model="isSizeDimension" type="text" placeholder="пусто">
+            </div>
+            <div class="modalInfo__info">
+              <span class="modalInfo__prefix">значение</span>
+              <input class="modalInfo__input" v-model="isValueDimension" type="number" placeholder="пусто">
+            </div>
+          </div>
+          <div class="modalInfo__position">
+            <UIMyButton class="modalInfo__btn" :info="'принять'" @click="addDimension"/>
+            <UIMyButton class="modalInfo__btn" :info="'отмена'" @click="offActive"/>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
   
@@ -106,11 +148,20 @@
     data() {
       return {
         useStatus: useStatus(),
+        useLine: useLine(),
+        useMeasuremen: useMeasuremen(),
         usePromoReal: usePromoReal(),
         usePromoId: usePromoId(),
         usePromoNoReal: usePromoNoReal(),
         useCategoryAll: useCategoryAll(),
-        useCategoryId: useCategoryId()
+        useCategoryId: useCategoryId(),
+        useDimension: useDimension(),
+        useDimensionItem: useDimensionItem(),
+
+        isSize: '',
+        isValue: '',
+        isSizeDimension: '',
+        isValueDimension: '',
       };
     },
     methods: {
@@ -137,6 +188,28 @@
         if (this.useCategoryId.id !== undefined) {
           await CategoryController.deleteCategoryOne(this.useCategoryId.id)
         }
+        this.useStatus = null
+      },
+      addSize() {
+        const size = {
+          description: this.isSize,
+          value: this.isValue
+        }
+
+        this.useMeasuremen[this.useLine].array.push(size)
+        this.isSize = ''
+        this.isValue = ''
+        this.useStatus = null
+      },
+      addDimension() {
+        const size = {
+          description: this.isSizeDimension,
+          value: this.isValueDimension
+        }
+
+        this.useDimension[this.useDimensionItem].array.push(size)
+        this.isSizeDimension = ''
+        this.isValueDimension = ''
         this.useStatus = null
       }
     },
@@ -267,6 +340,24 @@
   }
   .modalInfo__btn:nth-child(2) {
     margin-left: 10px;
+  }
+  .modalInfo__input {
+    width: 100%;
+    font-size: 22px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--brown);
+  }
+  .modalInfo__prefix {
+    font-size: 18px;
+  }
+  .modalInfo__info {
+    margin-top: 15px;
+  }
+  .modalInfo__info_special {
+    margin-right: 10px;
+  }
+  .modalInfo__input::placeholder {
+    color: var(--brown);
   }
   @media(max-width: 660px) {
     .modalInfo__card {

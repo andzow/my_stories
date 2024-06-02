@@ -1,10 +1,10 @@
 <template>
-  <UIMyHeader />
+  <!-- <UIMyHeader /> -->
   <main class="page">
     <NuxtPage />
     <UIMyModalStatus />
-    <UIMyCursor />
-    <UIMyCursorCircle />
+    <!-- <UIMyCursor />
+    <UIMyCursorCircle /> -->
   </main>
 </template>
 
@@ -13,7 +13,7 @@ export default {};
 </script>
 
 <style>
-* {
+/* * {
   cursor: none;
 }
 button {
@@ -21,5 +21,5 @@ button {
 }
 .page {
   height: 5000px;
-}
+} */
 </style>

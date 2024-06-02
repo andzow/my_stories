@@ -160,6 +160,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  white-space: nowrap;
 }
 .category__head {
   display: flex;

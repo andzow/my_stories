@@ -36,7 +36,7 @@ export default {
 }
 .header__container {
     padding: 0 20px;
-    max-width: 1380px;
+    max-width: 1880px;
     margin: 0 auto;
     display: flex;
     align-items: center;

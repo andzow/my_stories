@@ -26,7 +26,7 @@ export default {
     info: String,
     path: String,
     variant: String,
-    size: String,
+    size: String
   },
   data() {
     return {

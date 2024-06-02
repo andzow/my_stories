@@ -2,7 +2,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.directive('click-outside', {
       beforeMount(el, binding) {
         el.preventFirstClick = true;
-        
+
         el.clickOutsideEvent = function (event) {
           if (el.preventFirstClick) {
             el.preventFirstClick = false;

@@ -352,6 +352,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  white-space: nowrap;
 }
 .promocode__head {
   display: flex;
