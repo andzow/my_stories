@@ -1,56 +1,66 @@
 <template>
-  <canvas id="noiseCanvas" class="noise"></canvas>
+  <div class="bg"></div>
 </template>
 
 <script>
-export default {
-  mounted() {
-    const canvas = document.getElementById("noiseCanvas");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    function generateNoise(ctx, width, height) {
-      const imageData = ctx.createImageData(width, height);
-      const buffer32 = new Uint32Array(imageData.data.buffer);
-      const len = buffer32.length;
-
-      for (let i = 0; i < len; i++) {
-        if (Math.random() < 0.5) {
-          buffer32[i] = 0xaa7f7f7f;
-        } else {
-          buffer32[i] = 0xaaffffff;
-        }
-      }
-
-      ctx.putImageData(imageData, 0, 0);
-    }
-
-    let lastTime = 0;
-    const delay = 80;
-
-    function animateNoise(timestamp) {
-      if (timestamp - lastTime >= delay) {
-        generateNoise(ctx, canvas.width, canvas.height);
-        lastTime = timestamp;
-      }
-      requestAnimationFrame(animateNoise);
-    }
-
-    animateNoise();
-  },
-};
+export default {};
 </script>
 
 <style scoped>
-.noise {
+.bg {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
   height: 100vh;
-  opacity: 0.1;
+  background-color: "#66666e";
   z-index: 10;
+  border: 5px solid red;
+  width: 100%;
+  overflow: hidden;
+}
+
+.bg:after {
+  position: fixed;
+  animation: grain 9s steps(10) infinite;
+  background-image: url("@/assets/images/Main/шум.svg");
+  content: "";
+  height: 300%;
+  width: 300%;
+  left: -100%;
+  top: -110%;
+  opacity: 0.06;
+  z-index: 11;
+}
+
+@keyframes grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    transform: translate(5%, -25%);
+  }
+  40% {
+    transform: translate(-5%, 25%);
+  }
+  50% {
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    transform: translate(15%, 0%);
+  }
+  70% {
+    transform: translate(0%, 15%);
+  }
+  80% {
+    transform: translate(5%, 35%);
+  }
+  90% {
+    transform: translate(-10%, 10%);
+  }
 }
 </style>

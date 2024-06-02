@@ -23,28 +23,78 @@
         </div>
       </div>
     </div>
+    <div class="main__paralax"></div>
+    <div class="main__block"></div>
   </section>
 </template>
 
 <script>
-export default {};
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+export default {
+  methods: {
+    setAnimateParallax() {
+      gsap.to(".main__paralax", {
+        scrollTrigger: {
+          trigger: ".main",
+          start: "50px top",
+          scrub: true,
+        },
+        scale: 1.1,
+      });
+    },
+    animationOpacity() {
+      gsap.to(".main__img", {
+        opacity: 1,
+        duration: 1.5,
+      });
+      gsap.to(".main__title", {
+        opacity: 1,
+        duration: 1.5,
+      });
+      gsap.to(".main__catalog", {
+        opacity: 1,
+        duration: 1.5,
+      });
+    },
+  },
+  mounted() {
+    gsap.registerPlugin(ScrollTrigger);
+    setTimeout(() => {
+      this.setAnimateParallax();
+    }, 10);
+    this.animationOpacity();
+  },
+};
 </script>
 
 <style scoped>
 .main {
+  position: relative;
   height: 100vh;
   width: 100%;
-  background: url("@/assets/images/Main/back.webp") no-repeat;
-  background-size: cover;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
 }
+.main__paralax {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("@/assets/images/Main/back.webp") no-repeat;
+  background-size: cover;
+  z-index: 0;
+}
 .main__menu {
+  position: relative;
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
   padding: 0 30px;
+  z-index: 17;
 }
 .main__content {
   width: 100%;
@@ -55,9 +105,13 @@ export default {};
 }
 .main__catalog {
   min-width: 306px;
+  opacity: 0;
 }
 .main__logo {
   margin-bottom: 85px;
+}
+.main__img {
+  opacity: 0;
 }
 .main__title {
   font-size: 17px;
@@ -65,5 +119,6 @@ export default {};
   color: #ede9df;
   line-height: 120%;
   max-width: 350px;
+  opacity: 0;
 }
 </style>
