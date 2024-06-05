@@ -11,7 +11,13 @@
         right: item.setCss.right,
       }"
     >
-      <img class="main__img" :src="item.imageSrc" />
+      <img
+        class="main__img"
+        :src="item.imageSrc"
+        alt="Фотография lookbook"
+        onmousedown="return false"
+        onselectstart="return false"
+      />
     </div>
   </section>
 </template>
@@ -121,9 +127,10 @@ export default {
   mounted() {
     setTimeout(() => {
       this.changeCssStyle();
+      this.$emit("openSection");
     }, 1300);
     this.initGsapOpacity();
-    this.useGsapAnimationOpacity(this.initGsapOpacity(), ".main");
+    // this.useGsapAnimationOpacity(this.initGsapOpacity(), ".main");
   },
 };
 </script>

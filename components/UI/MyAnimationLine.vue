@@ -24,23 +24,19 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export default {
   props: {
     duration: String,
+    arrAnimationLine: Array,
   },
   data() {
     return {
       heightEl: null,
       checkVarieble: true,
+      useVeriableAnimationLine: useVeriableAnimationLine(),
+      useRegPlugin: useRegPlugin(),
     };
-  },
-  mounted() {
-    setTimeout(() => {
-      gsap.registerPlugin(ScrollTrigger);
-
-      this.initGsapScrollTrigger();
-    }, 0);
   },
   methods: {
     initGsapScrollTrigger() {
-      gsap.to(".lines", {
+      this.useVeriableAnimationLine = gsap.to(".lines", {
         scrollTrigger: {
           trigger: ".lines",
           start: "top 80%",
@@ -48,11 +44,41 @@ export default {
           markers: false,
           onEnter: () => {
             if (!this.checkVarieble) return;
-            this.calculateHeight();
             this.checkVarieble = false;
+            this.calculateHeight();
           },
         },
       });
+    },
+    setMarginLine() {
+      try {
+        this.arrAnimationLine.forEach((el, idx) => {
+          const elLineHtml = document.querySelector(".lines__line" + (idx + 1));
+
+          if (!el.defaultLine) {
+            const elHtml = document.querySelector(el.name);
+            const elBounding = elHtml.getBoundingClientRect();
+
+            if (!el.widthTo) {
+              const elMargin = el.share
+                ? `${
+                    Math.round(elBounding[el.indent]) +
+                    Math.round(elBounding.width) / 2
+                  }px`
+                : Math.round(elBounding[el.indent]) + "px";
+              elLineHtml.style[el.indent] = elMargin;
+            } else {
+              const elMargin =
+                Math.round(elBounding[el.indent]) +
+                Math.round(elBounding.width) +
+                "px";
+              elLineHtml.style.left = elMargin;
+            }
+            return;
+          }
+          elLineHtml.style[el.indent] = el.margin;
+        });
+      } catch {}
     },
     calculateHeight() {
       const lines = document.querySelector(".lines");
@@ -64,16 +90,20 @@ export default {
 
         const linesRect = lines.getBoundingClientRect();
         const linesBottom = linesRect.bottom + window.scrollY;
-
         this.heightEl = footerTop - linesBottom;
         lines.style.height = this.heightEl + "px";
       }
     },
   },
-  watch: {
-    $route() {
-      this.heightEl = null;
-    },
+  mounted() {
+    setTimeout(() => {
+      if (this.useVeriableAnimationLine !== null) {
+        this.useVeriableAnimationLine.revert();
+      }
+      gsap.registerPlugin(ScrollTrigger);
+      this.initGsapScrollTrigger();
+      this.setMarginLine();
+    }, 0);
   },
 };
 </script>
@@ -99,16 +129,16 @@ export default {
   height: 100%;
   background: #d2bcae;
 }
-.lines__line1 {
+/* .lines__line1 {
   left: 30px;
 }
 .lines__line2 {
   left: 383px;
 }
 .lines__line3 {
-  left: 1053px;
+  right: 852px;
 }
 .lines__line4 {
   right: 98px;
-}
+} */
 </style>

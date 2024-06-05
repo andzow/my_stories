@@ -12,9 +12,9 @@ export default {};
   height: 100vh;
   background-color: "#66666e";
   z-index: 10;
-  border: 5px solid red;
   width: 100%;
   overflow: hidden;
+  z-index: 11;
 }
 
 .bg:after {

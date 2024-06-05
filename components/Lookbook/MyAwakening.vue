@@ -3,7 +3,9 @@
     <div class="awakening__content">
       <div class="awakening__about">
         <div class="awakening__about_inf">
-          <h2 class="awakening__about_title">пробуждение . . .</h2>
+          <h2 class="awakening__about_title">
+            пробуждение <span class="span__inter">. . .</span>
+          </h2>
           <p class="awakening__about_text">
             в новую коллекцию вошли лаконичные юбки плиссе на запах в размерах
             миди, уютные стеганные жакеты свободного кроя, логсливы из
@@ -12,6 +14,7 @@
         </div>
         <div class="awakening__about_btn">
           <UIButtonMyButton
+            @click="$router.push('/lookbook/letniy-vecher')"
             aria-label="перейти"
             info="перейти"
             fontSize="24"
@@ -25,6 +28,9 @@
           <img
             class="awakening__image_img"
             src="@/assets/images/Lookbook/awakening1.webp"
+            alt="Фотография коллекции пробуждение"
+            onmousedown="return false"
+            onselectstart="return false"
           />
         </div>
       </div>
@@ -32,6 +38,9 @@
         <img
           class="awakening__photo_img"
           src="@/assets/images/Lookbook/awakening2.webp"
+          alt="Фотография коллекции пробуждение"
+          onmousedown="return false"
+          onselectstart="return false"
         />
       </div>
     </div>
@@ -39,7 +48,43 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      useGsapAnimationOpacity: useGsapAnimationOpacity,
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.useGsapAnimationOpacity(
+        [
+          ".awakening__about_title",
+          ".awakening__about_text",
+          ".awakening__image_number",
+        ],
+        ".awakening",
+        true
+      );
+      this.useGsapAnimationOpacity(
+        [".awakening__image_photo"],
+        ".awakening",
+        true,
+        0.5
+      );
+      this.useGsapAnimationOpacity(
+        [".awakening__photo"],
+        ".awakening",
+        true,
+        0.7
+      );
+      this.useGsapAnimationOpacity(
+        [".awakening__about_btn"],
+        ".awakening__image_photo",
+        true
+      );
+    }, 0);
+  },
+};
 </script>
 
 <style scoped>
@@ -69,15 +114,18 @@ export default {};
   font-size: 36px;
   color: var(--brown);
   margin-bottom: 35px;
+  opacity: 0;
 }
 .awakening__about_text {
   font-size: 17px;
   font-weight: 300;
   line-height: 140%;
   color: var(--brown);
+  opacity: 0;
 }
 .awakening__about_btn {
   max-width: 320px;
+  opacity: 0;
 }
 .awakening__image {
   display: flex;
@@ -91,14 +139,17 @@ export default {};
   color: var(--brown);
   text-align: center;
   margin-right: 20px;
+  opacity: 0;
 }
 .awakening__image_photo {
   display: flex;
+  opacity: 0;
   /* margin-bottom: 150px; */
 }
 .awakening__photo {
   display: flex;
   justify-content: flex-end;
   margin-right: 75px;
+  opacity: 0;
 }
 </style>

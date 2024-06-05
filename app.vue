@@ -10,12 +10,32 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      useCheckAnimationArr: useCheckAnimationArr(),
+      useCursor: useCursor(),
+    };
+  },
+  watch: {
+    $route() {
+      this.useCheckAnimationArr.forEach((el) => {
+        el.revert();
+      });
+      this.useCheckAnimationArr = [];
+      setTimeout(() => {
+        if (this.$route.path !== "/lookbook") {
+          this.useCursor = true;
+        }
+      }, 500);
+    },
+  },
+};
 </script>
 
 <style>
 * {
-  cursor: none;
+  cursor: none !important;
 }
 button {
   cursor: none;

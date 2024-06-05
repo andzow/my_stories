@@ -19,11 +19,18 @@ export default {
     const speed = 1;
 
     const updateCoordinates = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      try {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        if (e?.target?.className?.includes("footer")) {
+          cursorCircle.style.backgroundColor = "#fff";
+          return;
+        }
+        cursorCircle.style.backgroundColor = "#a8ab98";
+      } catch {}
     };
 
-    window.addEventListener("mousemove", updateCoordinates);
+    window.addEventListener("pointermove", updateCoordinates);
 
     function getAngle(diffX, diffY) {
       return (Math.atan2(diffY, diffX) * 180) / Math.PI;
@@ -49,16 +56,6 @@ export default {
       requestAnimationFrame(loop);
     }
     requestAnimationFrame(loop);
-
-    document.addEventListener("mousemove", (e) => {
-      try {
-        if (e?.target?.className?.includes("footer")) {
-          cursorCircle.style.backgroundColor = "#fff";
-          return;
-        }
-        cursorCircle.style.backgroundColor = "#a8ab98";
-      } catch {}
-    });
   },
   watch: {},
 };
@@ -75,8 +72,8 @@ export default {
 
 @media (hover: hover) and (pointer: fine) {
   .cursor__circle {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
     margin-top: -50%;
     margin-left: -50%;
     border-radius: 50%;

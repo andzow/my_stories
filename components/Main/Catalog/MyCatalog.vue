@@ -39,7 +39,7 @@ export default {
   max-height: 790px;
   min-height: 790px;
   overflow: hidden;
-  z-index: 11;
+  z-index: 12;
 }
 .catalog__content {
   display: flex;

@@ -75,8 +75,11 @@
             >
               <NuxtLink
                 class="header__link"
-                :to="item.path"
-                :class="{ activeLi: changeHeader }"
+                :to="generateLink(item.path)"
+                :class="{
+                  activeLi: changeHeader,
+                  activeIndex: activeLiPath === item.path,
+                }"
                 >{{ item.name }}</NuxtLink
               >
             </li>
@@ -101,14 +104,15 @@ export default {
       useCursor: useCursor(),
       searchVisible: false,
       changeHeader: false,
+      activeLiPath: null,
       navArr: [
         {
           name: "Каталог",
-          path: "/",
+          path: "/catalog",
         },
         {
           name: "О бренде",
-          path: "/",
+          path: "/brand",
         },
         {
           name: "Lookbook",
@@ -116,12 +120,12 @@ export default {
         },
         {
           name: "Доставка и оплата",
-          path: "/",
+          path: "/delivery-and-payment",
         },
 
         {
           name: "Контакты",
-          path: "/",
+          path: "/contacts",
         },
       ],
     };
@@ -133,16 +137,28 @@ export default {
     cursorLeave() {
       this.useCursor = false;
     },
+    generateLink(item) {
+      const currentQuery = this.$route.query;
+      if (item.includes("/catalog")) {
+        return { path: item, query: currentQuery };
+      }
+      return { path: item };
+    },
     changeColor() {
-      if (this.$route.path !== "/") {
-        this.changeHeader = true;
+      if (
+        this.$route.path === "/" ||
+        this.$route.params.id ||
+        this.$route.path === "/brand"
+      ) {
+        this.changeHeader = false;
         return;
       }
-      this.changeHeader = false;
+      this.changeHeader = true;
     },
   },
   mounted() {
     this.changeColor();
+    this.activeLiPath = this.$route.path;
   },
   watch: {
     searchVisible(val) {
@@ -157,6 +173,7 @@ export default {
     },
     $route() {
       this.changeColor();
+      this.activeLiPath = this.$route.path;
     },
   },
 };
@@ -198,6 +215,9 @@ header {
 }
 .activeLi {
   color: var(--brown);
+}
+.activeIndex {
+  font-weight: 500;
 }
 .header-fade-enter-from {
   opacity: 0;

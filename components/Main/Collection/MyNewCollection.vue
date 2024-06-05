@@ -26,6 +26,7 @@ export default {};
   color: var(--brown);
   margin-bottom: 50px;
   opacity: 0;
+  max-width: 361px;
 }
 .collection__new_img {
   opacity: 0;

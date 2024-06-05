@@ -27,7 +27,7 @@ export default {
 .main__title {
   color: var(--brandname);
   font-weight: 300;
-  font-size: 92px;
+  font-size: 116px;
   opacity: 0;
 }
 </style>

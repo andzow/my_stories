@@ -29,16 +29,14 @@ export default {
   data() {
     return {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
-      arrClassNameForAnimation: [
-        ".addition__number",
-        ".addition__image",
-        ".addition__text",
-        ".addition__new_title",
-      ],
     };
   },
   mounted() {
-    this.useGsapAnimationOpacity(this.arrClassNameForAnimation, ".addition");
+    this.useGsapAnimationOpacity(
+      [".addition__number", ".addition__text", ".addition__new_title"],
+      ".addition"
+    );
+    this.useGsapAnimationOpacity([".addition__image"], ".addition", false, 0.4);
   },
 };
 </script>
@@ -75,6 +73,7 @@ export default {
   font-weight: 300;
   line-height: 140%;
   color: var(--brown);
+  text-align: justify;
   max-width: 400px;
   opacity: 0;
 }

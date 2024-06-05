@@ -1,9 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
 :root {
   --yellow: #ede9df;
   --brown: #af9280;
   --green: #a8ab98;
+  --greenSec: #a5a995;
   --blue: #9ba8bd;
   --assistant: 10px;
   --brandname: #d2bcae;
@@ -180,4 +182,94 @@ input:focus:-ms-input-placeholder {
 body {
   background-color: var(--yellow);
   color: var(--brown);
+}
+.span__inter {
+  font-family: "Inter", sans-serif;
+  font-size: 30px;
+}
+
+/* SLIDER CSS */
+.new__item_swiper .swiper-slide {
+  opacity: 0 !important;
+  transition: 0s ease;
+}
+
+.new__item_swiper .swiper-slide-active {
+  opacity: 1 !important;
+  transition: 0s ease;
+}
+
+.new__item_swiper .swiper-slide .new__item_card {
+  opacity: 0.5;
+  transition: 0.3s ease;
+}
+.new__item_swiper .swiper-slide-active .new__item_card {
+  opacity: 1;
+  transition: 0.3s ease;
+}
+
+.new__item_swiper .swiper-pagination-bullet {
+  width: 100%;
+  height: 100%;
+  border-radius: 0px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  outline: none !important;
+  border: none !important;
+  cursor: none;
+}
+.new__item_swiper .swiper-pagination-bullet-active {
+  width: 100%;
+  height: 100%;
+  border-radius: 0px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  outline: none !important;
+  border: none !important;
+  cursor: none;
+}
+
+/* SWIPER CSS CARD */
+.card__item_swiper .swiper-slide {
+  opacity: 0 !important;
+  transition: 0s ease;
+}
+
+.card__item_swiper .swiper-slide-active {
+  opacity: 1 !important;
+  transition: 0s ease;
+}
+
+.card__item_swiper .swiper-slide .card__item_card {
+  opacity: 0.5;
+  transition: 0.3s ease;
+}
+.card__item_swiper .swiper-slide-active .card__item_card {
+  opacity: 1;
+  transition: 0.3s ease;
+}
+
+.card__item_swiper .swiper-pagination-bullet {
+  width: 100%;
+  height: 100%;
+  border-radius: 0px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  outline: none !important;
+  border: none !important;
+  cursor: none;
+}
+.card__item_swiper .swiper-pagination-bullet-active {
+  width: 100%;
+  height: 100%;
+  border-radius: 0px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  outline: none !important;
+  border: none !important;
+  cursor: none;
 }

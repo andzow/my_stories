@@ -8,7 +8,7 @@
     :slidesPerView="2.7"
     :slidesPerGroup="1"
     :spaceBetween="-3"
-    :speed="500"
+    :speed="800"
     :modules="modules"
   >
     <swiper-slide
@@ -44,22 +44,55 @@ export default {
     return {
       arrCatalog: [
         {
-          imageSrc: "../Main/catalog1.png",
+          imageSrc: "../Main/catalog1.webp",
         },
         {
-          imageSrc: "../Main/catalog1.png",
+          imageSrc: "../Main/catalog2.webp",
         },
         {
-          imageSrc: "../Main/catalog1.png",
+          imageSrc: "../Main/catalog3.webp",
         },
         {
-          imageSrc: "../Main/catalog1.png",
+          imageSrc: "../Main/catalog4.webp",
         },
         {
-          imageSrc: "../Main/catalog1.png",
+          imageSrc: "../Main/catalog5.webp",
         },
         {
-          imageSrc: "../Main/catalog1.png",
+          imageSrc: "../Main/catalog6.webp",
+        },
+        {
+          imageSrc: "../Main/catalog7.webp",
+        },
+        {
+          imageSrc: "../Main/catalog8.webp",
+        },
+
+        {
+          imageSrc: "../Main/catalog9.webp",
+        },
+        {
+          imageSrc: "../Main/catalog10.webp",
+        },
+        {
+          imageSrc: "../Main/catalog11.webp",
+        },
+
+        {
+          imageSrc: "../Main/catalog12.webp",
+        },
+        {
+          imageSrc: "../Main/catalog13.webp",
+        },
+        {
+          imageSrc: "../Main/catalog14.webp",
+        },
+
+        {
+          imageSrc: "../Main/catalog15.webp",
+        },
+        {
+          imageSrc: "../Main/catalog16.webp",
         },
       ],
       arrAnimationOpacityGsap: [],

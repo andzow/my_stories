@@ -95,10 +95,14 @@
         <div class="footer__data">
           <div class="footer__data_contacts">
             <div class="footer__data_inf" cursor-class="animateCursor">
-              <a class="footer__data_link" href="#">( &nbsp;Telegram&nbsp; )</a>
+              <a class="footer__data_link" href="#" target="_blank"
+                >( &nbsp;Telegram&nbsp; )</a
+              >
             </div>
             <div class="footer__data_inf" cursor-class="animateCursor">
-              <a class="footer__data_link" href="#">( &nbsp;WhatsApp&nbsp; )</a>
+              <a class="footer__data_link" href="#" target="_blank"
+                >( &nbsp;WhatsApp&nbsp; )</a
+              >
             </div>
           </div>
           <div class="footer__data_questions">
@@ -119,6 +123,7 @@
                     @complete="onComplete"
                     @input="checkInpValFunc($event)"
                     ref="dataInput"
+                    cursor-class="animateCursor"
                   />
                   <Transition name="footer-fade">
                     <button
@@ -233,7 +238,7 @@ export default {
   max-width: 1920px;
   margin: 0 auto;
   padding: 50px 30px 30px 30px;
-  z-index: 15;
+  z-index: 17;
 }
 .footer__logo {
   display: flex;
@@ -299,6 +304,7 @@ export default {
   font-weight: 300;
   font-size: 17px;
   color: var(--yellow);
+  text-transform: lowercase;
   max-width: 344px;
   margin-bottom: 30px;
 }

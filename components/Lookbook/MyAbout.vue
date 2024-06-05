@@ -11,7 +11,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      useGsapAnimationOpacity: useGsapAnimationOpacity,
+      arrClassNameForAnimation: [".about__text"],
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.useGsapAnimationOpacity(
+        this.arrClassNameForAnimation,
+        ".about__text"
+      );
+    }, 0);
+  },
+};
 </script>
 
 <style scoped>
@@ -35,5 +50,6 @@ export default {};
   line-height: 140%;
   color: var(--brown);
   max-width: 354px;
+  opacity: 0;
 }
 </style>

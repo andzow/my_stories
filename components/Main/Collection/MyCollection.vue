@@ -9,7 +9,9 @@
             миди, уютные стеганные жакеты свободного кроя, логсливы из
             конопляной ткани с оригинальным узором
           </p>
-          <h3 class="collection__name">летний ветер . . .</h3>
+          <h3 class="collection__name">
+            летний ветер <span class="span__inter">. . .</span>
+          </h3>
         </div>
         <div class="collection__btn">
           <UIButtonMyButton
@@ -41,31 +43,31 @@ export default {
   data() {
     return {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
-      arrClassNameForAnimation: [
-        // ".collection__text",
-        // ".collection__name",
-        ".collection__number",
-        ".collection__new_title",
-        // ".collection__new_img",
-        // ".collection__btn",
-        ".collection__photo_img",
-      ],
     };
   },
 
   mounted() {
     this.useGsapAnimationOpacity(
-      [
-        ".collection__number",
-        ".collection__new_title",
-        ".collection__photo_img",
-      ],
+      [".collection__number", ".collection__new_title"],
       ".collection"
     );
 
     this.useGsapAnimationOpacity(
-      [".collection__text", ".collection__name", ".collection__new_img"],
+      [".collection__photo_img"],
+      ".collection",
+      false,
+      0.7
+    );
+
+    this.useGsapAnimationOpacity(
+      [".collection__text", ".collection__name"],
       ".collection__new_img"
+    );
+    this.useGsapAnimationOpacity(
+      [".collection__new_img"],
+      ".collection__new_img",
+      false,
+      0.5
     );
     this.useGsapAnimationOpacity(
       [".collection__btn"],
@@ -114,6 +116,7 @@ export default {
   font-weight: 300;
   line-height: 140%;
   color: var(--brown);
+  text-align: justify;
   margin-bottom: 75px;
   opacity: 0;
 }

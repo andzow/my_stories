@@ -1,25 +1,12 @@
 <template>
-  <div class="new__item">
+  <div class="new__item" :class="['new__item' + (idx + 1)]">
     <div class="new__item_content">
       <div class="new__item_image" :class="['new__item_image' + (idx + 1)]">
         <div class="new__item_photo" cursor-class="animateCursor">
-          <div
-            class="new__item_texture"
-            v-for="item in arrNewStyleTexture"
-            :key="item"
-            :style="{
-              top: item.topStyle,
-              left: item.leftStyle,
-            }"
-          >
-            sale
-          </div>
-          <img
-            width="451"
-            height="578"
-            class="new__item_img"
-            :src="item.imageSrc"
-            alt="Новинки"
+          <MainNewMyNewImage
+            :images="item.images"
+            :idx="idx"
+            :sale="!item.sale ? false : item.sale"
           />
         </div>
       </div>
@@ -45,20 +32,6 @@ export default {
       arrNewStyleTexture: null,
     };
   },
-  methods: {
-    initArrSale() {
-      if (!this.item?.sale) return;
-      this.arrNewStyleTexture = [1, 2, 3].map((el, idx) => {
-        return {
-          topStyle: Math.floor(Math.random() * 100) + "%",
-          leftStyle: Math.floor(Math.random() * 100) + "%",
-        };
-      });
-    },
-  },
-  mounted() {
-    this.initArrSale();
-  },
 };
 </script>
 
@@ -73,34 +46,9 @@ export default {
 .new__item_photo {
   position: relative;
   width: 451px;
-  height: 578px;
+  height: 560px;
   overflow: hidden;
 }
-.new__item_img {
-  position: relative;
-  height: 100%;
-  transition: all 0.4s ease;
-  z-index: 5;
-}
-.new__item_img:hover {
-  transform: scale(1.1);
-}
-.new__item_texture {
-  position: absolute;
-  font-weight: 300;
-  font-size: 24px;
-  color: var(--yellow);
-  z-index: 6;
-}
-/* .new__item_texture {
-  position: absolute;
-  top: 10%;
-  left: 20%;
-  width: 100%;
-  height: 100%;
-  background: url("@/assets/images/Main/textureSale.svg");
-  z-index: 6;
-} */
 .new__item_name {
   font-weight: 400;
   font-size: 22px;
