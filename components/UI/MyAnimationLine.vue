@@ -4,6 +4,7 @@
     ref="lines"
     :style="{
       transition: `all ${duration}s linear`,
+      position: fixed ? 'fixed' : 'absolute',
     }"
   >
     <div class="lines__content">
@@ -25,6 +26,7 @@ export default {
   props: {
     duration: String,
     arrAnimationLine: Array,
+    fixed: Boolean,
   },
   data() {
     return {

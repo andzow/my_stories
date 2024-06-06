@@ -58,7 +58,7 @@ export default {
   max-width: 1920px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 19% 40% 35%);
+  grid-template-columns: repeat(3, 19% 33% 48%);
   padding: 0 30px;
 }
 
@@ -71,10 +71,9 @@ export default {
 .addition__text {
   font-size: 16px;
   font-weight: 300;
-  line-height: 140%;
   color: var(--brown);
   text-align: justify;
-  max-width: 400px;
+  max-width: 320px;
   opacity: 0;
 }
 .addition__image {
@@ -82,7 +81,7 @@ export default {
 }
 .addition__img {
   width: 130px;
-  height: 136px;
+  height: 100%;
   object-fit: cover;
 }
 .addition__new_title {

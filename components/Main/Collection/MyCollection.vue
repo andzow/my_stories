@@ -114,10 +114,10 @@ export default {
 .collection__text {
   font-size: 17px;
   font-weight: 300;
-  line-height: 140%;
   color: var(--brown);
   text-align: justify;
   margin-bottom: 75px;
+  max-width: 260px;
   opacity: 0;
 }
 .collection__name {

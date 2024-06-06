@@ -23,6 +23,7 @@
           class="card__item_imgs"
           :src="slide.imageSrc"
           @load="onImageLoad"
+          :alt="item.name"
         />
         <UIMyLoadItem v-show="!checkLoad" />
       </div>
@@ -45,6 +46,7 @@ export default {
     images: Array,
     idx: Number,
     sale: {},
+    item: Object,
   },
   data() {
     return {

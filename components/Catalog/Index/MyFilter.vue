@@ -1,46 +1,57 @@
 <template>
   <section class="filter">
-    <CatalogIndexFilterMyChapter @openMethod="checkResetBtn" />
-    <CatalogIndexFilterMySize @openMethod="checkResetBtn" />
-    <CatalogIndexFilterMyPrice
-      :minVal="minVal"
-      :maxVal="maxVal"
-      @openMethod="checkResetBtn"
-    />
-    <div class="filter__ready">
-      <UIButtonMyButton
-        aria-label="применить"
-        info="применить"
-        fontSize="18"
-        cursor-class="animateCursor"
-        @click="sendFilter"
+    <div class="filter__item">
+      <CatalogIndexFilterMyChapter @openMethod="checkResetBtn" />
+      <CatalogIndexFilterMySize @openMethod="checkResetBtn" />
+      <CatalogIndexFilterMyPrice
+        :minVal="minVal"
+        :maxVal="maxVal"
+        @openMethod="checkResetBtn"
       />
-    </div>
-    <Transition name="filter-fade">
-      <div class="filter__delete" v-if="checkReset">
+      <div class="filter__ready">
         <UIButtonMyButton
-          aria-label="сбросить"
-          info="сбросить"
-          variant="green"
+          aria-label="применить"
+          info="применить"
           fontSize="18"
-          @click="reset"
           cursor-class="animateCursor"
+          @click="sendFilter"
         />
       </div>
-    </Transition>
+      <Transition name="filter-fade">
+        <div class="filter__delete" v-if="checkReset">
+          <UIButtonMyButton
+            aria-label="сбросить"
+            info="сбросить"
+            variant="green"
+            fontSize="18"
+            @click="reset"
+            cursor-class="animateCursor"
+          />
+        </div>
+      </Transition>
+    </div>
   </section>
 </template>
 
 <script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 export default {
   data() {
     return {
       minVal: 2500,
       maxVal: 9237,
+      ofsset: 150,
       checkReset: false,
       useCheckPrice: useCheckPrice(),
       useFilterPrice: useFilterPrice(),
       useCheckReset: useCheckReset(),
+      distancyYCheck: false,
+      lastScrollTop: 0,
+      offset: 150,
     };
   },
   methods: {
@@ -100,12 +111,18 @@ export default {
 
 <style scoped>
 .filter {
+  position: relative;
   margin-right: 60px;
   max-width: 230px;
 }
-.filter__ready {
-  margin-bottom: 20px;
+.filter__item {
+  position: relative;
+  max-width: 100%;
+  max-width: 230px;
+  transition: all 0.4s ease;
+  z-index: 30;
 }
+
 .filter__delete {
   height: 45px;
 }

@@ -7,9 +7,7 @@
             <div class="main__about_header">
               <h1 class="main__about_title">( &nbsp;оплата&nbsp; )</h1>
             </div>
-            <p class="main__about_payment main__text">
-              Вы можете оплатить заказ:
-            </p>
+            <p class="main_about__p">Вы можете оплатить заказ:</p>
             <ul class="main__about_ul">
               <li class="main__about_li main__text">
                 картой вашего банка online
@@ -21,7 +19,11 @@
             <p class="main__about_text main__text">
               Если ни один из вариантов вам не подходит, Вы можете связаться с
               нами нажав на кнопку
-              <a href="#" class="main__about_link" cursor-class="animateCursor"
+              <a
+                href="https://t.me/+79536886333"
+                class="main__about_link"
+                cursor-class="animateCursor"
+                target="_blank"
                 >"написать в telegram"</a
               >
               и мы вместе найдём для Вас решение.<br /><br />
@@ -93,20 +95,49 @@ export default {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
     };
   },
+  methods: {
+    initMargin() {
+      const elHtml = document.querySelector(".main__delivery_about");
+      const textElStyle = document
+        .querySelector(".main__delivery_text")
+        .getBoundingClientRect().left;
+      const searchEl = document
+        .querySelector(".header__interaction_search")
+        .getBoundingClientRect().left;
+      elHtml.style.maxWidth = searchEl - textElStyle - 10 + "px";
+    },
+  },
   mounted() {
     this.useGsapAnimationOpacity(
       [
-        ".main__center_number",
-        ".main__center_num",
         ".main__about_title",
-        ".main__text",
-        ".main__about_back",
-        ".main__delivery_title",
-        ".main__delivery_number",
+        ".main__about_text",
+        ".main__about_ul",
+        ".main__center_number",
       ],
       ".main"
     );
-    this.useGsapAnimationOpacity([".main__center_image"], ".main", false, 0.5);
+
+    this.useGsapAnimationOpacity(
+      [
+        ".main__delivery_title",
+        ".main__delivery_number",
+        ".main__delivery_payment",
+        ".main__delivery_ul",
+        ".main__delivery_text",
+      ],
+      ".main",
+      false,
+      0.5
+    );
+
+    this.useGsapAnimationOpacity(
+      [".main__center_num", ".main__center_image"],
+      ".main",
+      false,
+      1
+    );
+    this.initMargin();
   },
 };
 </script>
@@ -149,6 +180,7 @@ export default {
   opacity: 0;
   /* opacity: 0; */
 }
+
 .main__center_number {
   font-weight: 500;
   font-size: 36px;
@@ -158,16 +190,26 @@ export default {
   /* margin-bottom: 50px;
   opacity: 0; */
 }
-.main__text {
+.main__about_ul {
+  opacity: 0;
+}
+.main__about_text {
+  opacity: 0;
+}
+.main_about__p {
   font-size: 17px;
   font-weight: 300;
-  line-height: 140%;
   color: var(--brown);
   text-transform: lowercase;
   text-align: justify;
   opacity: 0;
-  /* margin-bottom: 75px;
-  opacity: 0; */
+}
+.main__text {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--brown);
+  text-transform: lowercase;
+  text-align: justify;
 }
 .main__center {
   display: flex;
@@ -192,9 +234,21 @@ export default {
   margin-bottom: 15px;
 }
 .main__about_li {
-  list-style-type: circle;
-  margin-left: 20px;
+  position: relative;
+  text-align: justify;
+  padding-left: 20px;
 }
+.main__about_li::after {
+  content: "";
+  position: absolute;
+  top: 45%;
+  left: 1%;
+  width: 6px;
+  height: 6px;
+  background: var(--brown);
+  border-radius: 100%;
+}
+
 .main__about_text {
   max-width: 480px;
 }
@@ -250,12 +304,29 @@ export default {
   transform: translateX(9px);
   opacity: 0;
 }
+.main__delivery_payment {
+  opacity: 0;
+}
 .main__delivery_ul {
   margin-bottom: 15px;
+  opacity: 0;
+}
+.main__delivery_text {
+  opacity: 0;
 }
 .main__delivery_li {
-  list-style-type: circle;
-  margin-left: 20px;
+  position: relative;
+  padding-left: 20px;
   text-align: justify;
+}
+.main__delivery_li::after {
+  content: "";
+  position: absolute;
+  top: 45%;
+  left: 0.5%;
+  width: 6px;
+  height: 6px;
+  background: var(--brown);
+  border-radius: 100%;
 }
 </style>

@@ -2,6 +2,11 @@
   <div>
     <CatalogIndexMyMain />
     <UIMyNoise />
+    <UIMyAnimationLine
+      duration="11"
+      :arrAnimationLine="arrAnimationLine"
+      :fixed="true"
+    />
   </div>
 </template>
 
@@ -12,7 +17,20 @@ export default {
       useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
       arrFilterChapter: useArrFilterChapter(),
       arrFilterSize: useArrFilterSize(),
-      checkBlock: false,
+      arrAnimationLine: [
+        { name: ".header__content", defaultLine: false, indent: "left" },
+        { name: ".card1", defaultLine: false, indent: "left" },
+        {
+          name: ".header__li3",
+          defaultLine: false,
+          indent: "left",
+        },
+        {
+          name: ".header__interaction_search",
+          defaultLine: false,
+          indent: "left",
+        },
+      ],
     };
   },
   methods: {
@@ -71,11 +89,23 @@ export default {
   },
   mounted() {
     this.arrFilterChapter = [
-      {
-        name: "все",
-      },
+      { name: "все" },
+
       {
         name: "Весна-лето 2024",
+      },
+
+      {
+        name: "Обувь",
+      },
+      {
+        name: "Кроссовки",
+      },
+      {
+        name: "На лето",
+      },
+      {
+        name: "Зима",
       },
       {
         name: "топ продаж",

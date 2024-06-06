@@ -8,6 +8,7 @@
             :images="item.images"
             :idx="idx"
             :sale="!item.sale ? false : item.sale"
+            :item="item"
           />
         </div>
       </div>

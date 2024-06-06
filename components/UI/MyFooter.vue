@@ -95,12 +95,18 @@
         <div class="footer__data">
           <div class="footer__data_contacts">
             <div class="footer__data_inf" cursor-class="animateCursor">
-              <a class="footer__data_link" href="#" target="_blank"
+              <a
+                class="footer__data_link"
+                href="https://t.me/+79536886333"
+                target="_blank"
                 >( &nbsp;Telegram&nbsp; )</a
               >
             </div>
             <div class="footer__data_inf" cursor-class="animateCursor">
-              <a class="footer__data_link" href="#" target="_blank"
+              <a
+                class="footer__data_link"
+                href="https://wa.me/79536886333"
+                target="_blank"
                 >( &nbsp;WhatsApp&nbsp; )</a
               >
             </div>
@@ -230,7 +236,17 @@ export default {
 .footer {
   position: relative;
   width: 100%;
+  /* background: blue; */
+}
+.footer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   background-color: var(--green);
+  z-index: 10;
 }
 .footer__content {
   position: relative;

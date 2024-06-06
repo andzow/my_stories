@@ -54,7 +54,7 @@ export default {
       this.setAnimateParallax();
     }, 10);
     this.useGsapAnimationOpacity([".main__title", ".main__catalog"], ".main");
-    this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.5);
+    this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
   },
 };
 </script>

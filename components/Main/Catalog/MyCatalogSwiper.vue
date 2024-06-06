@@ -147,7 +147,7 @@ export default {
 .catalog__btn {
   position: absolute;
   top: 85%;
-  left: 44%;
+  left: 43%;
   min-width: 266px;
   z-index: 12;
 }

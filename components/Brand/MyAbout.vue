@@ -96,13 +96,33 @@ export default {
   opacity: 0;
 }
 .about__information_li {
-  list-style-type: circle;
+  position: relative;
   font-size: 16px;
   font-weight: 400;
   color: var(--brown);
   text-align: justify;
-  margin-left: 20px;
+  padding-left: 20px;
 }
+.about__information_li::after {
+  content: "";
+  position: absolute;
+  font-family: "Inter", sans-serif;
+  left: 1%;
+  width: 6px;
+  height: 6px;
+  background: var(--brown);
+  border-radius: 100%;
+}
+.about__information_li:nth-child(1)::after {
+  top: 20%;
+}
+.about__information_li:nth-child(2)::after {
+  top: 40%;
+}
+.about__information_li:nth-child(3)::after {
+  top: 40%;
+}
+
 .about__photo {
   display: flex;
   align-items: flex-end;

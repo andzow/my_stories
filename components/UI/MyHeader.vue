@@ -69,9 +69,10 @@
           <ul class="header__ul">
             <li
               class="header__li"
-              v-for="item in navArr"
+              v-for="(item, idx) in navArr"
               :key="item"
               cursor-class="animateCursor"
+              :class="['header__li' + (idx + 1)]"
             >
               <NuxtLink
                 class="header__link"

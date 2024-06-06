@@ -259,8 +259,10 @@ body {
   padding: 0 !important;
   background: none !important;
   outline: none !important;
-  border: none !important;
+  opacity: 1;
+  border-bottom: 1px solid #fff;
   cursor: none;
+  transition: all 0.4s ease;
 }
 .card__item_swiper .swiper-pagination-bullet-active {
   width: 100%;
@@ -270,6 +272,7 @@ body {
   padding: 0 !important;
   background: none !important;
   outline: none !important;
-  border: none !important;
+  border-bottom: 1px solid var(--brown);
   cursor: none;
+  transition: all 0.4s ease;
 }

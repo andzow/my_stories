@@ -47,16 +47,16 @@ export default {
     return {
       arrFacts: [
         {
-          text: `Бренд основан в <span class="facts__span">2020 году</span> (командой, которая до этого занималась индивидуальным пошивом люксовых платьев).`,
+          text: `бренд основан в <span class="facts__span">2020 году </span>командой профессионалов, которая до этого занималась индивидуальными заказами и пошивом люксовых платьев.`,
         },
         {
-          text: `<span class="facts__span">70%</span> - клиентов сделавшие первый заказ - остаются с нами`,
+          text: `<span class="facts__span">70%</span> наших клиентов, сделав первый заказ - остаются с нами. Спасибо, что вы выбираете нас снова и снова, доверяя нашему качеству и сервису.`,
         },
         {
-          text: `У нас есть специальный отдел, который <span class="facts__span">под микроскопом</span> изучает все ваши пожелания и возникшие недочёты. `,
+          text: `У нас есть специальный отдел, который <span class="facts__span">под микроскопом</span> внимательно изучает все ваши идеи, пожелания и воплощает их в жизнь.`,
         },
         {
-          text: `Вся наша команда – <span class="facts__span">творческие люди</span>, мы любим петь и танцевать…`,
+          text: ` вся наша команда - <span class="facts__span">творческие и разносторонние люди.</span> Мы любим петь, танцевать и всю энергию вкладываем в новые вещи для вас`,
         },
       ],
       useGsapAnimationOpacity: useGsapAnimationOpacity,
@@ -128,10 +128,13 @@ export default {
 .facts__items {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 95px;
-  margin-right: 110px;
+  column-gap: 85px;
+  max-width: 1600px;
   margin-bottom: 25px;
 }
+/* .facts__item {
+  border: 1px solid red;
+} */
 .facts__number {
   font-weight: 500;
   font-size: 36px;

@@ -10,6 +10,7 @@
     </div>
     <div class="catalog__button">
       <UIButtonMyButton
+        @click="addCard"
         aria-label="загрузить еще"
         info="загрузить еще"
         fontSize="24"
@@ -21,11 +22,106 @@
 </template>
 
 <script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 export default {
   data() {
     return {
       useCatalogItems: useCatalogItems(),
+      useFilterScroll: useFilterScroll(),
     };
+  },
+  methods: {
+    addCard() {
+      this.useCatalogItems.push(
+        {
+          name: "платье",
+          price: "4 800",
+          sale: "5 200",
+          images: [
+            {
+              imageSrc: "../Primer/catalog1.webp",
+            },
+            {
+              imageSrc: "../Primer/catalog2.png",
+            },
+            {
+              imageSrc: "../Primer/catalog3.webp",
+            },
+
+            {
+              imageSrc: "../Primer/catalog5.webp",
+            },
+            {
+              imageSrc: "../Primer/catalog3.webp",
+            },
+
+            {
+              imageSrc: "../Primer/catalog5.webp",
+            },
+            {
+              imageSrc: "../Primer/catalog3.webp",
+            },
+
+            {
+              imageSrc: "../Primer/catalog5.webp",
+            },
+          ],
+        },
+        {
+          name: "сарафан",
+          price: "2 800",
+          images: [
+            {
+              imageSrc: "../Primer/catalog3.webp",
+            },
+            {
+              imageSrc: "../Primer/catalog11.webp",
+            },
+          ],
+        },
+        {
+          name: "сарафан",
+          price: "2 800",
+          images: [
+            {
+              imageSrc: "../Primer/catalog3.webp",
+            },
+            {
+              imageSrc: "../Primer/catalog11.webp",
+            },
+          ],
+        },
+        {
+          name: "сарафан",
+          price: "2 800",
+          images: [
+            {
+              imageSrc: "../Primer/catalog3.webp",
+            },
+            {
+              imageSrc: "../Primer/catalog11.webp",
+            },
+          ],
+        },
+
+        {
+          name: "сарафан",
+          price: "2 800",
+          images: [
+            {
+              imageSrc: "../Primer/catalog3.webp",
+            },
+            {
+              imageSrc: "../Primer/catalog11.webp",
+            },
+          ],
+        }
+      );
+    },
   },
   mounted() {
     this.useCatalogItems = [

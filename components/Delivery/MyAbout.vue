@@ -5,10 +5,18 @@
         <div class="about__info_block">
           <p class="about__info_text about__text">
             Для возврата или обмена свяжитесь с нами любым удобным Вам способом
-            <a href="#" class="about__info_link" cursor-class="animateCursor"
+            <a
+              href="https://wa.me/79536886333"
+              class="about__info_link"
+              cursor-class="animateCursor"
+              target="_blank"
               >WhatsApp,
             </a>
-            <a href="#" class="about__info_link" cursor-class="animateCursor"
+            <a
+              href="https://t.me/+79536886333"
+              class="about__info_link"
+              cursor-class="animateCursor"
+              target="_blank"
               >Telegram.</a
             >
             и мы дадим вам полную инструкцию как осуществить возврат.<br /><br />
@@ -40,10 +48,18 @@
         <p class="about__calc_text about__text">
           Для расчета стоимости, сроков и условиях доставки в другие страны,
           свяжитесь с нами через любой мессенджер:
-          <a href="#" class="about__calc_link" cursor-class="animateCursor"
+          <a
+            href="https://wa.me/79536886333"
+            class="about__calc_link"
+            cursor-class="animateCursor"
+            target="_blank"
             >WhatsApp,
           </a>
-          <a href="#" class="about__calc_link" cursor-class="animateCursor"
+          <a
+            href="https://t.me/+79536886333"
+            class="about__calc_link"
+            cursor-class="animateCursor"
+            target="_blank"
             >Telegram.</a
           >
         </p>
@@ -68,15 +84,28 @@ export default {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
     };
   },
+  methods: {
+    initMargin() {
+      const elHtml = document.querySelector(".about__calc_text");
+      const textElStyle = document
+        .querySelector(".about__calc_text")
+        .getBoundingClientRect().left;
+      const searchEl = document
+        .querySelector(".header__interaction_search")
+        .getBoundingClientRect().left;
+      elHtml.style.maxWidth = searchEl - textElStyle - 10 + "px";
+    },
+  },
   mounted() {
-    this.useGsapAnimationOpacity([".about__text"], ".about");
-    this.useGsapAnimationOpacity([".about__info_img"], ".about", false, 0.5);
+    this.useGsapAnimationOpacity([".about__text"], ".about", false, 1);
+    this.useGsapAnimationOpacity([".about__info_img"], ".about", false, 1);
     this.useGsapAnimationOpacity(
       [".about__calc_img"],
       ".about__calc_image",
       false,
-      0.7
+      1
     );
+    this.initMargin();
   },
 };
 </script>
@@ -102,7 +131,6 @@ export default {
 .about__text {
   font-size: 17px;
   font-weight: 300;
-  line-height: 140%;
   color: var(--brown);
   text-transform: lowercase;
   text-align: justify;

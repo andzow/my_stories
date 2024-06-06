@@ -22,6 +22,7 @@
           v-show="checkLoad"
           class="new__item_imgs"
           :src="slide.imageSrc"
+          :alt="item.name"
           @load="onImageLoad"
         />
         <UIMyLoadItem v-show="!checkLoad" />
@@ -45,6 +46,7 @@ export default {
     images: Array,
     idx: Number,
     sale: {},
+    item: Object,
   },
   data() {
     return {
