@@ -1,6 +1,6 @@
 <template>
   <section class="filter">
-    <div class="filter__item">
+    <div class="filter__item" ref="filterItem" id="filter__item">
       <CatalogIndexFilterMyChapter @openMethod="checkResetBtn" />
       <CatalogIndexFilterMySize @openMethod="checkResetBtn" />
       <CatalogIndexFilterMyPrice
@@ -13,7 +13,7 @@
           aria-label="применить"
           info="применить"
           fontSize="18"
-          cursor-class="animateCursor"
+          data-cursor-class="animateCursor"
           @click="sendFilter"
         />
       </div>
@@ -25,7 +25,7 @@
             variant="green"
             fontSize="18"
             @click="reset"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
           />
         </div>
       </Transition>
@@ -34,24 +34,16 @@
 </template>
 
 <script>
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
 export default {
   data() {
     return {
       minVal: 2500,
       maxVal: 9237,
-      ofsset: 150,
       checkReset: false,
       useCheckPrice: useCheckPrice(),
       useFilterPrice: useFilterPrice(),
       useCheckReset: useCheckReset(),
-      distancyYCheck: false,
-      lastScrollTop: 0,
-      offset: 150,
+      useFilterFlout: useFilterFlout,
     };
   },
   methods: {
@@ -61,6 +53,8 @@ export default {
         chapterArr = null;
       if (routeQuery.chapter) {
         chapterArr = routeQuery.chapter.split(";");
+      } else {
+        chapterArr = [];
       }
       if (routeQuery.size) {
         sizeArr = routeQuery.size.split(";");
@@ -81,6 +75,11 @@ export default {
       }
       this.checkReset = false;
     },
+    async initScrollTrigger() {
+      await nextTick(() => {
+        this.useFilterFlout();
+      });
+    },
     sendFilter() {
       this.useCheckPrice = true;
     },
@@ -90,6 +89,7 @@ export default {
   },
   mounted() {
     this.checkResetBtn();
+    this.initScrollTrigger();
   },
   watch: {
     async useCheckReset(val) {
@@ -99,7 +99,6 @@ export default {
           query: {
             min: "0",
             max: "35000",
-            chapter: "все",
           },
         });
         this.checkResetBtn();
@@ -109,20 +108,33 @@ export default {
 };
 </script>
 
+<style>
+.sticky {
+  position: fixed;
+  z-index: 101;
+}
+.stop {
+  position: relative;
+  z-index: 101;
+}
+</style>
+
 <style scoped>
 .filter {
   position: relative;
   margin-right: 60px;
-  max-width: 230px;
+  max-width: 250px;
 }
 .filter__item {
   position: relative;
   max-width: 100%;
-  max-width: 230px;
+  max-width: 250px;
   transition: all 0.4s ease;
   z-index: 30;
 }
-
+.filter__ready {
+  padding-bottom: 20px;
+}
 .filter__delete {
   height: 45px;
 }

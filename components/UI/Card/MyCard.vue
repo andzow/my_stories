@@ -50,6 +50,7 @@ export default {
   position: relative;
   width: 490px;
   height: 665px;
+
   overflow: hidden;
 }
 .card__name {

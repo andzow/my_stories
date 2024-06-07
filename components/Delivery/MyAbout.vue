@@ -8,14 +8,14 @@
             <a
               href="https://wa.me/79536886333"
               class="about__info_link"
-              cursor-class="animateCursor"
+              data-cursor-class="animateCursor"
               target="_blank"
               >WhatsApp,
             </a>
             <a
               href="https://t.me/+79536886333"
               class="about__info_link"
-              cursor-class="animateCursor"
+              data-cursor-class="animateCursor"
               target="_blank"
               >Telegram.</a
             >
@@ -37,8 +37,6 @@
               class="about__info_image"
               src="@/assets/images/Delivery/delivery2.webp"
               alt="Фотография"
-              onmousedown="return false"
-              onselectstart="return false"
             />
           </div>
         </div>
@@ -51,14 +49,14 @@
           <a
             href="https://wa.me/79536886333"
             class="about__calc_link"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
             target="_blank"
             >WhatsApp,
           </a>
           <a
             href="https://t.me/+79536886333"
             class="about__calc_link"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
             target="_blank"
             >Telegram.</a
           >
@@ -68,8 +66,6 @@
             class="about__calc_image"
             src="@/assets/images/Delivery/delivery3.webp"
             alt="Фотография"
-            onmousedown="return false"
-            onselectstart="return false"
           />
         </div>
       </div>

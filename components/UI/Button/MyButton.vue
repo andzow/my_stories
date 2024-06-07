@@ -4,8 +4,6 @@
     @mousemove="updateParallax"
     @mouseleave="resetParallax"
     :class="{ activeBtn: active }"
-    onmousedown="return false"
-    onselectstart="return false"
   >
     <button
       class="button__btn"
@@ -14,11 +12,11 @@
       ref="button"
     >
       {{ info }}
-      <div
+      <span
         class="button__cirlce"
         :class="[variant + '__circle', bigSize + '__circle']"
         :style="circleStyle"
-      ></div>
+      ></span>
     </button>
   </div>
 </template>

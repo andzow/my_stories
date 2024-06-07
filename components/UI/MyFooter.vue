@@ -71,7 +71,7 @@
                 <NuxtLink
                   class="footer__about_link"
                   :to="item.path"
-                  cursor-class="animateCursor"
+                  data-cursor-class="animateCursor"
                   >{{ item.name }}</NuxtLink
                 >
               </li>
@@ -94,7 +94,7 @@
         </div>
         <div class="footer__data">
           <div class="footer__data_contacts">
-            <div class="footer__data_inf" cursor-class="animateCursor">
+            <div class="footer__data_inf" data-cursor-class="animateCursor">
               <a
                 class="footer__data_link"
                 href="https://t.me/+79536886333"
@@ -102,7 +102,7 @@
                 >( &nbsp;Telegram&nbsp; )</a
               >
             </div>
-            <div class="footer__data_inf" cursor-class="animateCursor">
+            <div class="footer__data_inf" data-cursor-class="animateCursor">
               <a
                 class="footer__data_link"
                 href="https://wa.me/79536886333"
@@ -129,13 +129,13 @@
                     @complete="onComplete"
                     @input="checkInpValFunc($event)"
                     ref="dataInput"
-                    cursor-class="animateCursor"
+                    data-cursor-class="animateCursor"
                   />
                   <Transition name="footer-fade">
                     <button
-                      CLASS="footer__data_submit"
+                      class="footer__data_submit"
                       type="submit"
-                      cursor-class="animateCursor"
+                      data-cursor-class="animateCursor"
                     >
                       <svg
                         v-if="checkInpVal"

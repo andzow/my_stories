@@ -3,7 +3,7 @@
     <CatalogIndexMyMain />
     <UIMyNoise />
     <UIMyAnimationLine
-      duration="11"
+      duration="13"
       :arrAnimationLine="arrAnimationLine"
       :fixed="true"
     />
@@ -45,7 +45,8 @@ export default {
       const queryRoutePrice = useRoute().query;
       const readyQueryChapter = this.useReplaceOrDeleteWordQuery(
         "chapter",
-        "все"
+        false,
+        true
       );
       const readyQueryPrice = this.useReplaceOrDeleteWordQuery(
         "min",
@@ -93,10 +94,6 @@ export default {
 
       {
         name: "Весна-лето 2024",
-      },
-
-      {
-        name: "Обувь",
       },
       {
         name: "Кроссовки",
@@ -168,5 +165,3 @@ export default {
   watch: {},
 };
 </script>
-
-<style scoepd></style>

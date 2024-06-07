@@ -70,7 +70,7 @@
             info="подписаться на обновления"
             variant="green"
             fontSize="24"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
           />
         </div>
       </div>

@@ -11,7 +11,7 @@
           aria-label="смотреть все"
           info="смотреть все"
           fontSize="24"
-          cursor-class="animateCursor"
+          data-cursor-class="animateCursor"
           bigSize="bigSize"
         />
       </div>

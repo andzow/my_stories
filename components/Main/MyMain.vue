@@ -4,7 +4,11 @@
       <div class="main__content">
         <div class="main__about">
           <div class="main__logo">
-            <img class="main__img" src="@/assets/images/Main/logo.svg" />
+            <img
+              class="main__img"
+              src="@/assets/images/Main/logo.svg"
+              alt="Логотип"
+            />
           </div>
           <div class="main__inf">
             <h1 class="main__title">
@@ -18,7 +22,7 @@
             info="каталог"
             fontSize="24"
             variant="main"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
           />
         </div>
       </div>
@@ -33,11 +37,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default {
   data() {
-    return { useGsapAnimationOpacity: useGsapAnimationOpacity };
+    return {
+      useGsapAnimationOpacity: useGsapAnimationOpacity,
+      useScrollCheckMain: useScrollCheckMain,
+    };
   },
   methods: {
     setAnimateParallax() {
-      gsap.to(".main__paralax", {
+      this.useScrollCheckMain = gsap.to(".main__paralax", {
         scrollTrigger: {
           trigger: ".main",
           start: "50px top",

@@ -24,8 +24,6 @@
           class="facts__images_photo"
           src="@/assets/images/Brand/facts1.webp"
           alt="Фотография бренда"
-          onmousedown="return false"
-          onselectstart="return false"
         />
       </div>
       <div class="facts__images_img facts__images_img2">
@@ -33,8 +31,6 @@
           class="facts__images_photo"
           src="@/assets/images/Brand/facts2.webp"
           alt="Фотография бренда"
-          onmousedown="return false"
-          onselectstart="return false"
         />
       </div>
     </div>

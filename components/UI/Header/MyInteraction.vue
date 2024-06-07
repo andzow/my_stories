@@ -8,7 +8,7 @@
         class="header__interaction_btn"
         aria-label="Открыть поиск"
         title="Поиск по названию товара"
-        cursor-class="animateCursor"
+        data-cursor-class="animateCursor"
         @click="setSearch"
       >
         <svg
@@ -40,7 +40,7 @@
         class="header__interaction_of"
         title="Открыть корзину"
         aria-label="Корзина"
-        cursor-class="animateCursor"
+        data-cursor-class="animateCursor"
       >
         <svg
           width="24"

@@ -58,7 +58,7 @@
               arrFilterQuery.includes(item.name.toLowerCase()) ? true : false
             "
             fontSize="18"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
           />
         </div>
       </div>

@@ -4,7 +4,7 @@
       <div class="header__content">
         <div
           class="header__logo"
-          cursor-class="animateCursor"
+          data-cursor-class="animateCursor"
           @click="$router.push('/')"
         >
           <svg
@@ -71,7 +71,7 @@
               class="header__li"
               v-for="(item, idx) in navArr"
               :key="item"
-              cursor-class="animateCursor"
+              data-cursor-class="animateCursor"
               :class="['header__li' + (idx + 1)]"
             >
               <NuxtLink
@@ -151,6 +151,7 @@ export default {
         this.$route.params.id ||
         this.$route.path === "/brand"
       ) {
+        console.log("привет");
         this.changeHeader = false;
         return;
       }

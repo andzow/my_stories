@@ -18,7 +18,7 @@
             aria-label="к коллекции"
             info="к коллекции"
             fontSize="24"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
           />
         </div>
       </div>
@@ -29,8 +29,6 @@
             class="collection__photo_img"
             src="@/assets/images/Main/collectionS.webp"
             alt="Фотография новой коллекции"
-            onmousedown="return false"
-            onselectstart="return false"
           />
         </div>
       </div>

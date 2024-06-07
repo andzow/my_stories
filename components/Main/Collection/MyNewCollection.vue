@@ -6,9 +6,6 @@
         <img
           class="collection__new_image"
           src="@/assets/images/Main/collectionF.webp"
-          alt="Фотография новой коллекции"
-          onmousedown="return false"
-          onselectstart="return false"
         />
       </div>
     </div>

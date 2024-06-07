@@ -11,13 +11,7 @@
         right: item.setCss.right,
       }"
     >
-      <img
-        class="main__img"
-        :src="item.imageSrc"
-        alt="Фотография lookbook"
-        onmousedown="return false"
-        onselectstart="return false"
-      />
+      <img class="main__img" :src="item.imageSrc" />
     </div>
   </section>
 </template>

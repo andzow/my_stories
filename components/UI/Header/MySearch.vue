@@ -10,7 +10,7 @@
           type="text"
           :placeholder="placeholderVal"
           class="search__input"
-          cursor-class="animateCursor"
+          data-cursor-class="animateCursor"
           v-model="searchVal"
         />
       </div>
@@ -21,14 +21,14 @@
             aria-label="Найти товар"
             info="Найти"
             fontSize="18"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
           />
         </div>
         <button
           class="search__close"
           @click="setClose"
           ref="searchClose"
-          cursor-class="animateCursor"
+          data-cursor-class="animateCursor"
           aria-label="Закрыть поиск"
         >
           <svg

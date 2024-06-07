@@ -22,8 +22,6 @@
             class="about__photo_img"
             src="@/assets/images/Brand/about1.webp"
             alt="Фотография бренда"
-            onmousedown="return false"
-            onselectstart="return false"
           />
         </div>
         <p class="about__text">

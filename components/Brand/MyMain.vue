@@ -22,11 +22,12 @@ export default {
   data() {
     return {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
+      useScrollCheckMain: useScrollCheckMain,
     };
   },
   methods: {
     setAnimateParallax() {
-      gsap.to(".main__paralax", {
+      this.useScrollCheckMain = gsap.to(".main__paralax", {
         scrollTrigger: {
           trigger: ".main",
           start: "50px top",

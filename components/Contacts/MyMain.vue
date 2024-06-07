@@ -25,12 +25,12 @@
         <div class="main__about_links">
           <div class="main__about_mess">
             <div class="main__about_link">
-              <button class="main__about_btn" cursor-class="animateCursor">
+              <button class="main__about_btn" data-cursor-class="animateCursor">
                 ( &nbsp;написать в Telegram&nbsp; )
               </button>
             </div>
             <div class="main__about_link">
-              <button class="main__about_btn" cursor-class="animateCursor">
+              <button class="main__about_btn" data-cursor-class="animateCursor">
                 ( &nbsp;написать в WhatsApp&nbsp; )
               </button>
             </div>
@@ -68,7 +68,7 @@ export default {
       ],
       ".main"
     );
-    this.useGsapAnimationOpacity([".main__image"], ".about", false, 0.5);
+    this.useGsapAnimationOpacity([".main__image"], ".main", false, 0.5);
   },
 };
 </script>

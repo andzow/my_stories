@@ -10,6 +10,11 @@ export default defineNuxtConfig({
       mode: "out-in",
     },
   },
+  hooks: {
+    "render:route": (url, result, context) => {
+      result.html = result.html.replace(/rel="prefetch"/g, 'rel="preload"');
+    },
+  },
 
   ssr: true,
   modules: ["@nuxt/image"],

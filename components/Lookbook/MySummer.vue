@@ -19,7 +19,7 @@
             aria-label="перейти"
             info="перейти"
             fontSize="24"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
           />
         </div>
       </div>
@@ -28,8 +28,6 @@
           class="summer__photo"
           src="@/assets/images/Lookbook/summer1.webp"
           alt="Фотографии коллекции летний ветер ..."
-          onmousedown="return false"
-          onselectstart="return false"
         />
       </div>
       <div class="summer__sm">
@@ -37,8 +35,6 @@
           class="summer__sm_img"
           src="@/assets/images/Lookbook/summer2.webp"
           alt="Фотографии коллекции летний ветер ..."
-          onmousedown="return false"
-          onselectstart="return false"
         />
       </div>
     </div>
@@ -114,7 +110,7 @@ export default {
 .summer__about_text {
   font-size: 17px;
   font-weight: 300;
-  line-height: 140%;
+  text-align: justify;
   color: var(--brown);
   opacity: 0;
 }

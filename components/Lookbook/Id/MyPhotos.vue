@@ -24,7 +24,7 @@
             aria-label="назад к lookbook"
             info="назад к lookbook"
             fontSize="24"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
             bigSize="bigSize"
           />
         </div>
@@ -39,7 +39,10 @@ export default {
     arrPhotos: Array,
   },
   data() {
-    return { useGsapAnimationOpacity: useGsapAnimationOpacity };
+    return {
+      useGsapAnimationOpacity: useGsapAnimationOpacity,
+      useCursor: useCursor(),
+    };
   },
   mounted() {
     setTimeout(() => {
@@ -51,6 +54,7 @@ export default {
         );
       });
       this.useGsapAnimationOpacity([`.photos__btn`], `.photos__btn`, true);
+      this.useCursor = true;
     }, 30);
   },
 };

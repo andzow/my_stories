@@ -13,21 +13,21 @@ export default {
   },
   methods: {
     setModifiers(cursorCircle) {
-      const cursorModifiers = document.querySelectorAll("[cursor-class]");
+      const cursorModifiers = document.querySelectorAll("[data-cursor-class]");
 
       cursorModifiers.forEach((cursorModifier) => {
         cursorModifier.addEventListener("mouseenter", () => {
-          const className = cursorModifier.getAttribute("cursor-class");
+          const className = cursorModifier.getAttribute("data-cursor-class");
           cursorCircle.classList.add(className);
         });
 
         cursorModifier.addEventListener("mouseleave", () => {
-          const className = cursorModifier.getAttribute("cursor-class");
+          const className = cursorModifier.getAttribute("data-cursor-class");
           cursorCircle.classList.remove(className);
         });
 
         cursorModifier.addEventListener("click", () => {
-          const className = cursorModifier.getAttribute("cursor-class");
+          const className = cursorModifier.getAttribute("data-cursor-class");
           cursorCircle.classList.remove(className);
         });
       });

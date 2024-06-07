@@ -1,5 +1,5 @@
 <template>
-  <section class="catalog">
+  <section class="catalog" id="catalog__content">
     <div class="catalog__content">
       <UICardMyCard
         v-for="(item, idx) in useCatalogItems"
@@ -8,7 +8,7 @@
         :idx="idx"
       />
     </div>
-    <div class="catalog__button">
+    <!-- <div class="catalog__button">
       <UIButtonMyButton
         @click="addCard"
         aria-label="загрузить еще"
@@ -17,16 +17,11 @@
         cursor-class="animateCursor"
         bigSize="bigSize"
       />
-    </div>
+    </div> -->
   </section>
 </template>
 
 <script>
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
 export default {
   data() {
     return {
@@ -121,6 +116,9 @@ export default {
           ],
         }
       );
+    },
+    async initScrollTrigger() {
+      await nextTick(() => {});
     },
   },
   mounted() {
@@ -329,7 +327,7 @@ export default {
   grid-template-columns: repeat(3, 1fr);
   column-gap: 10px;
   row-gap: 65px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   min-height: 900px;
 }
 </style>

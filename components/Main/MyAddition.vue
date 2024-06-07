@@ -4,13 +4,7 @@
       <div class="addition__menu">
         <div class="addition__number">( &nbsp;2&nbsp; )</div>
         <div class="addition__image">
-          <img
-            class="addition__img"
-            onmousedown="return false"
-            onselectstart="return false"
-            src="@/assets/images/Main/additionF.webp"
-            alt="Фотография"
-          />
+          <!-- <img src="@/assets/images/Main/additionF.webp" alt="Фотография" /> -->
         </div>
         <p class="addition__text">
           У нас собственное производство, что позволяет нам полностью с нуля
@@ -73,11 +67,15 @@ export default {
   font-weight: 300;
   color: var(--brown);
   text-align: justify;
-  max-width: 320px;
+  max-width: 360px;
   opacity: 0;
 }
 .addition__image {
   opacity: 0;
+  width: 130px;
+  height: 100%;
+  background: url("@/assets/images/Main/additionF.webp") no-repeat;
+  background-size: cover;
 }
 .addition__img {
   width: 130px;

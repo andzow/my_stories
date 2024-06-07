@@ -52,6 +52,7 @@ export default {
     return {
       arrImages: null,
       checkLoad: false,
+      useCursor: useCursor(),
     };
   },
   setup() {
@@ -86,7 +87,9 @@ export default {
       this.checkLoad = true;
     },
   },
-  mounted() {},
+  mounted() {
+    this.useCursor = true;
+  },
   components: {
     Swiper,
     SwiperSlide,

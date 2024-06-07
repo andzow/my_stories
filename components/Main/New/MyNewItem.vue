@@ -1,8 +1,12 @@
 <template>
   <div class="new__item" :class="['new__item' + (idx + 1)]">
     <div class="new__item_content">
-      <div class="new__item_image" :class="['new__item_image' + (idx + 1)]">
-        <div class="new__item_photo" cursor-class="animateCursor">
+      <div
+        class="new__item_image"
+        :class="['new__item_image' + (idx + 1)]"
+        data-cursor-class="animateCursor"
+      >
+        <div class="new__item_photo">
           <MainNewMyNewImage
             :images="item.images"
             :idx="idx"
@@ -40,6 +44,7 @@ export default {
 .new__item_image {
   position: relative;
   margin-bottom: 15px;
+  width: 100%;
   height: 100%;
   opacity: 0;
   overflow: hidden;

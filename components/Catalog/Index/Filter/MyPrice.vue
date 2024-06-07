@@ -11,6 +11,7 @@
               type="number"
               class="filter__price_input"
               :value="activeMinVal"
+              data-cursor-class="animateCursor"
             />
           </div>
           <div class="filter__price_block">
@@ -18,6 +19,7 @@
               type="number"
               class="filter__price_inp"
               :value="activeMaxVal"
+              data-cursor-class="animateCursor"
             />
           </div>
           <button :style="{ display: 'none' }"></button>
@@ -31,6 +33,7 @@
               :min="minVal"
               :max="maxVal"
               :value="activeMinVal"
+              data-cursor-class="animateCursor"
             />
             <input
               type="range"
@@ -38,6 +41,7 @@
               :min="minVal"
               :max="maxVal"
               :value="activeMaxVal"
+              data-cursor-class="animateCursor"
             />
           </div>
         </div>
