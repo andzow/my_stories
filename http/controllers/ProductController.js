@@ -21,6 +21,16 @@ export default class ProductController {
       }
     }
 
+    static async getNew() { // Новинки
+      try {
+        const response = await ProductServices.getNew();
+        return response.data;
+      } catch (e) {
+        console.log(e.response?.data?.message);
+        return e.response.status;
+      }
+    }
+
     static async getFilter(query) { // Отфильтрованые товары
       try {
         const response = await ProductServices.getFilter(query);

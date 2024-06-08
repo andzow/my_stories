@@ -6,6 +6,10 @@ export default defineNuxtConfig({
     "~/plugins/animate.connect.js",
     '~/plugins/v-click-outside.js',
   ],
+  routeRules: {
+    "/admin": { ssr: false },
+    "/login": { ssr: false },
+  },
   app: {
     pageTransition: {
       name: "page",

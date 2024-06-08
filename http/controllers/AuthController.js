@@ -31,7 +31,7 @@ export default class AuthController {
     static async logout() {
         try {
             const response = await AuthServices.logout()
-            localStorage.removeItem('token')
+            localStorage.removeItem('accessToken')
             useState('useUserAuth', () => false)
         } catch (e) {
             console.log(e.response?.data?.message)

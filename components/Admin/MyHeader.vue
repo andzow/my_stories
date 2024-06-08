@@ -11,7 +11,7 @@
                     <input class="header__input" v-if="isActive" type="text" placeholder="название" @keyup.enter="search"  v-model="isName">
                 </Transition>
                 <img class="header__loop" src="~/assets/images/Admin/loop.svg" alt="" @click="isActive = !isActive">
-                <img class="header__logout" src="~/assets/images/Admin/logout.svg" alt="">
+                <img class="header__logout" src="~/assets/images/Admin/logout.svg" @click="useStatus = 'logout'" alt="">
             </div>
         </div>
     </section>
@@ -19,10 +19,12 @@
 
 <script>
 import ProductController from "@/http/controllers/ProductController";
+
 export default {
     data() {
         return {
             isActive: false,
+            useStatus: useStatus(),
             isName: "",
             usePage: usePage(),
             usePageActive: usePageActive(),
@@ -39,7 +41,7 @@ export default {
             this.useProducts = data.products
             this.usePage = data.totalPages
             this.usePageActive = 1
-        }
+        },
     }
 }
 </script>

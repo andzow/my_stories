@@ -9,7 +9,14 @@
 </template>
 
 <script>
-export default {};
+import AuthController from "@/http/controllers/AuthController";
+export default {
+  async mounted() {
+    if (localStorage.getItem("accessToken")) {
+      await AuthController.cheackAuth()
+    }
+  }
+};
 </script>
 
 <style>

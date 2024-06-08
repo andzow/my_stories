@@ -38,3 +38,7 @@ export const useProductUpdate = () => useState("use_product_update", () => false
 export const usePage = () => useState("use_page", () => 1);
 export const usePageActive = () => useState("use_page_active", () => 1);
 
+export const useUserAuth = () => useState("use_user_auth", () => false);
+export const useUserData = () => useState("use_user_data", () => {});
+
+

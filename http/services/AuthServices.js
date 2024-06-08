@@ -10,6 +10,6 @@ export default class AuthServices {
     }
 
     static async logout() {
-        return $api.post('/logout')
+        return $api.post('/auth/logout')
     }
 }
