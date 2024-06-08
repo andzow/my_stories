@@ -5,6 +5,12 @@ export default class CategoryServices {
         return $api.get('/category/get')
     }
 
+    static async getCategory() {
+        return $api.get('/category/getCategory', {
+            params: query
+        })
+    }
+
     static async createCategory(FormObject) {
         return $api.post('/category/create', FormObject)
     }

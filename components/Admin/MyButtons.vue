@@ -6,7 +6,7 @@
                 <UIMyButton :info="'промокоды'" @click="useCode = true"/>
             </div>
             <div class="position__item">
-                <button class="position__btn_add" @click="useProduct = true">
+                <button class="position__btn_add" @click="createProduct">
                     <span class="position__text">добавить товар</span>
                     <img src="~/assets/images/Admin/add.svg" alt="">
                 </button>
@@ -20,9 +20,51 @@ export default {
     data() {
         return {
             useCode: useCode(),
+            useProductUpdate: useProductUpdate(),
             useCategory: useCategory(),
-            useProduct: useProduct()
+            useProduct: useProduct(),
+
+            isName: useName(),
+            isPrice: usePrice(),
+            isDiscount: useDiscount(),
+            isArticul: useArticul(),
+            isText: useText(),
+            isCharacteristic: useCharacteristic(),
+            isCategory: useCategoryArray(),
+            isMeasurement: useMeasuremen(),
+            useDimension: useDimension(),
+            isColor: useColor(),
+            isColorValue: useColorValue(),
+            listImages: useListImages(),
+            fileIn: useFileIn(),
+            isVideo: useVideo(),
+            videoUrl: useVideoUrl(),
+            useProductUpdate: useProductUpdate(),
         }
+    },
+    methods: {
+        createProduct() {
+            this.resetdata()
+            this.useProductUpdate = false
+            this.useProduct = true
+        },
+        resetdata() {
+            this.isName = ''
+            this.isPrice = null
+            this.isDiscount = null
+            this.isArticul = ''
+            this.isText = ''
+            this.isCharacteristic = ''
+            this.isCategory = ['все']
+            this.isMeasurement = [{name: '', array: []}]
+            this.useDimension = [{name: '', array: []}]
+            this.isColor = ''
+            this.colorValue = '#af9280'
+            this.fileIn = []
+            this.listImages = []
+            this.isVideo = null
+            this.videoUrl = null
+        },
     }
 }
 </script>

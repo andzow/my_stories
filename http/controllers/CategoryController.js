@@ -11,6 +11,16 @@ export default class PromoController {
         }
     }
 
+    static async getCategory() { // категории
+      try {
+          const response = await CategoryServices.getCategory()
+          return response.data
+      } catch (e) {
+          console.log(e.response?.data?.message)
+          return e.response.status
+      }
+  }
+
     static async createCategory(dataObject) {
       try {
         const response = await CategoryServices.createCategory(dataObject);

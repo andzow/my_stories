@@ -7,6 +7,7 @@
     <AdminMyProduct/>
     <AdminMyCategoryLine/>
     <AdminMyProductsGrid/>
+    <AdminMyPagination/>
   </div>
 </template>
 

@@ -22,5 +22,5 @@ button {
 .page {
   width: 100%;
   overflow: hidden;
-}
+} */
 </style>

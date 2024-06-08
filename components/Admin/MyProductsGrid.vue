@@ -4,8 +4,8 @@
       <table class="productGrid__table" cellpadding="0" cellspacing="0" border="0" v-if="useProducts.length > 0">
         <thead class="productGrid__thead">
           <tr>
-            <th class="productGrid__pos productGrid__left">фото</th>
-            <th class="productGrid__pos productGrid__left">заголовок</th>
+            <th class="productGrid__pos productGrid__pos_image productGrid__left">фото</th>
+            <th class="productGrid__pos productGrid__pos_name productGrid__left">заголовок</th>
             <th class="productGrid__pos">артикул</th>
             <th class="productGrid__pos">цена</th>
             <th class="productGrid__pos">видимость</th>
@@ -13,25 +13,27 @@
             <th class="productGrid__pos">удалить</th>
           </tr>
         </thead>
-        <tbody class="productGrid__tbody" v-auto-animate>
+        <tbody class="productGrid__tbody">
           <tr class="productGrid__line" v-for="(item, index) in useProducts" :key="index">
-            <td class="productGrid__element productGrid__left" >
+            <td class="productGrid__element  productGrid__left" >
                 <img class="productGrid__img" v-if="imgSrc" :src="imgSrc + item.images[0]" alt="">
             </td>
-            <td class="productGrid__element productGrid__left">{{ item.name }}</td>
+            <td class="productGrid__element productGrid__left">
+              <p class="productGrid__element_name" @click="updateProduct(item)">{{ item.name }}</p>
+            </td>
             <td class="productGrid__element">{{ item.articul }}</td>
-            <td v-if="!item.discount" class="productGrid__element">{{ item.price }} ₽</td>
-            <td class="productGrid__element">{{ item.discount }} ₽</td>
+            <td v-if="item.discount === null" class="productGrid__element">{{ item.price }} ₽</td>
+            <td v-if="item.discount !== null" class="productGrid__element">{{ item.discount }} ₽</td>
             <td class="productGrid__element productGrid__element_special">
-                <div class="productGrid__back" :class="{productGrid__back_active: item.watch}" @click="item.watch = !item.watch">
+                <div class="productGrid__back" :class="{productGrid__back_active: item.watch}" @click="sendWatch(index, item.id)">
                     <div class="productGrid__circle" :class="{productGrid__circle_active: item.watch}"></div>
                 </div>
             </td>
             <td class="productGrid__element">
-                <img class="productGrid__trash" src="~/assets/images/Admin/copy.svg" alt="">
+                <img class="productGrid__trash" @click="copyProduct(item)" src="~/assets/images/Admin/copy.svg" alt="">
             </td>
             <td class="productGrid__element">
-                <img class="productGrid__trash" src="~/assets/images/Admin/trash.svg" alt="">
+                <img class="productGrid__trash" src="~/assets/images/Admin/trash.svg" @click="deleteProduct(item.id)" alt="">
             </td>
           </tr>
         </tbody>
@@ -50,8 +52,28 @@ import { USE_SERVER } from "~/url";
 export default {
   data() {
     return {
-      useProducts: [],
+      useProduct: useProduct(),
+      useProducts: useProducts(),
       imgSrc: false,
+      useStatus: useStatus(),
+      useProductId: useProductId(),
+
+      isName: useName(),
+      isPrice: usePrice(),
+      isDiscount: useDiscount(),
+      isArticul: useArticul(),
+      isText: useText(),
+      isCharacteristic: useCharacteristic(),
+      isCategory: useCategoryArray(),
+      isMeasurement: useMeasuremen(),
+      useDimension: useDimension(),
+      isColor: useColor(),
+      isColorValue: useColorValue(),
+      listImages: useListImages(),
+      fileIn: useFileIn(),
+      isVideo: useVideo(),
+      videoUrl: useVideoUrl(),
+      useProductUpdate: useProductUpdate()
     };
   },
   async mounted() {
@@ -59,6 +81,76 @@ export default {
     this.useProducts = data.products
     this.imgSrc = USE_SERVER
   },
+  methods: {
+    async sendWatch(index, idProduct) {
+      this.useProducts[index].watch = !this.useProducts[index].watch
+      this.useStatus = true
+      const dataObject = {
+        id: idProduct,
+        watch: this.useProducts[index].watch
+      }
+      await ProductController.updateProductWatch(dataObject)
+      this.useStatus = null
+    },
+    async copyProduct(item) {
+      this.resetProduct()
+      this.useProduct = true
+      this.useProductUpdate = false
+      this.isName = item.name
+      this.isPrice = item.price
+      this.isDiscount = item.discount
+      this.isArticul = item.articul
+      this.isText = item.text
+      this.isCharacteristic = item.characteristic
+      this.isCategory = JSON.parse(item.category)
+      this.isMeasurement = JSON.parse(item.measurement)
+      this.useDimension = JSON.parse(item.dimension)
+      this.isColor = item.color
+      this.isColorValue = item.colorValue
+
+      for (const file of item.images) {
+        const imageUrl = this.imgSrc + file
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const imageFile = new File([blob], file.split('/').pop(), { type: blob.type });
+        this.fileIn.push(imageFile)
+        this.listImages.push({ src: URL.createObjectURL(imageFile) });
+      }
+
+      const videoUrl = this.imgSrc + item.video
+      const response = await fetch(videoUrl);
+      const blob = await response.blob();
+      const videoFile = new File([blob], item.video.split('/').pop(), { type: blob.type });
+      this.isVideo = videoFile
+      this.videoUrl = URL.createObjectURL(videoFile) 
+    },
+    updateProduct(item) {
+      this.copyProduct(item)
+      this.useProductUpdate = true
+      this.useProductId = item.id
+    },
+    resetProduct() {
+      this.isName = ''
+      this.isPrice = null
+      this.isDiscount = null
+      this.isArticul = ''
+      this.isText = ''
+      this.isCharacteristic = ''
+      this.isCategory = ['все']
+      this.isMeasurement = [{name: '', array: []}]
+      this.useDimension = [{name: '', array: []}]
+      this.isColor = ''
+      this.isColorValue = '#af9280'
+      this.fileIn = []
+      this.listImages = []
+      this.isVideo = null
+      this.videoUrl = null 
+    },
+    deleteProduct(index) {
+      this.useStatus = 'deleteProduct'
+      this.useProductId = index
+    }
+  }
 };
 </script>
 
@@ -146,5 +238,18 @@ export default {
 .productGrid__empty {
     font-size: 70px;
     font-weight: 500;
+}
+.productGrid__pos_image {
+  width: 250px;
+}
+.productGrid__pos_name {
+  width: 30%;
+}
+.productGrid__element_name {
+  cursor: pointer;
+  transition: all .3s ease;
+}
+.productGrid__element_name:hover {
+  transform: scale(1.04);
 }
 </style>

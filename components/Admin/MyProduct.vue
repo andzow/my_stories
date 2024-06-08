@@ -4,7 +4,8 @@
       <div class="product__container" v-click-outside="clickOutside">
         <div class="product__position">
           <div class="product__head">
-            <h3 class="product__title">создание нового товара</h3>
+            <h3 class="product__title" v-show="!useProductUpdate">создание нового товара</h3>
+            <h3 class="product__title" v-show="useProductUpdate">редактирование товара</h3>
             <div class="product__close" @click="useProduct = false">
               <svg
                 width="16"
@@ -198,10 +199,18 @@
         </div>
         <div class="product__footer">
           <UIMyButton
+            v-show="!useProductUpdate"
             class="product__btn_save"
             :info="'сохранить'"
             :variant="'green'"
             @click="sendData"
+          />
+          <UIMyButton
+            v-show="useProductUpdate"
+            class="product__btn_save"
+            :info="'сохранить'"
+            :variant="'green'"
+            @click="updateData"
           />
           <UIMyButton
             class="product__btn_reset"
@@ -218,6 +227,8 @@ import ProductController from "@/http/controllers/ProductController";
 export default {
   data() {
     return {
+      useProductId: useProductId(),
+      useProducts: useProducts(),
       useLine: useLine(),
       useDimensionItem: useDimensionItem(),
       useStatus: useStatus(),
@@ -226,23 +237,24 @@ export default {
       isActive: false,
       draggingItemIndex: null,
 
-      isName: '',
-      isPrice: '',
-      isDiscount: '',
-      isArticul: '',
-      isText: '',
-      isCharacteristic: '',
-      isCategory: [
-        'все'
-      ],
+      isName: useName(),
+      isPrice: usePrice(),
+      isDiscount: useDiscount(),
+      isArticul: useArticul(),
+      isText: useText(),
+      isCharacteristic: useCharacteristic(),
+      isCategory: useCategoryArray(),
       isMeasurement: useMeasuremen(),
       useDimension: useDimension(),
-      isColor: '',
-      isColorValue: '#af9280',
-      listImages: [],
-      fileIn: [],
-      isVideo: null,
-      videoUrl: null
+      isColor: useColor(),
+      isColorValue: useColorValue(),
+      listImages: useListImages(),
+      fileIn: useFileIn(),
+      isVideo: useVideo(),
+      videoUrl: useVideoUrl(),
+      useProductUpdate: useProductUpdate(),
+
+      usePage: usePage(),
     };
   },
   methods: {
@@ -267,9 +279,6 @@ export default {
         this.videoUrl = URL.createObjectURL(this.isVideo); 
       }
       event.target.value = '';
-    },
-    apple() {
-      console.log(this.isColorValue)
     },
     clickOutside() {
       this.useProduct = false;
@@ -350,20 +359,22 @@ export default {
       this.videoUrl = null
     },
     async sendData() {
+      this.useProduct = false;
       this.useStatus = true
-      console.log( this.fileIn)
       const formData = new FormData();
       formData.append("name", this.isName);
       formData.append("price", this.isPrice);
-      formData.append("discount", this.isDiscount);
+      if (this.isDiscount !== null) {
+        formData.append("discount", this.isDiscount);
+      }
       formData.append("articul", this.isArticul);
       formData.append("text", this.isText);
       formData.append("characteristic", this.isCharacteristic);
       formData.append("category", JSON.stringify(this.isCategory));
       formData.append("measurement", JSON.stringify(this.isMeasurement));
       formData.append("dimension", JSON.stringify(this.useDimension));
-      formData.append("color", JSON.stringify(this.isColor));
-      formData.append("colorValue", JSON.stringify(this.isColorValue));
+      formData.append("color", this.isColor);
+      formData.append("colorValue", this.isColorValue);
 
       this.fileIn.forEach((file) => {
         formData.append("files", file);
@@ -372,7 +383,60 @@ export default {
       formData.append("files", this.isVideo)
 
       await ProductController.createProduct(formData)
+      this.resetdata()
+      const data = await ProductController.getProductAll(this.$route.query);
+      this.useProducts = data.products
+      this.usePage = data.totalPages
       this.useStatus = null
+    },
+    resetdata() {
+      this.isName = ''
+      this.isPrice = null
+      this.isDiscount = null
+      this.isArticul = ''
+      this.isText = ''
+      this.isCharacteristic = ''
+      this.isCategory = ['все']
+      this.isMeasurement = [{name: '', array: []}]
+      this.useDimension = [{name: '', array: []}]
+      this.isColor = ''
+      this.colorValue = '#af9280'
+      this.fileIn = []
+      this.listImages = []
+      this.isVideo = null
+      this.videoUrl = null
+    },
+    async updateData() {
+      this.useProduct = false;
+      this.useStatus = true
+      const formData = new FormData();
+      formData.append("id", this.useProductId);
+      formData.append("name", this.isName);
+      formData.append("price", this.isPrice);
+      if (this.isDiscount !== null) {
+        formData.append("discount", this.isDiscount);
+      }
+      formData.append("articul", this.isArticul);
+      formData.append("text", this.isText);
+      formData.append("characteristic", this.isCharacteristic);
+      formData.append("category", JSON.stringify(this.isCategory));
+      formData.append("measurement", JSON.stringify(this.isMeasurement));
+      formData.append("dimension", JSON.stringify(this.useDimension));
+      formData.append("color", this.isColor);
+      formData.append("colorValue", this.isColorValue);
+
+      this.fileIn.forEach((file) => {
+        formData.append("files", file);
+      });
+
+      formData.append("files", this.isVideo)
+
+      await ProductController.updateProduct(formData)
+      this.resetdata()
+      const data = await ProductController.getProductAll(this.$route.query);
+      this.useProducts = data.products
+      this.useStatus = null
+      this.useProductId = null
     }
   },
 };
@@ -539,7 +603,7 @@ export default {
 .product__name {
   font-size: 18px;
   margin-left: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   cursor: pointer;
   transform: translateY(3px);
   white-space: pre-wrap;
@@ -547,6 +611,7 @@ export default {
 .product__status {
   display: flex;
   align-items: flex-end;
+  margin-bottom: 10px;
 }
 .product__tick {
   opacity: 0;

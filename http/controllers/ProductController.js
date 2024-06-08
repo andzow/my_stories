@@ -11,6 +11,26 @@ export default class ProductController {
       }
     }
 
+    static async getSearch(query) { // Поиск
+      try {
+        const response = await ProductServices.getSearch(query);
+        return response.data;
+      } catch (e) {
+        console.log(e.response?.data?.message);
+        return e.response.status;
+      }
+    }
+
+    static async getFilter(query) { // Отфильтрованые товары
+      try {
+        const response = await ProductServices.getFilter(query);
+        return response.data;
+      } catch (e) {
+        console.log(e.response?.data?.message);
+        return e.response.status;
+      }
+    }
+
     static async getProductAll(query) {
       try {
         const response = await ProductServices.getProductAll(query);
@@ -23,8 +43,38 @@ export default class ProductController {
 
     static async updateProduct(dataObject) {
       try {
-        const response = await PostService.updateProduct(dataObject);
+        const response = await ProductServices.updateProduct(dataObject);
         return response.status;
+      } catch (e) {
+        console.log(e.response?.data?.message);
+        return e.response.status;
+      }
+    }
+
+    static async updateProductWatch(dataObject) {
+      try {
+        const response = await ProductServices.updateProductWatch(dataObject);
+        return response.status;
+      } catch (e) {
+        console.log(e.response?.data?.message);
+        return e.response.status;
+      }
+    }
+
+    static async deleteProduct(id) {
+      try {
+        const response = await ProductServices.deleteProduct(id);
+        return response.status;
+      } catch (e) {
+        console.log(e.response?.data?.message);
+        return e.response.status;
+      }
+    }
+
+    static async productOne(id, query) { // получение товара
+      try {
+        const response = await PostService.productOne(id, query);
+        return response.data;
       } catch (e) {
         console.log(e.response?.data?.message);
         return e.response.status;
