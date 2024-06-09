@@ -13,11 +13,6 @@ export default {
     };
   },
   methods: {
-    changeSettings(arr, elHtml) {
-      arr.forEach((el) => {
-        elHtml.style[el.name] = el.value + "px";
-      });
-    },
     async initActivePagination() {
       nextTick(() => {
         const elHtmlProgress = document.querySelector(".slider__progress");
@@ -32,7 +27,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.initActivePagination();
-    }, 1000);
+    }, 0);
   },
   watch: {
     changeProgress(val) {

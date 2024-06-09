@@ -16,16 +16,31 @@
   >
     <swiper-slide
       class="slider__slide"
-      v-for="item in arrSlider"
+      v-for="(item, idx) in arrSlider"
       :key="item.id"
     >
       <div class="slider__card">
         <img
+          v-if="item.imageSrc"
           class="slider__imgs"
-          :src="'../Primer/catalog9.webp'"
+          :src="item.imageSrc"
           height="737px"
           alt="Фотография товара"
         />
+        <video
+          v-else
+          class="slider__video"
+          :poster="item.videoSrc"
+          type="video/mp4"
+          autoplay
+          muted
+          loop
+          preload="metadata"
+          :data-index="idx"
+          playsinline
+        >
+          <source :src="item.videoSrc" />
+        </video>
       </div>
     </swiper-slide>
     <div class="slider__pagination"></div>
@@ -57,15 +72,19 @@ export default {
     return {
       arrSlider: [
         {
-          imageSrc: "../Primer/catalog9.webp",
+          imageSrc: "../../Primer/catalog9.webp",
           id: 0,
         },
         {
-          imageSrc: "../Primer/catalog2.png",
+          videoSrc: "../../Primer/video.mp4",
+          id: 0,
+        },
+        {
+          imageSrc: "../../Primer/catalog2.png",
           id: 1,
         },
         {
-          imageSrc: "../Primer/catalog3.webp",
+          imageSrc: "../../Primer/catalog3.webp",
           id: 2,
         },
       ],
@@ -75,7 +94,7 @@ export default {
     };
   },
   setup() {
-    const pagination = { el: ".slider__pagination", clickable: true };
+    const pagination = { el: ".slider__pagination", clickable: false };
     const modules = [EffectFade, Pagination];
     return {
       pagination,
@@ -85,8 +104,12 @@ export default {
   methods: {
     onSwiperInit(instance) {
       this.swiper = instance;
+      const activeIdx = this.swiper.activeIndex;
     },
     onSlideChange() {
+      const activeIdx = this.swiper.activeIndex;
+      console.log(activeIdx);
+      // const element = document.querySelector('[data-index="0"]');
       this.changeProgress = true;
     },
     checkImage(src) {
@@ -96,6 +119,7 @@ export default {
         this.checkLoad = true;
       };
     },
+    videoLoad() {},
   },
   mounted() {
     this.arrSlider.forEach((item) => this.checkImage(item.imageSrc));
@@ -112,8 +136,8 @@ export default {
   position: absolute;
   opacity: 0;
   max-width: 100%;
-  margin-right: 50px;
-  max-height: 785px;
+  margin-right: 250px;
+  height: 785px;
   overflow: hidden;
   transition: all 0.4s ease;
 }
@@ -132,12 +156,17 @@ export default {
   }
 }
 .slider__slide {
-  max-height: 727px;
-  min-height: 727px;
+  max-height: 737px;
+  min-height: 737px;
+}
+.slider__video {
+  height: 737px;
+  width: 100%;
+  object-fit: cover;
 }
 .slider__load {
   max-width: 100%;
-  max-height: 727px;
+  max-height: 737px;
   opacity: 1;
   transition: all 0.4s ease;
 }

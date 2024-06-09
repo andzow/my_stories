@@ -2,7 +2,7 @@
   <div class="about">
     <div class="about__header">
       <h1 class="about__header_title">
-        {{ `( &nbsp;${$route.params.catalog}&nbsp; )` }}
+        {{ `( &nbsp;${$route.params.name}&nbsp; )` }}
       </h1>
       <div class="about__header_arcticle">8723913108</div>
     </div>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="about__dolyami">
-      <img :src="'../Primer/dolyami.png'" />
+      <img :src="'../../Primer/dolyami.png'" />
     </div>
     <CatalogIdAboutMyAboutSize />
     <CatalogIdAboutMyAboutColor />

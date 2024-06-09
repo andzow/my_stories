@@ -1,5 +1,5 @@
 <template>
-  <UIMyHeader />
+  <UIMyHeader v-if="headerVisible" />
   <main class="page">
     <NuxtPage />
     <UIMyModalStatus />
@@ -10,15 +10,33 @@
 </template>
 
 <script>
+import AuthController from "@/http/controllers/AuthController";
+
 export default {
   data() {
     return {
       useCheckAnimationArr: useCheckAnimationArr(),
       useCursor: useCursor(),
+      headerVisible: true,
     };
+  },
+  async mounted() {
+    if (this.$route.path === "/admin" || this.$route.path === "/login") {
+      this.headerVisible = false;
+    } else {
+      this.headerVisible = true;
+    }
+    if (localStorage.getItem("accessToken")) {
+      await AuthController.cheackAuth();
+    }
   },
   watch: {
     $route() {
+      if (this.$route.path === "/admin" || this.$route.path === "/login") {
+        this.headerVisible = false;
+      } else {
+        this.headerVisible = true;
+      }
       this.useCheckAnimationArr.forEach((el) => {
         el.revert();
       });
@@ -43,5 +61,5 @@ button {
 .page {
   width: 100%;
   overflow: hidden;
-} 
+}
 </style>

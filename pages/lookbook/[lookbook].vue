@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     initArr() {
-      const paramsIdPage = this.$route.params.id;
+      const paramsIdPage = this.$route.params.lookbook;
       return this.arrCollection.filter((el) => el.name === paramsIdPage)[0];
     },
   },

@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["~/assets/style/main.css"],
@@ -14,6 +13,11 @@ export default defineNuxtConfig({
     "/admin": { ssr: false },
     "/login": { ssr: false },
   },
+  routeRules: {
+    "/admin": { ssr: false },
+    "/login": { ssr: false },
+  },
+
   ssr: true,
   modules: ["@nuxt/image"],
 });
