@@ -1,7 +1,7 @@
 <template>
   <div class="collection__new">
     <div class="collection__new_content">
-      <h2 class="collection__new_title">( новая коллекция )</h2>
+      <h2 class="collection__new_title">( &nbsp;новая коллекция&nbsp; )</h2>
       <div class="collection__new_img">
         <img
           class="collection__new_image"
@@ -23,6 +23,7 @@ export default {};
   color: var(--brown);
   margin-bottom: 50px;
   opacity: 0;
+  max-width: 361px;
 }
 .collection__new_img {
   opacity: 0;

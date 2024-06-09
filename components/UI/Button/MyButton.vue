@@ -1,17 +1,22 @@
 <template>
-  <div class="button" @mousemove="updateParallax" @mouseleave="resetParallax">
+  <div
+    class="button"
+    @mousemove="updateParallax"
+    @mouseleave="resetParallax"
+    :class="{ activeBtn: active }"
+  >
     <button
       class="button__btn"
-      :class="[variant, size]"
+      :class="[variant, size, bigSize]"
       :style="squareStyle"
       ref="button"
     >
       {{ info }}
-      <div
+      <span
         class="button__cirlce"
-        :class="[variant + '__circle']"
+        :class="[variant + '__circle', bigSize + '__circle']"
         :style="circleStyle"
-      ></div>
+      ></span>
     </button>
   </div>
 </template>
@@ -24,6 +29,9 @@ export default {
     variant: String,
     size: String,
     fontSize: String,
+    bigSize: String,
+    active: Boolean,
+    padding: String,
   },
   data() {
     return {
@@ -40,6 +48,7 @@ export default {
       return {
         fontSize: this.fontSize + "px",
         transform: `translateX(${tX}px) translateY(${tY}px)`,
+        padding: this.padding ? this.padding : "",
         transition: "all 0.4s ease",
       };
     },
@@ -64,6 +73,7 @@ export default {
       }
     },
   },
+  mounted() {},
 };
 </script>
 
@@ -90,6 +100,15 @@ export default {
 .green {
   background-color: #ede9df;
 }
+.main {
+  background-color: #ede9df;
+}
+.white {
+  background-color: none;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
 .button__btn_line {
   border: 3px solid var(--brown);
 }
@@ -109,11 +128,27 @@ export default {
   pointer-events: none;
   transform: scale(0);
 }
+.bigSize__circle {
+  transition: transform 0.7s ease;
+}
+.average__circle {
+  transition: transform 1s ease !important;
+}
+.activeBtn {
+  background-color: var(--brown);
+  color: white;
+}
 .green__circle {
+  background-color: #868975;
+}
+.white__circle {
   background-color: #868975;
 }
 .button__btn:hover .button__cirlce {
   transform: scale(40);
+}
+.bigSize:hover .button__cirlce {
+  transform: scale(140) !important;
 }
 .big .button__cirlce {
   transition: transform 1s ease;

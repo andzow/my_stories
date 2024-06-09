@@ -9,14 +9,16 @@
             миди, уютные стеганные жакеты свободного кроя, логсливы из
             конопляной ткани с оригинальным узором
           </p>
-          <h3 class="collection__name">летний ветер . . .</h3>
+          <h3 class="collection__name">
+            летний ветер <span class="span__inter">. . .</span>
+          </h3>
         </div>
         <div class="collection__btn">
           <UIButtonMyButton
             aria-label="к коллекции"
             info="к коллекции"
             fontSize="24"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
           />
         </div>
       </div>
@@ -26,6 +28,7 @@
           <img
             class="collection__photo_img"
             src="@/assets/images/Main/collectionS.webp"
+            alt="Фотография новой коллекции"
           />
         </div>
       </div>
@@ -38,20 +41,37 @@ export default {
   data() {
     return {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
-      arrClassNameForAnimation: [
-        ".collection__text",
-        ".collection__name",
-        ".collection__number",
-        ".collection__new_title",
-        ".collection__new_img",
-        ".collection__btn",
-        ".collection__photo_img",
-      ],
     };
   },
 
   mounted() {
-    this.useGsapAnimationOpacity(this.arrClassNameForAnimation);
+    this.useGsapAnimationOpacity(
+      [".collection__number", ".collection__new_title"],
+      ".collection"
+    );
+
+    this.useGsapAnimationOpacity(
+      [".collection__photo_img"],
+      ".collection",
+      false,
+      0.7
+    );
+
+    this.useGsapAnimationOpacity(
+      [".collection__text", ".collection__name"],
+      ".collection__new_img"
+    );
+    this.useGsapAnimationOpacity(
+      [".collection__new_img"],
+      ".collection__new_img",
+      false,
+      0.5
+    );
+    this.useGsapAnimationOpacity(
+      [".collection__btn"],
+      ".collection__btn",
+      true
+    );
   },
 };
 </script>
@@ -69,8 +89,6 @@ export default {
   width: 100%;
   margin: 0 auto;
   padding: 0 30px;
-}
-.collection__content {
   display: grid;
   grid-template-columns: repeat(3, 35% 40% 25%);
   column-gap: 30px;
@@ -94,9 +112,10 @@ export default {
 .collection__text {
   font-size: 17px;
   font-weight: 300;
-  line-height: 140%;
   color: var(--brown);
+  text-align: justify;
   margin-bottom: 75px;
+  max-width: 260px;
   opacity: 0;
 }
 .collection__name {

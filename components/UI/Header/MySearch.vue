@@ -10,7 +10,7 @@
           type="text"
           :placeholder="placeholderVal"
           class="search__input"
-          cursor-class="animateCursor"
+          data-cursor-class="animateCursor"
           v-model="searchVal"
         />
       </div>
@@ -21,14 +21,14 @@
             aria-label="Найти товар"
             info="Найти"
             fontSize="18"
-            cursor-class="animateCursor"
+            data-cursor-class="animateCursor"
           />
         </div>
         <button
           class="search__close"
           @click="setClose"
           ref="searchClose"
-          cursor-class="animateCursor"
+          data-cursor-class="animateCursor"
           aria-label="Закрыть поиск"
         >
           <svg
@@ -113,12 +113,10 @@ export default {
   mounted() {
     const bodyEl = document.body;
     bodyEl.style.overflow = "hidden";
-    this.$nextTick(() => {
-      this.$refs.searchClose.focus();
-    });
-    setTimeout(() => {
-      this.arrSendMenu = this.arrMenu;
-    }, 500);
+    this.$refs.searchClose.focus();
+    // setTimeout(() => {
+    //   this.arrSendMenu = this.arrMenu;
+    // }, 500);
     setTimeout(() => {
       const blockEl = document.querySelector(".search");
       document.addEventListener("mouseup", (e) => {
@@ -141,7 +139,9 @@ export default {
   padding: 25px 30px;
   width: 100vw;
   background: #f5f2ea;
+  z-index: 25;
 }
+
 .search__content {
   display: flex;
   align-items: center;
