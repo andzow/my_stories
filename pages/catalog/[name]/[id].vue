@@ -6,7 +6,9 @@
 import ProductController from "@/http/controllers/ProductController";
 
 export default {
-  mounted() {},
+  async mounted() {
+    const res = await ProductController.productOne(this.$route.params);
+  },
 };
 </script>
 

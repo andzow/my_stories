@@ -127,7 +127,7 @@ export default {
   left: 0;
   top: 0;
   pointer-events: none;
-  z-index: 99;
+  z-index: 9999;
 }
 
 @media (hover: hover) and (pointer: fine) {
