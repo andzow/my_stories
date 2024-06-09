@@ -1,15 +1,41 @@
 <template>
-  <h1>{{ $route.params.id }}</h1>
+  <div>
+    <CatalogIdMyMain />
+    <CatalogIdMyCatalog />
+    <UIMyNoise />
+  </div>
 </template>
 
 <script>
-import ProductController from "@/http/controllers/ProductController";
-
 export default {
-  async mounted() {
-    const res = await ProductController.productOne(this.$route.params);
+  data() {
+    return {
+      useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
+    };
+  },
+  methods: {
+    async replaceRoute(querySettings) {
+      // await this.$router.replace({
+      //   path: this.$route.path,
+      //   query: {
+      //     color: "#fsadfdsafsadf",
+      //     colorName: "Красный",
+      //   },
+      // });
+      this.checkBlock = true;
+    },
+    initApp() {
+      this.replaceRoute();
+    },
+  },
+  created() {
+    this.initApp();
+  },
+  mounted() {
+    const bodyEl = document.body;
+    bodyEl.style.overflow = "auto";
   },
 };
 </script>
 
-<style></style>
+<style scoped></style>

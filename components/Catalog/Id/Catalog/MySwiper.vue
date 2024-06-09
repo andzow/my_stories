@@ -36,31 +36,31 @@ export default {
             sale: "5 200",
             images: [
               {
-                imageSrc: "../Primer/catalog1.webp",
+                imageSrc: "../../Primer/catalog1.webp",
               },
               {
-                imageSrc: "../Primer/catalog2.png",
+                imageSrc: "../../Primer/catalog2.png",
               },
               {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../Primer/catalog5.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog3.webp",
+                imageSrc: "../../Primer/catalog3.webp",
               },
 
               {
-                imageSrc: "../Primer/catalog5.webp",
+                imageSrc: "../../Primer/catalog5.webp",
               },
               {
-                imageSrc: "../Primer/catalog3.webp",
+                imageSrc: "../../Primer/catalog3.webp",
               },
 
               {
-                imageSrc: "../Primer/catalog5.webp",
+                imageSrc: "../../Primer/catalog5.webp",
+              },
+              {
+                imageSrc: "../../Primer/catalog3.webp",
+              },
+
+              {
+                imageSrc: "../../Primer/catalog5.webp",
               },
             ],
           },
@@ -69,10 +69,10 @@ export default {
             price: "2 800",
             images: [
               {
-                imageSrc: "../Primer/catalog3.webp",
+                imageSrc: "../../Primer/catalog3.webp",
               },
               {
-                imageSrc: "../Primer/catalog11.webp",
+                imageSrc: "../../Primer/catalog11.webp",
               },
             ],
           },
@@ -81,13 +81,13 @@ export default {
             price: "7 800",
             images: [
               {
-                imageSrc: "../Primer/catalog7.webp",
+                imageSrc: "../../Primer/catalog7.webp",
               },
               {
-                imageSrc: "../Primer/catalog2.png",
+                imageSrc: "../../Primer/catalog2.png",
               },
               {
-                imageSrc: "../Primer/catalog3.webp",
+                imageSrc: "../../Primer/catalog3.webp",
               },
             ],
           },
@@ -96,13 +96,13 @@ export default {
             price: "1 800",
             images: [
               {
-                imageSrc: "../Primer/catalog13.webp",
+                imageSrc: "../../Primer/catalog13.webp",
               },
               {
-                imageSrc: "../Primer/catalog2.png",
+                imageSrc: "../../Primer/catalog2.png",
               },
               {
-                imageSrc: "../Primer/catalog3.webp",
+                imageSrc: "../../Primer/catalog3.webp",
               },
             ],
           },
@@ -112,24 +112,24 @@ export default {
             sale: "5 200",
             images: [
               {
-                imageSrc: "../Primer/catalog9.webp",
+                imageSrc: "../../Primer/catalog9.webp",
               },
               {
-                imageSrc: "../Primer/catalog2.png",
+                imageSrc: "../../Primer/catalog2.png",
               },
               {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../Primer/catalog5.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog3.webp",
+                imageSrc: "../../Primer/catalog3.webp",
               },
 
               {
-                imageSrc: "../Primer/catalog5.webp",
+                imageSrc: "../../Primer/catalog5.webp",
+              },
+              {
+                imageSrc: "../../Primer/catalog3.webp",
+              },
+
+              {
+                imageSrc: "../../Primer/catalog5.webp",
               },
             ],
           },

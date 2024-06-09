@@ -148,7 +148,7 @@ export default {
     changeColor() {
       if (
         this.$route.path === "/" ||
-        this.$route.params.id ||
+        this.$route.params.lookbook ||
         this.$route.path === "/brand"
       ) {
         this.changeHeader = false;

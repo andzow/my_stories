@@ -1,39 +1,16 @@
 <template>
-  <div>
-    <CatalogIdMyMain />
-    <CatalogIdMyCatalog />
-    <UIMyNoise />
-  </div>
+  <div></div>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-      useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
-    };
-  },
-  methods: {
-    async replaceRoute(querySettings) {
-      // await this.$router.replace({
-      //   path: this.$route.path,
-      //   query: {
-      //     color: "#fsadfdsafsadf",
-      //     colorName: "Красный",
-      //   },
-      // });
-      this.checkBlock = true;
-    },
-    initApp() {
-      this.replaceRoute();
-    },
+    return {};
   },
   created() {
-    this.initApp();
-  },
-  mounted() {
-    const bodyEl = document.body;
-    bodyEl.style.overflow = "auto";
+    this.$router.replace({
+      path: "/catalog",
+    });
   },
 };
 </script>
