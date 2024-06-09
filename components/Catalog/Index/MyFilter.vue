@@ -18,7 +18,7 @@
         />
       </div>
       <Transition name="filter-fade">
-        <div class="filter__delete" v-if="checkReset">
+        <div class="filter__delete" :class="{ activeBtnDel: checkReset }">
           <UIButtonMyButton
             aria-label="сбросить"
             info="сбросить"
@@ -64,7 +64,7 @@ export default {
       const parsePriceMax = parseInt(this.useFilterPrice.activeMaxVal);
 
       if (
-        chapterArr.length > 1 ||
+        chapterArr.length > 0 ||
         sizeArr === null ||
         Array.isArray(sizeArr) ||
         parsePriceMin !== this.minVal ||
@@ -137,6 +137,11 @@ export default {
 }
 .filter__delete {
   height: 45px;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+.activeBtnDel {
+  opacity: 1;
 }
 .filter-fade-enter-from {
   opacity: 0;

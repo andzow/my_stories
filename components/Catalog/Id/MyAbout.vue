@@ -21,6 +21,33 @@
     </div>
     <CatalogIdAboutMyAboutSize />
     <CatalogIdAboutMyAboutColor />
+    <div class="about__buttons">
+      <div class="about__buttons_btn">
+        <UIButtonMyButton
+          class="about__size_btn"
+          aria-label="добавить в корзину"
+          :active="true"
+          info="добавить в корзину"
+          padding="15px 0"
+          fontSize="20"
+          bigSize="bigSize"
+          data-cursor-class="animateCursor"
+          variant="average"
+        />
+      </div>
+      <div class="about__buttons_btn">
+        <UIButtonMyButton
+          class="about__size_btn"
+          aria-label="написать в телеграм"
+          info="написать в телеграм"
+          padding="15px 0"
+          fontSize="20"
+          data-cursor-class="animateCursor"
+        />
+      </div>
+    </div>
+    <CatalogIdAboutMyAboutDescription />
+    <CatalogIdAboutMyAboutInfo />
   </div>
 </template>
 
@@ -68,5 +95,11 @@ export default {};
 }
 .about__dolyami {
   margin-bottom: 50px;
+}
+.about__buttons {
+  display: grid;
+  grid-template-columns: 1fr 0.3fr;
+  column-gap: 15px;
+  margin-bottom: 65px;
 }
 </style>

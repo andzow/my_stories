@@ -125,6 +125,7 @@ export default {
 .card__item_imgs {
   position: relative;
   object-fit: cover;
+  width: 100%;
   height: 100%;
   animation-duration: 0.5s;
   animation-name: animateOpacity;

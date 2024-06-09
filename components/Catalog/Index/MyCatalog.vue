@@ -2,6 +2,7 @@
   <section class="catalog" id="catalog__content">
     <div class="catalog__content">
       <UICardMyCard
+        @click="$router.push('/catalog/сарафан')"
         v-for="(item, idx) in useCatalogItems"
         :key="item"
         :item="item"

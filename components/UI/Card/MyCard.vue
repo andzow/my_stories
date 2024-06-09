@@ -2,7 +2,13 @@
   <div class="card" :class="['card' + (idx + 1)]">
     <div class="card__content">
       <div class="card__image" :class="['card__image' + (idx + 1)]">
-        <div class="card__photo" cursor-class="animateCursor">
+        <div
+          class="card__photo"
+          data-cursor-class="animateCursor"
+          :style="{
+            height: heightImage ? heightImage : '',
+          }"
+        >
           <UICardMyCardImage
             v-if="item.images"
             :images="item.images"
@@ -28,13 +34,24 @@ export default {
   props: {
     item: Object,
     idx: Number,
+    heightImage: String,
   },
   data() {
     return {
       arrNewStyleTexture: null,
+      useCursor: useCursor(),
     };
   },
-  mounted() {},
+  methods: {
+    async initApp() {
+      await nextTick(() => {
+        this.useCursor = true;
+      });
+    },
+  },
+  mounted() {
+    this.initApp();
+  },
 };
 </script>
 

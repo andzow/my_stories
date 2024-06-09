@@ -151,7 +151,6 @@ export default {
         this.$route.params.id ||
         this.$route.path === "/brand"
       ) {
-        console.log("привет");
         this.changeHeader = false;
         return;
       }

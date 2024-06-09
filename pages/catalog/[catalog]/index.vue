@@ -1,6 +1,7 @@
 <template>
   <div>
     <CatalogIdMyMain />
+    <CatalogIdMyCatalog />
     <UIMyNoise />
   </div>
 </template>
@@ -14,22 +15,17 @@ export default {
   },
   methods: {
     async replaceRoute(querySettings) {
-      await this.$router.replace({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          color: querySettings.color,
-          colorName: "Красный",
-        },
-      });
+      // await this.$router.replace({
+      //   path: this.$route.path,
+      //   query: {
+      //     color: "#fsadfdsafsadf",
+      //     colorName: "Красный",
+      //   },
+      // });
       this.checkBlock = true;
     },
     initApp() {
-      const readyQueryChapter = this.useReplaceOrDeleteWordQuery(
-        "color",
-        "red"
-      );
-      this.replaceRoute(readyQueryChapter);
+      this.replaceRoute();
     },
   },
   created() {

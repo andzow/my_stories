@@ -31,6 +31,7 @@ export default {
     fontSize: String,
     bigSize: String,
     active: Boolean,
+    padding: String,
   },
   data() {
     return {
@@ -47,6 +48,7 @@ export default {
       return {
         fontSize: this.fontSize + "px",
         transform: `translateX(${tX}px) translateY(${tY}px)`,
+        padding: this.padding ? this.padding : "",
         transition: "all 0.4s ease",
       };
     },
@@ -128,6 +130,9 @@ export default {
 }
 .bigSize__circle {
   transition: transform 0.7s ease;
+}
+.average__circle {
+  transition: transform 1s ease !important;
 }
 .activeBtn {
   background-color: var(--brown);

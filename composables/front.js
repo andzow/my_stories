@@ -81,6 +81,7 @@ export const useReplaceOrDeleteWordQuery = (
     const newArr = [];
     set.forEach((el) => newArr.push(el));
     if (defaultName) {
+      console.log(defaultName);
       newArr.unshift(defaultName);
       return {
         [nameQuery]: newArr.join(";"),

@@ -4,15 +4,24 @@
     <div class="about__size_content">
       <div class="about__size_item" v-for="item in arrSize" :key="item">
         <UIButtonMyButton
+          class="about__size_btn"
           :aria-label="item"
           :info="item"
+          padding="12px 0"
           fontSize="20"
-          cursor-class="animateCursor"
+          data-cursor-class="animateCursor"
         />
       </div>
     </div>
     <div class="about__size_menu">
-      <div class="about__size_text" v-for="item in arrTable" :key="item">
+      <div
+        class="about__size_text"
+        v-for="(item, idx) in arrTable"
+        :key="item"
+        data-cursor-class="animateCursor"
+        :class="{ activeTable: activeTableIdx === idx }"
+        @click="activeTableIdx = idx"
+      >
         {{ item }}
         <div class="about__size_vector">
           <svg
@@ -43,6 +52,7 @@ export default {
     return {
       arrSize: ["s", "m", "l", "xl"],
       arrTable: ["таблица размеров", "обмеры изделия"],
+      activeTableIdx: null,
     };
   },
 };
@@ -53,9 +63,37 @@ export default {
   margin-bottom: 20px;
 }
 .about__size_title {
-  font-weight: 200;
-  font-size: 16px;
+  font-weight: 300;
+  font-size: 17px;
   color: var(--brown);
   text-transform: lowercase;
+  margin-bottom: 10px;
 }
+.about__size_content {
+  max-width: 500px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 20px;
+  margin-bottom: 20px;
+}
+.about__size_menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 500px;
+}
+.about__size_text {
+  display: flex;
+  align-items: center;
+}
+.about__size_text svg {
+  transition: all 0.4s ease;
+}
+.about__size_vector {
+  display: flex;
+  margin-left: 30px;
+}
+/* .activeTable svg {
+  transform: rotate(90deg);
+} */
 </style>
