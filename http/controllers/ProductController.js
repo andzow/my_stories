@@ -93,7 +93,7 @@ export default class ProductController {
 
     static async productOne(data) { // получение товара
       try {
-        const response = await PostService.productOne(data);
+        const response = await ProductServices.productOne(data);
         return response.data;
       } catch (e) {
         console.log(e.response?.data?.message);

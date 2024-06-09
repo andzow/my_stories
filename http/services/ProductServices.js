@@ -33,8 +33,7 @@ export default class ProductServices {
     return $api.get("/product/getNew");
   }
 
-    static async productOne (data) {
-        console.log(data)
+    static async productOne(data) {
         return $api.get('/product/' + data.name + '/' + data.id)
     }
 

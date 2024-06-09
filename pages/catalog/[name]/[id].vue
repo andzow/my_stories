@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import ProductController from "@/http/controllers/ProductController";
 export default {
   data() {
     return {
@@ -31,9 +32,10 @@ export default {
   created() {
     this.initApp();
   },
-  mounted() {
+  async mounted() {
     const bodyEl = document.body;
     bodyEl.style.overflow = "auto";
+    const data = await ProductController.productOne(this.$route.params)
   },
 };
 </script>
