@@ -33,10 +33,9 @@ export default class ProductServices {
         return $api.get('/product/getNew')
     }
 
-    static async productOne (name, query) {
-        return $api.get('/product/' + name, {
-            params: query
-        })
+    static async productOne (data) {
+        console.log(data)
+        return $api.get('/product/' + data.name + '/' + data.id)
     }
 
     static async updateProduct(dataObject) {

@@ -3,9 +3,11 @@
 </template>
 
 <script>
+import ProductController from "@/http/controllers/ProductController";
 export default {
-  mounted() {
-    console.log(this.$route);
+  async mounted() {
+    const data = await ProductController.productOne(this.$route)
+    console.log(data)
   },
 };
 </script>

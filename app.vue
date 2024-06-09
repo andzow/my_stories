@@ -1,10 +1,10 @@
 <template>
-  <!-- <UIMyHeader /> -->
+  <UIMyHeader />
   <main class="page">
     <NuxtPage />
     <UIMyModalStatus />
-    <!-- <UIMyCursor />
-    <UIMyCursorCircle /> -->
+    <UIMyCursor />
+    <UIMyCursorCircle />
   </main>
   <UIMyFooter />
 </template>

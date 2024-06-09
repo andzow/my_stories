@@ -10,7 +10,10 @@ export default defineNuxtConfig({
       mode: "out-in",
     },
   },
-
+  routeRules: {
+    "/admin": { ssr: false },
+    "/login": { ssr: false },
+  },
   ssr: true,
   modules: ["@nuxt/image"],
 });

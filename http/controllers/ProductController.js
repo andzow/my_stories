@@ -91,9 +91,9 @@ export default class ProductController {
       }
     }
 
-    static async productOne(name, query) { // получение товара
+    static async productOne(data) { // получение товара
       try {
-        const response = await PostService.productOne(name, query);
+        const response = await PostService.productOne(data);
         return response.data;
       } catch (e) {
         console.log(e.response?.data?.message);
