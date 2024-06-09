@@ -1,21 +1,28 @@
 <template>
-  <!-- <UIMyHeader /> -->
+  <UIMyHeader />
   <main class="page">
     <NuxtPage />
     <UIMyModalStatus />
-    <!-- <UIMyCursor />
-    <UIMyCursorCircle /> -->
+    <UIMyCursor />
+    <UIMyCursorCircle />
   </main>
   <UIMyFooter />
 </template>
 
 <script>
+import AuthController from "@/http/controllers/AuthController";
+
 export default {
   data() {
     return {
       useCheckAnimationArr: useCheckAnimationArr(),
       useCursor: useCursor(),
     };
+  },
+  async mounted() {
+    if (localStorage.getItem("accessToken")) {
+      await AuthController.cheackAuth();
+    }
   },
   watch: {
     $route() {
@@ -43,5 +50,5 @@ button {
 .page {
   width: 100%;
   overflow: hidden;
-} */
+}
 </style>

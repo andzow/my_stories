@@ -3,10 +3,10 @@
 </template>
 
 <script>
+import ProductController from "@/http/controllers/ProductController";
+
 export default {
-  mounted() {
-    console.log(this.$route);
-  },
+  mounted() {},
 };
 </script>
 
