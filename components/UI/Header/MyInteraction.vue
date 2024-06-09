@@ -1,11 +1,14 @@
 <template>
-  <div class="header__interaction">
+  <div
+    class="header__interaction"
+    :class="{ activeSvgIteraction: changeHeader }"
+  >
     <div class="header__interaction_search">
       <button
         class="header__interaction_btn"
         aria-label="Открыть поиск"
         title="Поиск по названию товара"
-        cursor-class="animateCursor"
+        data-cursor-class="animateCursor"
         @click="setSearch"
       >
         <svg
@@ -37,7 +40,7 @@
         class="header__interaction_of"
         title="Открыть корзину"
         aria-label="Корзина"
-        cursor-class="animateCursor"
+        data-cursor-class="animateCursor"
       >
         <svg
           width="24"
@@ -81,6 +84,9 @@
 
 <script>
 export default {
+  props: {
+    changeHeader: Boolean,
+  },
   data() {
     return {
       useCursor: useCursor(),
@@ -99,6 +105,12 @@ export default {
 .header__interaction {
   display: flex;
   align-items: center;
+}
+.header__interaction path {
+  transition: all 0.4s ease;
+}
+.activeSvgIteraction path {
+  stroke: var(--brown);
 }
 .header__interaction_search {
   margin-right: 20px;

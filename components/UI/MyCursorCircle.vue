@@ -19,11 +19,18 @@ export default {
     const speed = 1;
 
     const updateCoordinates = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      try {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        if (e?.target?.className?.includes("footer")) {
+          cursorCircle.style.backgroundColor = "#fff";
+          return;
+        }
+        cursorCircle.style.backgroundColor = "#a8ab98";
+      } catch {}
     };
 
-    window.addEventListener("mousemove", updateCoordinates);
+    window.addEventListener("pointermove", updateCoordinates);
 
     function getAngle(diffX, diffY) {
       return (Math.atan2(diffY, diffX) * 180) / Math.PI;
@@ -65,14 +72,15 @@ export default {
 
 @media (hover: hover) and (pointer: fine) {
   .cursor__circle {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
     margin-top: -50%;
     margin-left: -50%;
     border-radius: 50%;
     background-color: #a8ab98;
-    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-      width 0.3s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s;
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+      width 0.4s cubic-bezier(0.25, 1, 0.5, 1), height 0.4s,
+      background-color 0.4s;
   }
 }
 </style>
