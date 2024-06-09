@@ -23,12 +23,18 @@ export default class ProductServices {
         })
     }
 
+    static async getOther(query) {
+        return $api.get('/product/getOther', {
+            params: query
+        })
+    }
+
     static async getNew(query) {
         return $api.get('/product/getNew')
     }
 
-    static async productOne (id, query) {
-        return $api.get('/product/' + id, {
+    static async productOne (name, query) {
+        return $api.get('/product/' + name, {
             params: query
         })
     }
