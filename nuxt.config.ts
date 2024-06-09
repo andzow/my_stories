@@ -13,11 +13,6 @@ export default defineNuxtConfig({
     "/admin": { ssr: false },
     "/login": { ssr: false },
   },
-  routeRules: {
-    "/admin": { ssr: false },
-    "/login": { ssr: false },
-  },
-
   ssr: true,
   modules: ["@nuxt/image"],
 });
