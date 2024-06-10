@@ -23,21 +23,13 @@ export default class ProductServices {
     });
   }
 
-  static async getOther(query) {
-    return $api.get("/product/getOther", {
-      params: query,
-    });
-  }
-
   static async getNew(query) {
     return $api.get("/product/getNew");
   }
 
-  static async productOne(name, query) {
-    return $api.get("/product/" + name, {
-      params: query,
-    });
-  }
+    static async productOne(data) {
+        return $api.get('/product/' + data.name + '/' + data.id)
+    }
 
   static async updateProduct(dataObject) {
     return $api.put("/product/update", dataObject);

@@ -41,16 +41,6 @@ export default class ProductController {
       }
     }
 
-    static async getOther(query) { // другие товары
-      try {
-        const response = await ProductServices.getOther(query);
-        return response.data;
-      } catch (e) {
-        console.log(e.response?.data?.message);
-        return e.response.status;
-      }
-    }
-
     static async getProductAll(query) {
       try {
         const response = await ProductServices.getProductAll(query);
@@ -91,9 +81,9 @@ export default class ProductController {
       }
     }
 
-    static async productOne(name, query) { // получение товара
+    static async productOne(data) { // получение товара
       try {
-        const response = await PostService.productOne(name, query);
+        const response = await ProductServices.productOne(data);
         return response.data;
       } catch (e) {
         console.log(e.response?.data?.message);
