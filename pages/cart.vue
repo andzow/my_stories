@@ -1,6 +1,8 @@
 <template>
   <div>
     <CartMyMain />
+    <CartMySlider />
+    <UIMyNoise />
   </div>
 </template>
 

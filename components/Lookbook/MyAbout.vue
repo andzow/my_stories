@@ -47,7 +47,8 @@ export default {
 .about__text {
   font-size: 16px;
   font-weight: 300;
-  line-height: 140%;
+  text-transform: lowercase;
+  text-align: justify;
   color: var(--brown);
   max-width: 354px;
   opacity: 0;

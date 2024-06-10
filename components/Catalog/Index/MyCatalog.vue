@@ -2,23 +2,13 @@
   <section class="catalog" id="catalog__content">
     <div class="catalog__content">
       <UICardMyCard
-        @click="$router.push('/catalog/сарафан')"
+        @click="$router.push('/catalog/сарафан/id')"
         v-for="(item, idx) in useCatalogItems"
         :key="item"
         :item="item"
         :idx="idx"
       />
     </div>
-    <!-- <div class="catalog__button">
-      <UIButtonMyButton
-        @click="addCard"
-        aria-label="загрузить еще"
-        info="загрузить еще"
-        fontSize="24"
-        cursor-class="animateCursor"
-        bigSize="bigSize"
-      />
-    </div> -->
   </section>
 </template>
 

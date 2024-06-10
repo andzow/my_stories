@@ -162,7 +162,6 @@ export default {
 .filter__chapter_title {
   font-size: 17px;
   font-weight: 300;
-  line-height: 140%;
   color: var(--brown);
   margin-bottom: 15px;
   text-transform: lowercase;

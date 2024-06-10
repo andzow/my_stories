@@ -1,11 +1,16 @@
 <template>
-  <div class="spinner">
+  <div class="spinner" :class="{ disableBack: backgroundDisable }">
     <div class="spinner__container"></div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    backgroundDisable: Boolean,
+  },
+  mounted() {},
+};
 </script>
 
 <style scoped>
@@ -20,6 +25,9 @@ export default {};
   z-index: 10;
 }
 
+.disableBack {
+  background-color: rgba(0, 0, 0, 0);
+}
 .spinner__container {
   display: inline-block;
   width: 40px;
