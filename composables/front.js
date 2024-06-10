@@ -18,7 +18,11 @@ export const useCheckReset = () => useState("use_check_reset", () => false);
 export const useCatalogItems = () => useState("use_catalog_items", () => []);
 
 export const useFilterScroll = () => useState("use_filter_scroll", () => false);
+export const useScrollCheckMain = () =>
+  useState("use_scroll_main", () => false);
 
+export const useTableSize = () => useState("use_table_size", () => false);
+export const useTableMeus = () => useState("use_table_meus", () => false);
 const animationsArrGsap = [];
 
 export const useGsapAnimationOpacity = (
@@ -95,9 +99,6 @@ export const useReplaceOrDeleteWordQuery = (
     [nameQuery]: defaultName,
   };
 };
-
-export const useScrollCheckMain = () =>
-  useState("use_scroll_main", () => false);
 
 export const useFilterFlout = () => {
   var a = document.querySelector("#filter__item"),

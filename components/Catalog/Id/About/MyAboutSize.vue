@@ -19,8 +19,7 @@
         v-for="(item, idx) in arrTable"
         :key="item"
         data-cursor-class="animateCursor"
-        :class="{ activeTable: activeTableIdx === idx }"
-        @click="activeTableIdx = idx"
+        @click="idx === 0 ? (useTableSize = true) : (useTableMeus = true)"
       >
         {{ item }}
         <div class="about__size_vector">
@@ -53,6 +52,8 @@ export default {
       arrSize: ["s", "m", "l", "xl"],
       arrTable: ["таблица размеров", "обмеры изделия"],
       activeTableIdx: null,
+      useTableSize: useTableSize(),
+      useTableMeus: useTableMeus(),
     };
   },
 };
@@ -93,7 +94,4 @@ export default {
   display: flex;
   margin-left: 30px;
 }
-/* .activeTable svg {
-  transform: rotate(90deg);
-} */
 </style>

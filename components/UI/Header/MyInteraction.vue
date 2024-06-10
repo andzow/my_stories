@@ -41,6 +41,7 @@
         title="Открыть корзину"
         aria-label="Корзина"
         data-cursor-class="animateCursor"
+        @click="$router.push('/cart')"
       >
         <svg
           width="24"
