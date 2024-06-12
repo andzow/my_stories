@@ -17,8 +17,8 @@ export const useDimension = () => useState("use_dimension", () => [{name: '', ar
 export const useDimensionItem= () => useState("use_dimension_item", () => undefined);
 
 export const useName = () => useState("use_name", () => '');
-export const usePrice = () => useState("use_price", () => null);
-export const useDiscount = () => useState("use_discount", () => null);
+export const usePrice = () => useState("use_price", () => '');
+export const useDiscount = () => useState("use_discount", () => '');
 export const useArticul = () => useState("use_articul", () => '');
 export const useText = () => useState("use_text", () => '');
 export const useCharacteristic = () => useState("use_сharacteristic", () => '');

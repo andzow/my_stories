@@ -35,30 +35,30 @@
             <p class="product__line">(  1  ) о товаре</p>
             <div class="product__log">
               <div class="product__info">
-                <span class="product__prefix">заголовок</span>
-                <input class="product__input" type="text" placeholder="название" v-model="isName">
+                <span class="product__prefix" :class="{'product__prefix_error': nameValidator === 1}">заголовок</span>
+                <input class="product__input" :class="{'product__input_error': nameValidator === 1}" type="text" placeholder="название" v-model="isName" @input="validator">
               </div>
               <div class="product__dop">
                 <div class="product__info product__info_special">
-                  <span class="product__prefix">цена</span>
-                  <input class="product__input product__input_special" type="number" placeholder="значение" v-model="isPrice">
+                  <span class="product__prefix" :class="{'product__prefix_error': priceValidator === 1}">цена</span>
+                  <input class="product__input product__input_special" :class="{'product__input_error': priceValidator === 1}" type="number" placeholder="значение" v-model="isPrice" @input="validator">
                 </div>
                 <div class="product__info product__info_special">
                   <span class="product__prefix">цена со скидкой</span>
                   <input class="product__input product__input_special" type="number" placeholder="значение" v-model="isDiscount">
                 </div>
                 <div class="product__info">
-                  <span class="product__prefix">артикул</span>
-                  <input class="product__input" type="number" placeholder="значение" v-model="isArticul">
+                  <span class="product__prefix" :class="{'product__prefix_error': articulValidator === 1}">артикул</span>
+                  <input class="product__input" :class="{'product__input_error': articulValidator === 1}" type="number" placeholder="значение" v-model="isArticul" @input="validator">
                 </div>
               </div>
               <div class="product__info">
-                <span class="product__prefix">описание</span>
-                <textarea class="product__textarea" type="text" placeholder="напишите описание" v-model="isText"/>
+                <span class="product__prefix" :class="{'product__prefix_error': textValidator === 1}">описание</span>
+                <textarea class="product__textarea" :class="{'product__textarea_error': textValidator === 1}" type="text" placeholder="напишите описание" @input="validator" v-model="isText"/>
               </div>
               <div class="product__info">
-                <span class="product__prefix">характеристики</span>
-                <textarea class="product__textarea" type="text" placeholder="напишите характеристику" v-model="isCharacteristic"/>
+                <span class="product__prefix" :class="{'product__prefix_error': characteristicValidator === 1}">характеристики</span>
+                <textarea class="product__textarea" :class="{'product__textarea_error': characteristicValidator === 1}" type="text" placeholder="напишите характеристику" @input="validator" v-model="isCharacteristic"/>
               </div>
               <div class="product__info">
                 <span class="product__prefix">Раздел каталога</span>
@@ -149,8 +149,8 @@
             <div class="product__log">
               <div class="product__dop product__dop_special">
                 <div class="product__info product__info_special">
-                  <span class="product__prefix product__prefix_special">цвет</span>
-                  <input class="product__input product__input_special" type="text" placeholder="название" v-model="isColor">
+                  <span class="product__prefix product__prefix_special" :class="{'product__prefix_error': colorValidator === 1}">цвет</span>
+                  <input class="product__input product__input_special"  :class="{'product__input_error': colorValidator === 1}" type="text" placeholder="название" v-model="isColor" @input="validator">
                 </div>
                 <div class="product__info">
                   <span class="product__prefix">цветовое отображение</span>
@@ -165,6 +165,7 @@
               <div class="product__download">
                 <UIMyButton
                   :info="'загрузить фото'"
+                  :class="{'product__prefix_error': photoValidator === 1}"
                   :size="'big'"
                   @click="triggerFileInput"
                 />
@@ -255,6 +256,14 @@ export default {
       useProductUpdate: useProductUpdate(),
 
       usePage: usePage(),
+      nameValidator: 0,
+      priceValidator: 0,
+      articulValidator: 0,
+      textValidator: 0,
+      characteristicValidator: 0,
+      colorValidator: 0,
+      photoValidator: 0,
+      allValidator: 0
     };
   },
   methods: {
@@ -268,6 +277,7 @@ export default {
         this.listImages.push({ src: URL.createObjectURL(files[i]) });
       }
       event.target.value = '';
+      this.validator()
     },
     triggerVideoInput() {
       this.$refs.videoInput.click();
@@ -359,12 +369,14 @@ export default {
       this.videoUrl = null
     },
     async sendData() {
-      this.useProduct = false;
+      this.validator()
+      if (this.allValidator === 2) {
+        this.useProduct = false;
       this.useStatus = true
       const formData = new FormData();
       formData.append("name", this.isName);
       formData.append("price", this.isPrice);
-      if (this.isDiscount !== null) {
+      if (this.isDiscount.toString().length > 0) {
         formData.append("discount", this.isDiscount);
       }
       formData.append("articul", this.isArticul);
@@ -380,7 +392,9 @@ export default {
         formData.append("files", file);
       });
 
-      formData.append("files", this.isVideo)
+      if (this.isVideo !== null) {
+        formData.append("files", this.isVideo)
+      }
 
       await ProductController.createProduct(formData)
       this.resetdata()
@@ -388,11 +402,12 @@ export default {
       this.useProducts = data.products
       this.usePage = data.totalPages
       this.useStatus = null
+      }
     },
     resetdata() {
       this.isName = ''
-      this.isPrice = null
-      this.isDiscount = null
+      this.isPrice = ''
+      this.isDiscount = ''
       this.isArticul = ''
       this.isText = ''
       this.isCharacteristic = ''
@@ -407,15 +422,17 @@ export default {
       this.videoUrl = null
     },
     async updateData() {
-      this.useProduct = false;
+      this.validator()
+      if (this.allValidator === 2) {
+        this.useProduct = false;
       this.useStatus = true
       const formData = new FormData();
       formData.append("id", this.useProductId);
       formData.append("name", this.isName);
       formData.append("price", this.isPrice);
-      if (this.isDiscount !== null) {
+      if (this.isDiscount.toString().length > 0) {
         formData.append("discount", this.isDiscount);
-      }
+      } 
       formData.append("articul", this.isArticul);
       formData.append("text", this.isText);
       formData.append("characteristic", this.isCharacteristic);
@@ -429,7 +446,9 @@ export default {
         formData.append("files", file);
       });
 
-      formData.append("files", this.isVideo)
+      if (this.isVideo !== null) {
+        formData.append("files", this.isVideo)
+      }
 
       await ProductController.updateProduct(formData)
       this.resetdata()
@@ -437,6 +456,64 @@ export default {
       this.useProducts = data.products
       this.useStatus = null
       this.useProductId = null
+      }
+    },
+    async validator() {
+      if (this.isName.length === 0) {
+        this.nameValidator = 1
+      } else {
+        this.nameValidator = 2
+      }
+
+      if (this.isPrice.length === 0) {
+        this.priceValidator = 1
+      } else {
+        this.priceValidator = 2
+      }
+
+      if (this.isArticul.length === 0) {
+        this.articulValidator = 1
+      } else {
+        this.articulValidator = 2
+      }
+
+      if (this.isText.length === 0) {
+        this.textValidator = 1
+      } else {
+        this.textValidator = 2
+      }
+
+      if (this.isCharacteristic.length === 0) {
+        this.characteristicValidator = 1
+      } else {
+        this.characteristicValidator = 2
+      }
+
+      if (this.isColor.length === 0) {
+        this.colorValidator = 1
+      } else {
+        this.colorValidator = 2
+      }
+
+      if (this.listImages.length === 0) {
+        this.photoValidator = 1
+      } else {
+        this.photoValidator = 2
+      }
+
+      if (
+        this.nameValidator === 2 && 
+        this.priceValidator === 2 && 
+        this.articulValidator === 2 && 
+        this.textValidator === 2 && 
+        this.characteristicValidator === 2 &&
+        this.colorValidator === 2 && 
+        this.photoValidator === 2
+        ) {
+        this.allValidator = 2
+      } else {
+        this.allValidator = 1
+      }
     }
   },
 };
@@ -749,6 +826,21 @@ export default {
 .product__btn_reset {
   width: 550px !important;
   flex-grow: 1;
+}
+.product__prefix_error {
+  color: #f3224c;
+}
+.product__input_error::placeholder {
+  color: #f3224c;
+}
+.product__input_error {
+  border-bottom-color: #f3224c;
+}
+.product__textarea_error::placeholder {
+  color: #f3224c;
+}
+.product__textarea_error {
+  border-color: #f3224c;
 }
 .v-enter-active,
 .v-leave-active {
