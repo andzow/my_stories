@@ -312,6 +312,7 @@ export default {
   font-weight: 300;
   font-size: 17px;
   color: var(--yellow);
+  text-transform: lowercase;
 }
 .footer__data_inf:nth-child(2) {
   margin-left: 120px;
