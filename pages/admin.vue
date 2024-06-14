@@ -16,7 +16,10 @@ import CategoryController from "@/http/controllers/CategoryController";
 export default {
   data() {
     return {
-      useCategoryAll: useCategoryAll()
+      useCategoryAll: useCategoryAll(),
+      useCode: useCode(),
+      useProduct: useProduct(),
+      useCategory: useCategory()
     }
   },
   setup() {
@@ -26,6 +29,17 @@ export default {
   },
   async mounted() {
     this.useCategoryAll = await CategoryController.getAll()
+  },
+  watch: {
+    useCode() {
+      document.body.style.overflow = this.useCode ? 'hidden' : '';
+    },
+    useProduct() {
+      document.body.style.overflow = this.useProduct ? 'hidden' : '';
+    },
+    useCategory() {
+      document.body.style.overflow = this.useCategory ? 'hidden' : '';
+    }
   }
 }
 </script>

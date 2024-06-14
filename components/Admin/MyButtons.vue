@@ -50,8 +50,8 @@ export default {
         },
         resetdata() {
             this.isName = ''
-            this.isPrice = null
-            this.isDiscount = null
+            this.isPrice = ''
+            this.isDiscount = ''
             this.isArticul = ''
             this.isText = ''
             this.isCharacteristic = ''

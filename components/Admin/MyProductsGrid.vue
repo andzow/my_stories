@@ -98,7 +98,11 @@ export default {
       this.useProductUpdate = false
       this.isName = item.name
       this.isPrice = item.price
-      this.isDiscount = item.discount
+      if (item.discount !== null) {
+        this.isDiscount = item.discount
+      } else {
+        this.isDiscount = ''
+      }
       this.isArticul = item.articul
       this.isText = item.text
       this.isCharacteristic = item.characteristic
@@ -117,12 +121,14 @@ export default {
         this.listImages.push({ src: URL.createObjectURL(imageFile) });
       }
 
-      const videoUrl = this.imgSrc + item.video
-      const response = await fetch(videoUrl);
-      const blob = await response.blob();
-      const videoFile = new File([blob], item.video.split('/').pop(), { type: blob.type });
-      this.isVideo = videoFile
-      this.videoUrl = URL.createObjectURL(videoFile) 
+      if (item.video !== null) {
+        const videoUrl = this.imgSrc + item.video
+        const response = await fetch(videoUrl);
+        const blob = await response.blob();
+        const videoFile = new File([blob], item.video.split('/').pop(), { type: blob.type });
+        this.isVideo = videoFile
+        this.videoUrl = URL.createObjectURL(videoFile) 
+      }
     },
     updateProduct(item) {
       this.copyProduct(item)
@@ -131,8 +137,8 @@ export default {
     },
     resetProduct() {
       this.isName = ''
-      this.isPrice = null
-      this.isDiscount = null
+      this.isPrice = ''
+      this.isDiscount = ''
       this.isArticul = ''
       this.isText = ''
       this.isCharacteristic = ''
