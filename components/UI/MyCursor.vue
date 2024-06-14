@@ -60,7 +60,10 @@ export default {
 
         mouse.x = e.clientX;
         mouse.y = e.clientY;
-        if (e?.target?.className?.includes("footer")) {
+        if (
+          e?.target?.className?.includes("footer") ||
+          e?.target?.className?.includes("promocode")
+        ) {
           cursorCircle.style.border = "1px solid #fff";
           return;
         }

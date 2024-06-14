@@ -22,7 +22,10 @@ export default {
       try {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
-        if (e?.target?.className?.includes("footer")) {
+        if (
+          e?.target?.className?.includes("footer") ||
+          e?.target?.className?.includes("promocode")
+        ) {
           cursorCircle.style.backgroundColor = "#fff";
           return;
         }

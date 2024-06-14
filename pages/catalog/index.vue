@@ -1,11 +1,12 @@
 <template>
   <div>
-    <CatalogIndexMyMain />
+    <CatalogIndexMyMain @activeLine="activeLine = true" />
     <UIMyNoise />
     <UIMyAnimationLine
       duration="13"
       :arrAnimationLine="arrAnimationLine"
       :fixed="true"
+      v-if="activeLine"
     />
   </div>
 </template>
@@ -17,6 +18,7 @@ export default {
       useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
       arrFilterChapter: useArrFilterChapter(),
       arrFilterSize: useArrFilterSize(),
+      activeLine: false,
       arrAnimationLine: [
         { name: ".header__content", defaultLine: false, indent: "left" },
         { name: ".card1", defaultLine: false, indent: "left" },

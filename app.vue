@@ -29,6 +29,13 @@ export default {
     if (localStorage.getItem("accessToken")) {
       await AuthController.cheackAuth();
     }
+    // document.addEventListener("visibilitychange", () => {
+    //   if (!document.hidden && this.swiper) {
+    //     this.useCheckAnimationArr.forEach((el) => {
+    //       el.revert();
+    //     });
+    //   }
+    // });
   },
   watch: {
     $route() {

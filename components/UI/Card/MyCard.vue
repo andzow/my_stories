@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="['card' + (idx + 1)]">
+  <div class="card" :class="['card' + (idx + 1)]" v-if="initSwiper">
     <div class="card__content">
       <div class="card__image" :class="['card__image' + (idx + 1)]">
         <div
@@ -40,17 +40,22 @@ export default {
     return {
       arrNewStyleTexture: null,
       useCursor: useCursor(),
+      initSwiper: null,
     };
   },
   methods: {
     async initApp() {
       await nextTick(() => {
         this.useCursor = true;
+        this.initSwiper = true;
+        this.$emit("activeLine");
       });
     },
   },
   mounted() {
-    this.initApp();
+    setTimeout(() => {
+      this.initApp();
+    }, 0);
   },
 };
 </script>

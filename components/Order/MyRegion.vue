@@ -1,0 +1,97 @@
+<template>
+  <div class="region">
+    <OrderUIMyTitle>регион доставки</OrderUIMyTitle>
+    <form class="region__form" @submit.prevent>
+      <div class="region__label">Город*</div>
+      <div class="region__block">
+        <input
+          class="region__input"
+          type="text"
+          placeholder="введите название города..."
+          @input="setRegion"
+          v-model="inpVal"
+        />
+        <div class="region__img">
+          <button class="region__btn" data-cursor-class="animateCursor">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
+                stroke="#D2BCAE"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M22 22L20 20"
+                stroke="#D2BCAE"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      inpVal: "Москва",
+    };
+  },
+  methods: {
+    setRegion() {},
+  },
+};
+</script>
+
+<style scoped>
+.region {
+  padding: 20px 15px;
+  border: 1px solid #af9280;
+  margin-bottom: 10px;
+}
+.region__label {
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--brown);
+  text-transform: lowercase;
+  margin-bottom: 8px;
+}
+.region__block {
+  position: relative;
+}
+.region__input {
+  width: 100%;
+  box-sizing: border-box;
+  background: white;
+  padding: 13px 20px;
+  border: none;
+  font-weight: 300;
+  font-size: 18px;
+  color: var(--brown);
+  /* text-transform: lowercase; */
+  transition: all 0.4s ease;
+}
+.region__input::placeholder {
+  color: var(--brown);
+}
+.region__img {
+  position: absolute;
+  top: 26%;
+  right: 2%;
+}
+.region__btn {
+  display: flex;
+}
+</style>

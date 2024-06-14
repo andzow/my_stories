@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import ProductController from "@/http/controllers/ProductController";
 export default {
   data() {
     return {
@@ -34,6 +33,7 @@ export default {
     const bodyEl = document.body;
     bodyEl.style.overflow = "auto";
   },
+  watch: {},
 };
 </script>
 
