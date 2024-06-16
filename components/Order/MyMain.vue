@@ -1,7 +1,7 @@
 <template>
   <section class="main">
     <div class="main__content">
-      <div class="main__menu">
+      <div class="main__menu" ref="mainMenu">
         <div class="main__info">
           <OrderMyRegion />
           <div class="main__block">
@@ -22,12 +22,9 @@
 <script>
 export default {
   data() {
-    return {
-      elHtml: null,
-    };
+    return {};
   },
-  methods: {},
-  async mounted() {},
+  mounted() {},
 };
 </script>
 
@@ -50,11 +47,7 @@ export default {
   grid-template-columns: 1fr 0.4fr;
   column-gap: 10px;
   margin-bottom: 50px;
-  overflow: hidden;
 }
-/* .main__info {
-  border: 1px solid red;
-} */
 .main__set {
   position: relative;
 }

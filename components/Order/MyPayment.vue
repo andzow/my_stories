@@ -46,7 +46,15 @@ export default {
           description: "сдэк (постамат)",
         },
       ],
+      useOrderInfo: useOrderInfo(),
     };
+  },
+  watch: {
+    useOrderInfo(val) {
+      if (val && this.selectedOption) {
+        this.useOrderInfo.payment = true;
+      }
+    },
   },
 };
 </script>

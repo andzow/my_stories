@@ -37,6 +37,13 @@
             </svg>
           </button>
         </div>
+        <Transition name="fade-dropdown">
+          <OrderMyRegionCitys
+            v-if="activeDropdown"
+            @close="activeDropdown = false"
+            @keydown.esc="activeDropdown = false"
+          />
+        </Transition>
       </div>
     </form>
   </div>
@@ -47,10 +54,26 @@ export default {
   data() {
     return {
       inpVal: "Москва",
+      activeDropdown: false,
+      useOrderInfo: useOrderInfo(),
     };
   },
   methods: {
-    setRegion() {},
+    setRegion() {
+      if (this.inpVal.length > 0) {
+        this.activeDropdown = true;
+      } else {
+        this.activeDropdown = false;
+      }
+      this.useCursor = true;
+    },
+  },
+  watch: {
+    useOrderInfo(val) {
+      if (val) {
+        this.useOrderInfo.region = this.inpVal;
+      }
+    },
   },
 };
 </script>
@@ -93,5 +116,25 @@ export default {
 }
 .region__btn {
   display: flex;
+}
+.fade-dropdown-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+.fade-dropdown-enter-to {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: all 0.4s ease;
+}
+.fade-dropdown-leave-from {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: all 0.4s ease;
+}
+.fade-dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
 }
 </style>

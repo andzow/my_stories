@@ -143,7 +143,7 @@ export default {
       promocodeState: "",
       inputPrimer: ["active"],
       useCursor: useCursor(),
-      timeLine: null,
+      timeLine: useScrollTriggerTimeLine(),
     };
   },
   methods: {

@@ -73,20 +73,7 @@ export default {
       useCursor: useCursor(),
     };
   },
-  methods: {
-    clickOutside() {
-      // setTimeout(() => {
-      //   const blockEl = document.querySelector(".table");
-      //   document.addEventListener("mouseup", (e) => {
-      //     // const click = e.composedPath().includes(blockEl);
-      //     // if (!click) {
-      //     //   this.useTableSize = false;
-      //     //   this.useTableMeus = false;
-      //     // }
-      //   });
-      // }, 0);
-    },
-  },
+  methods: {},
   mounted() {
     const body = document.body;
     body.style.overflow = "hidden";
@@ -95,6 +82,15 @@ export default {
       this.clickOutside();
       this.$refs.tableClose.focus();
     });
+    setTimeout(() => {
+      const blockEl = document.querySelector(".table__container");
+      document.addEventListener("mouseup", (e) => {
+        const click = e.composedPath().includes(blockEl);
+        if (!click) {
+          this.$emit("close");
+        }
+      });
+    }, 0);
   },
 };
 </script>

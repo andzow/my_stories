@@ -57,12 +57,14 @@ export default {
       try {
         const cursor = document.querySelector("#cursor-inside");
         const cursorCircle = cursor.querySelector(".cursor__inside");
+        const mouseMove = document.querySelector(".success__block");
 
         mouse.x = e.clientX;
         mouse.y = e.clientY;
         if (
           e?.target?.className?.includes("footer") ||
-          e?.target?.className?.includes("promocode")
+          e?.target?.className?.includes("promocode") ||
+          e.composedPath().includes(mouseMove)
         ) {
           cursorCircle.style.border = "1px solid #fff";
           return;

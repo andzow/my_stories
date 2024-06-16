@@ -26,6 +26,7 @@
         fontSize="24"
         data-cursor-class="animateCursor"
         bigSize="bigSize"
+        @click="useOrderInfo = {}"
       />
     </div>
   </div>
@@ -37,7 +38,39 @@ export default {
     return {
       selectedOption: null,
       option: "option",
+      allObjectsOrder: ["region", "delivery", "payment", "buyer"],
+      allObjectCheck: [],
+      useOrderInfo: useOrderInfo(),
+      checkVarible: 0,
     };
+  },
+  methods: {
+    redirectPayment() {
+      console.log("redirect");
+      this.checkVarible = 0;
+    },
+    cancelPayment() {
+      console.log("cancel");
+    },
+  },
+  watch: {
+    useOrderInfo(val) {
+      if (val) {
+        for (let key in val) {
+          const checkVar = this.allObjectsOrder.includes(key);
+          const checkVarArr = this.allObjectCheck.includes(key);
+          if (checkVar && !checkVarArr) {
+            this.checkVarible += 1;
+            this.allObjectCheck.push(key);
+          }
+          if (this.checkVarible === this.allObjectsOrder.length) {
+            this.redirectPayment();
+            this.checkVarible = 0;
+            this.allObjectCheck = [];
+          }
+        }
+      }
+    },
   },
 };
 </script>

@@ -59,7 +59,15 @@ export default {
           description: "доставка заказа в один из пунктов почты россии",
         },
       ],
+      useOrderInfo: useOrderInfo(),
     };
+  },
+  watch: {
+    useOrderInfo(val) {
+      if (val && this.selectedOption) {
+        this.useOrderInfo.delivery = "сдек";
+      }
+    },
   },
 };
 </script>

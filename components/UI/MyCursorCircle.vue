@@ -13,6 +13,7 @@ export default {
   mounted() {
     const cursor = document.querySelector("#cursor-circle");
     const cursorCircle = cursor.querySelector(".cursor__circle");
+    const mouseMove = document.querySelector(".success__block");
 
     const mouse = { x: -100, y: -100 };
     const pos = { x: 0, y: 0 };
@@ -24,7 +25,8 @@ export default {
         mouse.y = e.clientY;
         if (
           e?.target?.className?.includes("footer") ||
-          e?.target?.className?.includes("promocode")
+          e?.target?.className?.includes("promocode") ||
+          e.composedPath().includes(mouseMove)
         ) {
           cursorCircle.style.backgroundColor = "#fff";
           return;

@@ -185,13 +185,15 @@ export default {
 header {
   position: absolute;
   width: 100%;
-  padding: 26px 30px;
   z-index: 19;
 }
 .header__content {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 26px 30px;
 }
 .header__logo {
   display: flex;
