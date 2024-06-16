@@ -3,7 +3,7 @@
     <h1 class="main__title">( &nbsp;Каталог&nbsp; )</h1>
     <div class="main__content">
       <CatalogIndexMyFilter />
-      <CatalogIndexMyCatalog />
+      <CatalogIndexMyCatalog @activeLine="$emit('activeLine')" />
     </div>
   </section>
 </template>

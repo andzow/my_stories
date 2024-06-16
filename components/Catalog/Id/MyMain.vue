@@ -13,6 +13,7 @@
       :arrTable="arrTableSize"
       :arrObjectSize="arrObjectSize"
       @keydown.esc="useTableSize = false"
+      @close="useTableSize = false"
     />
   </Transition>
   <Transition>
@@ -21,6 +22,7 @@
       :arrTable="arrTableSize"
       :arrObjectSize="arrObjectSize"
       @keydown.esc="useTableMeus = false"
+      @close="useTableMeus = false"
     />
   </Transition>
   <Transition name="fade-table-blur">

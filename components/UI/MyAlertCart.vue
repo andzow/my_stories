@@ -1,5 +1,5 @@
 <template>
-  <div class="alert">
+  <div class="alert" tabindex="-1">
     <div class="alert__content">
       <div class="alert__info">
         <div
@@ -78,9 +78,11 @@ export default {
     },
     closeApp() {
       const blockEl = document.querySelector(".alert");
+      const btn = document.querySelector(".about__buttons_btn");
       document.addEventListener("mouseup", (e) => {
         const click = e.composedPath().includes(blockEl);
-        if (!click) {
+        const clickBnt = e.composedPath().includes(btn);
+        if (!click && !clickBnt) {
           clearTimeout(this.timeOut);
           this.timeOut = null;
           this.useAlertCart = false;

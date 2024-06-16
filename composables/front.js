@@ -214,3 +214,9 @@ export const useFilterFlout = () => {
     }
   } catch {}
 };
+
+export const useTimelineScrollTrigger = () =>
+  useState("use_timeline_scroll", () => null);
+export const useOrderInfo = () => useState("use_order_info", () => null);
+export const useScrollTriggerTimeLine = () =>
+  useState("use_timeline_scroll", () => null);

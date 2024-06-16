@@ -144,7 +144,7 @@ export default {
   watch: {
     async useCheckReset(val) {
       if (val) {
-        this.filterArrActiveQueryWord = ["все"];
+        this.filterArrActiveQueryWord = [];
       }
     },
   },

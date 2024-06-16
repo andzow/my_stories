@@ -102,7 +102,9 @@ export default {
       });
     },
     addToCart() {
-      if (this.useAlertCart) return;
+      if (this.useAlertCart) {
+        return;
+      }
       const arrLocaleStore = JSON.parse(localStorage.getItem("cart"));
       if (!arrLocaleStore || arrLocaleStore?.length <= 0) {
         this.arrObj.push(this.primerObj);
