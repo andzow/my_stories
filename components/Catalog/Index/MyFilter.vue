@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import CategoryController from "@/http/controllers/CategoryController";
+
 export default {
   data() {
     return {
@@ -86,10 +88,15 @@ export default {
     reset() {
       this.useCheckReset = true;
     },
+    async initFilter() {
+      const res = await CategoryController.getCategory();
+      console.log(res);
+    },
   },
   mounted() {
     this.checkResetBtn();
     this.initScrollTrigger();
+    this.initFilter();
   },
   watch: {
     async useCheckReset(val) {
