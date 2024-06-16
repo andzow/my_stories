@@ -62,6 +62,7 @@ export default {};
   font-size: 16px;
   font-weight: 300;
   margin-bottom: 25px;
+  text-transform: lowercase;
 }
 
 .main__run {

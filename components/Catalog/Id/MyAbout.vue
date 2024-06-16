@@ -103,7 +103,7 @@ export default {
     },
     addToCart() {
       if (this.useAlertCart) {
-        console.log(this.useAlertCart);
+        return;
       }
       const arrLocaleStore = JSON.parse(localStorage.getItem("cart"));
       if (!arrLocaleStore || arrLocaleStore?.length <= 0) {

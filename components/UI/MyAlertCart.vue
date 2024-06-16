@@ -78,7 +78,7 @@ export default {
     },
     closeApp() {
       const blockEl = document.querySelector(".alert");
-      const btn = document.querySelector(".average");
+      const btn = document.querySelector(".about__buttons_btn");
       document.addEventListener("mouseup", (e) => {
         const click = e.composedPath().includes(blockEl);
         const clickBnt = e.composedPath().includes(btn);
