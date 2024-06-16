@@ -5,7 +5,7 @@ export default class CategoryServices {
     return $api.get("/category/get");
   }
 
-  static async getCategory() {
+  static async getCategory(query) {
     return $api.get("/category/getCategory", {
       params: query,
     });

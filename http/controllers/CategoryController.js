@@ -11,9 +11,9 @@ export default class PromoController {
         }
     }
 
-    static async getCategory() { // категории
+    static async getCategory(query) { // категории
       try {
-          const response = await CategoryServices.getCategory()
+          const response = await CategoryServices.getCategory(query)
           return response.data
       } catch (e) {
           console.log(e.response?.data?.message)

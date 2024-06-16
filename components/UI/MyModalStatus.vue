@@ -126,7 +126,7 @@
             </div>
             <div class="modalInfo__info">
               <span class="modalInfo__prefix">значение</span>
-              <input class="modalInfo__input" v-model="isValue" type="number" placeholder="пусто">
+              <input class="modalInfo__input" v-model="isValue" type="text" placeholder="пусто">
             </div>
           </div>
           <div class="modalInfo__position">
@@ -147,7 +147,7 @@
             </div>
             <div class="modalInfo__info">
               <span class="modalInfo__prefix">значение</span>
-              <input class="modalInfo__input" v-model="isValueDimension" type="number" placeholder="пусто">
+              <input class="modalInfo__input" v-model="isValueDimension" type="text" placeholder="пусто">
             </div>
           </div>
           <div class="modalInfo__position">
