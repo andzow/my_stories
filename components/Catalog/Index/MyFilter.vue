@@ -1,14 +1,25 @@
 <template>
   <section class="filter">
-    <div class="filter__item" ref="filterItem" id="filter__item">
-      <CatalogIndexFilterMyChapter @openMethod="checkResetBtn" />
+    <div
+      class="filter__item"
+      ref="filterItem"
+      id="filter__item"
+      :class="{ activeFilter: arrFilterChapter }"
+    >
+      <CatalogIndexFilterMyChapter
+        @openMethod="checkResetBtn"
+        v-if="arrFilterChapter"
+      />
+      <CatalogIndexFilterMyChapterLoading v-else />
       <CatalogIndexFilterMySize @openMethod="checkResetBtn" />
       <CatalogIndexFilterMyPrice
+        v-if="(minVal || minVal <= 0) && maxVal"
         :minVal="minVal"
         :maxVal="maxVal"
         @openMethod="checkResetBtn"
       />
-      <div class="filter__ready">
+      <CatalogIndexFilterMyPriceLoading v-else />
+      <div class="filter__ready" v-if="arrFilterChapter">
         <UIButtonMyButton
           aria-label="применить"
           info="применить"
@@ -17,7 +28,7 @@
           @click="sendFilter"
         />
       </div>
-      <Transition name="filter-fade">
+      <Transition name="filter-fade" v-if="arrFilterChapter">
         <div class="filter__delete" :class="{ activeBtnDel: checkReset }">
           <UIButtonMyButton
             aria-label="сбросить"
@@ -35,21 +46,27 @@
 
 <script>
 import CategoryController from "@/http/controllers/CategoryController";
+import ProductController from "@/http/controllers/ProductController";
 
 export default {
   data() {
     return {
-      minVal: 2500,
-      maxVal: 9237,
+      minVal: useMinVal(),
+      maxVal: useMaxVal(),
+      arrFilterChapter: useArrFilterChapter(),
+      arrFilterSize: useArrFilterSize(),
       checkReset: false,
       useCheckPrice: useCheckPrice(),
       useFilterPrice: useFilterPrice(),
       useCheckReset: useCheckReset(),
-      useFilterFlout: useFilterFlout,
+      useCatalogItems: useCatalogItems(),
+      timeLineGsap: null,
+      useGsapAnimationOpacity: useGsapAnimationOpacity,
+      useFilterReset: useFilterReset(),
     };
   },
   methods: {
-    checkResetBtn() {
+    async checkResetBtn(check) {
       const routeQuery = this.$route.query;
       let sizeArr,
         chapterArr = null;
@@ -64,6 +81,11 @@ export default {
 
       const parsePriceMin = parseInt(this.useFilterPrice.activeMinVal);
       const parsePriceMax = parseInt(this.useFilterPrice.activeMaxVal);
+      if (check) {
+        await this.scrollToTop();
+        await this.initFilter();
+        await this.initItems();
+      }
 
       if (
         chapterArr.length > 0 ||
@@ -77,26 +99,51 @@ export default {
       }
       this.checkReset = false;
     },
-    async initScrollTrigger() {
-      await nextTick(() => {
-        this.useFilterFlout();
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return new Promise((resolve) => {
+        const scrollInterval = setInterval(() => {
+          if (document.documentElement.scrollTop === 0) {
+            clearInterval(scrollInterval);
+            resolve();
+          }
+        }, 100);
       });
     },
-    sendFilter() {
+    async sendFilter() {
       this.useCheckPrice = true;
+      await this.scrollToTop();
+      await this.initFilter();
+      await this.initItems();
     },
-    reset() {
+    async reset() {
       this.useCheckReset = true;
+      await this.scrollToTop();
+      await this.initFilter();
+      await this.initItems();
     },
     async initFilter() {
-      const res = await CategoryController.getCategory();
-      console.log(res);
+      try {
+        const res = await CategoryController.getCategory(this.$route.query);
+        this.arrFilterChapter = res.categorys;
+        this.arrFilterSize = res.uniqueNameArray;
+        this.minVal = !res.minPrice ? 0 : res.minPrice;
+        this.maxVal = !res.maxPrice ? 35000 : res.maxPrice;
+      } catch {}
+    },
+    async initItems() {
+      try {
+        const res = await ProductController.getFilter(this.$route.query);
+        this.useCatalogItems = res;
+      } catch {}
     },
   },
   mounted() {
     this.checkResetBtn();
-    this.initScrollTrigger();
-    this.initFilter();
+    this.useGsapAnimationOpacity([".filter"], ".catalog");
   },
   watch: {
     async useCheckReset(val) {
@@ -109,6 +156,13 @@ export default {
           },
         });
         this.checkResetBtn();
+        this.initFilter();
+      }
+    },
+    useFilterReset(val) {
+      if (val) {
+        this.reset();
+        this.useFilterReset = false;
       }
     },
   },
@@ -116,12 +170,18 @@ export default {
 </script>
 
 <style>
+.filter__item_block {
+  height: 300px;
+  width: 100%;
+}
 .sticky {
   position: fixed;
+  top: 0;
   z-index: 101;
 }
 .stop {
   position: relative;
+  top: 0;
   z-index: 101;
 }
 </style>
@@ -131,19 +191,25 @@ export default {
   position: relative;
   margin-right: 60px;
   max-width: 250px;
+  top: 0;
+  /* opacity: 0; */
+}
+.activeFilter {
+  animation-name: animationOpacity;
+  animation-duration: 1s;
 }
 .filter__item {
   position: relative;
+  top: 0;
   max-width: 100%;
-  max-width: 250px;
-  transition: all 0.4s ease;
+  /* transition: all 0.4s ease; */
   z-index: 30;
 }
+
 .filter__ready {
-  padding-bottom: 20px;
+  padding-bottom: 25px;
 }
 .filter__delete {
-  height: 45px;
   opacity: 0;
   transition: all 0.4s ease;
 }
@@ -152,23 +218,36 @@ export default {
 }
 .filter-fade-enter-from {
   opacity: 0;
-  height: 0;
   transition: all 0.4s ease;
 }
 .filter-fade-enter-to {
   opacity: 1;
-  height: 45px;
   transition: all 0.4s ease;
 }
 .filter-fade-leave-from {
   opacity: 1;
-  height: 45px;
   transition: all 0.4s ease;
 }
 
 .filter-fade-leave-to {
   opacity: 0;
-  height: 0px;
   transition: all 0.4s ease;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+@keyframes animationOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

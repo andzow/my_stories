@@ -37,6 +37,9 @@ export default {
       arrNewStyleTexture: null,
     };
   },
+  mounted() {
+    // console.log(this.item);
+  },
 };
 </script>
 

@@ -94,6 +94,7 @@ export default {
   z-index: 10;
   position: relative;
   overflow: hidden;
+  text-transform: lowercase;
   white-space: nowrap;
   cursor: none;
 }

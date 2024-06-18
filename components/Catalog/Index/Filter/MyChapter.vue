@@ -147,6 +147,9 @@ export default {
         this.filterArrActiveQueryWord = [];
       }
     },
+    filterArrActiveQueryWord(val) {
+      this.useCursor = true;
+    },
   },
 };
 </script>

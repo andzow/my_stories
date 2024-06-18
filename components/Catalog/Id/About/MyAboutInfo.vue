@@ -4,6 +4,7 @@
       class="about__info_header"
       @click="switchHeight"
       data-cursor-class="animateCursor"
+      v-show="arrProduct"
     >
       <h2 class="about__info_title">характеристика</h2>
       <div class="about__info_vector" :class="{ activeSvg: activeText }">
@@ -25,22 +26,39 @@
         </svg>
       </div>
     </div>
+    <div class="about__info_loading" v-if="!arrProduct">
+      <div class="about__info_load">
+        <UIMyLoadingItem
+          :item="{ loading: true }"
+          height="30px"
+          margin="20px"
+        />
+      </div>
+      <UIMyLoadingItem
+        :item="{ loading: true }"
+        height="20px"
+        margin="10px"
+        v-for="item in 5"
+        :key="item"
+      />
+    </div>
     <div class="about__info_content">
-      <p class="about__info_text">
-        Страна производства - Россия<br />
-        Цвет - Черный<br />
-        Материал - 100% лен.<br />
-      </p>
+      <p class="about__info_text" v-show="text && arrProduct">{{ text }}</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    arrProduct: {},
+  },
   data() {
     return {
       activeText: true,
       heightContent: null,
+      useProductObject: useProductObject(),
+      text: null,
     };
   },
   methods: {
@@ -64,8 +82,14 @@ export default {
       this.activeText = true;
     },
   },
-  mounted() {
-    this.initHeightTextContent();
+  mounted() {},
+  watch: {
+    useProductObject(val) {
+      if (val) {
+        this.text = val.product[0].characteristic;
+        this.initHeightTextContent();
+      }
+    },
   },
 };
 </script>
@@ -88,6 +112,8 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
 }
 .about__info_title {
   font-weight: 300;
@@ -109,11 +135,25 @@ export default {
   overflow: hidden;
   transition: all 0.4s ease;
 }
+.about__info_load {
+  max-width: 15%;
+}
 .about__info_text {
   font-weight: 300;
   font-size: 17px;
   color: var(--brown);
   text-transform: lowercase;
   text-align: justify;
+  white-space: pre-wrap;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
+}
+@keyframes animationOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

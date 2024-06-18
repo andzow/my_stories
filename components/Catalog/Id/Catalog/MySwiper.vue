@@ -8,10 +8,10 @@
   >
     <swiper-slide
       class="catalog__slide"
-      v-for="(item, idx) in arrNew"
+      v-for="(item, idx) in getArray"
       :key="item"
     >
-      <UICardMyCard heightImage="576px" :item="item" :idx="idx" />
+      <UICardMyCard heightImage="576px" :item="item" :idx="idx" v-if="arrNew" />
     </swiper-slide>
   </swiper>
 </template>
@@ -23,122 +23,20 @@ import "swiper/css";
 export default {
   data() {
     return {
+      useProductObject: useProductObject(),
       arrNew: null,
     };
   },
-  methods: {
-    async initApp() {
-      await nextTick(() => {
-        this.arrNew = [
-          {
-            name: "платье",
-            price: "4 800",
-            sale: "5 200",
-            images: [
-              {
-                imageSrc: "../../Primer/catalog1.webp",
-              },
-              {
-                imageSrc: "../../Primer/catalog2.png",
-              },
-              {
-                imageSrc: "../../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../../Primer/catalog5.webp",
-              },
-              {
-                imageSrc: "../../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../../Primer/catalog5.webp",
-              },
-              {
-                imageSrc: "../../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../../Primer/catalog5.webp",
-              },
-            ],
-          },
-          {
-            name: "сарафан",
-            price: "2 800",
-            images: [
-              {
-                imageSrc: "../../Primer/catalog3.webp",
-              },
-              {
-                imageSrc: "../../Primer/catalog11.webp",
-              },
-            ],
-          },
-          {
-            name: "сарочка",
-            price: "7 800",
-            images: [
-              {
-                imageSrc: "../../Primer/catalog7.webp",
-              },
-              {
-                imageSrc: "../../Primer/catalog2.png",
-              },
-              {
-                imageSrc: "../../Primer/catalog3.webp",
-              },
-            ],
-          },
-          {
-            name: "платье",
-            price: "1 800",
-            images: [
-              {
-                imageSrc: "../../Primer/catalog13.webp",
-              },
-              {
-                imageSrc: "../../Primer/catalog2.png",
-              },
-              {
-                imageSrc: "../../Primer/catalog3.webp",
-              },
-            ],
-          },
-          {
-            name: "кофта",
-            price: "9 800",
-            sale: "5 200",
-            images: [
-              {
-                imageSrc: "../../Primer/catalog9.webp",
-              },
-              {
-                imageSrc: "../../Primer/catalog2.png",
-              },
-              {
-                imageSrc: "../../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../../Primer/catalog5.webp",
-              },
-              {
-                imageSrc: "../../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../../Primer/catalog5.webp",
-              },
-            ],
-          },
-        ];
-      });
+  computed: {
+    getArray() {
+      return this.arrNew;
     },
   },
-  mounted() {
-    this.initApp();
+  mounted() {},
+  watch: {
+    useProductObject(val) {
+      this.arrNew = val.other;
+    },
   },
   components: {
     Swiper,

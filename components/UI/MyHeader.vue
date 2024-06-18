@@ -146,11 +146,11 @@ export default {
       }
       return { path: item };
     },
-    changeColor() {
+    changeColor(route) {
       if (
-        this.$route.path === "/" ||
-        this.$route.params.lookbook ||
-        this.$route.path === "/brand"
+        route.path === "/" ||
+        route.params.lookbook ||
+        route.path === "/brand"
       ) {
         this.changeHeader = false;
         return;
@@ -158,8 +158,11 @@ export default {
       this.changeHeader = true;
     },
   },
+  created() {
+    const route = useRoute();
+    this.changeColor(route);
+  },
   mounted() {
-    this.changeColor();
     this.activeLiPath = this.$route.path;
   },
   watch: {
@@ -174,7 +177,7 @@ export default {
       }
     },
     $route() {
-      this.changeColor();
+      this.changeColor(this.$route);
       this.activeLiPath = this.$route.path;
     },
   },

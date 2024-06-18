@@ -79,7 +79,6 @@ export default {
     body.style.overflow = "hidden";
     nextTick(() => {
       this.useCursor = true;
-      this.clickOutside();
       this.$refs.tableClose.focus();
     });
     setTimeout(() => {

@@ -1,15 +1,25 @@
 <template>
   <div class="about__size">
     <h2 class="about__size_title">Размер</h2>
+    <div class="about__size_empty" v-if="arrProductSize?.length <= 0">
+      У данного раздела/ов нет размера.
+    </div>
     <div class="about__size_content">
-      <div class="about__size_item" v-for="item in arrSize" :key="item">
+      <div
+        class="about__size_item"
+        v-for="(item, idx) in arrProductSize"
+        :key="item"
+      >
         <UIButtonMyButton
+          v-if="item?.name"
           class="about__size_btn"
-          :aria-label="item"
-          :info="item"
+          :aria-label="item.name"
+          :info="item.name"
           padding="12px 0"
           fontSize="20"
           data-cursor-class="animateCursor"
+          @click="activeIdx = idx"
+          :active="activeIdx === idx ? true : false"
         />
       </div>
     </div>
@@ -47,14 +57,26 @@
 
 <script>
 export default {
+  props: {
+    arrProductSize: Array,
+    getSize: Boolean,
+  },
   data() {
     return {
-      arrSize: ["s", "m", "l", "xl"],
       arrTable: ["таблица размеров", "обмеры изделия"],
       activeTableIdx: null,
       useTableSize: useTableSize(),
       useTableMeus: useTableMeus(),
+      activeIdx: 0,
     };
+  },
+  mounted() {},
+  watch: {
+    getSize(val) {
+      if (val) {
+        this.$emit("getIndex", this.activeIdx);
+      }
+    },
   },
 };
 </script>
@@ -69,13 +91,17 @@ export default {
   color: var(--brown);
   text-transform: lowercase;
   margin-bottom: 10px;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
 }
 .about__size_content {
   max-width: 500px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 20px;
+  gap: 20px;
   margin-bottom: 20px;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
 }
 .about__size_menu {
   display: flex;
@@ -86,6 +112,15 @@ export default {
 .about__size_text {
   display: flex;
   align-items: center;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
+}
+.about__size_empty {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--brown);
+  text-transform: lowercase;
+  margin-bottom: 10px;
 }
 .about__size_text svg {
   transition: all 0.4s ease;
@@ -93,5 +128,13 @@ export default {
 .about__size_vector {
   display: flex;
   margin-left: 30px;
+}
+@keyframes animationOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

@@ -17,11 +17,11 @@
       class="new__item_slide"
       :key="slide"
     >
-      <div class="new__item_card">
+      <div class="new__item_card" v-if="useServ">
         <img
           v-show="checkLoad"
           class="new__item_imgs"
-          :src="slide.imageSrc"
+          :src="useServ + slide"
           :alt="item.name"
           @load="onImageLoad"
         />
@@ -36,6 +36,7 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectFade, Pagination } from "swiper/modules";
+import { USE_SERVER } from "~/url";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -53,6 +54,7 @@ export default {
       arrImages: null,
       checkLoad: false,
       useCursor: useCursor(),
+      useServ: null,
     };
   },
   setup() {
@@ -89,6 +91,7 @@ export default {
   },
   mounted() {
     this.useCursor = true;
+    this.useServ = USE_SERVER;
   },
   components: {
     Swiper,

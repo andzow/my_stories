@@ -68,9 +68,6 @@ export default {
     };
   },
   methods: {
-    send() {
-      console.log("hi");
-    },
     setPriceInputs(rangeInput, priceInput) {
       priceInput.forEach((input) => {
         input.addEventListener("input", (e) => {
@@ -176,6 +173,16 @@ export default {
       this.useFilterPrice.activeMaxVal = maxElRange.value;
       this.$emit("openMethod");
     },
+    changeValue() {
+      document.querySelector(".filter__price_input").value = this.minVal;
+      document.querySelector(".filter__price_inp").value = this.maxVal;
+      document.querySelector(".filter_price_min").value = this.minVal;
+      document.querySelector(".filter_price_max").value = this.maxVal;
+      this.useFilterPrice.activeMinVal = this.minVal;
+      this.useFilterPrice.activeMaxVal = this.maxVal;
+      this.activeMinVal = this.minVal;
+      this.activeMaxVal = this.maxVal;
+    },
   },
   mounted() {
     const rangeInput = document.querySelectorAll(
@@ -196,16 +203,15 @@ export default {
         this.useCheckPrice = false;
       }
     },
+    minVal() {
+      this.changeValue();
+    },
+    maxVal() {
+      this.changeValue();
+    },
     async useCheckReset(val) {
       if (val) {
-        document.querySelector(".filter__price_input").value = this.minVal;
-        document.querySelector(".filter__price_inp").value = this.maxVal;
-        document.querySelector(".filter_price_min").value = this.minVal;
-        document.querySelector(".filter_price_max").value = this.maxVal;
-        this.useFilterPrice.activeMinVal = this.minVal;
-        this.useFilterPrice.activeMaxVal = this.maxVal;
-        this.activeMinVal = this.minVal;
-        this.activeMaxVal = this.maxVal;
+        this.changeValue();
         this.useCheckReset = false;
       }
     },

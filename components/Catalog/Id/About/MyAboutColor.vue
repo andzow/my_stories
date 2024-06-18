@@ -1,31 +1,48 @@
 <template>
   <div class="about__color">
-    <h2 class="about__color_title">цвет</h2>
-    <div class="about__color_content">
+    <h2 class="about__color_title" v-show="arrProduct">цвет</h2>
+    <div class="about__color_load" v-if="!arrProduct">
+      <UIMyLoadingItem :item="{ loading: true }" height="20px" margin="0px" />
+    </div>
+    <div class="about__color_content" v-if="arrProduct">
       <div
         class="about__color_item"
         data-cursor-class="animateCursor"
-        v-for="item in arrColors"
+        @click="changeRoute(item.id)"
+        v-for="item in getColor"
         :key="item"
         :style="{
           border: `1px solid ${
-            $route.query.color === item.color ? item.color : 'rgba(0,0,0,0)'
+            $route.params.id === item.id ? item.colorValue : 'rgba(0,0,0,0)'
           }`,
         }"
       >
         <div
           class="about__color_outline"
-          :style="{ background: item.color }"
+          :style="{ background: item.colorValue }"
         ></div>
       </div>
+    </div>
+    <div class="about__color_loading" v-else>
+      <UIMyLoadingItem
+        :item="{ loading: true }"
+        height="40px"
+        margin="0px"
+        v-for="item in 6"
+        :key="item"
+      />
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    arrProduct: {},
+  },
   data() {
     return {
+      useProductObject: useProductObject(),
       arrColors: [
         {
           name: "Коричневый",
@@ -44,9 +61,30 @@ export default {
           color: "#D8B0B0",
         },
       ],
+      arrColorsQuery: null,
+      useCursor: useCursor(),
     };
   },
-  mounted() {},
+  computed: {
+    getColor() {
+      return this.arrColorsQuery;
+    },
+  },
+  methods: {
+    changeRoute(id) {
+      if (this.$route.params.id !== id) {
+        this.$router.push(id);
+      }
+    },
+  },
+  watch: {
+    useProductObject(val) {
+      if (val) {
+        this.arrColorsQuery = val.colors;
+        this.useCursor = true;
+      }
+    },
+  },
 };
 </script>
 
@@ -60,17 +98,30 @@ export default {
   color: var(--brown);
   text-transform: lowercase;
   margin-bottom: 10px;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
 }
 .about__color_content {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   column-gap: 15px;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
+}
+.about__color_load {
+  max-width: 15%;
+  margin-bottom: 10px;
+}
+.about__color_loading {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+  max-width: 40%;
 }
 .about__color_item {
   width: 47px;
   height: 47px;
-
   border-radius: 100%;
   padding: 5px;
 }
@@ -79,5 +130,13 @@ export default {
   height: 100%;
   background: var(--brown);
   border-radius: 100%;
+}
+@keyframes animationOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

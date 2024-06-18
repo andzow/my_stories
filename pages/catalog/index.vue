@@ -12,12 +12,17 @@
 </template>
 
 <script>
+import CategoryController from "@/http/controllers/CategoryController";
+
 export default {
   data() {
     return {
-      useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
       arrFilterChapter: useArrFilterChapter(),
       arrFilterSize: useArrFilterSize(),
+      minVal: useMinVal(),
+      maxVal: useMaxVal(),
+      useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
+
       activeLine: false,
       arrAnimationLine: [
         { name: ".header__content", defaultLine: false, indent: "left" },
@@ -86,84 +91,29 @@ export default {
       });
       this.replaceRoute(settingsObj);
     },
+    async initFilter() {
+      try {
+        const res = await CategoryController.getCategory(this.$route.query);
+        this.arrFilterChapter = res.categorys;
+        this.arrFilterSize = res.uniqueNameArray;
+        this.minVal = !res.minPrice ? 0 : res.minPrice;
+        this.maxVal = !res.maxPrice ? 35000 : res.maxPrice;
+      } catch {}
+    },
+    initScrollTrigger() {
+      this.useFilterFlout();
+    },
   },
   created() {
     this.initRoute();
   },
   mounted() {
-    this.arrFilterChapter = [
-      { name: "все" },
-
-      {
-        name: "Весна-лето 2024",
-      },
-      {
-        name: "Кроссовки",
-      },
-      {
-        name: "На лето",
-      },
-      {
-        name: "Зима",
-      },
-      {
-        name: "топ продаж",
-      },
-      {
-        name: "платья",
-      },
-      {
-        name: "сарафаны",
-      },
-      {
-        name: "рубашки, топы",
-      },
-      {
-        name: "юбки",
-      },
-      {
-        name: "брюки",
-      },
-      {
-        name: "пиджаки, жакеты",
-      },
-      {
-        name: "костюмы",
-      },
-      {
-        name: "воротнички, манжеты, подюбники",
-      },
-
-      {
-        name: "свитеры, водолазки",
-      },
-
-      {
-        name: "куртки, фуфайки",
-      },
-    ];
-    this.arrFilterSize = [
-      {
-        name: "s",
-      },
-      {
-        name: "m",
-      },
-      {
-        name: "l",
-      },
-
-      {
-        name: "xl",
-      },
-      {
-        name: "2xl",
-      },
-    ];
-    this.useCatalogItems;
+    this.initFilter();
     const bodyEl = document.body;
     bodyEl.style.overflow = "auto";
   },
   watch: {},
 };
 </script>
+
+<style></style>

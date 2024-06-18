@@ -20,6 +20,7 @@
         <div class="main__catalog">
           <UIButtonMyButton
             info="каталог"
+            aria-label="каталог"
             fontSize="24"
             variant="main"
             data-cursor-class="animateCursor"

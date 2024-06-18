@@ -2,13 +2,18 @@
   <div class="filter__size">
     <div class="filter__size_content">
       <div class="filter__size_header">
-        <div class="filter__size_text">размер</div>
+        <div class="filter__size_text" v-if="arrFilterQuery && arrFilterSize">
+          размер
+        </div>
+        <div class="filter__size_load" v-else>
+          <UIMyLoadingItem :item="{ loading: true }" :index="0" height="20px" />
+        </div>
         <Transition name="size-fade">
           <div class="filter__size_image" v-if="checkFilter">
             <button
               class="filter__size_btn"
               aria-label="удалить"
-              cursor-class="animateCursor"
+              data-cursor-class="animateCursor"
               onmousedown="return false"
               onselectstart="return false"
               @click="deleteQuery"
@@ -39,7 +44,10 @@
           </div>
         </Transition>
       </div>
-      <div class="filter__size_items" v-if="arrFilterQuery">
+      <div class="filteR__size_empty" v-if="arrFilterSize?.length <= 0">
+        У данного раздела/ов нет размера.
+      </div>
+      <div class="filter__size_items" v-if="arrFilterQuery && arrFilterSize">
         <div
           class="filter__size_item"
           v-for="item in arrFilterSize"
@@ -48,19 +56,26 @@
           <UIButtonMyButton
             @click="
               setActiveBtn(
-                item.name,
-                arrFilterQuery.includes(item.name.toLowerCase()) ? true : false
+                item,
+                arrFilterQuery.includes(item.toLowerCase()) ? true : false
               )
             "
-            :aria-label="item.name"
-            :info="item.name"
-            :active="
-              arrFilterQuery.includes(item.name.toLowerCase()) ? true : false
-            "
+            :aria-label="item"
+            :info="item"
+            :active="arrFilterQuery.includes(item.toLowerCase()) ? true : false"
             fontSize="18"
             data-cursor-class="animateCursor"
           />
         </div>
+      </div>
+      <div class="filter__size_loading" v-else>
+        <UIMyLoadingItem
+          v-for="(item, idx) in arrFilterSizeLoading"
+          :key="item"
+          :item="item"
+          :index="idx"
+          height="40px"
+        />
       </div>
     </div>
   </div>
@@ -71,9 +86,27 @@ export default {
   data() {
     return {
       arrFilterSize: useArrFilterSize(),
+      arrFilterSizeLoading: [
+        {
+          loading: true,
+        },
+        {
+          loading: true,
+        },
+        {
+          loading: true,
+        },
+        {
+          loading: true,
+        },
+        {
+          loading: true,
+        },
+      ],
       arrFilterQuery: null,
       checkFilter: false,
       useCheckReset: useCheckReset(),
+      useCursor: useCursor(),
     };
   },
   methods: {
@@ -97,10 +130,11 @@ export default {
         return;
       }
       this.arrFilterQuery = [];
+      this.useCursor = true;
     },
     checkDelBtn() {
       const filtered = this.arrFilterSize.filter((el) =>
-        this.arrFilterQuery.includes(el.name.toLowerCase())
+        this.arrFilterQuery.includes(el.toLowerCase())
       );
       if (filtered.length <= 0) {
         this.checkFilter = false;
@@ -119,11 +153,12 @@ export default {
       this.arrFilterQuery = [];
       this.checkFilter = false;
       this.replaceRoute([]);
-      this.$emit("openMethod");
+      this.$emit("openMethod", true);
     },
   },
   mounted() {
     this.initApp();
+    this.useCursor = true;
   },
   watch: {
     arrFilterSize() {
@@ -133,6 +168,9 @@ export default {
       if (val) {
         this.arrFilterQuery = [];
       }
+    },
+    checkFilter(val) {
+      this.useCursor = true;
     },
   },
 };
@@ -151,8 +189,13 @@ export default {
 .filter__size_text {
   font-size: 17px;
   font-weight: 300;
-  line-height: 140%;
   color: var(--brown);
+}
+.filteR__size_empty {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--brown);
+  text-transform: lowercase;
 }
 .filter__size_btn {
   display: flex;
@@ -164,6 +207,17 @@ export default {
 .filter__size_items {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.filter__size_load {
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+.filter__size_loading {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 50px;
   gap: 10px;
 }
 .filter__size_item {

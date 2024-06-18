@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import ProductController from "@/http/controllers/ProductController";
+
 export default {
   data() {
     return {
@@ -109,11 +111,16 @@ export default {
         if (el.name.includes(this.searchVal)) return el;
       });
     },
+    async initArrSearch() {
+      const res = await ProductController.getSearch({ name: "сарафан" });
+      console.log(res);
+    },
   },
   mounted() {
     const bodyEl = document.body;
     bodyEl.style.overflow = "hidden";
     this.$refs.searchClose.focus();
+    this.initArrSearch();
     // setTimeout(() => {
     //   this.arrSendMenu = this.arrMenu;
     // }, 500);

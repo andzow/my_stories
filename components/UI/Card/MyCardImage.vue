@@ -18,14 +18,19 @@
       :key="slide"
     >
       <div class="card__item_card">
-        <img
-          v-show="checkLoad"
-          class="card__item_imgs"
-          :src="slide.imageSrc"
-          @load="onImageLoad"
-          :alt="item.name"
-        />
-        <UIMyLoadItem v-show="!checkLoad" />
+        <NuxtLink :to="item.name ? `/catalog/${item?.name}/${item?.id}` : '/'">
+          <img
+            v-show="checkLoad"
+            width="490"
+            height="665"
+            class="card__item_imgs"
+            :src="serverUrl + slide"
+            @load="onImageLoad"
+            :alt="`${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
+              /\r\n/g,
+              ', '
+            )}`"
+        /></NuxtLink>
       </div>
     </swiper-slide>
     <div class="card__item_pagination"></div>
@@ -36,6 +41,7 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectFade, Pagination } from "swiper/modules";
+import { USE_SERVER } from "~/url";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -52,6 +58,9 @@ export default {
     return {
       arrImages: null,
       checkLoad: false,
+      serverUrl: USE_SERVER,
+      swiper: null,
+      checkNum: false,
     };
   },
   setup() {
@@ -64,7 +73,7 @@ export default {
   },
   computed: {
     getArrSwiperImages() {
-      return this.images.filter((el, idx) => idx <= 3);
+      return this.images.filter((el, idx) => idx <= 2);
     },
   },
   methods: {
@@ -84,7 +93,14 @@ export default {
     },
     onImageLoad() {
       this.checkLoad = true;
+      this.$emit("loadPhoto");
     },
+  },
+  mounted() {},
+  unmounted() {
+    if (this.swiper) {
+      this.swiper.destroy(true, true);
+    }
   },
   components: {
     Swiper,

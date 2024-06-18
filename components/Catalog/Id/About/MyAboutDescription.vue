@@ -4,6 +4,7 @@
       class="about__description_header"
       @click="switchHeight"
       data-cursor-class="animateCursor"
+      v-show="arrProduct"
     >
       <h2 class="about__description_title">описание</h2>
       <div class="about__description_vector" :class="{ activeSvg: activeText }">
@@ -25,17 +26,25 @@
         </svg>
       </div>
     </div>
+    <div class="about__description_load" v-if="!arrProduct">
+      <div class="about__description_l">
+        <UIMyLoadingItem
+          :item="{ loading: true }"
+          height="30px"
+          margin="20px"
+        />
+      </div>
+      <UIMyLoadingItem
+        :item="{ loading: true }"
+        height="20px"
+        margin="10px"
+        v-for="item in 3"
+        :key="item"
+      />
+    </div>
     <div class="about__description_content">
-      <p class="about__description_text">
-        Лаконичный топ из натурального льна в базовом черном цвете. Благодаря
-        корсетному силуэту выгодно подчеркивает фигуру и станет украшением
-        особенного вечера в тандеме с брюками, а для насыщенного событиями дня
-        будет уместен в стилизации с джинсами или шортами. Для изделия мы
-        выбрали тонкий лен, который при этом хорошо держит форму, пропускает
-        воздух и тактильно приятен к телу. На солнце ткань приобретает едва
-        заметный дорогой лоск, благодаря уникальному плетению нити.<br /><br />
-        Параметры модели: 178/85/62/90<br />
-        На модели размер: S
+      <p class="about__description_text" v-show="text && arrProduct">
+        {{ text }}
       </p>
     </div>
   </div>
@@ -43,10 +52,15 @@
 
 <script>
 export default {
+  props: {
+    arrProduct: {},
+  },
   data() {
     return {
       activeText: true,
       heightContent: null,
+      useProductObject: useProductObject(),
+      text: null,
     };
   },
   methods: {
@@ -70,8 +84,14 @@ export default {
       this.activeText = true;
     },
   },
-  mounted() {
-    this.initHeightTextContent();
+  mounted() {},
+  watch: {
+    useProductObject(val) {
+      if (val) {
+        this.text = val.product[0].text;
+        this.initHeightTextContent();
+      }
+    },
   },
 };
 </script>
@@ -93,6 +113,8 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
 }
 .about__description_title {
   font-weight: 300;
@@ -120,5 +142,19 @@ export default {
   color: var(--brown);
   text-transform: lowercase;
   text-align: justify;
+  white-space: pre-wrap;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
+}
+.about__description_l {
+  max-width: 15%;
+}
+@keyframes animationOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

@@ -8,7 +8,7 @@
     <tbody>
       <tr v-for="row in arrTable" :key="row.name" class="table__item_tr">
         <td v-for="header in uniqueHeaders" :key="header">
-          {{ getValue(row.arrSettings, header) }}
+          {{ getValue(row.array, header) }}
         </td>
       </tr>
     </tbody>
@@ -27,18 +27,22 @@ export default {
     uniqueHeaders() {
       const headers = new Set();
       this.arrTable.forEach((item) => {
-        item.arrSettings.forEach((setting) => {
-          headers.add(setting.name);
+        item.array.forEach((setting) => {
+          headers.add(setting.description);
         });
       });
+      // console.log(Array.from(headers));
       return Array.from(headers);
     },
   },
   methods: {
     getValue(settings, header) {
-      const setting = settings.find((s) => s.name === header);
+      const setting = settings.find((s) => s.description === header);
       return setting ? setting.value : "-";
     },
+  },
+  mounted() {
+    // console.log(this.arrTable);
   },
 };
 </script>

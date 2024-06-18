@@ -13,7 +13,9 @@
     @swiper="onSwiperInit"
     @slideChange="onSlideChange"
     :class="{ activeSwiper: checkLoad }"
+    v-if="arrSlider"
   >
+    <div class="slider__back"></div>
     <swiper-slide
       class="slider__slide"
       v-for="(item, idx) in arrSlider"
@@ -21,14 +23,15 @@
     >
       <div class="slider__card">
         <img
-          v-if="item.imageSrc"
+          v-if="item.imageSrc && checkLoad"
           class="slider__imgs"
           :src="item.imageSrc"
-          height="737px"
+          width="620"
+          height="737"
           alt="Фотография товара"
         />
         <video
-          v-else
+          v-if="!item.imageSrc"
           class="slider__video"
           :poster="item.videoSrc"
           type="video/mp4"
@@ -48,6 +51,7 @@
         @next="controlSlideNext"
       />
       <CatalogIdSliderMyProgress
+        :useProductObject="useProductObject"
         :changeProgress="changeProgress"
         :activeDurationVideo="activeDurationVideo"
         @change="(changeProgress = false), (activeDurationVideo = null)"
@@ -55,7 +59,7 @@
       />
     </div>
   </swiper>
-  <div class="slider__load" v-show="!checkLoad">
+  <div class="slider__load" v-if="!checkLoad">
     <UIMyLoadItem />
   </div>
 </template>
@@ -63,37 +67,25 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectFade, Pagination } from "swiper/modules";
+import { USE_SERVER } from "~/url";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 
 export default {
+  props: {
+    useProductObject: {},
+  },
   data() {
     return {
-      arrSlider: [
-        {
-          videoSrc: "../../Primer/video.mp4",
-          id: 0,
-        },
-        {
-          imageSrc: "../../Primer/catalog9.webp",
-          id: 0,
-        },
-        {
-          imageSrc: "../../Primer/catalog13.webp",
-          id: 1,
-        },
-        {
-          imageSrc: "../../Primer/catalog11.webp",
-          id: 1,
-        },
-      ],
-      checkLoad: false,
+      arrSlider: null,
+      checkLoad: useCheckLoad(),
       swiper: null,
       changeProgress: false,
       activeIdx: null,
       activeDurationVideo: null,
+      urlServer: USE_SERVER,
     };
   },
   setup() {
@@ -104,6 +96,7 @@ export default {
       modules,
     };
   },
+  computed: {},
   methods: {
     controlSlidePrev() {
       this.swiper.slidePrev();
@@ -129,7 +122,7 @@ export default {
       if (videoElement) {
         videoElement.currentTime = "0";
         this.activeDurationVideo = videoElement.duration;
-        videoElement.play();
+        videoElement.play().catch((error) => {});
       }
       this.changeProgress = true;
     },
@@ -174,16 +167,31 @@ export default {
     },
   },
   mounted() {
-    this.loadContent();
-    // this.arrSlider.forEach((item) =>
-    //   this.checkImage(item.imageSrc, item.videoSrc)
-    // );
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden && this.swiper) {
         this.activeIdx = this.swiper.activeIndex;
         this.setDurationVideo();
       }
     });
+  },
+  watch: {
+    useProductObject(val) {
+      if (val) {
+        let arrImages = val.product[0].images.map((el) => ({
+          imageSrc: this.urlServer + el,
+        }));
+        const objVideo = val.product[0].video ? val.product[0].video : false;
+        if (objVideo) {
+          arrImages = [...arrImages, { videoSrc: this.urlServer + objVideo }];
+          this.arrSlider = arrImages;
+          this.loadContent();
+          return arrImages;
+        }
+        this.arrSlider = arrImages;
+        this.loadContent();
+        return arrImages;
+      }
+    },
   },
   components: {
     Swiper,
@@ -197,17 +205,26 @@ export default {
   position: absolute;
   opacity: 0;
   max-width: 100%;
-  height: 775px;
-  overflow: hidden;
+  padding-bottom: 20px;
   transition: all 0.4s ease;
+}
+.slider__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 170px);
+  background: rgba(0, 0, 0, 0.18);
+  margin-bottom: 50px;
+  z-index: 9;
 }
 .activeSwiper {
   position: relative;
   opacity: 1;
-  animation-name: nanex;
-  animation-duration: 0.4s;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
 }
-@keyframes nanex {
+@keyframes animationOpacity {
   from {
     opacity: 0;
   }
@@ -217,27 +234,29 @@ export default {
 }
 .slider__slide {
   position: relative;
-  max-height: 727px;
-  min-height: 727px;
-  max-width: 95%;
+  min-height: 100%;
+  max-width: 100%;
+  z-index: 31;
 }
 .slider__controls {
   position: absolute;
-  left: 0%;
   top: 0;
-  height: 100%;
+  left: 0%;
+  height: calc(100vh - 120px);
+  /* padding-bottom: 50px; */
   width: 100%;
-  max-width: 96%;
+  max-width: 100%;
   z-index: 19;
 }
 .slider__video {
-  height: 727px;
+  height: 100%;
   width: 100%;
   object-fit: cover;
 }
 .slider__load {
   max-width: 100%;
-  max-height: 727px;
+  height: calc(100vh - 150px);
+  padding-bottom: 20px;
   opacity: 1;
   transition: all 0.4s ease;
 }
@@ -245,11 +264,16 @@ export default {
   opacity: 0;
 }
 .slider__card {
-  height: 100%;
-}
-.slider__imgs {
+  position: relative;
   width: 100%;
-  height: 727px;
+  height: calc(100vh - 150px);
+  padding-bottom: 20px;
+}
+
+.slider__imgs {
+  position: relative;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -262,5 +286,13 @@ export default {
   width: 100%;
   padding: 0 2% 0 1%;
   column-gap: 1%;
+}
+@keyframes animationOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
