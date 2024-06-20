@@ -6,11 +6,11 @@
           <tr>
             <th class="productGrid__pos productGrid__pos_image productGrid__left">фото</th>
             <th class="productGrid__pos productGrid__pos_name productGrid__left">заголовок</th>
-            <th class="productGrid__pos">артикул</th>
-            <th class="productGrid__pos">цена</th>
+            <th class="productGrid__pos productGrid__mob_3">артикул</th>
+            <th class="productGrid__pos productGrid__mob_2">цена</th>
             <th class="productGrid__pos">видимость</th>
-            <th class="productGrid__pos">копировать</th>
-            <th class="productGrid__pos">удалить</th>
+            <th class="productGrid__pos productGrid__mob">копировать</th>
+            <th class="productGrid__pos productGrid__pos_other">удалить</th>
           </tr>
         </thead>
         <tbody class="productGrid__tbody">
@@ -21,15 +21,15 @@
             <td class="productGrid__element productGrid__left">
               <p class="productGrid__element_name" @click="updateProduct(item)">{{ item.name }}</p>
             </td>
-            <td class="productGrid__element">{{ item.articul }}</td>
-            <td v-if="item.discount === null" class="productGrid__element">{{ item.price }} ₽</td>
-            <td v-if="item.discount !== null" class="productGrid__element">{{ item.discount }} ₽</td>
+            <td class="productGrid__element productGrid__mob_3">{{ item.articul }}</td>
+            <td v-if="item.discount === null" class="productGrid__element productGrid__mob_2">{{ item.price }} ₽</td>
+            <td v-if="item.discount !== null" class="productGrid__element productGrid__mob_2">{{ item.discount }} ₽</td>
             <td class="productGrid__element productGrid__element_special">
                 <div class="productGrid__back" :class="{productGrid__back_active: item.watch}" @click="sendWatch(index, item.id)">
                     <div class="productGrid__circle" :class="{productGrid__circle_active: item.watch}"></div>
                 </div>
             </td>
-            <td class="productGrid__element">
+            <td class="productGrid__element productGrid__mob">
                 <img class="productGrid__trash" @click="copyProduct(item)" src="~/assets/images/Admin/copy.svg" alt="">
             </td>
             <td class="productGrid__element">
@@ -257,5 +257,40 @@ export default {
 }
 .productGrid__element_name:hover {
   transform: scale(1.04);
+}
+@media(max-width: 1200px) {
+  .productGrid__pos_image {
+    width: 150px;
+  }
+}
+@media(max-width: 1050px) {
+  .productGrid__pos_name {
+     width: 100px;
+  }
+}
+@media(max-width: 800px) {
+  .productGrid__mob {
+     display: none;
+  }
+}
+@media(max-width: 670px) {
+  .productGrid__mob_2 {
+     display: none;
+  }
+}
+@media(max-width: 590px) {
+  .productGrid__mob_3 {
+     display: none;
+  }
+}
+@media(max-width: 480px) {
+  .productGrid__pos_image {
+    width: 110px;
+  }
+}
+@media(max-width: 420px) {
+  .productGrid__pos_other {
+    padding-left: 8px;
+  }
 }
 </style>
