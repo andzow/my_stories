@@ -97,9 +97,9 @@ export default {
       });
       this.$emit("openMethod");
     },
-    initClose() {
+    initClose(route) {
       try {
-        const routeQuery = this.$route?.query?.chapter.split(";");
+        const routeQuery = route?.query?.chapter.split(";");
         if (!routeQuery) return;
         this.filterArrActiveQueryWord = this.arrFilterChapter
           .map((el) => {
@@ -122,12 +122,12 @@ export default {
       );
       this.replaceRoute(this.filterArrActiveQueryWord);
     },
-    initApp() {
-      if (!this.$route?.query?.chapter) {
+    initApp(route) {
+      if (!route?.query?.chapter) {
         this.filterArrActiveQueryWord = [];
         return;
       }
-      const routeQuery = this.$route?.query?.chapter.split(";");
+      const routeQuery = route?.query?.chapter.split(";");
       this.filterArrActiveQueryWord = routeQuery;
     },
     async initCursor() {
@@ -136,9 +136,11 @@ export default {
       });
     },
   },
+  created() {
+    this.initClose(useRoute());
+    this.initApp(useRoute());
+  },
   mounted() {
-    this.initClose();
-    this.initApp();
     this.initCursor();
   },
   watch: {
@@ -146,6 +148,9 @@ export default {
       if (val) {
         this.filterArrActiveQueryWord = [];
       }
+    },
+    filterArrActiveQueryWord(val) {
+      this.useCursor = true;
     },
   },
 };

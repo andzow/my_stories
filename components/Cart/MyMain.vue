@@ -32,11 +32,16 @@
             <UIMyLoadItem :backgroundDisable="true" />
           </div>
         </div>
-        <div class="main__full" v-if="arrLocale && arrLocale?.length > 0">
+        <div
+          class="main__full"
+          v-if="arrLocale && arrLocale?.length > 0"
+          ref="mainFull"
+        >
           <div class="main__full_block">
             <div class="main__full_price">{{ fullSumm }} ₽</div>
             <div class="main__full_button">
               <UIButtonMyButton
+                @click="$router.push('/order')"
                 info="оформить заказ"
                 fontSize="24"
                 data-cursor-class="animateCursor"
@@ -53,26 +58,7 @@
 export default {
   data() {
     return {
-      arrLocale: null,
       fullSumm: null,
-      arrNewLocale: [
-        {
-          name: 'Брюки из вельвета "Вельвет"',
-          size: "m",
-          price: 5200,
-          counter: 1,
-          fullprice: "",
-          imageSrc: "../Primer/catalog1.png",
-        },
-        {
-          name: "сарафан",
-          size: "xs",
-          price: 2200,
-          counter: 1,
-          fullprice: "",
-          imageSrc: "../Primer/catalog11.webp",
-        },
-      ],
       useGsapAnimationOpacity: useGsapAnimationOpacity,
       arrLocale: null,
       checkNews: false,
@@ -155,6 +141,7 @@ export default {
         const arrLocaleStore = JSON.parse(localStorage.getItem("cart"));
         if (!arrLocaleStore || arrLocaleStore.length <= 0) {
           this.arrLocale = [];
+          this.arrLocale = arrLocaleStore;
           return;
         }
         this.arrLocale = arrLocaleStore.map((el) => {
@@ -183,20 +170,26 @@ export default {
       this.fullSumm = this.useFormatNumberToPrice(summ);
     },
     initGsap() {
-      this.useGsapAnimationOpacity(
-        [".main__full_price", ".main__full_button"],
-        ".main"
-      );
+      nextTick(() => {
+        this.useGsapAnimationOpacity(
+          [".main__full_price", ".main__full_button"],
+          ".main"
+        );
+      });
     },
   },
   async mounted() {
     await this.initLocalStorage();
-    this.initGsap();
     if (this.arrLocale?.length > 0) {
       this.checkNews = false;
       return;
     }
     this.checkNews = true;
+  },
+  watch: {
+    arrLocale(val) {
+      this.initGsap();
+    },
   },
 };
 </script>

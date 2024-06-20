@@ -32,6 +32,7 @@
         </div>
         <div class="main__btn">
           <UIButtonMyButton
+            @click="$router.push('/')"
             info="вернуться на главную"
             fontSize="24"
             variant="main"

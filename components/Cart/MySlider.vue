@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import ProductController from "@/http/controllers/ProductController";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 
@@ -34,137 +35,10 @@ export default {
   },
   methods: {
     async initApp() {
-      await nextTick(() => {
-        this.arrNew = [
-          {
-            name: "платье",
-            price: "4 800",
-            sale: "5 200",
-            images: [
-              {
-                imageSrc: "../Primer/catalog1.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog2.png",
-              },
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../Primer/catalog5.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../Primer/catalog5.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../Primer/catalog5.webp",
-              },
-            ],
-          },
-          {
-            name: "сарафан",
-            price: "2 800",
-            images: [
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog11.webp",
-              },
-            ],
-          },
-          {
-            name: "сарафан",
-            price: "2 800",
-            images: [
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog11.webp",
-              },
-            ],
-          },
-          {
-            name: "сарафан",
-            price: "2 800",
-            images: [
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog11.webp",
-              },
-            ],
-          },
-          {
-            name: "сарочка",
-            price: "7 800",
-            images: [
-              {
-                imageSrc: "../Primer/catalog7.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog2.png",
-              },
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-            ],
-          },
-          {
-            name: "платье",
-            price: "1 800",
-            images: [
-              {
-                imageSrc: "../Primer/catalog13.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog2.png",
-              },
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-            ],
-          },
-          {
-            name: "кофта",
-            price: "9 800",
-            sale: "5 200",
-            images: [
-              {
-                imageSrc: "../Primer/catalog9.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog2.png",
-              },
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../Primer/catalog5.webp",
-              },
-              {
-                imageSrc: "../Primer/catalog3.webp",
-              },
-
-              {
-                imageSrc: "../Primer/catalog5.webp",
-              },
-            ],
-          },
-        ];
-      });
+      try {
+        const res = await ProductController.getNew();
+        this.arrNew = res;
+      } catch {}
     },
   },
   mounted() {

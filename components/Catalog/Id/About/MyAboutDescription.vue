@@ -26,16 +26,8 @@
       </div>
     </div>
     <div class="about__description_content">
-      <p class="about__description_text">
-        Лаконичный топ из натурального льна в базовом черном цвете. Благодаря
-        корсетному силуэту выгодно подчеркивает фигуру и станет украшением
-        особенного вечера в тандеме с брюками, а для насыщенного событиями дня
-        будет уместен в стилизации с джинсами или шортами. Для изделия мы
-        выбрали тонкий лен, который при этом хорошо держит форму, пропускает
-        воздух и тактильно приятен к телу. На солнце ткань приобретает едва
-        заметный дорогой лоск, благодаря уникальному плетению нити.<br /><br />
-        Параметры модели: 178/85/62/90<br />
-        На модели размер: S
+      <p class="about__description_text" :key="text">
+        {{ text }}
       </p>
     </div>
   </div>
@@ -43,15 +35,20 @@
 
 <script>
 export default {
+  props: {
+    arrProduct: {},
+  },
   data() {
     return {
       activeText: true,
       heightContent: null,
+      useProductObject: useProductObject(),
+      text: null,
     };
   },
   methods: {
     async initHeightTextContent() {
-      await nextTick(() => {
+      nextTick(() => {
         const elHtml = document.querySelector(".about__description_content");
         this.heightContent = elHtml.getBoundingClientRect().height;
         elHtml.style.height = this.heightContent + 10 + "px";
@@ -73,12 +70,19 @@ export default {
   mounted() {
     this.initHeightTextContent();
   },
+  created() {
+    const val = this.arrProduct;
+    if (val) {
+      this.text = val.text;
+    }
+  },
 };
 </script>
 
 <style scoped>
 .about__description {
   margin-bottom: 0px;
+  min-height: 50px;
 }
 .activeDes {
   margin-bottom: 25px;
@@ -93,6 +97,8 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
 }
 .about__description_title {
   font-weight: 300;
@@ -120,5 +126,23 @@ export default {
   color: var(--brown);
   text-transform: lowercase;
   text-align: justify;
+  white-space: pre-wrap;
+  animation-name: animationOpacity;
+  animation-duration: 1s;
+}
+.about__description_l {
+  max-width: 15%;
+}
+.about__description_loading {
+  margin-bottom: 15px;
+  width: 50%;
+}
+@keyframes animationOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

@@ -31,15 +31,41 @@
             </div>
           </div>
           <div class="category__body" ref="categoryContainer">
-            <div class="category__animate" :style="'width: 100%'" v-auto-animate>
-            <div class="category__item" v-for="(item, idx) in isCategory" :key="idx" draggable="true" @dragstart="dragStart(idx)" @dragover.prevent @drop="drop(idx)">
+            <div
+              class="category__animate"
+              :style="'width: 100%'"
+              v-auto-animate
+            >
+              <div
+                class="category__item"
+                v-for="(item, idx) in isCategory"
+                :key="idx"
+                draggable="true"
+                @dragstart="dragStart(idx)"
+                @dragover.prevent
+                @drop="drop(idx)"
+              >
                 <div class="category__info">
-                    <img src="~/assets/images/Admin/drag.svg" alt="">
-                    <p class="category__name" v-if="!item.status">{{ item.name }}</p>
-                    <input class="category__input" v-if="item.status" type="text" placeholder="пусто" v-model="item.name">
+                  <img src="~/assets/images/Admin/drag.svg" alt="" />
+                  <p class="category__name" v-if="!item.status">
+                    {{ item.name }}
+                  </p>
+                  <input
+                    class="category__input"
+                    v-if="item.status"
+                    type="text"
+                    placeholder="пусто"
+                    v-model="item.name"
+                  />
                 </div>
-                <img class="category__trash" src="~/assets/images/Admin/trash.svg" v-if="item.name !== 'все'" alt="" @click="deleteCategory(item.id, idx)">
-            </div>
+                <img
+                  class="category__trash"
+                  src="~/assets/images/Admin/trash.svg"
+                  v-if="item.name !== 'все'"
+                  alt=""
+                  @click="deleteCategory(item.id, idx)"
+                />
+              </div>
             </div>
             <img
               class="category__circle"
@@ -56,10 +82,7 @@
             :info="'сохранить'"
             :variant="'green'"
           />
-          <UIMyButton
-            class="category__btn_reset"
-            :info="'отмена'"
-          />
+          <UIMyButton class="category__btn_reset" :info="'отмена'" />
         </div>
       </div>
     </section>
@@ -75,7 +98,7 @@ export default {
       isCategory: useCategoryAll(),
       useStatus: useStatus(),
       draggingItemIndex: null,
-      useCategoryId: useCategoryId()
+      useCategoryId: useCategoryId(),
     };
   },
   methods: {
@@ -83,7 +106,7 @@ export default {
       this.useCategory = false;
     },
     dragStart(index) {
-      this.draggingItemIndex = index; 
+      this.draggingItemIndex = index;
     },
     drop(index) {
       if (this.draggingItemIndex !== null) {
@@ -95,43 +118,43 @@ export default {
     },
     addCategory() {
       const category = {
-        name: '',
-        status: 'create',
-        validatorName: false
-      }
-      this.isCategory.push(category)
+        name: "",
+        status: "create",
+        validatorName: false,
+      };
+      this.isCategory.push(category);
 
       this.$nextTick(() => {
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 300); // Задержка в 1000 миллисекунд (1 секунда)
+        setTimeout(() => {
+          this.scrollToBottom();
+        }, 300);
       });
     },
     async saveCategory() {
-      this.useStatus = true
+      this.useStatus = true;
       await CategoryController.deleteCategory();
-      for( let i = 0; i < this.isCategory.length; i++) {
-          let FormObject = {
-            name: this.isCategory[i].name
-          }
-          await CategoryController.createCategory(FormObject)
+      for (let i = 0; i < this.isCategory.length; i++) {
+        let FormObject = {
+          name: this.isCategory[i].name,
+        };
+        await CategoryController.createCategory(FormObject);
       }
-      this.isCategory = await CategoryController.getAll()
-      this.useStatus = null
+      this.isCategory = await CategoryController.getAll();
+      this.useStatus = null;
     },
     deleteCategory(id, index) {
-      this.useStatus = 'deleteCategory'
+      this.useStatus = "deleteCategory";
       this.useCategoryId = {
         id: id,
-        index: index
-      }
+        index: index,
+      };
     },
     scrollToBottom() {
       const container = this.$refs.categoryContainer;
       container.scrollTo({
-      top: container.scrollHeight,
-      behavior: 'smooth'
-    });
+        top: container.scrollHeight,
+        behavior: "smooth",
+      });
     },
   },
 };
@@ -190,22 +213,22 @@ export default {
   align-items: flex-end;
 }
 .category__item {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--brown);
-    margin-bottom: 10px;
-    cursor: move;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--brown);
+  margin-bottom: 10px;
+  cursor: move;
 }
 .category__item:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 .category__name {
-    font-size: 20px;
-    margin-left: 20px;
-    transform: translateY(-2px);  
+  font-size: 20px;
+  margin-left: 20px;
+  transform: translateY(-2px);
 }
 .category__input {
   transform: translateY(-2px);
@@ -217,8 +240,8 @@ export default {
   color: var(--brown);
 }
 .category__info {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .category__footer {
   display: flex;
@@ -245,7 +268,7 @@ export default {
 }
 .category__trash {
   cursor: pointer;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 .category__trash:hover {
   transform: scale(1.1);

@@ -26,7 +26,7 @@
         fontSize="24"
         data-cursor-class="animateCursor"
         bigSize="bigSize"
-        @click="useOrderInfo = {}"
+        @click="getInformationUser"
       />
     </div>
   </div>
@@ -42,6 +42,31 @@ export default {
       allObjectCheck: [],
       useOrderInfo: useOrderInfo(),
       checkVarible: 0,
+      objSet: {
+        name: "Алексей",
+        phone: "+7 242 423 34 34",
+        adress: "Г. Киров, ул. Молодая гвардия 32, д. 120",
+        promocode: "САНЯ - ВАДИЛА",
+        comments: "Я хочу на мальдивы",
+        amount: 1300.0,
+        items: [
+          {
+            name: "Product 1",
+            quantity: 2,
+            price: 300.0,
+          },
+          {
+            name: "Product 2",
+            quantity: 1,
+            price: 400.0,
+          },
+        ],
+        delivery: {
+          name: "CDEK",
+          quantity: 1,
+          price: 300.0,
+        },
+      },
     };
   },
   methods: {
@@ -52,10 +77,14 @@ export default {
     cancelPayment() {
       console.log("cancel");
     },
+    getInformationUser() {
+      this.useOrderInfo = {};
+    },
   },
   watch: {
     useOrderInfo(val) {
       if (val) {
+        console.log(this.useOrderInfo);
         for (let key in val) {
           const checkVar = this.allObjectsOrder.includes(key);
           const checkVarArr = this.allObjectCheck.includes(key);
@@ -63,6 +92,7 @@ export default {
             this.checkVarible += 1;
             this.allObjectCheck.push(key);
           }
+
           if (this.checkVarible === this.allObjectsOrder.length) {
             this.redirectPayment();
             this.checkVarible = 0;

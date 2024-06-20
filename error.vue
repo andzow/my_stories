@@ -1,8 +1,12 @@
 <template>
+  <UIMyHeader />
   <div>
     <ErrorMyMain />
     <UIMyNoise />
+    <UIMyCursor />
+    <UIMyCursorCircle />
   </div>
+  <UIMyFooter />
 </template>
 
 <script>
@@ -13,4 +17,4 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style></style>

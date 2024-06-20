@@ -5,6 +5,7 @@
     ref="container"
     tabindex="0"
     @mouseenter="setActiveFocus"
+    @keydown.enter="$emit('setCity', arrCitys, activeIdx)"
   >
     <div
       class="region__item_dropdown"

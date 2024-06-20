@@ -8,6 +8,7 @@
       <MainNewMyNewSwiper v-if="checkSwiper" />
       <div class="new__btn">
         <UIButtonMyButton
+          @click="$router.push('/catalog')"
           aria-label="смотреть все"
           info="смотреть все"
           fontSize="24"

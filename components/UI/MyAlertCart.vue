@@ -48,7 +48,12 @@
             </svg>
           </button>
         </div>
-        <div class="alert__summ">{{ useAlertCart.price }} ₽</div>
+        <div class="alert__summ">
+          {{
+            useAlertCart.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+          }}
+          ₽
+        </div>
       </div>
     </div>
   </div>
@@ -76,19 +81,26 @@ export default {
       }
       this.useAlertCart = false;
     },
-    closeApp() {
+    handleMouseUp(e) {
       const blockEl = document.querySelector(".alert");
       const btn = document.querySelector(".about__buttons_btn");
-      document.addEventListener("mouseup", (e) => {
-        const click = e.composedPath().includes(blockEl);
-        const clickBnt = e.composedPath().includes(btn);
-        if (!click && !clickBnt) {
-          clearTimeout(this.timeOut);
-          this.timeOut = null;
-          this.useAlertCart = false;
-        }
-      });
+      const click = e.composedPath().includes(blockEl);
+      const clickBnt = e.composedPath().includes(btn);
+      if (!click && !clickBnt) {
+        clearTimeout(this.timeOut);
+        this.timeOut = null;
+        this.useAlertCart = false;
+      }
     },
+    closeApp() {
+      document.addEventListener("mouseup", this.handleMouseUp);
+    },
+  },
+  unmounted() {
+    this.timeOut = clearTimeout(this.timeOut);
+    this.timeOut = null;
+    this.useAlertCart = false;
+    document.removeEventListener("mouseup", this.handleMouseUp);
   },
   mounted() {
     this.useCursor = true;
@@ -96,7 +108,9 @@ export default {
       clearTimeout(this.timeOut);
       this.timeOut = null;
     }
-    this.closeApp();
+    setTimeout(() => {
+      this.closeApp();
+    }, 100);
     this.timeOut = setTimeout(() => {
       this.delTimeOut();
     }, 3000);

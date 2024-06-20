@@ -7,6 +7,7 @@ export default {
   props: {
     activeDurationVideo: {},
     changeProgress: Boolean,
+    useProductObject: {},
   },
   data() {
     return {
@@ -42,12 +43,15 @@ export default {
       this.$emit("change");
     },
   },
-  mounted() {
-    setTimeout(() => {
-      this.initActivePagination();
-    }, 0);
-  },
+  mounted() {},
   watch: {
+    useProductObject(val) {
+      if (val) {
+        setTimeout(() => {
+          this.initActivePagination();
+        }, 0);
+      }
+    },
     changeProgress(val) {
       if (val) {
         if (this.timeOut) {

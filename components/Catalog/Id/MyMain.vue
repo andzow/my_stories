@@ -2,14 +2,15 @@
   <section class="main">
     <div class="main__content">
       <div class="main__menu">
-        <CatalogIdMySlider />
-        <CatalogIdMyAbout />
+        <CatalogIdMyImgSeo :productObject="productObject" />
+        <CatalogIdMySlider :useProductObject="productObjectClient" />
+        <CatalogIdMyAbout :useProductObject="productObject" />
       </div>
     </div>
   </section>
   <Transition>
     <CatalogIdTablesMyTable
-      v-if="useTableSize"
+      v-if="useTableSize && arrTableSize"
       :arrTable="arrTableSize"
       :arrObjectSize="arrObjectSize"
       @keydown.esc="useTableSize = false"
@@ -18,103 +19,83 @@
   </Transition>
   <Transition>
     <CatalogIdTablesMyTable
-      v-if="useTableMeus"
-      :arrTable="arrTableSize"
+      v-if="useTableMeus && arrTableMeus"
+      :arrTable="arrTableMeus"
       :arrObjectSize="arrObjectSize"
       @keydown.esc="useTableMeus = false"
       @close="useTableMeus = false"
     />
   </Transition>
   <Transition name="fade-table-blur">
-    <div class="table__blur" v-if="useTableSize || useTableMeus"></div>
+    <div
+      class="table__blur"
+      v-if="(useTableSize || useTableMeus) && arrTableSize && arrTableMeus"
+    ></div>
   </Transition>
 </template>
 
 <script>
+import ProductController from "@/http/controllers/ProductController";
+
 export default {
+  async setup() {
+    try {
+      let productObject = useProductObject();
+      let tableSize = useTableSize();
+      let tableMeus = useTableMeus();
+      const route = useRoute().params;
+      const { data: responseItems } = await useAsyncData(
+        "responseItems",
+        async () =>
+          $fetch(
+            usePageUrlAsyncData() + "product/" + `${route.name}/${route.id}`
+          )
+      );
+      if (!responseItems.value || responseItems.value?.length <= 0) {
+        useRouter().push("/error");
+      }
+      productObject.value = responseItems.value;
+      // tableSize.value = productObject.value.product[0].dimension;
+      // tableMeus.value = productObject.value.product[0].measurement;
+    } catch {}
+  },
   data() {
     return {
       useTableSize: useTableSize(),
       useTableMeus: useTableMeus(),
-      arrTableSize: [
-        {
-          nameTable: "xs",
-          arrSettings: [
-            { name: "int", value: "xs" },
-            { name: "ru", value: 16 },
-            { name: "длина", value: 44 },
-            { name: "обхват груди", value: 119 },
-            { name: "плечо", value: 16 },
-            { name: "длина рукава", value: 68 },
-          ],
-        },
-        {
-          nameTable: "m",
-          arrSettings: [
-            { name: "int", value: "l" },
-            { name: "ru", value: 26 },
-            { name: "длина", value: 44 },
-            { name: "обхват груди", value: 79 },
-            { name: "плечо", value: 46 },
-            { name: "длина рукава", value: 58 },
-          ],
-        },
-        {
-          nameTable: "l",
-          arrSettings: [
-            { name: "int", value: "xl" },
-            { name: "ru", value: 45 },
-            { name: "длина", value: 32 },
-            { name: "обхват груди", value: 89 },
-            { name: "плечо", value: 23 },
-            { name: "длина рукава", value: 45 },
-          ],
-        },
-      ],
-      arrObjectSize: {
-        title: "таблица размеров",
-        text: "Общая таблица размеров показывает нашу стандартную размерную линейку",
-      },
-      arrTableMeus: [
-        {
-          nameTable: "xs",
-          arrSettings: [
-            { name: "int", value: "xs" },
-            { name: "ru", value: 16 },
-            { name: "длина", value: 44 },
-            { name: "обхват груди", value: 119 },
-            { name: "плечо", value: 16 },
-            { name: "длина рукава", value: 68 },
-          ],
-        },
-        {
-          nameTable: "s",
-          arrSettings: [
-            { name: "int", value: "l" },
-            { name: "ru", value: 26 },
-            { name: "длина", value: 44 },
-            { name: "обхват груди", value: 79 },
-            { name: "плечо", value: 46 },
-            { name: "длина рукава", value: 58 },
-          ],
-        },
-        {
-          nameTable: "m",
-          arrSettings: [
-            { name: "int", value: "xl" },
-            { name: "ru", value: 45 },
-            { name: "длина", value: 32 },
-            { name: "обхват груди", value: 89 },
-            { name: "плечо", value: 23 },
-            { name: "длина рукава", value: 45 },
-          ],
-        },
-      ],
+      arrTableSize: null,
+      arrTableMeus: null,
+      mountedObj: null,
+      useCursor: useCursor(),
+      productObjectClient: null,
+      productObject: useProductObject(),
       arrObjectSize: {
         title: "обмеры изделия",
         text: "точные параметры изделия",
       },
     };
+  },
+  methods: {
+    async initProduct() {
+      if (!this.productObject || this.productObject?.length <= 0) {
+        this.$router.push("/error");
+      }
+    },
+  },
+  unmounted() {
+    this.productObject = false;
+  },
+  created() {
+    this.initProduct();
+  },
+  mounted() {
+    this.productObjectClient = this.productObject;
+    this.arrTableSize = JSON.parse(this.productObject.product[0].dimension);
+    this.arrTableMeus = JSON.parse(this.productObject.product[0].measurement);
+    nextTick(() => {
+      this.useCursor = true;
+      this.useCursor = false;
+    });
   },
   watch: {
     useTableSize(val) {
@@ -148,6 +129,7 @@ export default {
   padding: 0 30px;
 }
 .main__menu {
+  position: relative;
   display: grid;
   grid-template-columns: 0.5fr 1fr;
 }

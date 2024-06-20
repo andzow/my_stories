@@ -9,17 +9,20 @@
       >
         <label
           class="delivery__label"
-          :for="`delivery__option${index + 1}`"
+          :for="index"
           data-cursor-class="animateCursor"
         >
           <input
             type="radio"
             :id="`delivery__option${index + 1}`"
-            :value="`delivery__option${index + 1}`"
+            :value="index"
             v-model="selectedOption"
             class="delivery__custom"
           />
-          <span class="delivery__custom_radio"></span>
+          <span
+            class="delivery__custom_radio"
+            @click="selectedOption = index"
+          ></span>
           <div class="delivery__details">
             <div class="delivery__name">{{ option.name }}</div>
             <div class="delivery__price">{{ option.price }} ₽</div>
@@ -35,7 +38,7 @@
 export default {
   data() {
     return {
-      selectedOption: "delivery__option1",
+      selectedOption: 0,
       deliveryOptions: [
         {
           name: "СДЭК (доставка курьером) 4-5 дней",
@@ -64,8 +67,9 @@ export default {
   },
   watch: {
     useOrderInfo(val) {
-      if (val && this.selectedOption) {
-        this.useOrderInfo.delivery = "сдек";
+      if (val && (this.selectedOption || this.selectedOption <= 0)) {
+        const elHtml = this.deliveryOptions[this.selectedOption];
+        this.useOrderInfo.delivery = elHtml;
       }
     },
   },

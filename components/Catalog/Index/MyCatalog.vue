@@ -1,10 +1,13 @@
 <template>
   <section class="catalog" id="catalog__content">
+    <Transition>
+      <CatalogIndexMyEmpty
+        v-if="(catalogItems?.length <= 0 || !catalogItems) && checkEmpty"
+      />
+    </Transition>
     <div class="catalog__content">
       <UICardMyCard
-        @activeLine="$emit('activeLine')"
-        @click="$router.push('/catalog/сарафан/id')"
-        v-for="(item, idx) in useCatalogItems"
+        v-for="(item, idx) in catalogItems"
         :key="item"
         :item="item"
         :idx="idx"
@@ -14,298 +17,48 @@
 </template>
 
 <script>
+import ProductController from "@/http/controllers/ProductController";
+//   @activeLine="$emit('activeLine')"
+
 export default {
+  async setup() {
+    try {
+      let catalogItems = useCatalogItems();
+      const { data: responseItems } = await useAsyncData(
+        "responseItems",
+        async () =>
+          $fetch(usePageUrlAsyncData() + "product/getFilter", {
+            params: useRoute().query,
+          })
+      );
+      catalogItems.value = responseItems.value;
+    } catch {}
+  },
   data() {
     return {
-      useCatalogItems: useCatalogItems(),
       useFilterScroll: useFilterScroll(),
+      catalogItems: useCatalogItems(),
+      useFilterFlout: useFilterFlout,
+      checkEmpty: false,
     };
   },
   methods: {
-    addCard() {
-      this.useCatalogItems.push(
-        {
-          name: "платье",
-          price: "4 800",
-          sale: "5 200",
-          images: [
-            {
-              imageSrc: "../Primer/catalog1.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog2.png",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-          ],
-        },
-        {
-          name: "сарафан",
-          price: "2 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog11.webp",
-            },
-          ],
-        },
-        {
-          name: "сарафан",
-          price: "2 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog11.webp",
-            },
-          ],
-        },
-        {
-          name: "сарафан",
-          price: "2 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog11.webp",
-            },
-          ],
-        },
-
-        {
-          name: "сарафан",
-          price: "2 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog11.webp",
-            },
-          ],
-        }
-      );
-    },
     async initScrollTrigger() {
-      await nextTick(() => {});
+      await nextTick(() => {
+        this.useFilterFlout();
+        this.checkEmpty = true;
+      });
+    },
+    async initItems() {
+      try {
+        const res = await ProductController.getFilter(this.$route.query);
+        this.useCatalogItems = res;
+      } catch {}
     },
   },
   mounted() {
-    this.useCatalogItems = [
-      {
-        name: "платье",
-        price: "4 800",
-        sale: "5 200",
-        images: [
-          {
-            imageSrc: "../Primer/catalog1.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog2.png",
-          },
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-
-          {
-            imageSrc: "../Primer/catalog5.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-
-          {
-            imageSrc: "../Primer/catalog5.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-
-          {
-            imageSrc: "../Primer/catalog5.webp",
-          },
-        ],
-      },
-      {
-        name: "сарафан",
-        price: "2 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog11.webp",
-          },
-        ],
-      },
-      {
-        name: "сарафан",
-        price: "2 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog11.webp",
-          },
-        ],
-      },
-      {
-        name: "сарафан",
-        price: "2 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog11.webp",
-          },
-        ],
-      },
-
-      {
-        name: "сарафан",
-        price: "2 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog11.webp",
-          },
-        ],
-      },
-      {
-        name: "сарафан",
-        price: "2 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog11.webp",
-          },
-        ],
-      },
-      {
-        name: "сарафан",
-        price: "2 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog11.webp",
-          },
-        ],
-      },
-
-      {
-        name: "сарафан",
-        price: "2 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog11.webp",
-          },
-        ],
-      },
-
-      {
-        name: "сарафан",
-        price: "2 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog11.webp",
-          },
-        ],
-      },
-      {
-        name: "сарочка",
-        price: "7 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog7.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog2.png",
-          },
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-        ],
-      },
-      {
-        name: "платье",
-        price: "1 800",
-        images: [
-          {
-            imageSrc: "../Primer/catalog13.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog2.png",
-          },
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-        ],
-      },
-      {
-        name: "кофта",
-        price: "9 800",
-        sale: "5 200",
-        images: [
-          {
-            imageSrc: "../Primer/catalog9.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog2.png",
-          },
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-
-          {
-            imageSrc: "../Primer/catalog5.webp",
-          },
-          {
-            imageSrc: "../Primer/catalog3.webp",
-          },
-
-          {
-            imageSrc: "../Primer/catalog5.webp",
-          },
-        ],
-      },
-    ];
+    // this.initItems();
+    this.initScrollTrigger();
   },
 };
 </script>
@@ -321,5 +74,19 @@ export default {
   row-gap: 65px;
   margin-bottom: 20px;
   min-height: 900px;
+}
+.v-enter-from {
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+.v-enter-to {
+  opacity: 1;
+  transition: all 0.4s ease;
+}
+.v-leave-from {
+  opacity: 1;
+}
+.v-leave-to {
+  opacity: 0;
 }
 </style>

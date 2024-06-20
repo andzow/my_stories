@@ -19,8 +19,12 @@
         {{ item.name }}
       </h3>
       <div class="new__item_prices" :class="['new__item_prices' + (idx + 1)]">
-        <div class="new__item_price">{{ item.price }} ₽</div>
-        <div class="new__item_sale" v-if="item?.sale">{{ item.sale }} ₽</div>
+        <div class="new__item_price">
+          {{ item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
+        </div>
+        <div class="new__item_sale" v-if="item?.sale">
+          {{ item.sale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
+        </div>
       </div>
     </div>
   </div>
@@ -37,6 +41,7 @@ export default {
       arrNewStyleTexture: null,
     };
   },
+  mounted() {},
 };
 </script>
 
@@ -60,6 +65,7 @@ export default {
   font-size: 22px;
   color: var(--brown);
   margin-bottom: 20px;
+  text-transform: lowercase;
   opacity: 0;
 }
 .new__item_prices {

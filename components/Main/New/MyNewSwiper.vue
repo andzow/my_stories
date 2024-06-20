@@ -5,6 +5,7 @@
     :slidesPerGroup="1"
     :spaceBetween="25"
     :speed="500"
+    v-if="arrNew"
   >
     <swiper-slide class="new__slide" v-for="(item, idx) in arrNew" :key="item">
       <MainNewMyNewItem
@@ -17,148 +18,57 @@
 </template>
 
 <script>
+import ProductController from "@/http/controllers/ProductController";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 
 export default {
   data() {
     return {
-      arrNew: [
-        {
-          name: "платье",
-          price: "4 800",
-          sale: "5 200",
-          images: [
-            {
-              imageSrc: "../Primer/catalog1.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog2.png",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-          ],
-        },
-        {
-          name: "сарафан",
-          price: "2 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog11.webp",
-            },
-          ],
-        },
-        {
-          name: "сарочка",
-          price: "7 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog7.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog2.png",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-          ],
-        },
-        {
-          name: "платье",
-          price: "1 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog13.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog2.png",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-          ],
-        },
-        {
-          name: "кофта",
-          price: "9 800",
-          sale: "5 200",
-          images: [
-            {
-              imageSrc: "../Primer/catalog9.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog2.png",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-          ],
-        },
-      ],
+      arrNew: null,
       arrAnimationOpacityGsap: [],
       arrAnimationGsapPrices: [],
       useGsapAnimationOpacity: useGsapAnimationOpacity,
     };
   },
   methods: {
+    async initArr() {
+      try {
+        const res = await ProductController.getNew();
+        this.arrNew = res;
+        this.initAnimationArr();
+      } catch {}
+    },
     initAnimationArr() {
-      this.arrNew.forEach((el, idx) => {
-        this.arrAnimationOpacityGsap.push(`.new__item_image${idx + 1}`);
-        this.arrAnimationGsapPrices.push(
-          `.new__item_name${idx + 1}`,
-          `.new__item_prices${idx + 1}`
-        );
+      nextTick(() => {
+        this.arrNew.forEach((el, idx) => {
+          this.arrAnimationOpacityGsap.push(`.new__item_image${idx + 1}`);
+          this.arrAnimationGsapPrices.push(
+            `.new__item_name${idx + 1}`,
+            `.new__item_prices${idx + 1}`
+          );
+        });
+        this.arrAnimationGsapPrices.push(".new__btn");
+        this.playAnimationGsap();
       });
-      this.arrAnimationGsapPrices.push(".new__btn");
+    },
+    playAnimationGsap() {
+      this.useGsapAnimationOpacity(
+        this.arrAnimationOpacityGsap,
+        ".new",
+        false,
+        0.4
+      );
+      this.useGsapAnimationOpacity([".new__title", ".new__number"], ".new");
+      this.useGsapAnimationOpacity(
+        this.arrAnimationGsapPrices,
+        ".new__item_name1",
+        true
+      );
     },
   },
   mounted() {
-    this.initAnimationArr();
-    this.useGsapAnimationOpacity(
-      this.arrAnimationOpacityGsap,
-      ".new",
-      false,
-      0.4
-    );
-    this.useGsapAnimationOpacity([".new__title", ".new__number"], ".new");
-    this.useGsapAnimationOpacity(
-      this.arrAnimationGsapPrices,
-      ".new__item_name1",
-      true
-    );
+    this.initArr();
   },
   components: {
     Swiper,
