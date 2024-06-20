@@ -22,7 +22,6 @@ export default {
       minVal: useMinVal(),
       maxVal: useMaxVal(),
       useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
-
       activeLine: false,
       arrAnimationLine: [
         { name: ".header__content", defaultLine: false, indent: "left" },
@@ -93,11 +92,11 @@ export default {
     },
     async initFilter() {
       try {
-        const res = await CategoryController.getCategory(this.$route.query);
-        this.arrFilterChapter = res.categorys;
-        this.arrFilterSize = res.uniqueNameArray;
-        this.minVal = !res.minPrice ? 0 : res.minPrice;
-        this.maxVal = !res.maxPrice ? 35000 : res.maxPrice;
+        // const res = await CategoryController.getCategory(this.$route.query);
+        // this.arrFilterChapter = res.categorys;
+        // this.arrFilterSize = res.uniqueNameArray;
+        // this.minVal = !res.minPrice ? 0 : res.minPrice;
+        // this.maxVal = !res.maxPrice ? 35000 : res.maxPrice;
       } catch {}
     },
     initScrollTrigger() {
@@ -108,7 +107,7 @@ export default {
     this.initRoute();
   },
   mounted() {
-    this.initFilter();
+    // this.initFilter();
     const bodyEl = document.body;
     bodyEl.style.overflow = "auto";
   },

@@ -70,12 +70,13 @@ export default {
         },
         {
           name: "комментарий к заказу*",
-          regExp: /^[a-zA-Zа-яА-Я0-9\s.,/()-]{10,}$/,
-          regExpWord: "Комментарий должен содержать минимум 5 символов",
+          regExp: /^[a-zA-Zа-яА-Я0-9\s.,/()-]*$/,
+          regExpWord: "Комментарий должен быть корректным",
           mask: false,
           lengthWord: 300,
           textArea: true,
           inputVal: "",
+          optional: true,
         },
       ],
       useOrderInfo: useOrderInfo(),
@@ -92,7 +93,6 @@ export default {
         if (!el.mask) {
           const testMask = el.regExp.test(el.inputVal);
           const lengthEl = el.inputVal.length;
-
           if ((!testMask || lengthEl >= el.lengthWord) && getIndexErrors < 0) {
             this.arrErrors.push(el.name);
           } else if (testMask && getIndexErrors >= 0 && lengthEl < 120) {
@@ -106,6 +106,10 @@ export default {
           this.arrErrors.splice(getIndexErrors, 1);
         }
       });
+      if (this.arrErrors.length <= 0) {
+        return true;
+      }
+      return false;
     },
     setValueMask(item, idx, e) {
       const itemEl = item;
@@ -116,7 +120,12 @@ export default {
   watch: {
     useOrderInfo(val) {
       if (val) {
-        this.checkErrors();
+        const checkError = this.checkErrors();
+        if (checkError) {
+          this.useOrderInfo.buyer = this.arrBuyerInput;
+          return;
+        }
+        delete this.useOrderInfo.buyer;
       }
     },
   },

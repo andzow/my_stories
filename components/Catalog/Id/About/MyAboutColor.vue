@@ -1,10 +1,7 @@
 <template>
   <div class="about__color">
-    <h2 class="about__color_title" v-show="arrProduct">цвет</h2>
-    <div class="about__color_load" v-if="!arrProduct">
-      <UIMyLoadingItem :item="{ loading: true }" height="20px" margin="0px" />
-    </div>
-    <div class="about__color_content" v-if="arrProduct">
+    <h2 class="about__color_title">цвет</h2>
+    <div class="about__color_content">
       <div
         class="about__color_item"
         data-cursor-class="animateCursor"
@@ -22,15 +19,6 @@
           :style="{ background: item.colorValue }"
         ></div>
       </div>
-    </div>
-    <div class="about__color_loading" v-else>
-      <UIMyLoadingItem
-        :item="{ loading: true }"
-        height="40px"
-        margin="0px"
-        v-for="item in 6"
-        :key="item"
-      />
     </div>
   </div>
 </template>
@@ -77,13 +65,10 @@ export default {
       }
     },
   },
-  watch: {
-    useProductObject(val) {
-      if (val) {
-        this.arrColorsQuery = val.colors;
-        this.useCursor = true;
-      }
-    },
+  created() {
+    const val = this.useProductObject;
+    this.arrColorsQuery = val.colors;
+    this.useCursor = true;
   },
 };
 </script>

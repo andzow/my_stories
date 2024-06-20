@@ -2,12 +2,12 @@
   <section class="catalog" id="catalog__content">
     <Transition>
       <CatalogIndexMyEmpty
-        v-if="useCatalogItems?.length <= 0 || !useCatalogItems"
+        v-if="(catalogItems?.length <= 0 || !catalogItems) && checkEmpty"
       />
     </Transition>
     <div class="catalog__content">
       <UICardMyCard
-        v-for="(item, idx) in useCatalogItems"
+        v-for="(item, idx) in catalogItems"
         :key="item"
         :item="item"
         :idx="idx"
@@ -21,104 +21,32 @@ import ProductController from "@/http/controllers/ProductController";
 //   @activeLine="$emit('activeLine')"
 
 export default {
+  async setup() {
+    try {
+      let catalogItems = useCatalogItems();
+      const { data: responseItems } = await useAsyncData(
+        "responseItems",
+        async () =>
+          $fetch(usePageUrlAsyncData() + "product/getFilter", {
+            params: useRoute().query,
+          })
+      );
+      catalogItems.value = responseItems.value;
+    } catch {}
+  },
   data() {
     return {
-      useCatalogItems: useCatalogItems(),
       useFilterScroll: useFilterScroll(),
+      catalogItems: useCatalogItems(),
       useFilterFlout: useFilterFlout,
+      checkEmpty: false,
     };
   },
   methods: {
-    addCard() {
-      this.useCatalogItems.push(
-        {
-          name: "платье",
-          price: "4 800",
-          sale: "5 200",
-          images: [
-            {
-              imageSrc: "../Primer/catalog1.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog2.png",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-
-            {
-              imageSrc: "../Primer/catalog5.webp",
-            },
-          ],
-        },
-        {
-          name: "сарафан",
-          price: "2 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog11.webp",
-            },
-          ],
-        },
-        {
-          name: "сарафан",
-          price: "2 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog11.webp",
-            },
-          ],
-        },
-        {
-          name: "сарафан",
-          price: "2 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog11.webp",
-            },
-          ],
-        },
-
-        {
-          name: "сарафан",
-          price: "2 800",
-          images: [
-            {
-              imageSrc: "../Primer/catalog3.webp",
-            },
-            {
-              imageSrc: "../Primer/catalog11.webp",
-            },
-          ],
-        }
-      );
-    },
     async initScrollTrigger() {
       await nextTick(() => {
         this.useFilterFlout();
+        this.checkEmpty = true;
       });
     },
     async initItems() {
@@ -129,7 +57,7 @@ export default {
     },
   },
   mounted() {
-    this.initItems();
+    // this.initItems();
     this.initScrollTrigger();
   },
 };

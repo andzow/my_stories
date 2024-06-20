@@ -4,7 +4,6 @@
       class="about__description_header"
       @click="switchHeight"
       data-cursor-class="animateCursor"
-      v-show="arrProduct"
     >
       <h2 class="about__description_title">описание</h2>
       <div class="about__description_vector" :class="{ activeSvg: activeText }">
@@ -26,24 +25,8 @@
         </svg>
       </div>
     </div>
-    <div class="about__description_load" v-if="!arrProduct">
-      <div class="about__description_l">
-        <UIMyLoadingItem
-          :item="{ loading: true }"
-          height="30px"
-          margin="20px"
-        />
-      </div>
-      <UIMyLoadingItem
-        :item="{ loading: true }"
-        height="20px"
-        margin="10px"
-        v-for="item in 3"
-        :key="item"
-      />
-    </div>
     <div class="about__description_content">
-      <p class="about__description_text" v-show="text && arrProduct">
+      <p class="about__description_text" :key="text">
         {{ text }}
       </p>
     </div>
@@ -65,7 +48,7 @@ export default {
   },
   methods: {
     async initHeightTextContent() {
-      await nextTick(() => {
+      nextTick(() => {
         const elHtml = document.querySelector(".about__description_content");
         this.heightContent = elHtml.getBoundingClientRect().height;
         elHtml.style.height = this.heightContent + 10 + "px";
@@ -84,14 +67,14 @@ export default {
       this.activeText = true;
     },
   },
-  mounted() {},
-  watch: {
-    useProductObject(val) {
-      if (val) {
-        this.text = val.product[0].text;
-        this.initHeightTextContent();
-      }
-    },
+  mounted() {
+    this.initHeightTextContent();
+  },
+  created() {
+    const val = this.arrProduct;
+    if (val) {
+      this.text = val.text;
+    }
   },
 };
 </script>
@@ -99,6 +82,7 @@ export default {
 <style scoped>
 .about__description {
   margin-bottom: 0px;
+  min-height: 50px;
 }
 .activeDes {
   margin-bottom: 25px;
@@ -148,6 +132,10 @@ export default {
 }
 .about__description_l {
   max-width: 15%;
+}
+.about__description_loading {
+  margin-bottom: 15px;
+  width: 50%;
 }
 @keyframes animationOpacity {
   from {

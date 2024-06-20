@@ -42,6 +42,7 @@
             v-if="activeDropdown"
             @close="activeDropdown = false"
             @keydown.esc="activeDropdown = false"
+            @setCity="setCity"
           />
         </Transition>
       </div>
@@ -66,6 +67,10 @@ export default {
         this.activeDropdown = false;
       }
       this.useCursor = true;
+    },
+    setCity(arr, idx) {
+      this.inpVal = arr[idx].name;
+      this.activeDropdown = false;
     },
   },
   watch: {

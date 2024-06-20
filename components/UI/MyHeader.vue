@@ -163,6 +163,7 @@ export default {
     this.changeColor(route);
   },
   mounted() {
+    this.changeColor(this.$route);
     this.activeLiPath = this.$route.path;
   },
   watch: {

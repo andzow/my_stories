@@ -78,12 +78,13 @@ export default {
       console.log("cancel");
     },
     getInformationUser() {
-      console.log(this.objSet);
+      this.useOrderInfo = {};
     },
   },
   watch: {
     useOrderInfo(val) {
       if (val) {
+        console.log(this.useOrderInfo);
         for (let key in val) {
           const checkVar = this.allObjectsOrder.includes(key);
           const checkVarArr = this.allObjectCheck.includes(key);
@@ -91,6 +92,7 @@ export default {
             this.checkVarible += 1;
             this.allObjectCheck.push(key);
           }
+
           if (this.checkVarible === this.allObjectsOrder.length) {
             this.redirectPayment();
             this.checkVarible = 0;

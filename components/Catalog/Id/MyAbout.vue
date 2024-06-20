@@ -1,70 +1,47 @@
 <template>
   <div class="about">
     <div class="about__header">
-      <div class="about__header_block" v-show="arrProduct">
+      <div class="about__header_block">
         ( &nbsp;
         <h1 class="about__header_title">{{ $route.params.name }}</h1>
         &nbsp; )
       </div>
-      <div class="about__heade_loading" v-if="!arrProduct">
-        <UIMyLoadingItem :item="{ loading: true }" height="60px" margin="0px" />
-      </div>
-      <div class="about__header_arcticle" v-if="arrProduct">
+      <div class="about__header_arcticle">
         {{ arrProduct.articul }}
-      </div>
-      <div class="about__header_load" v-else>
-        <UIMyLoadingItem :item="{ loading: true }" height="30px" margin="0px" />
       </div>
     </div>
     <div class="about_price">
-      <div class="about__price_text" v-if="arrProduct">
+      <div class="about__price_text">
+        <span class="about__price_summ"
+          >{{
+            arrProduct[`${!arrProduct.discount ? "price" : "discount"}`]
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+          }} </span
+        ><span class="about__price_span"> ₽</span>
+      </div>
+      <div class="about__price_text" v-if="arrProduct?.discount">
         <span class="about__price_summ"
           >{{
             arrProduct.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
           }} </span
-        ><span class="about__price_span"> ₽</span>
-      </div>
-      <div class="about__price_load" v-else>
-        <UIMyLoadingItem :item="{ loading: true }" height="30px" margin="0px" />
-      </div>
-      <div class="about__price_text" v-if="arrProduct && arrProduct?.discount">
-        <span class="about__price_summ"
-          >{{
-            arrProduct.discount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-          }} </span
         ><span class="about__price_span">₽</span>
       </div>
-      <div class="about__price_loading" v-if="!arrProduct">
-        <UIMyLoadingItem :item="{ loading: true }" height="30px" margin="0px" />
-      </div>
     </div>
-    <div class="about__dolyami" v-if="arrProduct">
+    <div class="about__dolyami">
       <img :src="'../../Primer/dolyami.png'" />
     </div>
-    <div class="about__dolyami_loading" v-else>
-      <UIMyLoadingItem :item="{ loading: true }" height="50px" margin="0px" />
-    </div>
+
     <CatalogIdAboutMyAboutSize
       v-if="arrProductSize"
       :arrProductSize="arrProductSize"
       :getSize="getSize"
       @getIndex="setCart"
     />
-    <div class="about__load_title" v-if="!arrProduct">
-      <UIMyLoadingItem :item="{ loading: true }" height="20px" margin="0px" />
-    </div>
-    <div class="about__load_size" v-if="!arrProduct">
-      <UIMyLoadingItem
-        :item="{ loading: true }"
-        height="50px"
-        margin="0px"
-        v-for="item in 3"
-        :key="item"
-      />
-    </div>
+
     <CatalogIdAboutMyAboutColor :arrProduct="arrProduct" />
     <div class="about__buttons">
-      <div class="about__buttons_btn" v-if="arrProduct">
+      <div class="about__buttons_btn">
         <UIButtonMyButton
           @click="setSize"
           class="about__size_btn"
@@ -77,10 +54,8 @@
           variant="average"
         />
       </div>
-      <div class="about__buttons_load" v-else>
-        <UIMyLoadingItem :item="{ loading: true }" height="60px" margin="0px" />
-      </div>
-      <div class="about__buttons_btn" v-if="arrProduct">
+
+      <div class="about__buttons_btn">
         <UIButtonMyButton
           class="about__size_btn"
           aria-label="написать в телеграм"
@@ -89,9 +64,6 @@
           fontSize="20"
           data-cursor-class="animateCursor"
         />
-      </div>
-      <div class="about__buttons_load" v-else>
-        <UIMyLoadingItem :item="{ loading: true }" height="60px" margin="0px" />
       </div>
     </div>
     <CatalogIdAboutMyAboutDescription :arrProduct="arrProduct" />
@@ -192,14 +164,11 @@ export default {
       this.useAlertCart = this.primerObj;
     },
   },
-  unmounted() {},
-  watch: {
-    useProductObject(val) {
-      if (val) {
-        this.arrProduct = val.product[0];
-        this.arrProductSize = JSON.parse(val.product[0].dimension);
-      }
-    },
+  created() {
+    const val = this.useProductObject;
+    this.arrProduct = val.product[0];
+
+    this.arrProductSize = JSON.parse(val.product[0].dimension);
   },
 };
 </script>

@@ -2,8 +2,9 @@
   <section class="main">
     <div class="main__content">
       <div class="main__menu">
-        <CatalogIdMySlider :useProductObject="useProductObject" />
-        <CatalogIdMyAbout :useProductObject="useProductObject" />
+        <CatalogIdMyImgSeo :productObject="productObject" />
+        <CatalogIdMySlider :useProductObject="productObjectClient" />
+        <CatalogIdMyAbout :useProductObject="productObject" />
       </div>
     </div>
   </section>
@@ -37,13 +38,37 @@
 import ProductController from "@/http/controllers/ProductController";
 
 export default {
+  async setup() {
+    try {
+      let productObject = useProductObject();
+      let tableSize = useTableSize();
+      let tableMeus = useTableMeus();
+      const route = useRoute().params;
+      const { data: responseItems } = await useAsyncData(
+        "responseItems",
+        async () =>
+          $fetch(
+            usePageUrlAsyncData() + "product/" + `${route.name}/${route.id}`
+          )
+      );
+      if (!responseItems.value || responseItems.value?.length <= 0) {
+        useRouter().push("/error");
+      }
+      productObject.value = responseItems.value;
+      // tableSize.value = productObject.value.product[0].dimension;
+      // tableMeus.value = productObject.value.product[0].measurement;
+    } catch {}
+  },
   data() {
     return {
       useTableSize: useTableSize(),
       useTableMeus: useTableMeus(),
       arrTableSize: null,
       arrTableMeus: null,
-      useProductObject: useProductObject(),
+      mountedObj: null,
+      useCursor: useCursor(),
+      productObjectClient: null,
+      productObject: useProductObject(),
       arrObjectSize: {
         title: "обмеры изделия",
         text: "точные параметры изделия",
@@ -52,23 +77,25 @@ export default {
   },
   methods: {
     async initProduct() {
-      try {
-        const res = await ProductController.productOne(this.$route.params);
-        this.arrTableSize = JSON.parse(res.product[0].dimension).filter(
-          (el) => el.name !== "" || el.name.length > 0
-        );
-        this.arrTableMeus = JSON.parse(res.product[0].measurement).filter(
-          (el) => el.name !== "" || el.name.length > 0
-        );
-        this.useProductObject = res;
-      } catch {}
+      if (!this.productObject || this.productObject?.length <= 0) {
+        this.$router.push("/error");
+      }
     },
   },
   unmounted() {
-    this.useProductObject = false;
+    this.productObject = false;
+  },
+  created() {
+    this.initProduct();
   },
   mounted() {
-    this.initProduct();
+    this.productObjectClient = this.productObject;
+    this.arrTableSize = JSON.parse(this.productObject.product[0].dimension);
+    this.arrTableMeus = JSON.parse(this.productObject.product[0].measurement);
+    nextTick(() => {
+      this.useCursor = true;
+      this.useCursor = false;
+    });
   },
   watch: {
     useTableSize(val) {

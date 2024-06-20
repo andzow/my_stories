@@ -19,13 +19,12 @@
     >
       <div class="card__item_card">
         <NuxtLink :to="item.name ? `/catalog/${item?.name}/${item?.id}` : '/'">
-          <img
-            v-show="checkLoad"
+          <NuxtImg
             width="490"
             height="665"
             class="card__item_imgs"
+            :class="{ activeOpacity: checkLoad }"
             :src="serverUrl + slide"
-            @load="onImageLoad"
             :alt="`${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
               /\r\n/g,
               ', '
@@ -34,7 +33,7 @@
       </div>
     </swiper-slide>
     <div class="card__item_pagination"></div>
-    <div class="card__item_texture" v-if="sale"></div>
+    <div class="card__item_texture" v-if="item?.discount"></div>
   </swiper>
 </template>
 
@@ -91,12 +90,38 @@ export default {
         });
       });
     },
-    onImageLoad() {
+    onImageLoad(idx) {
       this.checkLoad = true;
       this.$emit("loadPhoto");
     },
+    loadImage(srcImage) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = srcImage;
+        img.onload = () => {
+          resolve(true);
+        };
+      });
+    },
+    loadContent() {
+      const arrPromise = [];
+      this.images.forEach((el) => {
+        arrPromise.push(this.loadImage(USE_SERVER + el));
+      });
+      Promise.all(arrPromise)
+        .then(() => {
+          this.checkLoad = true;
+          this.$emit("loadPhoto");
+        })
+        .catch(() => {
+          this.checkLoad = true;
+          this.$emit("loadPhoto");
+        });
+    },
   },
-  mounted() {},
+  mounted() {
+    this.loadContent();
+  },
   unmounted() {
     if (this.swiper) {
       this.swiper.destroy(true, true);
@@ -143,18 +168,14 @@ export default {
   object-fit: cover;
   width: 100%;
   height: 100%;
-  animation-duration: 0.5s;
-  animation-name: animateOpacity;
+  /* opacity: 0; */
+  transition: all 0.4s ease;
   z-index: 5;
 }
-@keyframes animateOpacity {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.activeOpacity {
+  opacity: 1;
 }
+
 .card__item_pagination {
   position: absolute;
   width: 100%;

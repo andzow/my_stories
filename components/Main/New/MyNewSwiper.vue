@@ -33,35 +33,42 @@ export default {
   },
   methods: {
     async initArr() {
-      const res = await ProductController.getNew();
-      this.arrNew = res;
-      this.initAnimationArr();
+      try {
+        const res = await ProductController.getNew();
+        this.arrNew = res;
+        this.initAnimationArr();
+      } catch {}
     },
     initAnimationArr() {
-      this.arrNew.forEach((el, idx) => {
-        this.arrAnimationOpacityGsap.push(`.new__item_image${idx + 1}`);
-        this.arrAnimationGsapPrices.push(
-          `.new__item_name${idx + 1}`,
-          `.new__item_prices${idx + 1}`
-        );
+      nextTick(() => {
+        this.arrNew.forEach((el, idx) => {
+          this.arrAnimationOpacityGsap.push(`.new__item_image${idx + 1}`);
+          this.arrAnimationGsapPrices.push(
+            `.new__item_name${idx + 1}`,
+            `.new__item_prices${idx + 1}`
+          );
+        });
+        this.arrAnimationGsapPrices.push(".new__btn");
+        this.playAnimationGsap();
       });
-      this.arrAnimationGsapPrices.push(".new__btn");
+    },
+    playAnimationGsap() {
+      this.useGsapAnimationOpacity(
+        this.arrAnimationOpacityGsap,
+        ".new",
+        false,
+        0.4
+      );
+      this.useGsapAnimationOpacity([".new__title", ".new__number"], ".new");
+      this.useGsapAnimationOpacity(
+        this.arrAnimationGsapPrices,
+        ".new__item_name1",
+        true
+      );
     },
   },
   mounted() {
     this.initArr();
-    // this.useGsapAnimationOpacity(
-    //   this.arrAnimationOpacityGsap,
-    //   ".new",
-    //   false,
-    //   0.4
-    // );
-    // this.useGsapAnimationOpacity([".new__title", ".new__number"], ".new");
-    // this.useGsapAnimationOpacity(
-    //   this.arrAnimationGsapPrices,
-    //   ".new__item_name1",
-    //   true
-    // );
   },
   components: {
     Swiper,

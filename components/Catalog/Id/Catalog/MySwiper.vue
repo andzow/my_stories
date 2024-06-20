@@ -32,11 +32,9 @@ export default {
       return this.arrNew;
     },
   },
-  mounted() {},
-  watch: {
-    useProductObject(val) {
-      this.arrNew = val.other;
-    },
+  mounted() {
+    const val = this.useProductObject?.other;
+    this.arrNew = val;
   },
   components: {
     Swiper,

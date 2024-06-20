@@ -1,6 +1,6 @@
 <template>
   <section class="main">
-    <h1 class="main__title">( &nbsp;Каталог&nbsp; )</h1>
+    <h1 class="main__title">Каталог | Mystories</h1>
     <div class="main__content">
       <CatalogIndexMyFilter />
       <CatalogIndexMyCatalog @activeLine="$emit('activeLine')" />

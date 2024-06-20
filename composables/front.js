@@ -115,8 +115,18 @@ export const useFilterFlout = () => {
     P = 0,
     N = 0;
   window.addEventListener("scroll", Ascroll, false);
-  document.body.addEventListener("scroll", Ascroll, false);
+
   function Ascroll() {
+    if (
+      a.getBoundingClientRect().x === 0 &&
+      a.getBoundingClientRect().height === 0
+    ) {
+      window.removeEventListener("scroll", Ascroll, false);
+      return;
+    }
+    if (!a) {
+      return;
+    }
     var Ra = a.getBoundingClientRect(),
       R1bottom = document
         .querySelector("#catalog__content")
@@ -218,24 +228,24 @@ export const useTimelineScrollTrigger = () =>
 export const useOrderInfo = () => useState("use_order_info", () => null);
 export const useScrollTriggerTimeLine = () =>
   useState("use_timeline_scroll", () => null);
-export const useMinVal = () => useState("use_min_val", () => null);
-export const useMaxVal = () => useState("use_max_val", () => null);
-export const useArrFilterChapter = () =>
-  useState("use_filter_chapter", () => null);
-export const useArrFilterSize = () => useState("use_filter_size", () => null);
+export const useMinVal = () => {
+  const config = useRuntimeConfig();
+  return useState("use_min_val", () => null);
+};
+export const useMaxVal = () => {
+  const config = useRuntimeConfig();
+  return useState("use_max_val", () => null);
+};
+export const useArrFilterChapter = () => {
+  const config = useRuntimeConfig();
+  return useState("use_filter_chapter", () => null);
+};
+export const useArrFilterSize = () => {
+  return useState("use_filter_size", () => null);
+};
 export const useDestroySwiper = () => useState("use_swiper", () => null);
 export const useFilterReset = () => useState("use_reset_filter", () => false);
-export const useCatalogItems = () =>
-  useState("use_catalog_items", () => [
-    { name: "", loading: true, price: 1200, images: [] },
-    { name: "", loading: true, price: 1200, images: [] },
-    { name: "", loading: true, price: 1200, images: [] },
-    { name: "", loading: true, price: 1200, images: [] },
-    { name: "", loading: true, price: 1200, images: [] },
-    { name: "", loading: true, price: 1200, images: [] },
-    { name: "", loading: true, price: 1200, images: [] },
-    { name: "", loading: true, price: 1200, images: [] },
-  ]);
+export const useCatalogItems = () => useState("use_catalog_items", () => null);
 export const useProductObject = () =>
   useState("use_product_object", () => null);
 export const useCheckLoad = () => useState("use_check_load", () => false);

@@ -120,13 +120,14 @@ export default {
       });
       this.$emit("openMethod");
     },
-    initApp() {
-      const queryParams = this.$route.query;
+    initApp(route) {
+      const queryParams = route.query;
       if (queryParams?.size) {
         const setArrQuery = queryParams.size
           .split(";")
           .map((el) => el.toLowerCase());
         this.arrFilterQuery = setArrQuery;
+        this.checkFilter = true;
         return;
       }
       this.arrFilterQuery = [];
@@ -156,8 +157,10 @@ export default {
       this.$emit("openMethod", true);
     },
   },
+  created() {
+    this.initApp(useRoute());
+  },
   mounted() {
-    this.initApp();
     this.useCursor = true;
   },
   watch: {

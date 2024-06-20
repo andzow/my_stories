@@ -24,6 +24,8 @@
           :src="useServ + slide"
           :alt="item.name"
           @load="onImageLoad"
+          width="451"
+          height="565"
         />
         <UIMyLoadItem v-show="!checkLoad" />
       </div>
@@ -133,6 +135,7 @@ export default {
   position: relative;
   object-fit: cover;
   height: 100%;
+  width: 100%;
   animation-duration: 0.5s;
   animation-name: animateOpacity;
   z-index: 5;

@@ -26,24 +26,8 @@
         </svg>
       </div>
     </div>
-    <div class="about__info_loading" v-if="!arrProduct">
-      <div class="about__info_load">
-        <UIMyLoadingItem
-          :item="{ loading: true }"
-          height="30px"
-          margin="20px"
-        />
-      </div>
-      <UIMyLoadingItem
-        :item="{ loading: true }"
-        height="20px"
-        margin="10px"
-        v-for="item in 5"
-        :key="item"
-      />
-    </div>
     <div class="about__info_content">
-      <p class="about__info_text" v-show="text && arrProduct">{{ text }}</p>
+      <p class="about__info_text">{{ text }}</p>
     </div>
   </div>
 </template>
@@ -82,14 +66,14 @@ export default {
       this.activeText = true;
     },
   },
-  mounted() {},
-  watch: {
-    useProductObject(val) {
-      if (val) {
-        this.text = val.product[0].characteristic;
-        this.initHeightTextContent();
-      }
-    },
+  mounted() {
+    this.initHeightTextContent();
+  },
+  created() {
+    const val = this.arrProduct;
+    if (val) {
+      this.text = val.characteristic;
+    }
   },
 };
 </script>

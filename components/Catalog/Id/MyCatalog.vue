@@ -1,7 +1,9 @@
 <template>
   <section class="catalog">
     <div class="catalog__content">
-      <CatalogIdCatalogMySwiper />
+      <NuxtErrorBoundary>
+        <CatalogIdCatalogMySwiper />
+      </NuxtErrorBoundary>
     </div>
   </section>
 </template>

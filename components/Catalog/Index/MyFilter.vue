@@ -1,25 +1,15 @@
 <template>
   <section class="filter">
-    <div
-      class="filter__item"
-      ref="filterItem"
-      id="filter__item"
-      :class="{ activeFilter: arrFilterChapter }"
-    >
-      <CatalogIndexFilterMyChapter
-        @openMethod="checkResetBtn"
-        v-if="arrFilterChapter"
-      />
-      <CatalogIndexFilterMyChapterLoading v-else />
+    <div class="filter__item" ref="filterItem" id="filter__item">
+      <CatalogIndexFilterMyChapter @openMethod="checkResetBtn" />
       <CatalogIndexFilterMySize @openMethod="checkResetBtn" />
       <CatalogIndexFilterMyPrice
-        v-if="(minVal || minVal <= 0) && maxVal"
         :minVal="minVal"
         :maxVal="maxVal"
         @openMethod="checkResetBtn"
       />
-      <CatalogIndexFilterMyPriceLoading v-else />
-      <div class="filter__ready" v-if="arrFilterChapter">
+
+      <div class="filter__ready">
         <UIButtonMyButton
           aria-label="применить"
           info="применить"
@@ -28,7 +18,7 @@
           @click="sendFilter"
         />
       </div>
-      <Transition name="filter-fade" v-if="arrFilterChapter">
+      <Transition name="filter-fade">
         <div class="filter__delete" :class="{ activeBtnDel: checkReset }">
           <UIButtonMyButton
             aria-label="сбросить"
@@ -49,6 +39,24 @@ import CategoryController from "@/http/controllers/CategoryController";
 import ProductController from "@/http/controllers/ProductController";
 
 export default {
+  async setup() {
+    try {
+      let arrFilterChapter = useArrFilterChapter();
+      let arrFilterSize = useArrFilterSize();
+      let minVal = useMinVal();
+      let maxVal = useMaxVal();
+
+      const { data: response } = await useAsyncData("data", async () =>
+        $fetch(usePageUrlAsyncData() + "category/getCategory", {
+          params: useRoute().query,
+        })
+      );
+      arrFilterChapter.value = response.value.categorys;
+      arrFilterSize.value = response.value.uniqueNameArray;
+      minVal.value = !response.value.minPrice ? 0 : response.value.minPrice;
+      maxVal.value = !response.value.maxPrice ? 35000 : response.value.maxPrice;
+    } catch {}
+  },
   data() {
     return {
       minVal: useMinVal(),
@@ -156,7 +164,7 @@ export default {
           },
         });
         this.checkResetBtn();
-        this.initFilter();
+        // this.initFilter();
       }
     },
     useFilterReset(val) {

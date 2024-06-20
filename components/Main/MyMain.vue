@@ -24,6 +24,7 @@
             fontSize="24"
             variant="main"
             data-cursor-class="animateCursor"
+            @click="$router.push('/catalog')"
           />
         </div>
       </div>

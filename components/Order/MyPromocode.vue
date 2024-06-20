@@ -3,7 +3,10 @@
     <div class="promocode__content">
       <div class="promocode__name">Ваш заказ</div>
       <div class="promocode__summ">
-        Сумма заказа: <span class="promocode__span">10 400 ₽</span>
+        Сумма заказа:
+        <span class="promocode__span" v-if="summ"
+          >{{ summ.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</span
+        >
       </div>
       <div class="promocode__delivery">
         Доставка: <span class="promocode__span">305 ₽</span>
@@ -124,7 +127,13 @@
         </div>
       </form>
       <div class="promocode__full">
-        итого: <span class="promocode__span">10 705 ₽</span>
+        итого:
+        <span class="promocode__span" v-if="fullSumm"
+          >{{
+            fullSumm.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+          }}
+          ₽</span
+        >
       </div>
     </div>
   </div>
@@ -144,6 +153,10 @@ export default {
       inputPrimer: ["active"],
       useCursor: useCursor(),
       timeLine: useScrollTriggerTimeLine(),
+      fullSumm: 0,
+      summ: 0,
+      useOrderInfo: useOrderInfo(),
+      activePromocode: "",
     };
   },
   methods: {
@@ -160,6 +173,7 @@ export default {
     checkPromocode() {
       const checkPromocode = this.inputPrimer.includes(this.inputVal);
       if (checkPromocode) {
+        this.activePromocode = this.inputVal;
         this.promocodeState = "success";
         this.promocodeText = "промокод применен";
         document.querySelector(".promocode__input").disabled = true;
@@ -168,8 +182,23 @@ export default {
       this.promocodeText = "промокод введен не верно";
       this.promocodeState = "reject";
     },
-    initEndTrigger() {
-      return;
+    initPromocode() {
+      const parseCart = JSON.parse(localStorage.getItem("cart"));
+      if (!parseCart || parseCart?.length <= 0) {
+        this.$router.push("/error");
+        return;
+      }
+      parseCart.forEach((el) => {
+        let number = el.price;
+        if (typeof number !== "number") {
+          number = number.match(/\d+/g);
+          number = parseInt(number.join(""));
+        }
+        const fullSumme = number * el.counter;
+        this.fullSumm += fullSumme;
+      });
+      this.summ = this.fullSumm;
+      this.fullSumm += 305;
     },
     initScrollTrigger() {
       this.timeLine = gsap.timeline({
@@ -188,11 +217,19 @@ export default {
     },
   },
   mounted() {
+    this.initPromocode();
     setTimeout(() => {
       nextTick(() => {
         this.initScrollTrigger();
       });
     }, 0);
+  },
+  watch: {
+    useOrderInfo(val) {
+      if (val) {
+        this.useOrderInfo.promocode = this.activePromocode;
+      }
+    },
   },
 };
 </script>
