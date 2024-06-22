@@ -45,7 +45,7 @@ export default {
   methods: {
     async initScrollTrigger() {
       await nextTick(() => {
-        this.useFilterFlout();
+        this.useFilterFlout("filter__item", "catalog__content");
         this.checkEmpty = true;
       });
     },

@@ -1,9 +1,9 @@
 <template>
-  <div class="search__item">
+  <div class="search__item" @click="setPage">
     <div class="search__item_image">
       <img class="search__item_img" :src="item.imageSrc" />
     </div>
-    <p class="search__item_title">{{ item.name }}</p>
+    <p class="search__item_title">{{ item.name + item.color }}</p>
   </div>
 </template>
 
@@ -11,6 +11,11 @@
 export default {
   props: {
     item: Object,
+  },
+  methods: {
+    setPage() {
+      this.$emit("close", this.item);
+    },
   },
 };
 </script>
@@ -26,6 +31,7 @@ export default {
   margin-left: 40px;
   font-size: 20px;
   font-weight: 400;
+  text-transform: lowercase;
 }
 .search__item_img {
   width: 80px;

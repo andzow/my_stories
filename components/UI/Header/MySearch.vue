@@ -3,7 +3,7 @@
     <form
       class="search__content"
       @submit.prevent="getSortedArray"
-      :class="{ activeMargin: arrSendMenu.length > 0 }"
+      :class="{ activeMargin: arrSendMenu?.length > 0 }"
     >
       <div class="search__type">
         <input
@@ -11,11 +11,12 @@
           :placeholder="placeholderVal"
           class="search__input"
           data-cursor-class="animateCursor"
+          @input="debouncedSearch"
           v-model="searchVal"
         />
       </div>
       <div class="search__interaction">
-        <div class="search__btn">
+        <!-- <div class="search__btn">
           <UIButtonMyButton
             type="submit"
             aria-label="Найти товар"
@@ -23,7 +24,7 @@
             fontSize="18"
             data-cursor-class="animateCursor"
           />
-        </div>
+        </div> -->
         <button
           class="search__close"
           @click="setClose"
@@ -56,74 +57,61 @@
         </button>
       </div>
     </form>
-    <UIHeaderMySearchMenu v-if="arrMenu.length > 0" :arrMenu="arrSendMenu" />
+    <UIHeaderMySearchMenu :arrMenu="arrSendMenu" @close="close" />
+    <div class="search__empty" v-if="arrSendMenu.length <= 0 && checkSearch">
+      <div class="search__empty_title">товаров нет</div>
+      <div class="search__empty_text">По вашему запросу ничего не найдено</div>
+    </div>
   </div>
 </template>
 
 <script>
 import ProductController from "@/http/controllers/ProductController";
+import { USE_SERVER } from "~/url";
+import debounce from "lodash.debounce";
 
 export default {
   data() {
     return {
-      arrMenu: [
-        {
-          name: "сарафан с открытой спиной",
-          imageSrc: "../Primer/item.png",
-        },
-        {
-          name: "айфон",
-          imageSrc: "../Primer/item.png",
-        },
-        {
-          name: "айфон 12",
-          imageSrc: "../Primer/item.png",
-        },
-        {
-          name: "апл",
-          imageSrc: "../Primer/item.png",
-        },
-        {
-          name: "сарочка",
-          imageSrc: "../Primer/item.png",
-        },
-        {
-          name: "сарочка красная",
-          imageSrc: "../Primer/item.png",
-        },
-        {
-          name: "саранск",
-          imageSrc: "../Primer/item.png",
-        },
-      ],
       arrSendMenu: [],
       searchVal: "",
       placeholderVal: "Поиск...",
       useCursor: useCursor(),
+      checkSearch: false,
+      debouncedSearch: debounce(async () => {
+        try {
+          const res = await ProductController.getSearch({
+            name: this.searchVal,
+          });
+          this.arrSendMenu = res
+            .map((el) => ({
+              name: el.name,
+              color: ` ( ${el.color.toLowerCase()} )`,
+              imageSrc: USE_SERVER + el.images[0],
+              id: el.id,
+            }))
+            .filter((el) => el);
+          if (!this.checkSearch) {
+            this.checkSearch = true;
+          }
+        } catch {}
+      }, 300),
     };
   },
   methods: {
+    close(item) {
+      this.$emit("close", item);
+    },
     setClose() {
       this.$emit("closeSearch");
     },
-    getSortedArray() {
-      this.arrSendMenu = this.arrMenu.filter((el) => {
-        if (el.name.includes(this.searchVal)) return el;
-      });
-    },
-    async initArrSearch() {
-      const res = await ProductController.getSearch({ name: "сарафан" });
-      console.log(res);
-    },
+    async initArrSearch() {},
   },
   mounted() {
     const bodyEl = document.body;
     bodyEl.style.overflow = "hidden";
     this.$refs.searchClose.focus();
     this.initArrSearch();
-    // setTimeout(() => {
-    //   this.arrSendMenu = this.arrMenu;
-    // }, 500);
     setTimeout(() => {
       const blockEl = document.querySelector(".search");
       document.addEventListener("mouseup", (e) => {
@@ -131,8 +119,9 @@ export default {
         if (!click) {
           this.$emit("closeSearch");
         }
-        this.useCursor = true;
       });
+      this.useCursor = true;
+      this.useCursor = false;
     }, 0);
   },
 };
@@ -186,5 +175,20 @@ export default {
   height: 40px;
   display: flex;
   align-items: center;
+}
+.search__empty_title {
+  margin-top: 50px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 36px;
+  color: var(--brown);
+  margin-bottom: 30px;
+}
+.search__empty_text {
+  text-align: center;
+  font-weight: 300;
+  font-size: 18px;
+  color: var(--brown);
+  margin-bottom: 20px;
 }
 </style>

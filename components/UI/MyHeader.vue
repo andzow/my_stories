@@ -95,7 +95,7 @@
     </header>
   </Transition>
   <UIMyBlur :searchVisible="searchVisible" @keydown.esc="searchVisible = false">
-    <UIHeaderMySearch @closeSearch="searchVisible = false" />
+    <UIHeaderMySearch @closeSearch="searchVisible = false" @close="close" />
   </UIMyBlur>
 </template>
 
@@ -133,6 +133,10 @@ export default {
     };
   },
   methods: {
+    close(item) {
+      this.searchVisible = false;
+      this.$router.push(`/catalog/${item.name}/${item.id}`);
+    },
     cursorEnter() {
       this.useCursor = true;
     },

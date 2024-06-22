@@ -8,7 +8,7 @@
           class="region__input"
           type="text"
           placeholder="введите название города..."
-          @input="setRegion"
+          @input="debouncedSearch"
           v-model="inpVal"
         />
         <div class="region__img">
@@ -39,9 +39,10 @@
         </div>
         <Transition name="fade-dropdown">
           <OrderMyRegionCitys
-            v-if="activeDropdown"
+            v-if="activeDropdown && arrCitys.length > 0"
             @close="activeDropdown = false"
             @keydown.esc="activeDropdown = false"
+            :arrCitys="arrCitys"
             @setCity="setCity"
           />
         </Transition>
@@ -51,26 +52,89 @@
 </template>
 
 <script>
+import CdekController from "~/http/controllers/CdekController";
+import debounce from "lodash.debounce";
+
 export default {
   data() {
     return {
-      inpVal: "Москва",
+      inpVal: "Москва, Россия",
       activeDropdown: false,
       useOrderInfo: useOrderInfo(),
+      useCursor: useCursor(),
+      arrCitys: [],
+      deliveryOptions: useDeliveryArr(),
+      useDeliveryLoad: useDeliveryLoad,
+      objSet: useDeliveryObj(),
+      useDeliveryPrice: useDeliveryPrice(),
+      useCityCode: useCityCode(),
+      activeTextEmpty: "",
+      debouncedSearch: debounce(async () => {
+        try {
+          const response = await CdekController.getCity({ name: this.inpVal });
+          this.arrCitys = response;
+          if (this.inpVal.length > 0) {
+            this.activeDropdown = true;
+          } else {
+            this.activeDropdown = false;
+          }
+          this.useCursor = true;
+        } catch {}
+      }, 200),
     };
   },
   methods: {
-    setRegion() {
-      if (this.inpVal.length > 0) {
-        this.activeDropdown = true;
-      } else {
-        this.activeDropdown = false;
+    changeSumm() {
+      const parseCart = JSON.parse(localStorage.getItem("cart"));
+      const localArr = parseCart;
+      if (localArr.length >= 2 || localArr[0].counter >= 2) {
+        return true;
       }
-      this.useCursor = true;
+      return false;
     },
-    setCity(arr, idx) {
-      this.inpVal = arr[idx].name;
-      this.activeDropdown = false;
+    async setRegion() {
+      try {
+        const response = await CdekController.getCity({ name: this.inpVal });
+        this.arrCitys = response;
+        if (this.inpVal.length > 0) {
+          this.activeDropdown = true;
+        } else {
+          this.activeDropdown = false;
+        }
+        this.useCursor = true;
+      } catch {}
+    },
+    async setCity(arr, idx) {
+      try {
+        const item = arr[idx];
+        this.deliveryOptions = false;
+        this.inpVal =
+          item.city +
+          (item.city === item.region
+            ? ", " + item.country
+            : ", " + item.region + ", " + item.country);
+        this.activeDropdown = false;
+
+        this.objSet.to_location.code = item.code;
+        const response = await CdekController.getOptions(this.objSet);
+        if (!response) {
+          this.deliveryOptions = {
+            loadText: "Для данного населенного пункта тарифы отсутствуют",
+          };
+          this.useDeliveryPrice = 0;
+          return;
+        }
+        const check = this.changeSumm();
+        const newArr = this.useDeliveryLoad(check, response);
+        this.useDeliveryPrice = newArr[0].sumDelivery;
+        this.deliveryOptions = newArr;
+        this.useCityCode = item.code;
+      } catch {
+        this.deliveryOptions = {
+          loadText: "Для данного населенного пункта тарифы отсутствуют",
+        };
+        this.useDeliveryPrice = 0;
+      }
     },
   },
   watch: {

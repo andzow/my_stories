@@ -1,6 +1,11 @@
 <template>
   <div class="search__menu" v-auto-animate>
-    <UIHeaderMySearchItem v-for="item in arrMenu" :key="item" :item="item" />
+    <UIHeaderMySearchItem
+      v-for="item in arrMenu"
+      :key="item"
+      :item="item"
+      @close="close"
+    />
   </div>
 </template>
 
@@ -9,8 +14,10 @@ export default {
   props: {
     arrMenu: { type: Array },
   },
-  data() {
-    return {};
+  methods: {
+    close(item) {
+      this.$emit("close", item);
+    },
   },
 };
 </script>

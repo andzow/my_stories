@@ -6,33 +6,35 @@
     tabindex="0"
     @mouseenter="setActiveFocus"
     @keydown.enter="$emit('setCity', arrCitys, activeIdx)"
+    v-auto-animate
   >
     <div
       class="region__item_dropdown"
       v-for="(item, idx) in arrCitys"
-      :key="item.name"
+      :key="item"
       :class="{ activeDropdown: idx === activeIdx }"
       :ref="'dropdown' + idx"
-      @click="activeIdx = idx"
+      @click="(activeIdx = idx), $emit('setCity', arrCitys, activeIdx)"
       data-cursor-class="animateCursor"
     >
-      <span class="region__item_span">{{ item.name }}</span>
+      <span class="region__item_span">{{
+        `${item.city}${
+          item.city === item.region
+            ? ", " + item.country
+            : ", " + item.region + ", " + item.country
+        }`
+      }}</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    arrCitys: Array,
+  },
   data() {
     return {
-      arrCitys: [
-        { name: "Москва" },
-        { name: "Киров" },
-        { name: "Чепецк" },
-        { name: "Алматы" },
-        { name: "Чебоксары" },
-        { name: "Урал" },
-      ],
       useCursor: useCursor(),
       activeIdx: 2,
     };
@@ -59,7 +61,9 @@ export default {
       }
     },
     setActiveFocus() {
-      this.$refs.container.focus();
+      if (this.$refs.container) {
+        this.$refs.container.focus();
+      }
     },
     scrollToActive() {
       const container = this.$refs.container;
@@ -98,11 +102,11 @@ export default {
 .region__item {
   position: absolute;
   width: 100%;
-  top: 90%;
+  top: 95%;
   left: 0;
   background: #f5f2ea;
   box-shadow: 2px 2px 20px 2px rgba(207, 201, 180, 0.4);
-  height: 300px;
+  max-height: 300px;
   padding: 5px;
   overflow: auto;
   z-index: 33;

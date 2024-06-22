@@ -2,6 +2,7 @@
   <UIMyHeader v-if="headerVisible" />
   <main class="page">
     <NuxtPage />
+    <!-- <UIMyPreloader v-if="preloader" /> -->
     <UIMyModalStatus />
     <UIMyCursor />
     <UIMyCursorCircle />
@@ -18,6 +19,7 @@ export default {
       useCheckAnimationArr: useCheckAnimationArr(),
       useCursor: useCursor(),
       headerVisible: true,
+      preloader: true,
     };
   },
   async mounted() {

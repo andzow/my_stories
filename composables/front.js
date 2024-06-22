@@ -107,8 +107,8 @@ export const useReplaceOrDeleteWordQuery = (
   };
 };
 
-export const useFilterFlout = () => {
-  var a = document.querySelector("#filter__item"),
+export const useFilterFlout = (filterItem, contentItem) => {
+  var a = document.querySelector(`#${filterItem}`),
     b = null,
     K = null,
     Z = 0,
@@ -129,7 +129,7 @@ export const useFilterFlout = () => {
     }
     var Ra = a.getBoundingClientRect(),
       R1bottom = document
-        .querySelector("#catalog__content")
+        .querySelector(`#${contentItem}`)
         .getBoundingClientRect().bottom;
     if (Ra.bottom < R1bottom) {
       if (b == null) {
@@ -249,3 +249,7 @@ export const useCatalogItems = () => useState("use_catalog_items", () => null);
 export const useProductObject = () =>
   useState("use_product_object", () => null);
 export const useCheckLoad = () => useState("use_check_load", () => false);
+export const usePvzModal = () => useState("use_pvz_modal", () => false);
+export const useDeliveryArr = () => useState("use_delivery_arr", () => null);
+export const useDeliveryPrice = () =>
+  useState("use_delivery_price", () => null);

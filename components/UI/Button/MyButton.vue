@@ -145,19 +145,25 @@ export default {
 .white__circle {
   background-color: #868975;
 }
-.button__btn:hover .button__cirlce {
-  transform: scale(40);
-}
-.bigSize:hover .button__cirlce {
-  transform: scale(140) !important;
-}
 .big .button__cirlce {
   transition: transform 1s ease;
 }
-.big:hover .button__cirlce {
-  transform: scale(60);
-}
-.button__btn:hover {
-  color: #fff;
+
+@media (hover: hover) and (pointer: fine) {
+  .button__btn:hover {
+    color: #fff;
+  }
+  .button__btn:hover .button__cirlce {
+    transform: scale(40);
+  }
+  .bigSize:hover .button__cirlce {
+    transform: scale(140) !important;
+  }
+  .big .button__cirlce {
+    transition: transform 1s ease;
+  }
+  .big:hover .button__cirlce {
+    transform: scale(60);
+  }
 }
 </style>
