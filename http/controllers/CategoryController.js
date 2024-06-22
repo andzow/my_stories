@@ -1,6 +1,6 @@
 import CategoryServices from "../services/CategoryServices"
 
-export default class PromoController {
+export default class CategoryController {
     static async getAll() {
         try {
             const response = await CategoryServices.getAll()

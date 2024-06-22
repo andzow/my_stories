@@ -106,4 +106,30 @@ export default {
     transform: translateY(-2px);
     margin-right: 10px;
 }
+@media(max-width: 720px) {
+    .position__container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .position__btn_add {
+        margin-top: 10px;
+        padding: 6px 35px;
+    }
+}
+@media(max-width: 475px) {
+    .position__item {
+        flex-direction: column;
+        width: 100%;
+    }
+    .position__btn {
+        margin-right: 0px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .position__btn_add {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+}
 </style>

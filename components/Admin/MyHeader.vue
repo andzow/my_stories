@@ -122,4 +122,23 @@ export default {
   width: 0;
   padding: 0;
 }
+
+@media(max-width: 844px) {
+    .header__line,
+    .header__title {
+        display: none;
+    }
+}
+
+@media(max-width: 600px) {
+    .header__input,
+    .header__loop {
+        display: none;
+    }
+}
+@media(max-width: 450px) {
+    .header__title_special {
+        font-size: 20px;
+    }
+}
 </style>

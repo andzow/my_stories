@@ -1,7 +1,7 @@
 <template>
   <Transition>
     <section class="promocode" v-if="useCode">
-      <div class="promocode__container" v-click-outside="handleClickOutside">
+      <div class="promocode__container">
         <div class="promocode__position">
           <div class="promocode__head">
             <h3 class="promocode__title">промокоды</h3>
@@ -454,5 +454,49 @@ export default {
 .v-enter-from,
 .v-leave-to {
   width: 0;
+}
+@media(max-width: 1400px) {
+  .promocode__container {
+    margin-left: 30%;
+    width: 70%;
+  }
+}
+@media(max-width: 1000px) {
+  .promocode__container {
+    margin-left: 10%;
+    width: 90%;
+  }
+}
+@media(max-width: 600px) {
+  .promocode__container {
+    margin-left: 0%;
+    width: 100%;
+  }
+  .promocode__body {
+  height: 75vh;
+}
+}
+@media(max-width: 460px) {
+  .promocode__title {
+    font-size: 24px;
+  }
+  .promocode__trash {
+    width: 30px;
+  }
+  .promocode__circle {
+    width: 30px;
+  }
+  .promocode__item {
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+}
+@media(max-width: 400px) {
+  .promocode__title {
+    font-size: 24px;
+  }
+  .promocode__body {
+  height: 70vh;
+}
 }
 </style>

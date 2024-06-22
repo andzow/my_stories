@@ -1,7 +1,7 @@
 <template>
   <Transition>
     <section class="category" v-if="useCategory">
-      <div class="category__container" v-click-outside="clickOutside">
+      <div class="category__container">
         <div class="category__position">
           <div class="category__head">
             <h3 class="category__title">разделы каталога</h3>
@@ -204,7 +204,7 @@ export default {
 }
 .category__body {
   margin-top: 40px;
-  height: 760px;
+  height: 80vh;
   overflow-x: hidden;
   overflow-y: auto;
   padding-right: 30px;
@@ -280,5 +280,42 @@ export default {
 .v-enter-from,
 .v-leave-to {
   width: 0;
+}
+@media(max-width: 1400px) {
+  .category__container {
+    margin-left: 30%;
+    width: 70%;
+  }
+}
+@media(max-width: 1000px) {
+  .category__container {
+    margin-left: 10%;
+    width: 90%;
+  }
+}
+@media(max-width: 600px) {
+  .category__container {
+    margin-left: 0%;
+    width: 100%;
+  }
+  .category__body {
+  height: 75vh;
+}
+}
+@media(max-width: 460px) {
+  .category__title {
+    font-size: 24px;
+  }
+  .category__trash {
+    width: 30px;
+  }
+  .category__circle {
+    width: 30px;
+  }
+}
+@media(max-width: 400px) {
+  .category__body {
+  height: 70vh;
+}
 }
 </style>

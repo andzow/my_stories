@@ -114,16 +114,18 @@ export default {
 .green__circle {
   background-color: #868975;
 }
-.button__btn:hover .button__cirlce {
-  transform: scale(40);
-}
 .big .button__cirlce {
   transition: transform 1s ease;
 }
+@media (hover: hover) and (pointer: fine) {
 .big:hover .button__cirlce {
   transform: scale(60);
 }
+.button__btn:hover .button__cirlce {
+  transform: scale(40);
+}
 .button__btn:hover {
   color: #fff;
+}
 }
 </style>

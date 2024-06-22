@@ -1,7 +1,7 @@
 <template>
   <Transition>
     <section class="product" v-if="useProduct">
-      <div class="product__container" v-click-outside="clickOutside">
+      <div class="product__container">
         <div class="product__position">
           <div class="product__head">
             <h3 class="product__title" v-show="!useProductUpdate">создание нового товара</h3>
@@ -569,7 +569,7 @@ export default {
   transform: translateY(3px) scale(1.4);
 }
 .product__body {
-  height: 760px;
+  height: 80vh;
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;
@@ -849,5 +849,59 @@ export default {
 .v-enter-from,
 .v-leave-to {
   width: 0;
+}
+@media(max-width: 1400px) {
+  .product__container {
+    margin-left: 30%;
+    width: 70%;
+  }
+}
+@media(max-width: 1000px) {
+  .product__container {
+    margin-left: 10%;
+    width: 90%;
+  }
+}
+@media(max-width: 800px) {
+  .product__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media(max-width: 600px) {
+  .product__container {
+    margin-left: 0%;
+    width: 100%;
+  }
+  .product__body {
+  height: 75vh;
+}
+}
+@media(max-width: 460px) {
+  .product__title {
+    font-size: 24px;
+  }
+  .product__add {
+    width: 30px;
+  }
+  .product__svg {
+    width: 30px;
+  }
+  .product__grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media(max-width: 400px) {
+  .product__title {
+    font-size: 24px;
+  }
+  .product__add {
+    width: 30px;
+  }
+  .product__svg {
+    width: 30px;
+  }
+  .product__body {
+  height: 70vh;
+}
 }
 </style>
