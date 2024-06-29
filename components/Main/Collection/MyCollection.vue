@@ -19,20 +19,25 @@
             info="к коллекции"
             fontSize="24"
             data-cursor-class="animateCursor"
+            @click="$router.push('/lookbook/letniy-vecher')"
           />
         </div>
       </div>
+      <MainCollectionMyCollectionMobile />
       <MainCollectionMyNewCollection />
       <div class="collection__photo">
         <div class="collection__photo_content">
           <img
             class="collection__photo_img"
             src="@/assets/images/Main/collectionS.webp"
-            alt="Фотография новой коллекции"
+            width="131"
+            height="137"
+            alt="Фотография новой коллекции - летний ветер"
           />
         </div>
       </div>
     </div>
+    <MainCollectionMyCollectionMob />
   </section>
 </template>
 
@@ -43,35 +48,43 @@ export default {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
     };
   },
+  methods: {
+    initGsap() {
+      this.useGsapAnimationOpacity(
+        [".collection__number", ".collection__new_title"],
+        ".collection"
+      );
 
+      this.useGsapAnimationOpacity(
+        [".collection__photo_img"],
+        ".collection",
+        false,
+        0.7
+      );
+
+      this.useGsapAnimationOpacity(
+        [".collection__text", ".collection__name"],
+        ".collection__new_img"
+      );
+      this.useGsapAnimationOpacity(
+        [".collection__new_img"],
+        ".collection__new_img",
+        false,
+        0.5
+      );
+      this.useGsapAnimationOpacity(
+        [".collection__btn"],
+        ".collection__btn",
+        true
+      );
+    },
+  },
   mounted() {
-    this.useGsapAnimationOpacity(
-      [".collection__number", ".collection__new_title"],
-      ".collection"
-    );
-
-    this.useGsapAnimationOpacity(
-      [".collection__photo_img"],
-      ".collection",
-      false,
-      0.7
-    );
-
-    this.useGsapAnimationOpacity(
-      [".collection__text", ".collection__name"],
-      ".collection__new_img"
-    );
-    this.useGsapAnimationOpacity(
-      [".collection__new_img"],
-      ".collection__new_img",
-      false,
-      0.5
-    );
-    this.useGsapAnimationOpacity(
-      [".collection__btn"],
-      ".collection__btn",
-      true
-    );
+    if (window.innerWidth > 876) {
+      this.initGsap();
+    } else {
+      this.useGsapAnimationOpacity([".collection"], ".collection");
+    }
   },
 };
 </script>
@@ -132,5 +145,100 @@ export default {
   object-fit: cover;
   margin-right: 60px;
   opacity: 0;
+}
+@media screen and (max-width: 1600px) {
+  .collection {
+    padding-bottom: 136px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .collection__number {
+    font-size: 30px;
+    margin-bottom: 50px;
+  }
+  .collection__text {
+    font-size: 16px;
+    text-align: justify;
+    max-width: 260px;
+  }
+  .collection__name {
+    font-size: 30px;
+  }
+  .collection__btn {
+    max-width: 266px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .collection {
+    padding-top: 50px;
+  }
+  .collection__photo_img {
+    width: 111px;
+    height: 117px;
+  }
+  .collection__number {
+    font-size: 26px;
+    margin-bottom: 50px;
+  }
+  .collection__text {
+    font-size: 15px;
+    text-align: justify;
+    max-width: 240px;
+    margin-bottom: 35px;
+  }
+  .collection__name {
+    font-size: 26px;
+  }
+  .collection__btn {
+    max-width: 266px;
+  }
+}
+@media screen and (max-width: 934px) {
+  .collection__btn {
+    max-width: 206px;
+  }
+}
+@media screen and (max-width: 876px) {
+  .collection {
+    padding-bottom: 160px;
+    opacity: 0;
+  }
+  .collection__btn {
+    max-width: 206px;
+    transform: translateY(-200px);
+    opacity: 1;
+  }
+  .collection__text {
+    opacity: 1;
+  }
+  .collection__name {
+    opacity: 1;
+  }
+  .collection__photo_img {
+    opacity: 1;
+  }
+  .collection__number {
+    opacity: 1;
+  }
+  .collection__photo {
+    display: none;
+  }
+  .collection__content {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 711px) {
+  .collection__btn {
+    transform: translateY(-90px);
+  }
+}
+@media screen and (max-width: 630px) {
+  .collection__content {
+    display: none;
+  }
+  .collection {
+    padding-bottom: 100px;
+  }
 }
 </style>

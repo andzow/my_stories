@@ -54,6 +54,7 @@ export default {};
   width: 100%;
   padding-top: 150px;
   min-height: 70vh;
+  overflow: hidden;
   z-index: 17;
 }
 .main__content {

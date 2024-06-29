@@ -44,6 +44,9 @@ export default {
   border: 1px solid rgba(0, 0, 0, 0);
   transition: all 0.4s ease;
 }
+.order__inputs::placeholder {
+  color: #a09a96;
+}
 .order__textarea {
   width: 100%;
   box-sizing: border-box;

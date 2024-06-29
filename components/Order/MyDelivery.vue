@@ -3,73 +3,178 @@
     <OrderUIMyTitle>способ доставки</OrderUIMyTitle>
     <div class="delivery__content">
       <div
-        v-for="(option, index) in deliveryOptions"
-        :key="index"
-        class="delivery__option"
+        class="delivery__bl"
+        v-if="deliveryOptions && deliveryOptions?.length > 0"
       >
-        <label
-          class="delivery__label"
-          :for="index"
-          data-cursor-class="animateCursor"
+        <div
+          v-for="(option, index) in getArr"
+          :key="index"
+          class="delivery__option"
         >
-          <input
-            type="radio"
-            :id="`delivery__option${index + 1}`"
-            :value="index"
-            v-model="selectedOption"
-            class="delivery__custom"
-          />
-          <span
-            class="delivery__custom_radio"
-            @click="selectedOption = index"
-          ></span>
-          <div class="delivery__details">
-            <div class="delivery__name">{{ option.name }}</div>
-            <div class="delivery__price">{{ option.price }} ₽</div>
-            <div class="delivery__description">{{ option.description }}</div>
+          <div class="delivery__item">
+            <label class="delivery__label" :for="index">
+              <input
+                type="radio"
+                :id="`delivery__option${index + 1}`"
+                :value="index"
+                v-model="selectedOption"
+                class="delivery__custom"
+              />
+              <span
+                class="delivery__custom_radio"
+                data-cursor-class="animateCursor"
+                @click="
+                  (selectedOption = index),
+                    (useDeliveryPrice = deliveryOptions[index].sumDelivery)
+                "
+              ></span>
+              <div class="delivery__details">
+                <div class="delivery__name">
+                  {{
+                    option.name + " " + option.deliveryTime + " " + option.day
+                  }}
+                </div>
+                <div class="delivery__price">
+                  {{
+                    option.sumDelivery === 0
+                      ? "бесплатно"
+                      : option.sumDelivery + " ₽"
+                  }}
+                </div>
+                <div class="delivery__description">
+                  {{ option.des }}
+                </div>
+              </div>
+            </label>
           </div>
-        </label>
+          <div
+            class="delivery__btn"
+            v-if="
+              option.name.toLowerCase().includes('самовывоз') &&
+              selectedOption === index
+            "
+          >
+            <UIButtonMyButton
+              info="Выбрать ПВЗ"
+              aria-label="Выбрать ПВЗ"
+              fontSize="18"
+              padding="10px 30px"
+              data-cursor-class="animateCursor"
+              @click="usePvzModal = true"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="delivery__empty" v-else-if="!deliveryOptions">
+        <UIMyLoadItem :backgroundDisable="true" />
+      </div>
+      <div class="delivery__emptyText" v-if="deliveryOptions?.loadText">
+        {{ deliveryOptions?.loadText }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import CdekController from "~/http/controllers/CdekController";
+
 export default {
   data() {
     return {
-      selectedOption: 0,
-      deliveryOptions: [
-        {
-          name: "СДЭК (доставка курьером) 4-5 дней",
-          price: 495,
-          description: "доставка заказа курьером компании сдэк",
-        },
-        {
-          name: "СДЭК (постамат) 4-5 дней",
-          price: 305,
-          description: "сдэк (постамат)",
-        },
-        {
-          name: "СДЭК (самовывоз) 4-5 дней",
-          price: 305,
-          description:
-            "доставка заказа в один из пунктов самовывоза компании сдэк",
-        },
-        {
-          name: "Почта России 5-7 дней",
-          price: 205,
-          description: "доставка заказа в один из пунктов почты россии",
-        },
-      ],
+      selectedOption: useIndexDelivery(),
+      usePvzModal: usePvzModal(),
+      deliveryOptions: useDeliveryArr(),
       useOrderInfo: useOrderInfo(),
+      useDeliveryPrice: useDeliveryPrice(),
+      localStorageArr: null,
+      useCursor: useCursor(),
+      objSet: useDeliveryObj(),
+      useDeliveryLoad: useDeliveryLoad,
+      useActiveAddress: useActiveAddress(),
+      useFilterDeliveryPackages: useFilterDeliveryPackages,
+      useSelectedSamovivos: useSelectedSamovivos(),
+      useBuyerAddress: useBuyerAddress(),
+      activePvzObj: null,
     };
   },
+  computed: {
+    getArr() {
+      return this.deliveryOptions;
+    },
+  },
+  methods: {
+    changeSumm() {
+      const parseCart = JSON.parse(localStorage.getItem("cart"));
+      this.localStorageArr = parseCart;
+      const localArr = this.localStorageArr;
+      if (localArr.length >= 2 || localArr[0].counter >= 2) {
+        return true;
+      }
+      return false;
+    },
+    async initApp() {
+      try {
+        const packagesArr = this.useFilterDeliveryPackages();
+        this.objSet.packages = packagesArr;
+        const response = await CdekController.getOptions(this.objSet);
+        const check = this.changeSumm();
+        const newArr = this.useDeliveryLoad(check, response);
+        this.useDeliveryPrice = newArr[0].sumDelivery;
+        this.deliveryOptions = newArr;
+        setTimeout(() => {
+          this.useCursor = true;
+        }, 0);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  },
+  mounted() {
+    this.initApp();
+  },
   watch: {
+    deliveryOptions: {
+      handler(val) {
+        //Очистить переменные доставки
+        this.selectedOption = 0;
+
+        const item = this.deliveryOptions[this.selectedOption];
+        const findName = item?.name?.toLowerCase().includes("самовывоз");
+        if (findName) {
+          this.useSelectedSamovivos = true;
+        } else {
+          this.useSelectedSamovivos = false;
+        }
+
+        setTimeout(() => {
+          this.useCursor = true;
+        }, 100);
+      },
+      deep: true,
+    },
+    selectedOption(val) {
+      if (!this.deliveryOptions) return;
+      const item = this.deliveryOptions[val];
+      if (!item?.name) return;
+      const findSamovivos = item.name.toLowerCase().includes("самовывоз");
+      if (findSamovivos) {
+        this.useSelectedSamovivos = true;
+      } else {
+        this.useSelectedSamovivos = false;
+      }
+      delete this.objSet.to_location.address_full;
+      this.useBuyerAddress = "";
+      this.useActiveAddress = null;
+    },
     useOrderInfo(val) {
       if (val && (this.selectedOption || this.selectedOption <= 0)) {
         const elHtml = this.deliveryOptions[this.selectedOption];
-        this.useOrderInfo.delivery = elHtml;
+        if (elHtml) {
+          this.useOrderInfo.delivery = elHtml;
+        } else {
+          this.useOrderInfo.delivery = false;
+          this.useOrderInfo.region = false;
+        }
       }
     },
   },
@@ -81,8 +186,27 @@ export default {
   padding: 20px 15px;
   border: 1px solid #af9280;
 }
+
 .delivery__option {
-  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.delivery__empty {
+  width: 100%;
+  height: 300px;
+}
+.delivery__emptyText {
+  font-size: 18px;
+  margin-top: 40px;
+  height: 100%;
+  font-weight: 400;
+
+  text-transform: lowercase;
+}
+.delivery__item {
+  margin-bottom: 15px;
   display: flex;
   align-items: flex-start;
 }
@@ -155,5 +279,8 @@ export default {
   color: var(--brown);
   text-transform: lowercase;
   max-width: 450px;
+}
+.delivery__btn {
+  margin-left: 30px;
 }
 </style>

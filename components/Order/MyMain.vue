@@ -1,7 +1,7 @@
 <template>
   <section class="main">
     <div class="main__content">
-      <div class="main__menu" ref="mainMenu">
+      <div class="main__menu" ref="mainMenu" id="order__menu">
         <div class="main__info">
           <OrderMyRegion />
           <div class="main__block">
@@ -24,7 +24,9 @@ export default {
   data() {
     return {};
   },
-  mounted() {},
+  mounted() {
+    // this.useFilterFlout("order__promocode", "order__menu");
+  },
 };
 </script>
 

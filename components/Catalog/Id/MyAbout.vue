@@ -114,7 +114,8 @@ export default {
           name === this.primerObj.name.toLowerCase() &&
           priceConvertEl === priceConvertObj &&
           colorEl === this.primerObj.color.toLowerCase() &&
-          sizeEl === this.primerObj.size.toLowerCase()
+          sizeEl === this.primerObj.size.toLowerCase() &&
+          el.id === this.primerObj.id
         ) {
           return true;
         }
@@ -131,14 +132,16 @@ export default {
       const product = this.arrProduct;
       const size = JSON.parse(product.dimension)[idx]?.name;
       this.primerObj = {
+        id: product.id,
         name: product.name.toLowerCase(),
         size: size,
-        price: product.price,
+        price: product[!product.discount ? "price" : "discount"],
         color: product.color.toLowerCase(),
         counter: 1,
         fullprice: "",
         imageSrc: USE_SERVER + product.images[0],
       };
+
       this.useAlertCart = this.primerObj;
       this.addToCart();
       this.getSize = false;

@@ -21,6 +21,7 @@
 <script>
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   props: {
@@ -84,27 +85,29 @@ export default {
     },
     calculateHeight() {
       const lines = document.querySelector(".lines");
-      const footer = document.querySelector("footer");
-
-      if (lines && footer) {
-        const footerRect = footer.getBoundingClientRect();
-        const footerTop = footerRect.top + window.scrollY;
-
+      if (lines) {
         const linesRect = lines.getBoundingClientRect();
-        const linesBottom = linesRect.bottom + window.scrollY;
-        this.heightEl = footerTop - linesBottom;
+        const bodyHeight = document.body.scrollHeight;
+        const elStyle = bodyHeight - linesRect.top;
+        this.heightEl = elStyle;
         lines.style.height = this.heightEl + "px";
       }
     },
   },
+  unmounted() {
+    if (this.useVeriableAnimationLine !== null) {
+      this.useVeriableAnimationLine.revert();
+    }
+  },
   mounted() {
     setTimeout(() => {
-      if (this.useVeriableAnimationLine !== null) {
-        this.useVeriableAnimationLine.revert();
-      }
-      gsap.registerPlugin(ScrollTrigger);
-      this.initGsapScrollTrigger();
-      this.setMarginLine();
+      nextTick(() => {
+        if (this.useVeriableAnimationLine !== null) {
+          this.useVeriableAnimationLine.revert();
+        }
+        this.initGsapScrollTrigger();
+        this.setMarginLine();
+      });
     }, 0);
   },
 };

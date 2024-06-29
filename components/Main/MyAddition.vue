@@ -4,7 +4,13 @@
       <div class="addition__menu">
         <div class="addition__number">( &nbsp;2&nbsp; )</div>
         <div class="addition__image">
-          <!-- <img src="@/assets/images/Main/additionF.webp" alt="Фотография" /> -->
+          <img
+            class="addition__img"
+            src="@/assets/images/Main/additionF.webp"
+            alt="платье в каталоге"
+            width="136"
+            height="119"
+          />
         </div>
         <p class="addition__text">
           У нас собственное производство, что позволяет нам полностью с нуля
@@ -13,6 +19,18 @@
           посадку на фигуре в каждом изделии до идеала.
         </p>
       </div>
+    </div>
+    <div class="addition__mob">
+      <div class="addition__mob_img">
+        <img
+          class="addition__mob_image"
+          src="@/assets/images/Main/additionF.webp"
+          alt="платье в каталоге"
+          width="136"
+          height="119"
+        />
+      </div>
+      <h2 class="addition__mob_title">( &nbsp;о бренде&nbsp; )</h2>
     </div>
     <h2 class="addition__new_title">( &nbsp;о бренде&nbsp; )</h2>
   </section>
@@ -25,12 +43,26 @@ export default {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
     };
   },
+  methods: {
+    initGsap() {
+      this.useGsapAnimationOpacity(
+        [".addition__number", ".addition__text", ".addition__new_title"],
+        ".addition"
+      );
+      this.useGsapAnimationOpacity(
+        [".addition__image"],
+        ".addition",
+        false,
+        0.4
+      );
+    },
+  },
   mounted() {
-    this.useGsapAnimationOpacity(
-      [".addition__number", ".addition__text", ".addition__new_title"],
-      ".addition"
-    );
-    this.useGsapAnimationOpacity([".addition__image"], ".addition", false, 0.4);
+    if (window.innerWidth > 876) {
+      this.initGsap();
+    } else {
+      this.useGsapAnimationOpacity([".addition"], ".addition");
+    }
   },
 };
 </script>
@@ -68,14 +100,11 @@ export default {
   color: var(--brown);
   text-align: justify;
   max-width: 360px;
+  text-transform: lowercase;
   opacity: 0;
 }
 .addition__image {
   opacity: 0;
-  width: 130px;
-  height: 100%;
-  background: url("@/assets/images/Main/additionF.webp") no-repeat;
-  background-size: cover;
 }
 .addition__img {
   width: 130px;
@@ -91,5 +120,101 @@ export default {
   color: var(--brown);
   padding: 0 30px 90px 30px;
   opacity: 0;
+}
+.addition__mob {
+  display: none;
+}
+.addition__mob_title {
+  font-weight: 400;
+  font-size: 26px;
+  color: var(--brown);
+}
+@media screen and (max-width: 1778px) {
+  .addition__menu {
+    max-width: 1920px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 30% 33% 48%);
+    padding: 0 30px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .addition__new_title {
+    font-size: 30px;
+  }
+  .addition__number {
+    font-size: 30px;
+  }
+  .addition__text {
+    font-size: 16px;
+    max-width: 311px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .addition__new_title {
+    font-size: 26px;
+  }
+  .addition__number {
+    font-size: 26px;
+  }
+}
+@media screen and (max-width: 876px) {
+  .addition {
+    opacity: 0;
+  }
+  .addition__number {
+    opacity: 1;
+  }
+  .addition__image {
+    opacity: 1;
+  }
+  .addition__new_title {
+    opacity: 1;
+  }
+  .addition__menu {
+    display: flex;
+    justify-content: space-between;
+  }
+  .addition__text {
+    width: 100%;
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 676px) {
+  .addition__image {
+    display: none;
+  }
+  .addition__new_title {
+    display: none;
+  }
+  .addition__mob {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 30px;
+    padding-bottom: 60px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .addition__number {
+    margin-bottom: 20px;
+  }
+  .addition__menu {
+    border: none;
+    flex-direction: column;
+  }
+  .addition__text {
+    margin-bottom: 10px;
+  }
+}
+@media screen and (max-width: 376px) {
+  .addition__mob {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+  .addition__mob_image {
+    margin-bottom: 20px;
+  }
 }
 </style>

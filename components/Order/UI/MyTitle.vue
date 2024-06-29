@@ -13,5 +13,6 @@ export default {};
   color: var(--brown);
   text-transform: lowercase;
   margin-bottom: 20px;
+  transition: all 0.4s ease;
 }
 </style>

@@ -99,9 +99,6 @@ export default {
         // this.maxVal = !res.maxPrice ? 35000 : res.maxPrice;
       } catch {}
     },
-    initScrollTrigger() {
-      this.useFilterFlout();
-    },
   },
   created() {
     this.initRoute();

@@ -9,6 +9,7 @@
         fontSize="24"
         variant="white"
         data-cursor-class="animateCursor"
+        @click="$router.push('/catalog')"
       />
     </div>
   </section>
@@ -44,5 +45,40 @@ export default {
 .catalog__content {
   display: flex;
   width: 100%;
+}
+@media screen and (max-width: 1600px) {
+  .catalog {
+    max-height: 650px;
+    min-height: 650px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  .catalog {
+    max-height: 585px;
+    min-height: 585px;
+  }
+}
+@media screen and (max-width: 1154px) {
+  .catalog {
+    margin-bottom: 56px;
+  }
+}
+@media screen and (max-width: 976px) {
+  .catalog {
+    max-height: 535px;
+    min-height: 535px;
+  }
+}
+@media screen and (max-width: 876px) {
+  .catalog {
+    max-height: 655px;
+    min-height: 655px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .catalog {
+    max-height: 555px;
+    min-height: 555px;
+  }
 }
 </style>

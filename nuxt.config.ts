@@ -9,12 +9,14 @@ export default defineNuxtConfig({
       mode: "out-in",
     },
   },
-
   routeRules: {
     "/admin": { ssr: false },
     "/login": { ssr: false },
   },
-
   ssr: true,
-  modules: ["@nuxt/image"]
+  // delayHydration: {
+  //   debug: process.env.NODE_ENV === "development",
+  //   mode: "mount",
+  // },
+  modules: ["@nuxt/image"],
 });

@@ -133,7 +133,6 @@ export default {
 .table__close_btn {
   transform: translateY(3px);
   transition: all 0.3s ease;
-  cursor: pointer;
 }
 .table__close_btn:hover {
   transform: translateY(3px) scale(1.4);

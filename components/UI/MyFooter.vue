@@ -59,6 +59,24 @@
           />
         </svg>
       </div>
+      <div class="footer__mob">
+        <div class="footer__mob_href">
+          <a
+            class="footer__data_link"
+            href="https://t.me/+79536886333"
+            target="_blank"
+            >( &nbsp;Telegram&nbsp; )</a
+          >
+        </div>
+        <div class="footer__mob_href">
+          <a
+            class="footer__data_link"
+            href="https://wa.me/79536886333"
+            target="_blank"
+            >( &nbsp;WhatsApp&nbsp; )</a
+          >
+        </div>
+      </div>
       <div class="footer__menu">
         <div class="footer__about">
           <div class="footer__about_nav">
@@ -116,59 +134,79 @@
               По всем вопросам оставьте ваш телеграм или WhatsApp мы свяжемся с
               вами
             </p>
-            <form class="footer__data_form" @submit.prevent>
-              <div class="footer__data_send">
-                <div class="footer__data_span">Telegram/WhatsApp</div>
-                <div class="footer__data_block">
-                  <input
-                    class="footer__data_input"
-                    :value="valueInp"
-                    v-imask="maskInp"
-                    type="text"
-                    placeholder="+7 (000)-000-00-00"
-                    @complete="onComplete"
-                    @input="checkInpValFunc($event)"
-                    ref="dataInput"
-                    data-cursor-class="animateCursor"
-                  />
-                  <Transition name="footer-fade">
-                    <button
-                      class="footer__data_submit"
-                      type="submit"
+            <div class="footer__data_send">
+              <form class="footer__data_form" @submit.prevent>
+                <div class="footer__data_send">
+                  <div class="footer__data_span">Telegram/WhatsApp</div>
+                  <div class="footer__data_block">
+                    <input
+                      class="footer__data_input"
+                      :value="valueInp"
+                      v-imask="maskInp"
+                      type="text"
+                      placeholder="+7 (000)-000-00-00"
+                      @complete="onComplete"
+                      @input="checkInpValFunc($event)"
+                      ref="dataInput"
                       data-cursor-class="animateCursor"
-                    >
-                      <svg
-                        v-if="checkInpVal"
-                        class="footer__data_svg"
-                        width="19"
-                        height="14"
-                        viewBox="0 0 19 14"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
+                    />
+                    <Transition name="footer-fade">
+                      <button
+                        class="footer__data_submit"
+                        type="submit"
+                        data-cursor-class="animateCursor"
                       >
-                        <path
-                          d="M1 7H17.83"
-                          stroke="#A48A77"
-                          stroke-width="1.5"
-                          stroke-miterlimit="10"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M11.9297 1L17.9997 7L11.9297 13"
-                          stroke="#A48A77"
-                          stroke-width="1.5"
-                          stroke-miterlimit="10"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </Transition>
+                        <svg
+                          v-if="checkInpVal"
+                          class="footer__data_svg"
+                          width="19"
+                          height="14"
+                          viewBox="0 0 19 14"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1 7H17.83"
+                            stroke="#A48A77"
+                            stroke-width="1.5"
+                            stroke-miterlimit="10"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            d="M11.9297 1L17.9997 7L11.9297 13"
+                            stroke="#A48A77"
+                            stroke-width="1.5"
+                            stroke-miterlimit="10"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </button>
+                    </Transition>
+                  </div>
                 </div>
+              </form>
+            </div>
+            <div class="footer__data_card">
+              <div class="footer__data_mob">
+                <div class="footer__data_mobile">
+                  г.Киров, ул.Московская 29в
+                </div>
+                <div class="footer__data_mobile">
+                  Политика конфиденциальности
+                </div>
+                <div class="footer__data_mobile">публичная оферта</div>
               </div>
-            </form>
-            <div class="footer__data_rights">All rights reserved, 2023</div>
+              <div class="footer__data_phone">
+                <div class="footer__about_text">
+                  ( ИП ) Леванова Елена Евгеньевна
+                </div>
+                <div class="footer__about_text">( ИНН ) 434528568247</div>
+                <div class="footer__about_text">( ОГРН ) 323430000001420</div>
+              </div>
+              <div class="footer__data_rights">All rights reserved, 2023</div>
+            </div>
           </div>
         </div>
       </div>
@@ -185,24 +223,24 @@ export default {
       arrFooterNav: [
         {
           name: "Каталог",
-          path: "/",
+          path: "/catalog",
         },
         {
           name: "О бренде",
-          path: "/",
+          path: "/brand",
         },
         {
           name: "Lookbook",
-          path: "/",
+          path: "/lookbook",
         },
 
         {
           name: "Доставка и оплата",
-          path: "/",
+          path: "/delivery-and-payment",
         },
         {
           name: "Контакты",
-          path: "/",
+          path: "/contacts",
         },
       ],
       valueInp: "",
@@ -265,6 +303,7 @@ export default {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  column-gap: 30px;
   height: 350px;
 }
 .footer__about {
@@ -335,6 +374,9 @@ export default {
 .footer__data_block {
   position: relative;
 }
+.footer__data_block {
+  height: 100%;
+}
 .footer__data_svg {
   position: absolute;
   top: 36%;
@@ -371,6 +413,27 @@ export default {
   font-weight: 300;
   font-size: 17px;
 }
+.footer__data_mob {
+  display: none;
+  margin-bottom: 10px;
+}
+.footer__data_mobile {
+  text-transform: lowercase;
+  font-weight: 300;
+  font-size: 15px;
+  color: #868975;
+  margin-bottom: 7px;
+}
+.footer__mob {
+  display: none;
+  align-items: center;
+  column-gap: 20px;
+  margin-bottom: 30px;
+}
+.footer__data_phone {
+  display: none;
+}
+
 .footer-fade-enter-from {
   opacity: 0;
   transition: all 0.4s ease;
@@ -386,5 +449,61 @@ export default {
 .footer-fade-leave-to {
   opacity: 0;
   transition: all 0.4s ease;
+}
+@media screen and (max-width: 1400px) {
+  .footer__about_link {
+    font-size: 16px;
+  }
+  .footer__data_rights {
+    font-size: 16px;
+    text-align: start;
+  }
+  .footer__data_input {
+    font-size: 16px;
+  }
+  .footer__data_span {
+    font-size: 17px;
+  }
+  .footer__about_text {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .footer__about_contacts {
+    display: none;
+  }
+  .footer__data_mob {
+    display: block;
+  }
+}
+@media screen and (max-width: 676px) {
+  .footer__mob {
+    display: flex;
+  }
+  .footer__data_questions {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+  }
+  .footer__data_contacts {
+    display: none;
+  }
+}
+@media screen and (max-width: 597px) {
+  .footer__menu {
+    height: auto;
+    flex-direction: column;
+  }
+  .footer__data_mob {
+    margin-bottom: 20px;
+  }
+  .footer__about_data {
+    display: none;
+  }
+  .footer__data_phone {
+    display: block;
+    margin-bottom: 20px;
+  }
 }
 </style>

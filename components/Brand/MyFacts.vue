@@ -1,6 +1,32 @@
 <template>
   <section class="facts">
     <div class="facts__content">
+      <div class="facts__mob">
+        <h2 class="facts__mob_name">факты о нас</h2>
+        <div class="facts__mob_items">
+          <div
+            class="facts__mob_block"
+            v-for="(item, idx) in arrFactsFirst"
+            :key="item"
+          >
+            <div class="facts__mob_number">
+              {{ `( &nbsp;${idx + 1}&nbsp; )` }}
+            </div>
+            <p class="facts__mob_text">
+              Бренд основан
+              <span class="facts__span">в 2020 году</span> (командой, которая до
+              этого занималась индивидуальным пошивом люксовых платьев).
+            </p>
+          </div>
+          <div class="facts__mob_img">
+            <img
+              class="facts__images_photo"
+              src="@/assets/images/Brand/facts2.webp"
+              alt="Фотография бренда"
+            />
+          </div>
+        </div>
+      </div>
       <div class="facts__menu">
         <h2 class="facts__title">факты о нас</h2>
         <div class="facts__items">
@@ -53,6 +79,14 @@ export default {
         },
         {
           text: ` вся наша команда - <span class="facts__span">творческие и разносторонние люди.</span> Мы любим петь, танцевать и всю энергию вкладываем в новые вещи для вас`,
+        },
+      ],
+      arrFactsFirst: [
+        {
+          text: `бренд основан в <span class="facts__span">2020 году </span>командой профессионалов, которая до этого занималась индивидуальными заказами и пошивом люксовых платьев.`,
+        },
+        {
+          text: `<span class="facts__span">70%</span> наших клиентов, сделав первый заказ - остаются с нами. Спасибо, что вы выбираете нас снова и снова, доверяя нашему качеству и сервису.`,
         },
       ],
       useGsapAnimationOpacity: useGsapAnimationOpacity,
@@ -170,5 +204,41 @@ export default {
   align-items: center;
   justify-content: center;
   transform: translateX(-80px);
+}
+.facts__mob_span {
+  font-weight: 700;
+}
+.facts__mob_name {
+  font-weight: 300;
+  font-size: 17px;
+  color: var(--brown);
+  margin-bottom: 60px;
+}
+.facts__mob_items {
+  display: flex;
+  align-items: center;
+}
+.facts__mob_number {
+  font-weight: 500;
+  font-size: 30px;
+  color: var(--brown);
+  margin-bottom: 78px;
+}
+@media screen and (max-width: 1400px) {
+  .facts__number {
+    font-size: 30px;
+    margin-bottom: 58px;
+  }
+  .facts__text {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  .facts__menu {
+    display: none;
+  }
+  .facts__images {
+    display: none;
+  }
 }
 </style>

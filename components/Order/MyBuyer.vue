@@ -5,15 +5,21 @@
       <div class="buyer__item" v-for="(item, idx) in arrBuyerInput" :key="item">
         <div
           class="buyer__span"
-          :class="{ activeSpan: arrErrors.includes(item.name) }"
+          :class="{
+            activeSpan: arrErrors.includes(item.name) || item.textError !== '',
+          }"
         >
-          {{ item.name }}
+          {{ item.textError === "" ? item.name : item.textError }}
         </div>
         <OrderUIMyInput
           v-if="!item.mask"
           v-model="item.inputVal"
           data-cursor-class="animateCursor"
-          :active="arrErrors.includes(item.name) ? true : false"
+          :active="
+            arrErrors.includes(item.name) || item.textError !== ''
+              ? true
+              : false
+          "
           :textArea="item.textArea"
         />
         <input
@@ -24,7 +30,9 @@
           :value="item.inputVal"
           @input="setValueMask(item, idx, $event)"
           @complete="onComplete"
-          :class="{ activeInp: arrErrors.includes(item.name) }"
+          :class="{
+            activeInp: arrErrors.includes(item.name) || item.textError !== '',
+          }"
           v-imask="maskInp"
         />
       </div>
@@ -34,6 +42,8 @@
 
 <script>
 import { IMaskDirective } from "vue-imask";
+import debounce from "lodash.debounce";
+import CdekController from "~/http/controllers/CdekController";
 
 export default {
   data() {
@@ -50,15 +60,7 @@ export default {
           lengthWord: 120,
           textArea: false,
           inputVal: "",
-        },
-        {
-          name: "Адрес доставки*",
-          regExp: /^[a-zA-Zа-яА-Я0-9\s.,/()-]{5,}$/,
-          regExpWord: "Адрес доставки должен быть корректным",
-          lengthWord: 200,
-          mask: false,
-          textArea: false,
-          inputVal: "",
+          textError: "",
         },
         {
           name: "телефон Telegram / WhatsApp*",
@@ -67,6 +69,17 @@ export default {
           mask: true,
           textArea: false,
           inputVal: "",
+          textError: "",
+        },
+        {
+          name: "Адрес доставки*",
+          regExp: /^.{2,}$/,
+          regExpWord: "Адрес доставки должен быть корректным",
+          lengthWord: 200,
+          mask: false,
+          textArea: true,
+          inputVal: useBuyerAddress(),
+          textError: "",
         },
         {
           name: "комментарий к заказу*",
@@ -77,11 +90,61 @@ export default {
           textArea: true,
           inputVal: "",
           optional: true,
+          textError: "",
         },
       ],
+      objSet: useDeliveryObj(),
       useOrderInfo: useOrderInfo(),
-      arrErrors: [],
+      arrErrors: useCheckErrors(),
       completeNumberPhone: false,
+      useActiveAddress: useActiveAddress(),
+      useFilterDeliveryPackages: useFilterDeliveryPackages,
+      deliveryOptions: useDeliveryArr(),
+      selectedOption: useIndexDelivery(),
+      useSelectedSamovivos: useSelectedSamovivos(),
+      useBuyerAddress: useBuyerAddress(),
+      debouncedMethod: debounce(async (val) => {
+        try {
+          const checkError = this.checkErrors();
+          if (!checkError || this.deliveryOptions?.loadText) {
+            this.useOrderInfo.buyer = false;
+          }
+          if (
+            val &&
+            this.useSelectedSamovivos &&
+            !this.deliveryOptions?.loadText
+          ) {
+            if (checkError) {
+              const item = this.arrBuyerInput[2].inputVal;
+              const response = await this.getPvz(item);
+
+              if (response) {
+                const address = JSON.parse(JSON.stringify(this.arrBuyerInput));
+                this.useOrderInfo.buyer = address;
+                this.arrBuyerInput[2].textError = "";
+              } else {
+                this.useOrderInfo.buyer = false;
+                this.arrBuyerInput[2].textError =
+                  "на данный адрес доставка не осуществляется";
+              }
+              return;
+            }
+          } else if (
+            val &&
+            !this.useSelectedSamovivos &&
+            !this.deliveryOptions?.loadText
+          ) {
+            this.arrBuyerInput[2].textError = "";
+            if (checkError) {
+              const address = JSON.parse(JSON.stringify(this.arrBuyerInput));
+              if (this.arrBuyerInput[2].inputVal?.length < 0) {
+                this.useOrderInfo.buyer = false;
+              }
+              this.useOrderInfo.buyer = address;
+            }
+          }
+        } catch {}
+      }, 300),
     };
   },
   methods: {
@@ -116,18 +179,42 @@ export default {
       itemEl.inputVal = e.target.value;
       this.arrBuyerInput.splice(idx, 1, itemEl);
     },
+    async getPvz(textInp) {
+      //Очистить переменную кода доставки
+      delete this.objSet.to_location.code;
+      if (!this.useBuyerAddress || this.useBuyerAddress?.length <= 0)
+        return false;
+      const packagesArr = this.useFilterDeliveryPackages();
+      this.objSet.packages = packagesArr;
+      this.objSet.to_location.address = textInp;
+      const response = await CdekController.getOptions(this.objSet);
+      if (!response) {
+        return false;
+      }
+      return true;
+    },
   },
   watch: {
-    useOrderInfo(val) {
-      if (val) {
-        const checkError = this.checkErrors();
-        if (checkError) {
-          this.useOrderInfo.buyer = this.arrBuyerInput;
-          return;
-        }
-        delete this.useOrderInfo.buyer;
-      }
+    deliveryOptions: {
+      handler(val) {
+        this.arrBuyerInput[2].textError = "";
+      },
+      deep: true,
     },
+    selectedOption() {
+      this.arrErrors = [];
+      this.arrBuyerInput[2].textError = "";
+    },
+    useBuyerAddress(val) {
+      // console.log(val);
+    },
+    async useOrderInfo(val) {
+      this.debouncedMethod(val);
+    },
+  },
+  unmounted() {
+    this.arrErrors = [];
+    this.useStartCheck = false;
   },
   directives: {
     imask: IMaskDirective,
@@ -146,7 +233,7 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   column-gap: 80px;
   row-gap: 20px;
-  max-width: 80%;
+  max-width: 100%;
 }
 .buyer__span {
   font-weight: 400;

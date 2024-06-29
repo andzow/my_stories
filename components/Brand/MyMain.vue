@@ -17,6 +17,7 @@
 <script>
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   data() {
@@ -38,8 +39,12 @@ export default {
       });
     },
   },
+  unmounted() {
+    if (this.useScrollCheckMain !== null) {
+      this.useScrollCheckMain.revert();
+    }
+  },
   mounted() {
-    gsap.registerPlugin(ScrollTrigger);
     setTimeout(() => {
       this.setAnimateParallax();
       this.useGsapAnimationOpacity([".main__title"], ".main");
@@ -111,5 +116,64 @@ export default {
   background: url("@/assets/images/Brand/brandBack.webp") no-repeat;
   background-size: cover;
   z-index: 0;
+}
+@media screen and (max-width: 1400px) {
+  .main__text {
+    font-size: 16px;
+    font-weight: 300;
+    color: #ede9df;
+    opacity: 0;
+  }
+  .main__number {
+    font-size: 16px;
+  }
+  .main__title {
+    font-size: 92px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  .main__title {
+    margin-right: 0px;
+  }
+}
+@media screen and (max-width: 834px) {
+  .main__title {
+    margin-right: 0px;
+  }
+  .main__information {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 634px) {
+  .main__title {
+    font-size: 82px;
+  }
+}
+@media screen and (max-width: 536px) {
+  .main__information {
+    flex-direction: column;
+  }
+  .main__text {
+    margin-bottom: 30px;
+  }
+  .main__title {
+    font-size: 70px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .main__title {
+    font-size: 60px;
+  }
+}
+@media screen and (max-width: 420px) {
+  .main__title {
+    font-size: 50px;
+  }
+}
+@media screen and (max-width: 360px) {
+  .main__title {
+    font-size: 40px;
+  }
 }
 </style>

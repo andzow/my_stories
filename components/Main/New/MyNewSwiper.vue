@@ -5,6 +5,24 @@
     :slidesPerGroup="1"
     :spaceBetween="25"
     :speed="500"
+    :freemode="true"
+    :breakpoints="{
+      1154: {
+        slidesPerView: 4,
+      },
+      876: {
+        slidesPerView: 3,
+      },
+      576: {
+        slidesPerView: 2,
+      },
+      470: {
+        slidesPerView: 1.5,
+      },
+      0: {
+        slidesPerView: 1,
+      },
+    }"
     v-if="arrNew"
   >
     <swiper-slide class="new__slide" v-for="(item, idx) in arrNew" :key="item">

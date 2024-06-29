@@ -1,15 +1,18 @@
 <template>
-  <div class="promocode" id="promocode">
+  <div class="promocode" id="order__promocode" v-show="deliveryOptions">
     <div class="promocode__content">
       <div class="promocode__name">Ваш заказ</div>
       <div class="promocode__summ">
         Сумма заказа:
-        <span class="promocode__span" v-if="summ"
+        <span class="promocode__span" v-if="summ && checkSumm"
           >{{ summ.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽</span
         >
       </div>
       <div class="promocode__delivery">
-        Доставка: <span class="promocode__span">305 ₽</span>
+        Доставка:
+        <span class="promocode__span"
+          >{{ useDeliveryPrice === 0 ? "бесплатно" : useDeliveryPrice + " ₽" }}
+        </span>
       </div>
       <form class="promocode__form" @submit.prevent>
         <div class="promocode__label">{{ promocodeText }}</div>
@@ -128,7 +131,7 @@
       </form>
       <div class="promocode__full">
         итого:
-        <span class="promocode__span" v-if="fullSumm"
+        <span class="promocode__span" v-if="fullSumm && checkSumm"
           >{{
             fullSumm.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
           }}
@@ -136,6 +139,9 @@
         >
       </div>
     </div>
+  </div>
+  <div class="promocode__load" v-show="!deliveryOptions">
+    <UIMyLoadItem :backgroundDisable="true" />
   </div>
 </template>
 
@@ -153,10 +159,16 @@ export default {
       inputPrimer: ["active"],
       useCursor: useCursor(),
       timeLine: useScrollTriggerTimeLine(),
+      deliveryOptions: useDeliveryArr(),
       fullSumm: 0,
       summ: 0,
       useOrderInfo: useOrderInfo(),
       activePromocode: "",
+      useDeliveryPrice: useDeliveryPrice(),
+      selectedOption: useIndexDelivery(),
+      localStorageArr: null,
+      checkSumm: false,
+      checkLoadPromocode: false,
     };
   },
   methods: {
@@ -184,10 +196,7 @@ export default {
     },
     initPromocode() {
       const parseCart = JSON.parse(localStorage.getItem("cart"));
-      if (!parseCart || parseCart?.length <= 0) {
-        this.$router.push("/error");
-        return;
-      }
+      this.localStorageArr = parseCart;
       parseCart.forEach((el) => {
         let number = el.price;
         if (typeof number !== "number") {
@@ -198,31 +207,40 @@ export default {
         this.fullSumm += fullSumme;
       });
       this.summ = this.fullSumm;
-      this.fullSumm += 305;
     },
     initScrollTrigger() {
+      if (!document.getElementById("order__promocode")?.getBoundingClientRect())
+        return;
       this.timeLine = gsap.timeline({
         scrollTrigger: {
           trigger: ".main__menu",
           start: () => "top top",
           end: () =>
             `bottom ${
-              document.getElementById("promocode").getBoundingClientRect()
-                .height + "px"
+              document
+                .getElementById("order__promocode")
+                .getBoundingClientRect().height + "px"
             }`,
           pin: ".promocode",
           markers: false,
+          invalidateOnRefresh: true,
         },
       });
+    },
+    changeSumm() {
+      this.checkSumm = true;
+      const localArr = this.localStorageArr;
+      if (localArr?.length >= 2 || localArr[0]?.counter >= 2) {
+        this.useDeliveryPrice = 0;
+        this.fullSumm = this.summ;
+        return true;
+      }
+      return false;
     },
   },
   mounted() {
     this.initPromocode();
-    setTimeout(() => {
-      nextTick(() => {
-        this.initScrollTrigger();
-      });
-    }, 0);
+    this.changeSumm();
   },
   watch: {
     useOrderInfo(val) {
@@ -230,7 +248,30 @@ export default {
         this.useOrderInfo.promocode = this.activePromocode;
       }
     },
+    useDeliveryPrice(val) {
+      this.fullSumm = this.summ + val;
+      this.checkFirstLoad = true;
+    },
+    selectedOption() {
+      setTimeout(() => {
+        nextTick(() => {
+          this.timeLine.scrollTrigger.refresh();
+        });
+      }, 0);
+    },
+    deliveryOptions() {
+      setTimeout(() => {
+        nextTick(() => {
+          if (!this.checkLoadPromocode) {
+            this.initScrollTrigger();
+            this.checkLoadPromocode = true;
+          }
+          this.timeLine.scrollTrigger.refresh();
+        });
+      }, 0);
+    },
   },
+  unmounted() {},
 };
 </script>
 
@@ -320,6 +361,11 @@ export default {
   font-size: 28px;
   color: var(--yellow);
   text-transform: lowercase;
+}
+.promocode__load {
+  width: 100%;
+  height: 300px;
+  border: 1px solid var(--brown);
 }
 .v-enter-active,
 .v-leave-active {

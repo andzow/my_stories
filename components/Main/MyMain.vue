@@ -6,8 +6,10 @@
           <div class="main__logo">
             <img
               class="main__img"
-              src="@/assets/images/Main/logo.svg"
+              :src="'../Preload/logo.svg'"
               alt="Логотип"
+              width="478"
+              height="41"
             />
           </div>
           <div class="main__inf">
@@ -65,6 +67,11 @@ export default {
     this.useGsapAnimationOpacity([".main__title", ".main__catalog"], ".main");
     this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
   },
+  unmounted() {
+    if (this.useScrollCheckMain) {
+      this.useScrollCheckMain.revert();
+    }
+  },
 };
 </script>
 
@@ -120,5 +127,78 @@ export default {
   max-width: 350px;
   text-align: justify;
   opacity: 0;
+}
+@media screen and (max-width: 1400px) {
+  .main__logo {
+    margin-bottom: 65px;
+  }
+  .main__title {
+    font-size: 16px;
+    line-height: auto;
+    max-width: 310px;
+    text-align: justify;
+  }
+  .main__img {
+    width: 310px;
+    min-width: 310px;
+  }
+}
+@media screen and (max-width: 1154px) {
+  .main__logo {
+    margin-bottom: 45px;
+  }
+}
+@media screen and (max-width: 834px) {
+  .main__paralax {
+    background-position: 20%;
+  }
+  .main__title {
+    font-size: 15px;
+    max-width: 290px;
+  }
+  .main__catalog {
+    min-width: 233px;
+    max-width: 233px;
+  }
+}
+@media screen and (max-width: 648px) {
+  .main__logo {
+    margin-bottom: 30px;
+  }
+  .main__img {
+    width: 400px;
+    min-width: 400px;
+  }
+  .main__content {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+  .main__title {
+    margin-bottom: 45px;
+  }
+  .main__content {
+    margin-bottom: 43px;
+  }
+}
+@media screen and (max-width: 490px) {
+  .main__paralax {
+    background-position: 30%;
+  }
+}
+@media screen and (max-width: 460px) {
+  .main__img {
+    width: 400px;
+    min-width: 308px;
+  }
+}
+@media screen and (max-width: 358px) {
+  .main__img {
+    width: 400px;
+    min-width: 200px;
+  }
+  .main__title {
+    text-align: left;
+  }
 }
 </style>

@@ -1,12 +1,13 @@
 <template>
-  <UIMyHeader v-if="headerVisible" />
+  <!-- <UIMyHeader v-if="headerVisible" /> -->
   <main class="page">
     <NuxtPage />
-    <UIMyModalStatus />
+    <!-- <UIMyPreloader v-if="preloader" /> -->
+    <!-- <UIMyModalStatus />
     <UIMyCursor />
-    <UIMyCursorCircle />
+    <UIMyCursorCircle /> -->
   </main>
-  <UIMyFooter />
+  <!-- <UIMyFooter /> -->
 </template>
 
 <script>
@@ -18,6 +19,7 @@ export default {
       useCheckAnimationArr: useCheckAnimationArr(),
       useCursor: useCursor(),
       headerVisible: true,
+      preloader: true,
     };
   },
   async mounted() {

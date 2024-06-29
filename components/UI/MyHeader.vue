@@ -2,11 +2,19 @@
   <Transition name="header-fade">
     <header class="header" v-if="!searchVisible">
       <div class="header__content">
-        <div
-          class="header__logo"
-          data-cursor-class="animateCursor"
-          @click="$router.push('/')"
-        >
+        <div class="header__logo" data-cursor-class="animateCursor">
+          <div class="header__burger" @click="activeMenu = !activeMenu">
+            <div class="header__burger_block">
+              <div
+                class="header__burger_line"
+                :class="{ activeLineFirst: activeMenu }"
+              ></div>
+              <div
+                class="header__burger_line"
+                :class="{ activeLineSec: activeMenu }"
+              ></div>
+            </div>
+          </div>
           <NuxtLink class="header__logo_link" :to="'/'">
             <svg
               width="163"
@@ -14,7 +22,7 @@
               viewBox="0 0 163 14"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              :class="{ activeSvg: changeHeader }"
+              :class="{ activeSvg: changeHeader || activeMenu }"
             >
               <path
                 d="M13.039 0.138672V13.8653H11.7305V2.80094L6.51774 9.51342L1.30495 2.80094V13.8653H0V0.138672H0.765335L6.51774 7.57529L12.2913 0.138672H13.039Z"
@@ -95,8 +103,11 @@
     </header>
   </Transition>
   <UIMyBlur :searchVisible="searchVisible" @keydown.esc="searchVisible = false">
-    <UIHeaderMySearch @closeSearch="searchVisible = false" />
+    <LazyUIHeaderMySearch @closeSearch="searchVisible = false" @close="close" />
   </UIMyBlur>
+  <Transition name="fade-menu">
+    <LazyUIMenuMyMenu v-if="activeMenu" />
+  </Transition>
 </template>
 
 <script>
@@ -107,6 +118,7 @@ export default {
       searchVisible: false,
       changeHeader: false,
       activeLiPath: null,
+      activeMenu: useActiveMenu(),
       navArr: [
         {
           name: "Каталог",
@@ -133,6 +145,10 @@ export default {
     };
   },
   methods: {
+    close(item) {
+      this.searchVisible = false;
+      this.$router.push(`/catalog/${item.name}/${item.id}`);
+    },
     cursorEnter() {
       this.useCursor = true;
     },
@@ -225,6 +241,29 @@ header {
   text-transform: lowercase;
   transition: all 0.4s ease;
 }
+.header__burger {
+  display: flex;
+  margin-right: 25px;
+  flex-direction: column;
+  width: 30px;
+  display: none;
+}
+.header__burger_line {
+  width: 100%;
+  border: 1px solid #ede9df;
+  transition: all 0.4s ease;
+}
+.header__burger_line:first-child {
+  margin-bottom: 8px;
+}
+.activeLineFirst {
+  transform: translateY(4px) rotate(45deg);
+  border: 1px solid var(--brown);
+}
+.activeLineSec {
+  transform: translateY(-5px) rotate(-45deg);
+  border: 1px solid var(--brown);
+}
 .activeLi {
   color: var(--brown);
 }
@@ -243,9 +282,61 @@ header {
   opacity: 1;
   transition: all 0.4s ease;
 }
-
 .header-fade-leave-to {
   opacity: 0;
   transition: all 0.4s ease;
+}
+.fade-menu-enter-from {
+  transform: translateX(-100%) scale(1);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.fade-menu-enter-to {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+.fade-menu-leave-from {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+.fade-menu-leave-to {
+  transform: translateX(100%) scale(1);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+@media screen and (max-width: 1060px) {
+  .header__ul {
+    display: flex;
+    align-items: center;
+    column-gap: 40px;
+  }
+}
+@media screen and (max-width: 904px) {
+  .header__content {
+    padding: 31px 30px;
+  }
+  .header__ul {
+    display: flex;
+    align-items: center;
+    column-gap: 25px;
+  }
+}
+@media screen and (max-width: 890px) {
+  .header__ul {
+    display: flex;
+    align-items: center;
+    column-gap: 25px;
+  }
+}
+@media screen and (max-width: 868px) {
+  .header__nav {
+    display: none;
+  }
+  .header__burger {
+    display: block;
+  }
 }
 </style>
