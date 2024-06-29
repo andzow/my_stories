@@ -11,7 +11,8 @@
       :style="squareStyle"
       ref="button"
     >
-      {{ info }}
+      <span class="button__spinner" v-if="loadingBtn"></span>
+      {{ !loadingBtn ? info : "" }}
       <span
         class="button__cirlce"
         :class="[variant + '__circle', bigSize + '__circle']"
@@ -32,6 +33,8 @@ export default {
     bigSize: String,
     active: Boolean,
     padding: String,
+    loadingBtn: Boolean,
+    heightEl: String,
   },
   data() {
     return {
@@ -49,6 +52,7 @@ export default {
         fontSize: this.fontSize + "px",
         transform: `translateX(${tX}px) translateY(${tY}px)`,
         padding: this.padding ? this.padding : "",
+        height: this.heightEl ? this.heightEl : "",
         transition: "all 0.4s ease",
       };
     },
@@ -148,6 +152,26 @@ export default {
 .big .button__cirlce {
   transition: transform 1s ease;
 }
+.button__spinner {
+  border: 4px solid #af9280;
+  border-top: 4px solid #f3f3f3;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+  margin-top: 5px;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 @media (hover: hover) and (pointer: fine) {
   .button__btn:hover {
@@ -164,6 +188,16 @@ export default {
   }
   .big:hover .button__cirlce {
     transform: scale(60);
+  }
+}
+@media screen and (max-width: 1154px) {
+  .button__btn {
+    font-size: 20px !important;
+  }
+}
+@media screen and (max-width: 986px) {
+  .button__btn {
+    font-size: 20px !important;
   }
 }
 </style>

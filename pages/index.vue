@@ -7,7 +7,11 @@
       <MainMyAddition />
       <MainCatalogMyCatalog />
       <MainNewMyNew />
-      <UIMyAnimationLine duration="7" :arrAnimationLine="arrAnimationLine" />
+      <UIMyAnimationLine
+        v-if="arrAnimationLine"
+        duration="11"
+        :arrAnimationLine="arrAnimationLine"
+      />
       <UIMyNoise />
     </section>
   </div>
@@ -17,8 +21,32 @@
 export default {
   data() {
     return {
-      arrAnimationLine: [
-        { name: ".header__content", defaultLine: false, indent: "left" },
+      arrAnimationLine: null,
+    };
+  },
+  methods: {
+    initScrollTrigger() {
+      if (window.innerWidth <= 990) {
+        this.arrAnimationLine = [
+          { name: ".header__logo", defaultLine: false, indent: "left" },
+          {
+            name: ".header__interaction_cart",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+          { name: "", defaultLine: false, indent: "left" },
+          {
+            name: "",
+            defaultLine: false,
+            share: true,
+            indent: "left",
+          },
+        ];
+        return;
+      }
+      this.arrAnimationLine = [
+        { name: ".header__logo", defaultLine: false, indent: "left" },
         { name: ".addition__img", defaultLine: false, indent: "left" },
         {
           name: ".collection__new_title",
@@ -32,10 +60,11 @@ export default {
           share: true,
           indent: "left",
         },
-      ],
-    };
+      ];
+    },
   },
   mounted() {
+    this.initScrollTrigger();
     const bodyEl = document.body;
     bodyEl.style.overflow = "auto";
   },

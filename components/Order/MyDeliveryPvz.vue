@@ -34,10 +34,19 @@
           </button>
         </div>
       </div>
-      <form class="delivery__pvz_form" @submit.prevent>
-        <div class="delivery__pvz_label">
-          Выберите ПВЗ с помощью поля ввода*
-        </div>
+
+      <div class="delivery__pvz_name">
+        <span
+          class="delivery__pvz_sp"
+          v-if="
+            textActive !== 'Выберите ПВЗ с помощью карты*' &&
+            textActive !== 'Выберите ПВЗ с помощью поля ввода*'
+          "
+          >вы выбрали:</span
+        >
+        {{ textActive }}
+      </div>
+      <form class="delivery__pvz_form" @submit.prevent v-if="checkMapAndInput">
         <div class="delivery__pvz_block">
           <input
             class="delivery__pvz_input"
@@ -60,10 +69,9 @@
           </Transition>
         </div>
       </form>
-      <div class="delivery__pvz_label">Выберите ПВЗ с помощью карты*</div>
       <NuxtErrorBoundary>
         <OrderMyDeliveryMap
-          v-if="arrPlacemarkAndInfo && !loadingEl"
+          v-if="arrPlacemarkAndInfo && !loadingEl && !checkMapAndInput"
           :arrPlacemarkAndInfo="arrPlacemarkAndInfo"
           :changeMap="changeMap"
           @loadMap="setCity"
@@ -79,9 +87,20 @@
       <div class="delivery__pvz_pickup">
         <UIButtonMyButton
           info="применить"
-          fontSize="22"
+          fontSize="20"
           data-cursor-class="animateCursor"
           @click="getDelivery"
+        />
+        <UIButtonMyButton
+          :info="
+            !checkMapAndInput
+              ? 'выбрать ПВЗ вручную'
+              : 'выбрать пвз с помощью карты'
+          "
+          fontSize="20"
+          data-cursor-class="animateCursor"
+          @click="setActiveMapOrInput"
+          variant="green"
         />
       </div>
     </div>
@@ -108,6 +127,12 @@ export default {
       activeObj: null,
       changeMap: false,
       loadingEl: false,
+      useActiveAddress: useActiveAddress(),
+      useFilterDeliveryPackages: useFilterDeliveryPackages,
+      textActive: "Выберите ПВЗ с помощью карты*",
+      checkMapAndInput: false,
+      useBuyerAddress: useBuyerAddress(),
+      arrErrors: useCheckErrors(),
     };
   },
 
@@ -125,6 +150,7 @@ export default {
         return;
       }
       this.pvzInputVal = `${item.location.city}, ${item.location.address}`;
+      this.textActive = `${item.location.city}, ${item.location.address}`;
       this.changeMap = item;
       this.activeObj = item;
       this.activeDropdown = false;
@@ -158,17 +184,38 @@ export default {
         if (!this.activeObj) {
           this.usePvzModal = false;
         }
+        const packagesArr = this.useFilterDeliveryPackages();
+        this.objSet.packages = packagesArr;
         delete this.objSet.to_location.code;
+
         this.objSet.to_location.address = this.activeObj.location.address_full;
         const response = await CdekController.getOptions(this.objSet);
+        this.arrErrors = [];
         const check = this.changeSumm();
         const newArr = this.useDeliveryLoad(check, response);
         this.useDeliveryPrice = newArr[0].sumDelivery;
         this.deliveryOptions = newArr;
         this.usePvzModal = false;
+        this.useActiveAddress = this.activeObj;
+        this.useBuyerAddress = this.useActiveAddress.location.address_full;
       } catch {
         this.usePvzModal = false;
       }
+    },
+    setActiveMapOrInput() {
+      if (!this.checkMapAndInput) {
+        this.textActive = "Выберите ПВЗ с помощью поля ввода*";
+        this.checkMapAndInput = true;
+        this.pvzInputVal = "";
+        this.activeObj = null;
+        this.useActiveAddress = null;
+        return;
+      }
+      this.textActive = "Выберите ПВЗ с помощью карты*";
+      this.checkMapAndInput = false;
+      this.pvzInputVal = "";
+      this.activeObj = null;
+      this.useActiveAddress = null;
     },
   },
   mounted() {
@@ -210,7 +257,7 @@ export default {
   border-radius: 5px;
 }
 .delivery__pvz_loading {
-  height: 400px;
+  height: 500px;
 }
 .delivery__pvz_header {
   display: flex;
@@ -242,12 +289,15 @@ export default {
 .delivery__pvz_block {
   position: relative;
 }
-.delivery__pvz_label {
-  font-weight: 400;
-  font-size: 15px;
+.delivery__pvz_sp {
+  font-weight: 300;
+}
+.delivery__pvz_name {
+  font-weight: 600;
+  font-size: 18px;
   color: var(--brown);
-  text-transform: lowercase;
-  margin-bottom: 8px;
+  /* text-transform: lowercase; */
+  margin-bottom: 25px;
 }
 .delivery__pvz_input {
   width: 100%;
@@ -265,9 +315,9 @@ export default {
   color: var(--brown);
 }
 .delivery__pvz_pickup {
-  /* display: grid;
+  display: grid;
   grid-template-columns: 1fr 0.5fr;
-  column-gap: 10px; */
+  column-gap: 10px;
 }
 .fade-dropdown-enter-from {
   opacity: 0;

@@ -132,7 +132,7 @@ export default {
 .delivery__adress {
   position: absolute;
   width: 100%;
-  top: 95%;
+  top: 110%;
   left: 0;
   background: #fff;
   box-shadow: 2px 2px 20px 2px rgba(207, 201, 180, 0.4);

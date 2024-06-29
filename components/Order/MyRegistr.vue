@@ -23,9 +23,11 @@
       <UIButtonMyButton
         aria-label="оформить заказ"
         info="оформить заказ"
-        fontSize="24"
+        fontSize="26"
         data-cursor-class="animateCursor"
         bigSize="bigSize"
+        :heightEl="'60px'"
+        :loadingBtn="loadingButton"
         @click="getInformationUser"
       />
     </div>
@@ -38,11 +40,14 @@ export default {
     return {
       selectedOption: null,
       option: "option",
-      allObjectsOrder: ["region", "delivery", "payment", "buyer"],
+      allObjectsOrder: ["region", "delivery", "payment", "buyer", "promocode"],
       allObjectCheck: [],
       useOrderInfo: useOrderInfo(),
       checkVarible: 0,
-      objSet: {
+      deliveryOptions: useDeliveryArr(),
+      objSet: useDeliveryObj(),
+      useBuyerAddress: useBuyerAddress(),
+      objSetPayment: {
         name: "Алексей",
         phone: "+7 242 423 34 34",
         adress: "Г. Киров, ул. Молодая гвардия 32, д. 120",
@@ -67,39 +72,53 @@ export default {
           price: 300.0,
         },
       },
+      loadingButton: useLoadingButton(),
+      errorCheck: false,
     };
   },
   methods: {
-    redirectPayment() {
-      console.log("redirect");
+    redirectPayment(item) {
+      console.log(item);
       this.checkVarible = 0;
     },
-    cancelPayment() {
-      console.log("cancel");
-    },
     getInformationUser() {
+      if (!this.deliveryOptions) return;
       this.useOrderInfo = {};
+      this.loadingButton = true;
     },
   },
-  watch: {
-    useOrderInfo(val) {
-      if (val) {
-        console.log(this.useOrderInfo);
-        for (let key in val) {
-          const checkVar = this.allObjectsOrder.includes(key);
-          const checkVarArr = this.allObjectCheck.includes(key);
-          if (checkVar && !checkVarArr) {
-            this.checkVarible += 1;
-            this.allObjectCheck.push(key);
-          }
 
-          if (this.checkVarible === this.allObjectsOrder.length) {
-            this.redirectPayment();
-            this.checkVarible = 0;
-            this.allObjectCheck = [];
+  watch: {
+    useOrderInfo: {
+      handler(val) {
+        if (val && this.deliveryOptions) {
+          for (let key in val) {
+            if (val[key] === false) {
+              this.errorCheck = true;
+            }
+            const checkVar = this.allObjectsOrder.includes(key);
+            const checkVarArr = this.allObjectCheck.includes(key);
+            if (checkVar && !checkVarArr) {
+              this.checkVarible += 1;
+              this.allObjectCheck.push(key);
+            }
+            if (this.checkVarible === this.allObjectsOrder.length) {
+              if (this.errorCheck) {
+                this.errorCheck = false;
+                this.loadingButton = false;
+                this.checkVarible = 0;
+                this.allObjectCheck = [];
+                console.log("cancel payment");
+                return;
+              }
+              this.redirectPayment(this.useOrderInfo);
+              this.checkVarible = 0;
+              this.allObjectCheck = [];
+            }
           }
         }
-      }
+      },
+      deep: true,
     },
   },
 };

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <BrandMyMain />
+    <!-- <BrandMyMain /> -->
     <section class="index">
-      <BrandMyAbout />
-      <BrandMyPhrase />
+      <!-- <BrandMyAbout /> -->
+      <!-- <BrandMyPhrase /> -->
       <BrandMyFacts />
-      <BrandMySubscribe />
-      <UIMyAnimationLine duration="4" :arrAnimationLine="arrAnimationLine" />
-      <UIMyNoise />
+      <!-- <BrandMySubscribe />
+      <UIMyAnimationLine duration="7" :arrAnimationLine="arrAnimationLine" />
+      <UIMyNoise /> -->
     </section>
   </div>
 </template>

@@ -23,9 +23,12 @@ export default {
         for (let mutation of mutationsList) {
           if (mutation.type === "childList") {
             const span = currentDes.querySelector(".phrase__span");
-            if (span) {
+            if (span && window.innerWidth > 1054) {
               span.style.fontFamily = "Inter, sans-serif";
               span.style.fontSize = "80px";
+            } else {
+              span.style.fontFamily = "Inter, sans-serif";
+              span.style.fontSize = "30px";
             }
           }
         }
@@ -50,6 +53,11 @@ export default {
         },
       });
     },
+  },
+  unmounted() {
+    if (this.scrollTriggerVarieble !== null) {
+      this.scrollTriggerVarieble.kill();
+    }
   },
   mounted() {
     gsap.registerPlugin(ScrollTrigger);
@@ -85,6 +93,23 @@ export default {
 }
 .phrase__font {
   font-family: "Inter", sans-serif;
-  border: 1px solid red;
+}
+@media screen and (max-width: 1400px) {
+  .phrase__text {
+    font-size: 84px;
+    line-height: 105%;
+  }
+}
+@media screen and (max-width: 1054px) {
+  .phrase__text {
+    font-size: 54px;
+    line-height: 105%;
+    letter-spacing: -2px;
+  }
+}
+@media screen and (max-width: 620px) {
+  .phrase__text {
+    font-size: 44px;
+  }
 }
 </style>

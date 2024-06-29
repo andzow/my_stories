@@ -6,6 +6,9 @@
         <img
           class="collection__new_image"
           src="@/assets/images/Main/collectionF.webp"
+          width="504"
+          height="528"
+          alt="Фотография коллекции"
         />
       </div>
     </div>
@@ -30,5 +33,18 @@ export default {};
 }
 .collection__new_image {
   object-fit: cover;
+}
+@media screen and (max-width: 1400px) {
+  .collection__new_title {
+    font-size: 26px;
+  }
+  .collection__new_title {
+    margin-bottom: 30px;
+  }
+}
+@media screen and (max-width: 876px) {
+  .collection__new {
+    display: none;
+  }
 }
 </style>

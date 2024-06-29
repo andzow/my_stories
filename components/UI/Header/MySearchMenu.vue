@@ -29,4 +29,9 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
 }
+@media screen and (max-width: 996px) {
+  .search__menu {
+    max-height: 420px;
+  }
+}
 </style>

@@ -34,7 +34,13 @@
                     option.name + " " + option.deliveryTime + " " + option.day
                   }}
                 </div>
-                <div class="delivery__price">{{ option.sumDelivery }} ₽</div>
+                <div class="delivery__price">
+                  {{
+                    option.sumDelivery === 0
+                      ? "бесплатно"
+                      : option.sumDelivery + " ₽"
+                  }}
+                </div>
                 <div class="delivery__description">
                   {{ option.des }}
                 </div>
@@ -43,7 +49,10 @@
           </div>
           <div
             class="delivery__btn"
-            v-if="option.name.toLowerCase().includes('самовывоз')"
+            v-if="
+              option.name.toLowerCase().includes('самовывоз') &&
+              selectedOption === index
+            "
           >
             <UIButtonMyButton
               info="Выбрать ПВЗ"
@@ -72,7 +81,7 @@ import CdekController from "~/http/controllers/CdekController";
 export default {
   data() {
     return {
-      selectedOption: 0,
+      selectedOption: useIndexDelivery(),
       usePvzModal: usePvzModal(),
       deliveryOptions: useDeliveryArr(),
       useOrderInfo: useOrderInfo(),
@@ -81,6 +90,10 @@ export default {
       useCursor: useCursor(),
       objSet: useDeliveryObj(),
       useDeliveryLoad: useDeliveryLoad,
+      useActiveAddress: useActiveAddress(),
+      useFilterDeliveryPackages: useFilterDeliveryPackages,
+      useSelectedSamovivos: useSelectedSamovivos(),
+      useBuyerAddress: useBuyerAddress(),
       activePvzObj: null,
     };
   },
@@ -101,6 +114,8 @@ export default {
     },
     async initApp() {
       try {
+        const packagesArr = this.useFilterDeliveryPackages();
+        this.objSet.packages = packagesArr;
         const response = await CdekController.getOptions(this.objSet);
         const check = this.changeSumm();
         const newArr = this.useDeliveryLoad(check, response);
@@ -109,17 +124,57 @@ export default {
         setTimeout(() => {
           this.useCursor = true;
         }, 0);
-      } catch {}
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
   mounted() {
     this.initApp();
   },
   watch: {
+    deliveryOptions: {
+      handler(val) {
+        //Очистить переменные доставки
+        this.selectedOption = 0;
+
+        const item = this.deliveryOptions[this.selectedOption];
+        const findName = item?.name?.toLowerCase().includes("самовывоз");
+        if (findName) {
+          this.useSelectedSamovivos = true;
+        } else {
+          this.useSelectedSamovivos = false;
+        }
+
+        setTimeout(() => {
+          this.useCursor = true;
+        }, 100);
+      },
+      deep: true,
+    },
+    selectedOption(val) {
+      if (!this.deliveryOptions) return;
+      const item = this.deliveryOptions[val];
+      if (!item?.name) return;
+      const findSamovivos = item.name.toLowerCase().includes("самовывоз");
+      if (findSamovivos) {
+        this.useSelectedSamovivos = true;
+      } else {
+        this.useSelectedSamovivos = false;
+      }
+      delete this.objSet.to_location.address_full;
+      this.useBuyerAddress = "";
+      this.useActiveAddress = null;
+    },
     useOrderInfo(val) {
       if (val && (this.selectedOption || this.selectedOption <= 0)) {
         const elHtml = this.deliveryOptions[this.selectedOption];
-        this.useOrderInfo.delivery = elHtml;
+        if (elHtml) {
+          this.useOrderInfo.delivery = elHtml;
+        } else {
+          this.useOrderInfo.delivery = false;
+          this.useOrderInfo.region = false;
+        }
       }
     },
   },

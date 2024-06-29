@@ -75,4 +75,32 @@ export default {
 .new__btn {
   opacity: 0;
 }
+@media screen and (max-width: 1630px) {
+  .new__content {
+    min-height: 700px;
+    max-height: 700px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .new__title {
+    font-size: 30px;
+  }
+  .new__number {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 1154px) {
+  .new {
+    padding-bottom: 50px;
+  }
+  .new__content {
+    min-height: auto;
+    max-height: 800px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .new__number {
+    font-size: 26px;
+  }
+}
 </style>

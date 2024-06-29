@@ -17,21 +17,22 @@
       class="new__item_slide"
       :key="slide"
     >
-      <div class="new__item_card" v-if="useServ">
-        <img
-          v-show="checkLoad"
-          class="new__item_imgs"
-          :src="useServ + slide"
-          :alt="item.name"
-          @load="onImageLoad"
-          width="451"
-          height="565"
-        />
-        <UIMyLoadItem v-show="!checkLoad" />
+      <div class="new__item_card">
+        <NuxtLink :to="item.name ? `/catalog/${item?.name}/${item?.id}` : '/'">
+          <NuxtImg
+            class="new__item_imgs"
+            :src="'http://localhost:8080/api/' + slide"
+            :alt="item.name"
+            @load="onImageLoad"
+            width="451"
+            height="565"
+            loading="lazy"
+          />
+        </NuxtLink>
       </div>
     </swiper-slide>
     <div class="new__item_pagination"></div>
-    <div class="new__item_texture" v-if="sale"></div>
+    <div class="new__item_texture" v-if="item?.discount"></div>
   </swiper>
 </template>
 
@@ -69,7 +70,7 @@ export default {
   },
   computed: {
     getArrSwiperImages() {
-      return this.images.filter((el, idx) => idx <= 3);
+      return this.images.filter((el, idx) => idx <= 1);
     },
   },
   methods: {
@@ -88,7 +89,7 @@ export default {
       });
     },
     onImageLoad() {
-      this.checkLoad = true;
+      this.$emit("load");
     },
   },
   mounted() {
@@ -104,6 +105,7 @@ export default {
 
 <style scoped>
 .new__item_swiper {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;

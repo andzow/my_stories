@@ -1,5 +1,5 @@
 <template>
-  <div class="promocode" id="order__promocode">
+  <div class="promocode" id="order__promocode" v-show="deliveryOptions">
     <div class="promocode__content">
       <div class="promocode__name">Ваш заказ</div>
       <div class="promocode__summ">
@@ -9,7 +9,10 @@
         >
       </div>
       <div class="promocode__delivery">
-        Доставка: <span class="promocode__span">{{ useDeliveryPrice }} ₽</span>
+        Доставка:
+        <span class="promocode__span"
+          >{{ useDeliveryPrice === 0 ? "бесплатно" : useDeliveryPrice + " ₽" }}
+        </span>
       </div>
       <form class="promocode__form" @submit.prevent>
         <div class="promocode__label">{{ promocodeText }}</div>
@@ -137,6 +140,9 @@
       </div>
     </div>
   </div>
+  <div class="promocode__load" v-show="!deliveryOptions">
+    <UIMyLoadItem :backgroundDisable="true" />
+  </div>
 </template>
 
 <script>
@@ -159,8 +165,10 @@ export default {
       useOrderInfo: useOrderInfo(),
       activePromocode: "",
       useDeliveryPrice: useDeliveryPrice(),
+      selectedOption: useIndexDelivery(),
       localStorageArr: null,
       checkSumm: false,
+      checkLoadPromocode: false,
     };
   },
   methods: {
@@ -233,11 +241,6 @@ export default {
   mounted() {
     this.initPromocode();
     this.changeSumm();
-    setTimeout(() => {
-      nextTick(() => {
-        this.initScrollTrigger();
-      });
-    }, 0);
   },
   watch: {
     useOrderInfo(val) {
@@ -246,13 +249,23 @@ export default {
       }
     },
     useDeliveryPrice(val) {
-      const check = this.changeSumm();
-      if (check) return;
       this.fullSumm = this.summ + val;
+      this.checkFirstLoad = true;
+    },
+    selectedOption() {
+      setTimeout(() => {
+        nextTick(() => {
+          this.timeLine.scrollTrigger.refresh();
+        });
+      }, 0);
     },
     deliveryOptions() {
       setTimeout(() => {
         nextTick(() => {
+          if (!this.checkLoadPromocode) {
+            this.initScrollTrigger();
+            this.checkLoadPromocode = true;
+          }
           this.timeLine.scrollTrigger.refresh();
         });
       }, 0);
@@ -348,6 +361,11 @@ export default {
   font-size: 28px;
   color: var(--yellow);
   text-transform: lowercase;
+}
+.promocode__load {
+  width: 100%;
+  height: 300px;
+  border: 1px solid var(--brown);
 }
 .v-enter-active,
 .v-leave-active {

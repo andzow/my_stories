@@ -91,6 +91,9 @@ export default {
               id: el.id,
             }))
             .filter((el) => el);
+          setTimeout(() => {
+            this.useCursor = true;
+          }, 0);
           if (!this.checkSearch) {
             this.checkSearch = true;
           }
@@ -175,9 +178,10 @@ export default {
   height: 40px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .search__empty_title {
-  margin-top: 50px;
+  margin-top: 30px;
   text-align: center;
   font-weight: 400;
   font-size: 36px;
@@ -190,5 +194,33 @@ export default {
   font-size: 18px;
   color: var(--brown);
   margin-bottom: 20px;
+  text-transform: lowercase;
+}
+@media screen and (max-width: 996px) {
+  .search__empty_title {
+    margin-top: 15px;
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+  .search__empty_text {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  .search__input {
+    font-size: 19px;
+    font-weight: 400;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .search__empty_title {
+    margin-top: 10px;
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  .search__empty_text {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
 }
 </style>

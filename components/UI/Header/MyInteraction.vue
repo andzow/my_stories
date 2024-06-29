@@ -1,7 +1,7 @@
 <template>
   <div
     class="header__interaction"
-    :class="{ activeSvgIteraction: changeHeader }"
+    :class="{ activeSvgIteraction: changeHeader || activeMenu }"
   >
     <div class="header__interaction_search">
       <button
@@ -91,10 +91,12 @@ export default {
   data() {
     return {
       useCursor: useCursor(),
+      activeMenu: useActiveMenu(),
     };
   },
   methods: {
     setSearch() {
+      this.activeMenu = false;
       this.useCursor = true;
       this.$emit("setActiveSearch");
     },

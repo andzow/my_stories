@@ -55,3 +55,4 @@ export const useDeliveryLoad = (check, response) => {
   }
   return newArr;
 };
+export const useActiveMenu = () => useState("use_active_menu", () => false);

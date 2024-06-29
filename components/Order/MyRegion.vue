@@ -1,8 +1,10 @@
 <template>
   <div class="region">
     <OrderUIMyTitle>регион доставки</OrderUIMyTitle>
-    <form class="region__form" @submit.prevent>
-      <div class="region__label">Город*</div>
+    <div class="region__form">
+      <div class="region__label" :class="{ disableText: !checkRegion }">
+        {{ textRegion }}
+      </div>
       <div class="region__block">
         <input
           class="region__input"
@@ -10,6 +12,7 @@
           placeholder="введите название города..."
           @input="debouncedSearch"
           v-model="inpVal"
+          :class="{ disableInput: !checkRegion }"
         />
         <div class="region__img">
           <button class="region__btn" data-cursor-class="animateCursor">
@@ -47,7 +50,7 @@
           />
         </Transition>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -58,20 +61,30 @@ import debounce from "lodash.debounce";
 export default {
   data() {
     return {
+      selectedOption: useIndexDelivery(),
       inpVal: "Москва, Россия",
       activeDropdown: false,
       useOrderInfo: useOrderInfo(),
       useCursor: useCursor(),
       arrCitys: [],
       deliveryOptions: useDeliveryArr(),
+      useActiveAddress: useActiveAddress(),
       useDeliveryLoad: useDeliveryLoad,
       objSet: useDeliveryObj(),
       useDeliveryPrice: useDeliveryPrice(),
+      useFilterDeliveryPackages: useFilterDeliveryPackages,
       useCityCode: useCityCode(),
       activeTextEmpty: "",
+      checkRegion: true,
+      textRegion: "город*",
+      useBuyerAddress: useBuyerAddress(),
+      useSelectedSamovivos: useSelectedSamovivos(),
+      arrErrors: useCheckErrors(),
+      counterErrors: false,
       debouncedSearch: debounce(async () => {
         try {
           const response = await CdekController.getCity({ name: this.inpVal });
+          this.arrErrors = [];
           this.arrCitys = response;
           if (this.inpVal.length > 0) {
             this.activeDropdown = true;
@@ -81,6 +94,11 @@ export default {
           this.useCursor = true;
         } catch {}
       }, 200),
+      debouncedMethod: debounce(async (val) => {
+        try {
+          this.getInfoPvz(val);
+        } catch {}
+      }, 300),
     };
   },
   methods: {
@@ -106,6 +124,11 @@ export default {
     },
     async setCity(arr, idx) {
       try {
+        //Удалить старую инфу
+        delete this.objSet.to_location.address;
+        this.useBuyerAddress = "";
+        this.useActiveAddress = null;
+
         const item = arr[idx];
         this.deliveryOptions = false;
         this.inpVal =
@@ -126,6 +149,7 @@ export default {
         }
         const check = this.changeSumm();
         const newArr = this.useDeliveryLoad(check, response);
+        this.checkDeliveryScrollToTop(false, false);
         this.useDeliveryPrice = newArr[0].sumDelivery;
         this.deliveryOptions = newArr;
         this.useCityCode = item.code;
@@ -136,12 +160,74 @@ export default {
         this.useDeliveryPrice = 0;
       }
     },
+    async getPvzCode() {
+      try {
+        //Удалить старый адресс
+        const packagesArr = this.useFilterDeliveryPackages();
+        this.objSet.packages = packagesArr;
+        const response = await CdekController.getOptions(this.objSet);
+        if (!response) {
+          return false;
+        }
+        return true;
+      } catch {}
+    },
+    checkDeliveryScrollToTop(check, code) {
+      if (check) {
+        if (code) {
+          this.useOrderInfo.region = this.useCityCode;
+        }
+        this.checkRegion = false;
+        this.textRegion = "в данный регион доставка не осуществляется";
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+        return;
+      }
+      if (code) {
+        this.useOrderInfo.region = this.useCityCode;
+      }
+      this.checkRegion = true;
+      this.textRegion = "город*";
+    },
+    async getInfoPvz(val) {
+      if (
+        val &&
+        !this.useSelectedSamovivos &&
+        !this.deliveryOptions?.loadText
+      ) {
+        this.objSet.to_location.code = this.useCityCode;
+        const response = await this.getPvzCode();
+        if (!response) {
+          this.useOrderInfo.region = false;
+          this.checkDeliveryScrollToTop(true);
+        } else {
+          this.checkDeliveryScrollToTop(false, true);
+        }
+        return;
+      }
+      if (this.deliveryOptions?.loadText) {
+        this.checkDeliveryScrollToTop(true);
+      } else {
+        this.checkDeliveryScrollToTop(false, true);
+      }
+    },
+  },
+  unmounted() {
+    this.useOrderInfo = null;
+    this.deliveryOptions = null;
+    this.useActiveAddress = null;
+    delete this.objSet.to_location.address;
+    this.objSet.to_location.code = 44;
+    this.useDeliveryPrice = null;
+    this.useCityCode = 44;
+    this.useBuyerAddress = "";
+    this.useSelectedSamovivos = false;
   },
   watch: {
-    useOrderInfo(val) {
-      if (val) {
-        this.useOrderInfo.region = this.inpVal;
-      }
+    async useOrderInfo(val) {
+      this.debouncedMethod(val);
     },
   },
 };
@@ -159,6 +245,7 @@ export default {
   color: var(--brown);
   text-transform: lowercase;
   margin-bottom: 8px;
+  transition: all 0.4s ease;
 }
 .region__block {
   position: relative;
@@ -185,6 +272,12 @@ export default {
 }
 .region__btn {
   display: flex;
+}
+.disableText {
+  color: red;
+}
+.disableInput {
+  border: 1px solid red;
 }
 .fade-dropdown-enter-from {
   opacity: 0;
