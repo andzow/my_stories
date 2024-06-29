@@ -28,6 +28,10 @@ export default {
             isPrice: usePrice(),
             isDiscount: useDiscount(),
             isArticul: useArticul(),
+            isWidth: useWidth(),
+            isHeight: useHeight(),
+            isLenght: useLenght(),
+            isWeight: useWeight(),
             isText: useText(),
             isCharacteristic: useCharacteristic(),
             isCategory: useCategoryArray(),
@@ -54,6 +58,10 @@ export default {
             this.isDiscount = ''
             this.isArticul = ''
             this.isText = ''
+            this.isWidth = ''
+            this.isHeight = ''
+            this.isLenght = ''
+            this.isWeight = ''
             this.isCharacteristic = ''
             this.isCategory = ['все']
             this.isMeasurement = [{name: '', array: []}]

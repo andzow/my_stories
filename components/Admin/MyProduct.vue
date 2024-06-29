@@ -41,15 +41,15 @@
               <div class="product__dop">
                 <div class="product__info product__info_special">
                   <span class="product__prefix" :class="{'product__prefix_error': priceValidator === 1}">цена</span>
-                  <input class="product__input product__input_special" :class="{'product__input_error': priceValidator === 1}" type="number" placeholder="значение" v-model="isPrice" @input="validator">
+                  <input class="product__input product__input_special" :class="{'product__input_error': priceValidator === 1}" type="number" placeholder="пусто" v-model="isPrice" @input="validator">
                 </div>
                 <div class="product__info product__info_special">
                   <span class="product__prefix">цена со скидкой</span>
-                  <input class="product__input product__input_special" type="number" placeholder="значение" v-model="isDiscount">
+                  <input class="product__input product__input_special" type="number" placeholder="пусто" v-model="isDiscount">
                 </div>
                 <div class="product__info">
                   <span class="product__prefix" :class="{'product__prefix_error': articulValidator === 1}">артикул</span>
-                  <input class="product__input" :class="{'product__input_error': articulValidator === 1}" type="number" placeholder="значение" v-model="isArticul" @input="validator">
+                  <input class="product__input" :class="{'product__input_error': articulValidator === 1}" type="number" placeholder="пусто" v-model="isArticul" @input="validator">
                 </div>
               </div>
               <div class="product__info">
@@ -78,6 +78,26 @@
                   </div>
                 </div>
                 <div class="product__border"></div>
+              </div>
+              <div class="product__dop">
+                <div class="product__info product__info_special">
+                  <span class="product__prefix" :class="{'product__prefix_error': widthValidator === 1}">ширина, см</span>
+                  <input class="product__input" :class="{'product__input_error': widthValidator === 1}" type="number" placeholder="пусто" v-model="isWidth" @input="validator">
+                </div>
+                <div class="product__info">
+                  <span class="product__prefix" :class="{'product__prefix_error': heightValidator === 1}">высота, см</span>
+                  <input class="product__input" :class="{'product__input_error': heightValidator === 1}" type="number" placeholder="пусто" v-model="isHeight" @input="validator">
+                </div>
+              </div>
+              <div class="product__dop">
+                <div class="product__info product__info_special">
+                  <span class="product__prefix" :class="{'product__prefix_error': lenghtValidator === 1}">длина, см</span>
+                  <input class="product__input" :class="{'product__input_error': lenghtValidator === 1}" type="number" placeholder="пусто" v-model="isLenght" @input="validator">
+                </div>
+                <div class="product__info">
+                  <span class="product__prefix" :class="{'product__prefix_error': weightValidator === 1}">вес, гр</span>
+                  <input class="product__input" :class="{'product__input_error': weightValidator === 1}" type="number" placeholder="пусто" v-model="isWeight" @input="validator">
+                </div>
               </div>
             </div>
 
@@ -242,6 +262,10 @@ export default {
       isPrice: usePrice(),
       isDiscount: useDiscount(),
       isArticul: useArticul(),
+      isWidth: useWidth(),
+      isHeight: useHeight(),
+      isLenght: useLenght(),
+      isWeight: useWeight(),
       isText: useText(),
       isCharacteristic: useCharacteristic(),
       isCategory: useCategoryArray(),
@@ -263,7 +287,11 @@ export default {
       characteristicValidator: 0,
       colorValidator: 0,
       photoValidator: 0,
-      allValidator: 0
+      allValidator: 0,
+      widthValidator: 0,
+      heightValidator: 0,
+      lenghtValidator: 0,
+      weightValidator: 0,
     };
   },
   methods: {
@@ -379,6 +407,10 @@ export default {
       if (this.isDiscount.toString().length > 0) {
         formData.append("discount", this.isDiscount);
       }
+      formData.append("width", this.isWidth);
+      formData.append("height", this.isHeight);
+      formData.append("lenght", this.isLenght);
+      formData.append("weight", this.isWeight);
       formData.append("articul", this.isArticul);
       formData.append("text", this.isText);
       formData.append("characteristic", this.isCharacteristic);
@@ -410,6 +442,10 @@ export default {
       this.isDiscount = ''
       this.isArticul = ''
       this.isText = ''
+      this.isWidth = ''
+      this.isHeight = ''
+      this.isLenght = ''
+      this.isWeight = ''
       this.isCharacteristic = ''
       this.isCategory = ['все']
       this.isMeasurement = [{name: '', array: []}]
@@ -432,7 +468,11 @@ export default {
       formData.append("price", this.isPrice);
       if (this.isDiscount.toString().length > 0) {
         formData.append("discount", this.isDiscount);
-      } 
+      }
+      formData.append("width", this.isWidth);
+      formData.append("height", this.isHeight);
+      formData.append("lenght", this.isLenght);
+      formData.append("weight", this.isWeight);
       formData.append("articul", this.isArticul);
       formData.append("text", this.isText);
       formData.append("characteristic", this.isCharacteristic);
@@ -469,6 +509,30 @@ export default {
         this.priceValidator = 1
       } else {
         this.priceValidator = 2
+      }
+
+      if (this.isWidth.length === 0) {
+        this.widthValidator = 1
+      } else {
+        this.widthValidator = 2
+      }
+
+      if (this.isHeight.length === 0) {
+        this.heightValidator = 1
+      } else {
+        this.heightValidator = 2
+      }
+
+      if (this.isLenght.length === 0) {
+        this.lenghtValidator = 1
+      } else {
+        this.lenghtValidator = 2
+      }
+
+      if (this.isWeight.length === 0) {
+        this.weightValidator = 1
+      } else {
+        this.weightValidator = 2
       }
 
       if (this.isArticul.length === 0) {
@@ -508,7 +572,11 @@ export default {
         this.textValidator === 2 && 
         this.characteristicValidator === 2 &&
         this.colorValidator === 2 && 
-        this.photoValidator === 2
+        this.photoValidator === 2 &&
+        this.widthValidator === 2 &&
+        this.heightValidator === 2 &&
+        this.lenghtValidator === 2 &&
+        this.weightValidator === 2 
         ) {
         this.allValidator = 2
       } else {

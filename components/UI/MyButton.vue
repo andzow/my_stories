@@ -42,6 +42,7 @@ export default {
       const tY = this.mouseY / 2;
       return {
         transform: `translateX(${tX}px) translateY(${tY}px)`,
+        transition: "all 0.4s ease",
       };
     },
     circleStyle() {
