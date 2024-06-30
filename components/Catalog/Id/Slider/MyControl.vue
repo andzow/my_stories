@@ -68,7 +68,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      useCursor: useCursor(),
+    };
+  },
+  mounted() {
+    this.useCursor = false;
+    setTimeout(() => {
+      this.useCursor = true;
+    }, 10);
+  },
+};
 </script>
 
 <style scoped>
@@ -88,5 +100,15 @@ export default {};
 }
 .slider__control_next {
   margin-left: 20px;
+}
+@media screen and (max-width: 1600px) {
+  .slider__control {
+    bottom: -1.5%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .slider__control {
+    bottom: -5%;
+  }
 }
 </style>

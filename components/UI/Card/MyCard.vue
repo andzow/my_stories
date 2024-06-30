@@ -85,9 +85,23 @@ export default {
         this.$emit("activeLine");
       });
     },
+    initWidth() {
+      const elementsCard = document.querySelectorAll(".card");
+      elementsCard.forEach((el, idx) => {
+        const elHtmlBlock = document.querySelector(".card" + (idx + 1));
+        const setStyleP = document.querySelector(
+          ".card" + (idx + 1) + " .card__name"
+        );
+        if (elHtmlBlock.getBoundingClientRect()) {
+          setStyleP.style.width =
+            elHtmlBlock.getBoundingClientRect().width + "px";
+        }
+      });
+    },
   },
   mounted() {
     this.initSwiper = true;
+    this.initWidth();
     setTimeout(() => {
       this.initApp();
     }, 0);
@@ -115,7 +129,6 @@ export default {
 }
 .card__photo {
   position: relative;
-  width: 490px;
   height: 665px;
   /* overflow: hidden; */
 }
@@ -130,6 +143,12 @@ export default {
   color: var(--brown);
   text-transform: lowercase;
   margin-bottom: 20px;
+  text-transform: lowercase;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+  width: 100%;
   display: none;
   transition: all 1s ease;
 }
@@ -168,6 +187,211 @@ export default {
   }
   to {
     opacity: 1;
+  }
+}
+@media screen and (max-width: 1820px) {
+  .card__image_loading {
+    height: 625px;
+  }
+  .card__photo {
+    height: 625px;
+  }
+  .card__loading_block {
+    height: 625px;
+  }
+}
+@media screen and (max-width: 1730px) {
+  .card__image_loading {
+    height: 585px;
+  }
+  .card__photo {
+    height: 585px;
+  }
+  .card__loading_block {
+    height: 585px;
+  }
+}
+@media screen and (max-width: 1630px) {
+  .card__image_loading {
+    height: 535px;
+  }
+  .card__photo {
+    height: 535px;
+  }
+  .card__loading_block {
+    height: 535px;
+  }
+}
+@media screen and (max-width: 1540px) {
+  .card__image_loading {
+    height: 465px;
+  }
+  .card__photo {
+    height: 465px;
+  }
+  .card__loading_block {
+    height: 465px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .card__name {
+    font-size: 20px;
+  }
+  .card__price {
+    font-size: 18px;
+  }
+  .card__sale {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  .card__image_loading {
+    height: 370px;
+  }
+  .card__photo {
+    height: 370px;
+  }
+  .card__loading_block {
+    height: 370px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .card__name {
+    font-size: 18px;
+  }
+  .card__price {
+    font-size: 16px;
+  }
+  .card__sale {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .card__name {
+    font-size: 18px;
+  }
+  .card__price {
+    font-size: 16px;
+  }
+  .card__sale {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1020px) {
+  .card__name {
+    font-size: 17px;
+  }
+  .card__price {
+    font-size: 15px;
+  }
+  .card__sale {
+    font-size: 15px;
+  }
+  .card__image_loading {
+    height: 300px;
+  }
+  .card__photo {
+    height: 300px;
+  }
+  .card__loading_block {
+    height: 300px;
+  }
+}
+@media screen and (max-width: 952px) {
+  .card__image_loading {
+    height: 430px;
+  }
+  .card__photo {
+    height: 430px;
+  }
+  .card__loading_block {
+    height: 430px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .card__image_loading {
+    height: 380px;
+  }
+  .card__photo {
+    height: 380px;
+  }
+  .card__loading_block {
+    height: 380px;
+  }
+}
+@media screen and (max-width: 836px) {
+  .card__image_loading {
+    height: 495px;
+  }
+  .card__photo {
+    height: 495px;
+  }
+  .card__loading_block {
+    height: 495px;
+  }
+}
+@media screen and (max-width: 730px) {
+  .card__image_loading {
+    height: 445px;
+  }
+  .card__photo {
+    height: 445px;
+  }
+  .card__loading_block {
+    height: 445px;
+  }
+}
+@media screen and (max-width: 688px) {
+  .card__image_loading {
+    height: 400px;
+  }
+  .card__photo {
+    height: 400px;
+  }
+  .card__loading_block {
+    height: 400px;
+  }
+}
+@media screen and (max-width: 588px) {
+  .card__image_loading {
+    height: 320px;
+  }
+  .card__photo {
+    height: 320px;
+  }
+  .card__loading_block {
+    height: 320px;
+  }
+}
+@media screen and (max-width: 466px) {
+  .card__name {
+    font-size: 20px;
+  }
+  .card__price {
+    font-size: 18px;
+  }
+  .card__sale {
+    font-size: 18px;
+  }
+  .card__image_loading {
+    height: 475px;
+  }
+  .card__photo {
+    height: 475px;
+  }
+  .card__loading_block {
+    height: 475px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .card__image_loading {
+    height: 390px;
+  }
+  .card__photo {
+    height: 390px;
+  }
+  .card__loading_block {
+    height: 390px;
   }
 }
 </style>

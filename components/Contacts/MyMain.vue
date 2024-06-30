@@ -1,10 +1,45 @@
 <template>
   <section class="main">
+    <div class="main__mobile">
+      <div class="main__mobile_header">
+        <h1 class="main__mobile_title">
+          ( &nbsp;мы всегда с вами на связи&nbsp; )
+        </h1>
+        <p class="main__mobile_text">
+          Если у вас есть какие-то вопросы, предложения, хотите оставить отзыв,
+          или вам нужна наша помощь - напишите нам, мы всегда на связи по
+          указанным ниже контактам.
+        </p>
+      </div>
+      <div class="main__mobile_content">
+        <div class="main__mobile_href">
+          <a
+            class="main__mobile_link main__mobile_link1"
+            href="https://t.me/+79536886333"
+            target="_blank"
+            >( &nbsp;написать в Telegram&nbsp; )</a
+          >
+        </div>
+        <div class="main__mobile_href">
+          <a
+            class="main__mobile_link"
+            href="https://wa.me/79536886333"
+            target="_blank"
+            >( &nbsp;написать в WhatsApp&nbsp; )</a
+          >
+        </div>
+      </div>
+      <div class="main__mobile_img">
+        <img
+          src="@/assets/images/Contacts/contacts.webp"
+          alt="Фотография
+        страницы"
+        />
+      </div>
+    </div>
     <div class="main__content">
       <div class="main__image">
         <img
-          onmousedown="return false"
-          onselectstart="return false"
           class="main__image_img"
           height="600"
           src="@/assets/images/Contacts/contacts.webp"
@@ -58,17 +93,26 @@ export default {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
     };
   },
+  methods: {
+    initGsap() {
+      this.useGsapAnimationOpacity(
+        [
+          ".main__about_block",
+          ".main__about_mess",
+          ".main__about_title",
+          ".main__about_text",
+        ],
+        ".main"
+      );
+      this.useGsapAnimationOpacity([".main__image"], ".main", false, 0.5);
+    },
+  },
   mounted() {
-    this.useGsapAnimationOpacity(
-      [
-        ".main__about_block",
-        ".main__about_mess",
-        ".main__about_title",
-        ".main__about_text",
-      ],
-      ".main"
-    );
-    this.useGsapAnimationOpacity([".main__image"], ".main", false, 0.5);
+    if (window.innerWidth > 1240) {
+      this.initGsap();
+    } else {
+      this.useGsapAnimationOpacity([".main"], ".main");
+    }
   },
 };
 </script>
@@ -77,7 +121,7 @@ export default {
 .main {
   position: relative;
   width: 100%;
-  padding-top: 150px;
+  padding-top: 120px;
   padding-bottom: 40px;
   z-index: 17;
 }
@@ -149,5 +193,167 @@ export default {
 }
 .main__about_item:nth-child(2) {
   margin-left: 110px;
+}
+.main__mobile {
+  display: none;
+  margin: 0 30px;
+}
+.main__mobile_header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+.main__mobile_title {
+  font-weight: 500;
+  font-size: 27px;
+  color: var(--brown);
+}
+.main__mobile_text {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--brown);
+  text-transform: lowercase;
+  text-align: justify;
+  max-width: 315px;
+}
+.main__mobile_content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 35px;
+}
+.main__mobile_link {
+  font-size: 20px;
+  color: var(--brown);
+  text-transform: lowercase;
+}
+@media screen and (max-width: 1600px) {
+  .main__about {
+    transform: translateX(-100px);
+  }
+}
+@media screen and (max-width: 1440px) {
+  .main__about {
+    transform: translateX(0px);
+    margin-left: 40px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .main__about_title {
+    font-size: 30px;
+  }
+  .main__about_text {
+    font-size: 16px;
+  }
+
+  .main__about_btn {
+    font-size: 20px;
+  }
+  .main__about_item:nth-child(2) {
+    margin-left: 40px;
+  }
+  .main__about_link:nth-child(2) {
+    margin-left: 40px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  .main {
+    opacity: 0;
+  }
+  .main__image {
+    opacity: 1;
+  }
+  .main__about_title {
+    opacity: 1;
+  }
+  .main__about_text {
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .main__image {
+    opacity: 1;
+  }
+  .main__about_title {
+    opacity: 1;
+  }
+  .main__about_text {
+    opacity: 1;
+  }
+
+  .main__about_link:nth-child(1) {
+    margin-bottom: 20px;
+  }
+  .main__about_link:nth-child(2) {
+    margin-left: 0px;
+  }
+  .main__about_mess {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-bottom: 20px;
+    opacity: 1;
+  }
+  .main__about_block {
+    flex-direction: column;
+    opacity: 1;
+  }
+  .main__about_text:nth-child(1) {
+    margin-bottom: 5px;
+  }
+  .main__about_item:nth-child(2) {
+    margin-left: 0px;
+  }
+  .main__about {
+    min-height: 0px;
+    max-height: 0px;
+  }
+  .main__about_information {
+    margin-bottom: 30px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .main {
+    padding-top: 110px;
+  }
+  .main__about_title {
+    font-size: 27px;
+  }
+  .main__about_text {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 933px) {
+  .main__mobile {
+    display: block;
+  }
+  .main__content {
+    display: none;
+  }
+}
+@media screen and (max-width: 775px) {
+  .main__mobile_header {
+    flex-direction: column;
+  }
+  .main__mobile_title {
+    margin-bottom: 30px;
+  }
+}
+@media screen and (max-width: 560px) {
+  .main__mobile_header {
+    flex-direction: column;
+  }
+  .main__mobile_title {
+    margin-bottom: 30px;
+  }
+  .main__mobile_content {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+  .main__mobile_href:nth-child(1) {
+    margin-bottom: 20px;
+  }
 }
 </style>

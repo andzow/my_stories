@@ -19,12 +19,14 @@
     >
       <div class="card__item_card">
         <NuxtLink :to="item.name ? `/catalog/${item?.name}/${item?.id}` : '/'">
-          <NuxtImg
+          <img
             width="490"
             height="665"
             class="card__item_imgs"
+            v-lazy="{
+              src: 'http://localhost:8080/api/8fa53b65-36af-437a-978a-06c2c0829730.webp',
+            }"
             :class="{ activeOpacity: checkLoad }"
-            :src="serverUrl + slide"
             :alt="`${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
               /\r\n/g,
               ', '
@@ -136,8 +138,11 @@ export default {
 
 <style scoped>
 .card__item_swiper {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 665px;
   display: flex;
   justify-content: space-between;
 }
@@ -185,5 +190,75 @@ export default {
   display: flex;
   gap: 0;
   z-index: 11;
+}
+@media screen and (max-width: 1820px) {
+  .card__item_swiper {
+    height: 625px;
+  }
+}
+@media screen and (max-width: 1730px) {
+  .card__item_swiper {
+    height: 585px;
+  }
+}
+@media screen and (max-width: 1630px) {
+  .card__item_swiper {
+    height: 535px;
+  }
+}
+@media screen and (max-width: 1540px) {
+  .card__item_swiper {
+    height: 465px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  .card__item_swiper {
+    height: 370px;
+  }
+}
+@media screen and (max-width: 1020px) {
+  .card__item_swiper {
+    height: 300px;
+  }
+}
+@media screen and (max-width: 952px) {
+  .card__item_swiper {
+    height: 430px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .card__item_swiper {
+    height: 380px;
+  }
+}
+@media screen and (max-width: 836px) {
+  .card__item_swiper {
+    height: 495px;
+  }
+}
+@media screen and (max-width: 730px) {
+  .card__item_swiper {
+    height: 445px;
+  }
+}
+@media screen and (max-width: 688px) {
+  .card__item_swiper {
+    height: 400px;
+  }
+}
+@media screen and (max-width: 588px) {
+  .card__item_swiper {
+    height: 320px;
+  }
+}
+@media screen and (max-width: 466px) {
+  .card__item_swiper {
+    height: 475px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .card__item_swiper {
+    height: 390px;
+  }
 }
 </style>

@@ -137,4 +137,13 @@ export default {
     opacity: 1;
   }
 }
+@media screen and (max-width: 478px) {
+  .about__size_menu {
+    margin-top: 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 15px;
+    flex-direction: column;
+  }
+}
 </style>

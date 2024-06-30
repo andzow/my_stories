@@ -131,4 +131,9 @@ export default {
 .subscribe__btn {
   opacity: 0;
 }
+@media screen and (max-width: 1400px) {
+  .subscribe__text {
+    font-size: 16px;
+  }
+}
 </style>

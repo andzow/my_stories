@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import "~/assets/style/Line/style.css";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -113,37 +114,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.lines {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 0px;
-  z-index: 9;
-}
-.lines__content {
-  position: relative;
-  max-width: 1920px;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-}
-.lines__line {
-  position: absolute;
-  width: 1px;
-  height: 100%;
-  background: #d2bcae;
-}
-/* .lines__line1 {
-  left: 30px;
-}
-.lines__line2 {
-  left: 383px;
-}
-.lines__line3 {
-  right: 852px;
-}
-.lines__line4 {
-  right: 98px;
-} */
-</style>
+<style></style>

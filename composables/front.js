@@ -253,3 +253,5 @@ export const usePvzModal = () => useState("use_pvz_modal", () => false);
 export const useDeliveryArr = () => useState("use_delivery_arr", () => null);
 export const useDeliveryPrice = () =>
   useState("use_delivery_price", () => null);
+export const useWidthLookbook = () =>
+  useState("use_width_lookbook", () => null);

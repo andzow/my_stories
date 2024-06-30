@@ -38,6 +38,7 @@
 <script>
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   data() {
@@ -60,7 +61,6 @@ export default {
     },
   },
   mounted() {
-    gsap.registerPlugin(ScrollTrigger);
     setTimeout(() => {
       this.setAnimateParallax();
     }, 10);

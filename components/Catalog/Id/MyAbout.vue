@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="about__dolyami">
-      <img :src="'../../Primer/dolyami.png'" />
+      <!-- <img :src="'../../Primer/dolyami.png'" /> -->
     </div>
 
     <CatalogIdAboutMyAboutSize
@@ -47,7 +47,7 @@
           class="about__size_btn"
           aria-label="добавить в корзину"
           info="добавить в корзину"
-          padding="15px 0"
+          padding="15px 15px"
           fontSize="20"
           bigSize="bigSize"
           data-cursor-class="animateCursor"
@@ -60,7 +60,7 @@
           class="about__size_btn"
           aria-label="написать в телеграм"
           info="написать в телеграм"
-          padding="15px 0"
+          padding="15px 15px"
           fontSize="20"
           data-cursor-class="animateCursor"
         />
@@ -176,6 +176,14 @@ export default {
 };
 </script>
 
+<style>
+@media screen and (max-width: 1100px) {
+  .about__size_btn .button__btn {
+    font-size: 17px !important;
+    padding: 13px 13px !important;
+  }
+}
+</style>
 <style scoped>
 .about {
   margin-left: 135px;
@@ -276,6 +284,65 @@ export default {
   }
   to {
     opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1820px) {
+  .about {
+    margin-left: 65px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .about__header_block {
+    font-size: 45px;
+  }
+  .about__header_title {
+    font-size: 45px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .about__header_block {
+    font-size: 36px;
+  }
+  .about__header_title {
+    font-size: 36px;
+  }
+  .about__price_text {
+    font-size: 18px;
+  }
+  .about__header_arcticle {
+    font-size: 15px;
+  }
+  .about {
+    margin-right: 0px;
+  }
+}
+@media screen and (max-width: 936px) {
+  .about {
+    margin: 0;
+    padding: 0 10%;
+  }
+}
+@media screen and (max-width: 686px) {
+  .about {
+    margin: 0;
+    padding: 0 0%;
+  }
+  .about__buttons {
+    margin-bottom: 35px;
+  }
+}
+@media screen and (max-width: 498px) {
+  .about__header {
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  .about__buttons {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
   }
 }
 </style>

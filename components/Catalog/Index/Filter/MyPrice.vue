@@ -236,6 +236,11 @@ export default {
   height: 25px;
   margin-left: 15px;
 }
+.filter__price_title {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--brown);
+}
 .filter__price_form {
   width: 100%;
 }
@@ -306,5 +311,44 @@ input[type="range"]::-moz-range-thumb {
   border: none;
   -moz-appearance: none;
   background: var(--brown);
+}
+@media screen and (max-width: 1400px) {
+  .filter__price_input {
+    font-size: 16px;
+  }
+  .filter__price_inp {
+    font-size: 16px;
+  }
+  .filter__price_title {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .filter__price_input {
+    font-size: 15px;
+  }
+  .filter__price_inp {
+    font-size: 15px;
+  }
+  .filter__price_title {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 836px) {
+  .filter__price {
+    margin-bottom: 0;
+    max-width: 200px;
+  }
+  .filter__price_title {
+    font-weight: 400;
+    color: var(--brown);
+    font-size: 20px;
+    text-transform: lowercase;
+  }
+}
+@media screen and (max-width: 474px) {
+  .filter__price {
+    max-width: 220px;
+  }
 }
 </style>

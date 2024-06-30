@@ -39,11 +39,7 @@ export default {
       });
     },
   },
-  unmounted() {
-    if (this.useScrollCheckMain !== null) {
-      this.useScrollCheckMain.revert();
-    }
-  },
+  unmounted() {},
   mounted() {
     setTimeout(() => {
       this.setAnimateParallax();

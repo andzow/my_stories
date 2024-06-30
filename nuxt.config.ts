@@ -14,9 +14,5 @@ export default defineNuxtConfig({
     "/login": { ssr: false },
   },
   ssr: true,
-  // delayHydration: {
-  //   debug: process.env.NODE_ENV === "development",
-  //   mode: "mount",
-  // },
   modules: ["@nuxt/image"],
 });

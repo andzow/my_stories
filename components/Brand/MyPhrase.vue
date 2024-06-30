@@ -10,6 +10,7 @@
 import Typed from "typed.js";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   data() {
@@ -19,22 +20,25 @@ export default {
   },
   methods: {
     setObserver(currentDes) {
-      const observer = new MutationObserver((mutationsList) => {
-        for (let mutation of mutationsList) {
-          if (mutation.type === "childList") {
-            const span = currentDes.querySelector(".phrase__span");
-            if (span && window.innerWidth > 1054) {
-              span.style.fontFamily = "Inter, sans-serif";
-              span.style.fontSize = "80px";
-            } else {
-              span.style.fontFamily = "Inter, sans-serif";
-              span.style.fontSize = "30px";
+      try {
+        const observer = new MutationObserver((mutationsList) => {
+          for (let mutation of mutationsList) {
+            if (mutation.type === "childList") {
+              const span = currentDes.querySelector(".phrase__span");
+              if (span && window.innerWidth > 1054) {
+                span.style.fontFamily = "Inter, sans-serif";
+                span.style.fontSize = "80px";
+              } else {
+                if (!span?.style) return;
+                span.style.fontFamily = "Inter, sans-serif";
+                span.style.fontSize = "30px";
+              }
             }
           }
-        }
-      });
-      const config = { childList: true, subtree: true };
-      observer.observe(currentDes, config);
+        });
+        const config = { childList: true, subtree: true };
+        observer.observe(currentDes, config);
+      } catch {}
     },
     setAnimationTypedJs(currentDes) {
       this.scrollTriggerVarieble = ScrollTrigger.create({
@@ -60,7 +64,6 @@ export default {
     }
   },
   mounted() {
-    gsap.registerPlugin(ScrollTrigger);
     const currentDes = this.$refs.phrase__text;
     this.setObserver(currentDes);
     this.setAnimationTypedJs(currentDes);
@@ -94,10 +97,23 @@ export default {
 .phrase__font {
   font-family: "Inter", sans-serif;
 }
+@media screen and (max-width: 1660px) {
+  .phrase {
+    padding-bottom: 60px;
+  }
+  .phrase__text {
+    font-size: 94px;
+    min-height: 420px;
+  }
+}
 @media screen and (max-width: 1400px) {
+  .phrase {
+    padding-bottom: 60px;
+  }
   .phrase__text {
     font-size: 84px;
     line-height: 105%;
+    min-height: 380px;
   }
 }
 @media screen and (max-width: 1054px) {
@@ -105,6 +121,7 @@ export default {
     font-size: 54px;
     line-height: 105%;
     letter-spacing: -2px;
+    min-height: 240px;
   }
 }
 @media screen and (max-width: 620px) {

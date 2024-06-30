@@ -5,6 +5,7 @@
         <div class="main__about">
           <div class="main__about_information">
             <div class="main__about_header">
+              <div class="main__about_mob">( &nbsp;1&nbsp; )</div>
               <h1 class="main__about_title">( &nbsp;оплата&nbsp; )</h1>
             </div>
             <p class="main_about__p">Вы можете оплатить заказ:</p>
@@ -33,6 +34,15 @@
           </div>
           <div class="main__about_images">
             <h2 class="main__about_back">( &nbsp;возврат&nbsp; )</h2>
+          </div>
+        </div>
+        <div class="main__mobile">
+          <div class="main__mobile_img">
+            <img
+              class="main__mobile_image"
+              src="@/assets/images/Delivery/delivery1.webp"
+              alt="Фотография"
+            />
           </div>
         </div>
         <div class="main__center">
@@ -104,37 +114,45 @@ export default {
         .getBoundingClientRect().left;
       elHtml.style.maxWidth = searchEl - textElStyle - 10 + "px";
     },
+    initGsap() {
+      this.useGsapAnimationOpacity(
+        [
+          ".main__about_title",
+          ".main__about_text",
+          ".main__about_ul",
+          ".main__center_number",
+        ],
+        ".main"
+      );
+
+      this.useGsapAnimationOpacity(
+        [
+          ".main__delivery_title",
+          ".main__delivery_number",
+          ".main__delivery_payment",
+          ".main__delivery_ul",
+          ".main__delivery_text",
+          ".main__about_back",
+        ],
+        ".main",
+        false,
+        0.5
+      );
+
+      this.useGsapAnimationOpacity(
+        [".main__center_num", ".main__center_image"],
+        ".main",
+        false,
+        1
+      );
+    },
   },
   mounted() {
-    this.useGsapAnimationOpacity(
-      [
-        ".main__about_title",
-        ".main__about_text",
-        ".main__about_ul",
-        ".main__center_number",
-      ],
-      ".main"
-    );
-
-    this.useGsapAnimationOpacity(
-      [
-        ".main__delivery_title",
-        ".main__delivery_number",
-        ".main__delivery_payment",
-        ".main__delivery_ul",
-        ".main__delivery_text",
-      ],
-      ".main",
-      false,
-      0.5
-    );
-
-    this.useGsapAnimationOpacity(
-      [".main__center_num", ".main__center_image"],
-      ".main",
-      false,
-      1
-    );
+    if (window.innerWidth > 1240) {
+      this.initGsap();
+    } else {
+      this.useGsapAnimationOpacity([".main"], ".main");
+    }
     this.initMargin();
   },
 };
@@ -144,7 +162,7 @@ export default {
 .main {
   position: relative;
   width: 100%;
-  padding-top: 150px;
+  padding-top: 120px;
   padding-bottom: 56px;
   z-index: 17;
 }
@@ -176,7 +194,6 @@ export default {
   font-size: 36px;
   color: var(--brown);
   opacity: 0;
-  /* opacity: 0; */
 }
 
 .main__center_number {
@@ -184,9 +201,6 @@ export default {
   font-size: 36px;
   color: var(--brown);
   opacity: 0;
-  /* margin-left: 170px; */
-  /* margin-bottom: 50px;
-  opacity: 0; */
 }
 .main__about_ul {
   opacity: 0;
@@ -326,5 +340,174 @@ export default {
   height: 6px;
   background: var(--brown);
   border-radius: 100%;
+}
+.main__about_mob {
+  font-weight: 500;
+  font-size: 27px;
+  color: var(--brown);
+  margin-right: 40px;
+  display: none;
+}
+.main__mobile {
+  display: none;
+}
+@media screen and (max-width: 1400px) {
+  .main__about_title {
+    font-size: 30px;
+  }
+
+  .main__center_number {
+    font-size: 30px;
+  }
+  .main_about__p {
+    font-size: 16px;
+  }
+  .main__text {
+    font-size: 16px;
+  }
+  .main__center_num {
+    font-size: 30px;
+  }
+
+  .main__about_back {
+    font-size: 30px;
+  }
+  .main__about_num {
+    font-size: 30px;
+  }
+  .main__delivery_title {
+    font-size: 30px;
+  }
+  .main__delivery_number {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 1240px) {
+  .main {
+    opacity: 0;
+  }
+  .main__about_title {
+    opacity: 1;
+  }
+
+  .main__center_number {
+    opacity: 1;
+  }
+  .main__about_ul {
+    opacity: 1;
+  }
+  .main__about_text {
+    opacity: 1;
+  }
+  .main_about__p {
+    opacity: 1;
+  }
+
+  .main__center_image {
+    opacity: 1;
+  }
+  .main__center_num {
+    opacity: 1;
+  }
+  .main__about_back {
+    opacity: 1;
+  }
+  .main__delivery_title {
+    opacity: 1;
+  }
+  .main__delivery_number {
+    opacity: 1;
+  }
+  .main__delivery_payment {
+    opacity: 1;
+  }
+  .main__delivery_ul {
+    opacity: 1;
+  }
+  .main__delivery_text {
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .main {
+    padding-top: 110px;
+  }
+  .main__about_title {
+    font-size: 27px;
+  }
+
+  .main__center_number {
+    font-size: 27px;
+  }
+  .main_about__p {
+    font-size: 15px;
+  }
+  .main__text {
+    font-size: 15px;
+  }
+  .main__center_num {
+    font-size: 27px;
+  }
+
+  .main__about_back {
+    font-size: 27px;
+  }
+  .main__about_num {
+    font-size: 27px;
+  }
+  .main__delivery_title {
+    font-size: 27px;
+  }
+  .main__delivery_number {
+    font-size: 27px;
+  }
+}
+@media screen and (max-width: 930px) {
+  .main__about_images {
+    display: none;
+  }
+  .main__text {
+    max-width: 480px;
+  }
+  .main__menu {
+    border: none;
+  }
+  .main__content {
+    display: flex;
+    flex-direction: column;
+    min-height: 450px;
+  }
+  .main__center {
+    display: none;
+  }
+  .main__about_mob {
+    display: block;
+  }
+  .main__mobile {
+    display: block;
+    margin: 30px 0;
+    height: 0px;
+    transform: translateY(0px);
+    display: flex;
+    justify-content: flex-end;
+  }
+  .main__delivery_header {
+    margin-top: 50px;
+    justify-content: flex-start;
+  }
+  .main__delivery_title {
+    margin-left: 40px;
+    order: 1;
+  }
+}
+@media screen and (max-width: 630px) {
+  .main__delivery_about {
+    max-width: 100% !important;
+  }
+}
+@media screen and (max-width: 520px) {
+  .main__mobile {
+    display: none;
+  }
 }
 </style>

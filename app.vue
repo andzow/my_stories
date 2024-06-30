@@ -1,13 +1,13 @@
 <template>
-  <!-- <UIMyHeader v-if="headerVisible" /> -->
+  <UIMyHeader v-if="headerVisible" />
   <main class="page">
     <NuxtPage />
     <!-- <UIMyPreloader v-if="preloader" /> -->
-    <!-- <UIMyModalStatus />
+    <UIMyModalStatus />
     <UIMyCursor />
-    <UIMyCursorCircle /> -->
+    <UIMyCursorCircle />
   </main>
-  <!-- <UIMyFooter /> -->
+  <UIMyFooter />
 </template>
 
 <script>

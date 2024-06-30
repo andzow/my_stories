@@ -154,4 +154,36 @@ export default {
 .table__des_btn {
   max-width: 330px;
 }
+@media screen and (max-width: 1200px) {
+  .table__container {
+    margin-left: 30%;
+    width: 70%;
+  }
+  .table__title {
+    font-size: 30px;
+  }
+
+  .table__text {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 936px) {
+  .table__container {
+    margin-left: 0%;
+    width: 100%;
+  }
+  .table__title {
+    font-size: 27px;
+  }
+
+  .table__text {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 370px) {
+  .table__text {
+    font-size: 14px;
+    max-width: 150px;
+  }
+}
 </style>

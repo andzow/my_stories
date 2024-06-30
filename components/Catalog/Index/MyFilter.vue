@@ -2,34 +2,40 @@
   <section class="filter">
     <div class="filter__item" ref="filterItem" id="filter__item">
       <CatalogIndexFilterMyChapter @openMethod="checkResetBtn" />
-      <CatalogIndexFilterMySize @openMethod="checkResetBtn" />
-      <CatalogIndexFilterMyPrice
-        :minVal="minVal"
-        :maxVal="maxVal"
-        @openMethod="checkResetBtn"
-      />
-
-      <div class="filter__ready">
-        <UIButtonMyButton
-          aria-label="применить"
-          info="применить"
-          fontSize="18"
-          data-cursor-class="animateCursor"
-          @click="sendFilter"
+      <div class="filter__bl">
+        <CatalogIndexFilterMySize @openMethod="checkResetBtn" />
+        <CatalogIndexFilterMyPrice
+          :minVal="minVal"
+          :maxVal="maxVal"
+          @openMethod="checkResetBtn"
         />
       </div>
-      <Transition name="filter-fade">
-        <div class="filter__delete" :class="{ activeBtnDel: checkReset }">
+
+      <div class="filter__btns">
+        <div class="filter__ready">
           <UIButtonMyButton
-            aria-label="сбросить"
-            info="сбросить"
-            variant="green"
+            class="filter__item_btn"
+            aria-label="применить"
+            info="применить"
             fontSize="18"
-            @click="reset"
             data-cursor-class="animateCursor"
+            @click="sendFilter"
           />
         </div>
-      </Transition>
+        <Transition name="filter-fade">
+          <div class="filter__delete" :class="{ activeBtnDel: checkReset }">
+            <UIButtonMyButton
+              class="filter__item_btn"
+              aria-label="сбросить"
+              info="сбросить"
+              variant="green"
+              fontSize="18"
+              @click="reset"
+              data-cursor-class="animateCursor"
+            />
+          </div>
+        </Transition>
+      </div>
     </div>
   </section>
 </template>
@@ -192,6 +198,16 @@ export default {
   top: 0;
   z-index: 101;
 }
+@media screen and (max-width: 1400px) {
+  .filter__item_btn .button__btn {
+    font-size: 18px !important;
+  }
+}
+@media screen and (max-width: 1020px) {
+  .filter__item_btn .button__btn {
+    font-size: 17px !important;
+  }
+}
 </style>
 
 <style scoped>
@@ -213,12 +229,21 @@ export default {
   /* transition: all 0.4s ease; */
   z-index: 30;
 }
-
+.filter__btns {
+  display: flex;
+  flex-direction: column;
+}
+.filter__bl {
+  display: flex;
+  flex-direction: column;
+}
 .filter__ready {
   padding-bottom: 25px;
 }
 .filter__delete {
   opacity: 0;
+  display: block !important;
+  height: auto !important;
   transition: all 0.4s ease;
 }
 .activeBtnDel {
@@ -256,6 +281,44 @@ export default {
   }
   to {
     opacity: 1;
+  }
+}
+@media screen and (max-width: 836px) {
+  .filter {
+    margin-right: 0px;
+    max-width: 100%;
+  }
+  .filter__bl {
+    display: flex;
+    max-width: 600px;
+    column-gap: 50px;
+    flex-direction: row;
+  }
+  .filter__ready {
+    max-width: 220px;
+    min-width: 220px;
+  }
+  .filter__delete {
+    max-width: 220px;
+    min-width: 220px;
+    margin-bottom: 20px;
+  }
+  .filter__btns {
+    flex-direction: row;
+    column-gap: 20px;
+    margin-top: 30px;
+  }
+}
+@media screen and (max-width: 474px) {
+  .filter__bl {
+    flex-direction: column;
+  }
+  .filter__btns {
+    flex-direction: column;
+  }
+  .filter__delete {
+    height: 0;
+    overflow: hidden;
   }
 }
 </style>

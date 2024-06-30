@@ -45,7 +45,9 @@ export default {
   methods: {
     async initScrollTrigger() {
       await nextTick(() => {
-        this.useFilterFlout("filter__item", "catalog__content");
+        if (window.innerWidth > 836) {
+          this.useFilterFlout("filter__item", "catalog__content");
+        }
         this.checkEmpty = true;
       });
     },
@@ -88,5 +90,21 @@ export default {
 }
 .v-leave-to {
   opacity: 0;
+}
+@media screen and (max-width: 1200px) {
+  .catalog__content {
+    row-gap: 35px;
+  }
+}
+@media screen and (max-width: 952px) {
+  .catalog__content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 466px) {
+  .catalog__content {
+    margin-top: 0px;
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 </style>

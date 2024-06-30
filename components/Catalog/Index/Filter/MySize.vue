@@ -9,13 +9,14 @@
           <UIMyLoadingItem :item="{ loading: true }" :index="0" height="20px" />
         </div>
         <Transition name="size-fade">
-          <div class="filter__size_image" v-if="checkFilter">
+          <div
+            class="filter__size_image"
+            v-if="checkFilter && arrFilterSize?.length > 0"
+            data-cursor-class="animateCursor"
+          >
             <button
               class="filter__size_btn"
               aria-label="удалить"
-              data-cursor-class="animateCursor"
-              onmousedown="return false"
-              onselectstart="return false"
               @click="deleteQuery"
             >
               <svg
@@ -54,6 +55,7 @@
           :key="item"
         >
           <UIButtonMyButton
+            class="filter__size_sized"
             @click="
               setActiveBtn(
                 item,
@@ -86,23 +88,7 @@ export default {
   data() {
     return {
       arrFilterSize: useArrFilterSize(),
-      arrFilterSizeLoading: [
-        {
-          loading: true,
-        },
-        {
-          loading: true,
-        },
-        {
-          loading: true,
-        },
-        {
-          loading: true,
-        },
-        {
-          loading: true,
-        },
-      ],
+      arrFilterSizeLoading: null,
       arrFilterQuery: null,
       checkFilter: false,
       useCheckReset: useCheckReset(),
@@ -150,10 +136,10 @@ export default {
       this.checkDelBtn();
       this.$emit("openMethod");
     },
-    deleteQuery() {
+    async deleteQuery() {
       this.arrFilterQuery = [];
       this.checkFilter = false;
-      this.replaceRoute([]);
+      await this.replaceRoute([]);
       this.$emit("openMethod", true);
     },
   },
@@ -173,12 +159,30 @@ export default {
       }
     },
     checkFilter(val) {
-      this.useCursor = true;
+      if (val) {
+        nextTick(() => {
+          this.useCursor = false;
+          setTimeout(() => {
+            this.useCursor = true;
+          }, 100);
+        });
+      }
     },
   },
 };
 </script>
-
+<style>
+@media screen and (max-width: 1400px) {
+  .filter__size_sized .button__btn {
+    font-size: 17px !important;
+  }
+}
+@media screen and (max-width: 1020px) {
+  .filter__size_sized .button__btn {
+    font-size: 16px !important;
+  }
+}
+</style>
 <style scoped>
 .filter__size {
   margin-bottom: 45px;
@@ -241,5 +245,35 @@ export default {
 .size-fade-leave-to {
   opacity: 0;
   transition: all 0.4s ease;
+}
+@media screen and (max-width: 1400px) {
+  .filter__size_text {
+    font-size: 16px;
+  }
+  .filteR__size_empty {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .filter__size_text {
+    font-size: 15px;
+  }
+  .filteR__size_empty {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 836px) {
+  .filter__size_text {
+    font-weight: 400;
+    color: var(--brown);
+    font-size: 20px;
+    text-transform: lowercase;
+  }
+}
+@media screen and (max-width: 474px) {
+  .filter__size {
+    max-width: 220px;
+    margin-bottom: 25px;
+  }
 }
 </style>

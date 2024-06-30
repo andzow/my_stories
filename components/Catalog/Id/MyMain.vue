@@ -118,7 +118,7 @@ export default {
 .main {
   position: relative;
   width: 100%;
-  padding-top: 150px;
+  padding-top: 120px;
   margin-bottom: 96px;
   z-index: 17;
 }
@@ -165,5 +165,30 @@ export default {
 .v-enter-from,
 .v-leave-to {
   width: 0;
+}
+@media screen and (max-width: 1600px) {
+  .main__menu {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.7fr 1fr;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .main {
+    padding-top: 110px;
+    margin-bottom: 46px;
+  }
+}
+@media screen and (max-width: 936px) {
+  .main__menu {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 500px) {
+  .main {
+    margin-bottom: 20px;
+  }
 }
 </style>

@@ -213,7 +213,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 170px);
+  height: calc(100vh - 140px);
   background: rgba(0, 0, 0, 0.18);
   margin-bottom: 50px;
   z-index: 9;
@@ -242,8 +242,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0%;
-  height: calc(100vh - 120px);
-  /* padding-bottom: 50px; */
+  height: calc(100vh - 90px);
   width: 100%;
   max-width: 100%;
   z-index: 19;
@@ -255,8 +254,8 @@ export default {
 }
 .slider__load {
   max-width: 100%;
-  height: calc(100vh - 150px);
-  padding-bottom: 20px;
+  height: calc(100vh - 140px);
+  padding-bottom: 0px;
   opacity: 1;
   transition: all 0.4s ease;
 }
@@ -266,7 +265,7 @@ export default {
 .slider__card {
   position: relative;
   width: 100%;
-  height: calc(100vh - 150px);
+  height: calc(100vh - 120px);
   padding-bottom: 20px;
 }
 
@@ -293,6 +292,99 @@ export default {
   }
   to {
     opacity: 1;
+  }
+}
+@media screen and (max-width: 1600px) {
+  .slider__controls {
+    height: calc(100vh - 140px);
+  }
+  .slider__card {
+    height: calc(100vh - 155px);
+  }
+  .slider__load {
+    height: calc(100vh - 175px);
+  }
+  .slider__back {
+    height: calc(100vh - 175px);
+    margin-bottom: 50px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .slider__controls {
+    height: 578px;
+  }
+  .slider__card {
+    height: 568px;
+  }
+  .slider__load {
+    height: 548px;
+  }
+  .slider__back {
+    height: 548px;
+  }
+}
+@media screen and (max-width: 936px) {
+  .slider__swiper {
+    max-width: 80%;
+    padding-bottom: 96px;
+  }
+  .slider__controls {
+    height: 808px;
+  }
+  .slider__card {
+    height: 788px;
+  }
+  .slider__load {
+    opacity: 0;
+  }
+  .slider__back {
+    height: 768px;
+  }
+}
+@media screen and (max-width: 680px) {
+  .slider__swiper {
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 556px) {
+  .slider__controls {
+    height: 612px;
+  }
+  .slider__card {
+    height: 598px;
+  }
+  .slider__back {
+    height: 578px;
+  }
+}
+@media screen and (max-width: 498px) {
+  .slider__swiper {
+    padding-bottom: 66px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .slider__swiper {
+    padding-bottom: 46px;
+  }
+  .slider__controls {
+    height: 505px;
+  }
+  .slider__card {
+    height: 500px;
+  }
+  .slider__back {
+    height: 480px;
+  }
+}
+@media screen and (max-width: 378px) {
+  .slider__controls {
+    height: 430px;
+  }
+  .slider__card {
+    height: 430px;
+  }
+  .slider__back {
+    height: 410px;
   }
 }
 </style>
