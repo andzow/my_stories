@@ -315,7 +315,7 @@ export default {
             name: this.isCandidate[i].name,
             discount: this.isCandidate[i].discount,
             date: this.isCandidate[i].date,
-            count: this.isCandidate[i].count,
+            count: Number(this.isCandidate[i].count),
           };
 
           await PromoController.createPromo(formData);
