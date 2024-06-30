@@ -3,9 +3,9 @@
   <main class="page">
     <NuxtPage />
     <!-- <UIMyPreloader v-if="preloader" /> -->
-    <!-- <UIMyModalStatus />
+    <UIMyModalStatus />
     <UIMyCursor />
-    <UIMyCursorCircle /> -->
+    <UIMyCursorCircle />
   </main>
   <!-- <UIMyFooter /> -->
 </template>
