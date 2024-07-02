@@ -2,7 +2,7 @@
   <section class="main">
     <div class="main__block success__block">
       <p class="main__text">
-        на ваш Telegram / WhatsApp вотсап придет информация и статус заказа
+        на ваш Telegram / WhatsApp придет информация и статус заказа
       </p>
       <div class="main__run">
         <span class="main__run_text">( &nbsp;спасибо за заказ&nbsp; )</span>
