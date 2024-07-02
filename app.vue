@@ -1,4 +1,7 @@
 <template>
+  <Transition>
+    <UIMyPreloader v-if="!preloader"/>
+  </Transition>
   <UIMyHeader v-if="headerVisible" />
   <main class="page">
     <NuxtPage />
@@ -19,7 +22,7 @@ export default {
       useCheckAnimationArr: useCheckAnimationArr(),
       useCursor: useCursor(),
       headerVisible: true,
-      preloader: true,
+      preloader: false,
     };
   },
   async mounted() {
@@ -38,6 +41,9 @@ export default {
     //     });
     //   }
     // });
+    setTimeout(() => {
+      this.preloader = true;
+    }, 1800);
   },
   watch: {
     $route() {
@@ -70,5 +76,21 @@ button {
 .page {
   width: 100%;
   overflow: hidden;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all .7s ease-in-out;
+}
+.v-enter-from,
+.v-leave-to {
+  transform: translateY(-100%);
+  border-radius: 80%;
+}
+@media(max-width: 470px) {
+  .v-enter-from,
+  .v-leave-to {
+    transform: translateY(-100%);
+    border-radius: 20%;
+  }
 }
 </style>
