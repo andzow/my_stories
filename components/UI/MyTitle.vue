@@ -30,4 +30,24 @@ export default {
   font-size: 116px;
   opacity: 0;
 }
+@media screen and (max-width: 1400px) {
+  .main__title {
+    font-size: 92px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .main__title {
+    font-size: 72px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .main__title {
+    font-size: 62px;
+  }
+}
+@media screen and (max-width: 364px) {
+  .main__title {
+    font-size: 52px;
+  }
+}
 </style>

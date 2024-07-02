@@ -1,13 +1,19 @@
 <template>
   <div>
-    <!-- <BrandMyMain /> -->
+    <NuxtErrorBoundary>
+      <BrandMyMain />
+    </NuxtErrorBoundary>
     <section class="index">
-      <!-- <BrandMyAbout /> -->
-      <!-- <BrandMyPhrase /> -->
+      <BrandMyAbout />
+      <BrandMyPhrase />
       <BrandMyFacts />
-      <!-- <BrandMySubscribe />
-      <UIMyAnimationLine duration="7" :arrAnimationLine="arrAnimationLine" />
-      <UIMyNoise /> -->
+      <BrandMySubscribe />
+      <UIMyAnimationLine
+        duration="7"
+        :arrAnimationLine="arrAnimationLine"
+        v-if="arrAnimationLine"
+      />
+      <UIMyNoise />
     </section>
   </div>
 </template>
@@ -16,31 +22,70 @@
 export default {
   data() {
     return {
-      arrAnimationLine: [
-        { name: ".header__content", defaultLine: false, indent: "left" },
-        {
-          name: ".facts__images_photo",
-          defaultLine: false,
-          indent: "left",
-          widthTo: true,
-        },
-        {
-          name: ".about__text",
-          defaultLine: false,
-          indent: "left",
-        },
-        {
-          name: ".about__text",
-          defaultLine: false,
-          indent: "left",
-          widthTo: true,
-        },
-      ],
+      arrAnimationLine: null,
     };
+  },
+  methods: {
+    initLine() {
+      if (window.innerWidth > 1100) {
+        this.arrAnimationLine = [
+          { name: ".header__logo", defaultLine: false, indent: "left" },
+          {
+            name: ".about__information_li1",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+          {
+            name: ".about__text",
+            defaultLine: false,
+            indent: "left",
+          },
+          {
+            name: ".about__text",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+        ];
+      } else if (window.innerWidth > 767) {
+        this.arrAnimationLine = [
+          { name: ".header__logo", defaultLine: false, indent: "left" },
+          {
+            name: ".about__mob_img",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+          {
+            name: ".header__interaction_search",
+            defaultLine: false,
+            indent: "left",
+          },
+          {
+            name: ".header__interaction_cart",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+        ];
+      } else {
+        this.arrAnimationLine = [
+          { name: ".header__logo", defaultLine: false, indent: "left" },
+          {
+            name: ".header__interaction_cart",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+        ];
+      }
+    },
   },
   mounted() {
     const bodyEl = document.body;
     bodyEl.style.overflow = "auto";
+    this.initLine();
   },
 };
 </script>

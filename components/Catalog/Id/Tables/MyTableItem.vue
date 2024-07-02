@@ -72,4 +72,14 @@ export default {
   min-width: 50px;
   color: var(--brown);
 }
+@media screen and (max-width: 1200px) {
+  .table__item td {
+    font-size: 17px;
+  }
+}
+@media screen and (max-width: 936px) {
+  .table__item td {
+    font-size: 16px;
+  }
+}
 </style>

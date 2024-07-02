@@ -92,4 +92,11 @@ export default {
 .photos__btn {
   opacity: 0;
 }
+@media screen and (max-width: 836px) {
+  .photos__images {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-bottom: 102px;
+  }
+}
 </style>

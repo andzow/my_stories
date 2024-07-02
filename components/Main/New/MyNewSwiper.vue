@@ -54,6 +54,7 @@ export default {
       try {
         const res = await ProductController.getNew();
         this.arrNew = res;
+        console.log(this.arrNew);
         this.initAnimationArr();
       } catch {}
     },

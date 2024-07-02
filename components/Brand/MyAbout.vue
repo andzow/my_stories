@@ -5,7 +5,7 @@
         <div class="about__information">
           <p class="about__information_text">my stories… - это:</p>
           <ul class="about__information_ul">
-            <li class="about__information_li">
+            <li class="about__information_li about__information_li1">
               уникальный стиль в основе которого лежит естественная природная
               красота
             </li>
@@ -23,6 +23,8 @@
               class="about__mob_img"
               src="@/assets/images/Brand/about1.webp"
               alt="Фотография бренда"
+              width="124"
+              height="130"
             />
           </div>
           <p class="about__mob_text">
@@ -71,18 +73,27 @@ export default {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
     };
   },
+  methods: {
+    initGsap() {
+      this.useGsapAnimationOpacity(
+        [".about__information_text", ".about__information_ul"],
+        ".about__information_text"
+      );
+      this.useGsapAnimationOpacity([".about__text"], ".about__text");
+      this.useGsapAnimationOpacity(
+        [".about__photo_img"],
+        ".about__photo_img",
+        false,
+        0.5
+      );
+    },
+  },
   mounted() {
-    this.useGsapAnimationOpacity(
-      [".about__information_text", ".about__information_ul"],
-      ".about__information_text"
-    );
-    this.useGsapAnimationOpacity([".about__text"], ".about__text");
-    this.useGsapAnimationOpacity(
-      [".about__photo_img"],
-      ".about__photo_img",
-      false,
-      0.5
-    );
+    if (window.innerWidth > 1100) {
+      this.initGsap();
+    } else {
+      this.useGsapAnimationOpacity([".about"], ".about");
+    }
   },
 };
 </script>
@@ -98,7 +109,6 @@ export default {
 .about__content {
   border-top: 1px solid #d2bcae;
 }
-
 .about__menu {
   width: 100%;
   max-width: 1920px;
@@ -193,16 +203,25 @@ export default {
   }
 }
 @media screen and (max-width: 1100px) {
+  .about {
+    padding-top: 50px;
+    opacity: 0;
+  }
+  .about__information_li {
+    font-size: 15px;
+  }
   .about__menu {
     display: flex;
     flex-direction: column;
   }
   .about__information_text {
-    font-size: 16px;
+    font-size: 15px;
+    opacity: 1;
   }
   .about__text {
-    font-size: 16px;
+    font-size: 15px;
     display: none;
+    opacity: 1;
   }
   .about__photo {
     display: none;
@@ -222,6 +241,12 @@ export default {
   }
   .about__mob_img {
     height: 130px;
+  }
+  .about__information_ul {
+    opacity: 1;
+  }
+  .about__photo_img {
+    opacity: 1;
   }
 }
 @media screen and (max-width: 800px) {

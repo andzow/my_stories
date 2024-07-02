@@ -22,7 +22,7 @@ export default {
   position: relative;
   width: 100%;
   min-height: 700px;
-  padding-top: 150px;
+  padding-top: 120px;
   padding-bottom: 96px;
   z-index: 17;
 }
@@ -30,12 +30,6 @@ export default {
   position: absolute;
   top: 0;
   opacity: 0;
-  /* max-width: 1920px;
-  margin: 0 auto;
-  font-weight: 400;
-  font-size: 36px;
-  color: var(--brown);
-  padding: 0 30px 60px 30px; */
 }
 .main__content {
   max-width: 1920px;
@@ -44,5 +38,26 @@ export default {
   padding: 0 30px;
   display: grid;
   grid-template-columns: repeat(2, 20% 80%);
+}
+@media screen and (max-width: 1240px) {
+  .main__content {
+    grid-template-columns: repeat(2, 25% 75%);
+  }
+}
+@media screen and (max-width: 1100px) {
+  .main__content {
+    grid-template-columns: repeat(2, 25% 75%);
+  }
+}
+@media screen and (max-width: 1020px) {
+  .main__content {
+    grid-template-columns: repeat(2, 30% 70%);
+  }
+}
+@media screen and (max-width: 836px) {
+  .main__content {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

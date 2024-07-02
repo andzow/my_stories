@@ -53,4 +53,29 @@ export default {
   color: var(--brown);
   margin-bottom: 20px;
 }
+@media screen and (max-width: 1400px) {
+  .catalog__empty_title {
+    font-size: 30px;
+  }
+  .catalog__empty_text {
+    font-size: 17px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .catalog__empty_title {
+    font-size: 27px;
+  }
+  .catalog__empty_text {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 836px) {
+  .catalog__empty {
+    width: 100%;
+  }
+  .catalog__empty_content {
+    margin-top: 60px;
+    max-width: 100%;
+  }
+}
 </style>

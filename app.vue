@@ -1,5 +1,5 @@
 <template>
-  <!-- <UIMyHeader v-if="headerVisible" /> -->
+  <UIMyHeader v-if="headerVisible" />
   <main class="page">
     <NuxtPage />
     <!-- <UIMyPreloader v-if="preloader" /> -->
@@ -7,7 +7,7 @@
     <UIMyCursor />
     <UIMyCursorCircle />
   </main>
-  <!-- <UIMyFooter /> -->
+  <UIMyFooter />
 </template>
 
 <script>

@@ -140,4 +140,20 @@ export default {
     opacity: 1;
   }
 }
+@media screen and (max-width: 1400px) {
+  .about__info_title {
+    font-size: 15px;
+  }
+  .about__info_text {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 936px) {
+  .about__info_title {
+    font-size: 15px;
+  }
+  .about__info_text {
+    font-size: 15px;
+  }
+}
 </style>

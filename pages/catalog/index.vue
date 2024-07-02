@@ -3,17 +3,14 @@
     <CatalogIndexMyMain @activeLine="activeLine = true" />
     <UIMyNoise />
     <UIMyAnimationLine
-      duration="13"
+      duration="11"
       :arrAnimationLine="arrAnimationLine"
-      :fixed="true"
-      v-if="activeLine"
+      v-if="arrAnimationLine"
     />
   </div>
 </template>
 
 <script>
-import CategoryController from "@/http/controllers/CategoryController";
-
 export default {
   data() {
     return {
@@ -23,20 +20,7 @@ export default {
       maxVal: useMaxVal(),
       useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
       activeLine: false,
-      arrAnimationLine: [
-        { name: ".header__content", defaultLine: false, indent: "left" },
-        { name: ".card1", defaultLine: false, indent: "left" },
-        {
-          name: ".header__li3",
-          defaultLine: false,
-          indent: "left",
-        },
-        {
-          name: ".header__interaction_search",
-          defaultLine: false,
-          indent: "left",
-        },
-      ],
+      arrAnimationLine: null,
     };
   },
   methods: {
@@ -90,23 +74,38 @@ export default {
       });
       this.replaceRoute(settingsObj);
     },
-    async initFilter() {
-      try {
-        // const res = await CategoryController.getCategory(this.$route.query);
-        // this.arrFilterChapter = res.categorys;
-        // this.arrFilterSize = res.uniqueNameArray;
-        // this.minVal = !res.minPrice ? 0 : res.minPrice;
-        // this.maxVal = !res.maxPrice ? 35000 : res.maxPrice;
-      } catch {}
+    initGsap() {
+      if (window.innerWidth > 936) {
+        this.arrAnimationLine = [
+          { name: ".header__logo", defaultLine: false, indent: "left" },
+          { name: ".card1", defaultLine: false, indent: "left" },
+          {
+            name: ".card2",
+            defaultLine: false,
+            indent: "left",
+          },
+          {
+            name: ".header__interaction_search",
+            defaultLine: false,
+            indent: "left",
+          },
+        ];
+      } else {
+        this.arrAnimationLine = [
+          { name: ".header__logo", defaultLine: false, indent: "left" },
+          {
+            name: ".header__interaction_search",
+            defaultLine: false,
+            indent: "left",
+          },
+        ];
+      }
     },
   },
-  created() {
-    this.initRoute();
-  },
   mounted() {
-    // this.initFilter();
     const bodyEl = document.body;
     bodyEl.style.overflow = "auto";
+    this.initGsap();
   },
   watch: {},
 };

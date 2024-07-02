@@ -190,6 +190,11 @@ export default {
     transform: scale(60);
   }
 }
+@media screen and (max-width: 1400px) {
+  .button__btn {
+    font-size: 22px !important;
+  }
+}
 @media screen and (max-width: 1154px) {
   .button__btn {
     font-size: 20px !important;

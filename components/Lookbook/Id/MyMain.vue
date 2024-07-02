@@ -19,6 +19,7 @@
 <script>
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
   props: {
@@ -43,7 +44,6 @@ export default {
     },
   },
   mounted() {
-    gsap.registerPlugin(ScrollTrigger);
     setTimeout(() => {
       this.setAnimateParallax();
       this.useGsapAnimationOpacity([".main__title", ".main__span"], ".main");
@@ -99,5 +99,10 @@ export default {
   font-weight: 300;
   font-size: 16px;
   opacity: 0;
+}
+@media screen and (max-width: 1400px) {
+  .main__paralax {
+    background-position: center !important;
+  }
 }
 </style>
