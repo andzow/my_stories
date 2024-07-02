@@ -82,4 +82,35 @@ export default {};
 .main__btn {
   min-width: 230px;
 }
+
+@media(max-width:730px) {
+  .main__text {
+    padding: 0 20px;
+    text-align: center;
+  }
+  .main__block {
+    width: 480px;
+  }
+}
+@media(max-width:520px) {
+  .main__text {
+    padding: 0 20px;
+    text-align: center;
+  }
+  .main__block {
+    width: 380px;
+  }
+    .main__run {
+    font-size: 60px;
+  }
+}
+@media(max-width:410px) {
+  .main__text {
+    padding: 0 20px;
+    text-align: center;
+  }
+  .main__block {
+    width: 300px;
+  }
+}
 </style>
