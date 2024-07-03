@@ -84,6 +84,10 @@ export default {
     align-items: center;
     justify-content: center;
     height: 100%;
+    padding: 0 20px;
+}
+.login__form {
+    max-width: 600px;
 }
 .login__title {
     font-size: 36px;
