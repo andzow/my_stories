@@ -13,4 +13,7 @@ export default class MailServices {
   static async normalizeAddress(data) {
     return $api.post("/mail/getAddress", data);
   }
+  static async payment(data) {
+    return $api.post("/payment", data);
+  }
 }

@@ -172,9 +172,7 @@ export default {
         setTimeout(() => {
           this.useCursor = true;
         }, 0);
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     },
     openPvz(item) {
       this.usePvzModal = true;

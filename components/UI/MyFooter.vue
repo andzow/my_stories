@@ -105,8 +105,23 @@
             </div>
             <div class="footer__about_contacts">
               <div class="footer__about_text">г.Киров, ул.Московская 29в</div>
-              <div class="footer__about_text">Политика конфиденциальности</div>
-              <div class="footer__about_text">публичная оферта</div>
+              <div
+                class="footer__about_text footer__about_animate"
+                data-cursor-class="animateCursor"
+              >
+                <NuxtLink class="footer__about_href" :to="'/politics'"
+                  >Политика конфиденциальности</NuxtLink
+                >
+              </div>
+              <div
+                class="footer__about_text footer__about_animate"
+                data-cursor-class="animateCursor"
+                @click="$router.push('/dogovor')"
+              >
+                <NuxtLink class="footer__about_href" :to="'/dogovor'"
+                  >публичная оферта</NuxtLink
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -138,7 +153,10 @@
               <form class="footer__data_form" @submit.prevent>
                 <div class="footer__data_send">
                   <div class="footer__data_span">Telegram/WhatsApp</div>
-                  <div class="footer__data_block">
+                  <div
+                    class="footer__data_block"
+                    data-cursor-class="animateCursor"
+                  >
                     <input
                       class="footer__data_input"
                       :value="valueInp"
@@ -148,16 +166,20 @@
                       @complete="onComplete"
                       @input="checkInpValFunc($event)"
                       ref="dataInput"
-                      data-cursor-class="animateCursor"
                     />
                     <Transition name="footer-fade">
                       <button
                         class="footer__data_submit"
                         type="submit"
-                        data-cursor-class="animateCursor"
+                        @click="
+                          () => {
+                            loadingEl = true;
+                            submitPhone();
+                          }
+                        "
+                        v-if="checkInpVal && !loadingEl"
                       >
                         <svg
-                          v-if="checkInpVal"
                           class="footer__data_svg"
                           width="19"
                           height="14"
@@ -183,6 +205,10 @@
                           />
                         </svg>
                       </button>
+                      <div
+                        class="footer__data_loading"
+                        v-else-if="loadingEl"
+                      ></div>
                     </Transition>
                   </div>
                 </div>
@@ -190,13 +216,25 @@
             </div>
             <div class="footer__data_card">
               <div class="footer__data_mob">
-                <div class="footer__data_mobile">
+                <div
+                  class="footer__data_mobile"
+                  data-cursor-class="animateCursor"
+                >
                   г.Киров, ул.Московская 29в
                 </div>
-                <div class="footer__data_mobile">
-                  Политика конфиденциальности
+                <div
+                  class="footer__data_mobile"
+                  data-cursor-class="animateCursor"
+                >
+                  <NuxtLink class="footer__data_link" :to="'/politics'"
+                    >Политика конфиденциальности</NuxtLink
+                  >
                 </div>
-                <div class="footer__data_mobile">публичная оферта</div>
+                <div class="footer__data_mobile">
+                  <NuxtLink class="footer__data_link" :to="'/politics'">
+                    публичная оферта</NuxtLink
+                  >
+                </div>
               </div>
               <div class="footer__data_phone">
                 <div class="footer__about_text">
@@ -216,6 +254,8 @@
 
 <script>
 import { IMaskDirective } from "vue-imask";
+import AmoService from "~/http/services/AmoService";
+import debounce from "lodash.debounce";
 
 export default {
   data() {
@@ -245,9 +285,29 @@ export default {
       ],
       valueInp: "",
       checkInpVal: false,
+      loadingEl: false,
       maskInp: {
         mask: "+{7} (000)-000-00-00",
       },
+      submitPhone: debounce(async () => {
+        try {
+          const elInput = document.querySelector(".footer__data_input");
+          const response = await AmoService.create({ phone: elInput.value });
+          if (response) {
+            this.loadingEl = false;
+            alert("Ваша заявка успешно отправлена");
+            elInput.value = "";
+            return;
+          }
+          this.loadingEl = false;
+          alert("При отправке вознкла ошибка");
+          elInput.value = "";
+        } catch {
+          this.loadingEl = false;
+          alert("При отправке вознкла ошибка");
+          elInput.value = "";
+        }
+      }, 300),
     };
   },
   methods: {
@@ -335,6 +395,17 @@ export default {
   font-size: 16px;
   color: #868975;
   margin-bottom: 7px;
+  transition: all 0.4s ease;
+}
+.footer__about_link {
+  text-transform: lowercase;
+  font-weight: 300;
+  font-size: 16px;
+  color: #868975;
+  transition: all 0.4s ease;
+}
+.footer__about_link:hover {
+  color: white;
 }
 .footer__data {
   display: flex;
@@ -424,6 +495,16 @@ export default {
   color: #868975;
   margin-bottom: 7px;
 }
+.footer__about_href {
+  text-transform: lowercase;
+  font-weight: 300;
+  font-size: 15px;
+  color: #868975;
+  transition: all 0.4s ease;
+}
+.footer__about_href:hover {
+  color: white;
+}
 .footer__mob {
   display: none;
   align-items: center;
@@ -433,7 +514,25 @@ export default {
 .footer__data_phone {
   display: none;
 }
-
+.footer__data_loading {
+  position: absolute;
+  top: 25%;
+  right: 5%;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  border-top: 3px solid #c1a999;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .footer-fade-enter-from {
   opacity: 0;
   transition: all 0.4s ease;

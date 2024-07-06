@@ -68,7 +68,7 @@ export default {
 
 @keyframes appear {
   0% {
-    transform: translateY(20px);
+    transform: translateY(15px);
     opacity: 0;
   }
   50% {
@@ -110,19 +110,28 @@ export default {
 }
 .preloader__letter_9 {
   animation-delay: 1s;
+  font-family: "Inter", sans-serif;
 }
 .preloader__letter_10 {
   animation-delay: 1.1s;
+  font-family: "Inter", sans-serif;
 }
 .preloader__letter_11 {
   animation-delay: 1.2s;
+  font-family: "Inter", sans-serif;
 }
 .preloader__letter_12 {
   animation-delay: 1.3s;
+  font-family: "Inter", sans-serif;
 }
-@media(max-width: 470px) {
+@media (max-width: 470px) {
   .preloader__letter {
-  font-size: 30px;
+    font-size: 30px;
+  }
 }
+@media (max-width: 767px) {
+  .preloader__letter {
+    font-size: 30px;
+  }
 }
 </style>

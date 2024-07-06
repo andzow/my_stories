@@ -172,7 +172,7 @@ export default {
           this.getPvzMail = data;
           this.activeDropdown = true;
         } catch {}
-      }, 1500),
+      }, 500),
     };
   },
 

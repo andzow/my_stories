@@ -37,6 +37,7 @@
 
 <script>
 import PromoServices from "~/http/services/PromoServices";
+import MailServices from "~/http/services/MailServices";
 
 export default {
   data() {
@@ -85,86 +86,106 @@ export default {
   },
   methods: {
     async createMailDocument(item, arr) {
-      const { inputVal: fullName } = item.buyer.inputsInfo[0];
-      const [firstName, middleName, surName] = fullName.split(" ");
-      if (this.useInputMobile.length > 18) {
-        let splitNumber = this.useInputMobile.split("");
-        splitNumber.splice(this.useInputMobile.length - 1, 1);
-        this.useInputMobile = splitNumber.join("");
-      }
-      const cleanedPhoneNumber = this.useInputMobile.replace(/\D/g, "");
-      const setObj = {
-        name: fullName,
-        firstName: firstName,
-        middleName: middleName,
-        surName: surName,
-        phone: cleanedPhoneNumber,
-        items: arr,
-        ...item.buyer.codeCity,
-        index_to: item.buyer.codeCity.index,
-        address: item.buyer.codeCity["original-address"],
-        promocode: item.promocode.promocodeText,
-        amount: item.promocode.summ,
-        comments:
-          item.buyer.inputsInfo[item.buyer.inputsInfo.length - 1].inputVal,
-        mail_type: item.delivery.ship,
-        delivery: {
-          name: "Почта России",
-          quantity: 1,
-          price: item.promocode.summDelivery,
-        },
-      };
-      delete setObj.index;
-      delete setObj["original-address"];
-      delete setObj["region-guid"];
-      delete setObj["validation-code"];
-      delete setObj["place-guid"];
-      delete setObj["address-type"];
-      delete setObj["quality-code"];
-      delete setObj["street-guid"];
-      delete setObj["region"];
-      delete setObj["id"];
-      console.log(setObj);
+      try {
+        const { inputVal: fullName } = item.buyer.inputsInfo[0];
+        const [firstName, middleName, surName] = fullName.split(" ");
+        if (this.useInputMobile.length > 18) {
+          let splitNumber = this.useInputMobile.split("");
+          splitNumber.splice(this.useInputMobile.length - 1, 1);
+          this.useInputMobile = splitNumber.join("");
+        }
+        const cleanedPhoneNumber = this.useInputMobile.replace(/\D/g, "");
+        const setObj = {
+          name: fullName,
+          firstName: firstName,
+          middleName: middleName,
+          surName: surName,
+          phone: cleanedPhoneNumber,
+          items: arr,
+          ...item.buyer.codeCity,
+          index_to: item.buyer.codeCity.index,
+          address: item.buyer.codeCity["original-address"],
+          promocode: item.promocode.promocodeText,
+          amount: item.promocode.summ,
+          comments:
+            item.buyer.inputsInfo[item.buyer.inputsInfo.length - 1].inputVal,
+          mail_type: item.delivery.ship,
+          delivery: {
+            name: "Почта России",
+            quantity: 1,
+            price: item.promocode.summDelivery,
+          },
+        };
+        delete setObj.index;
+        delete setObj["original-address"];
+        delete setObj["region-guid"];
+        delete setObj["validation-code"];
+        delete setObj["place-guid"];
+        delete setObj["address-type"];
+        delete setObj["quality-code"];
+        delete setObj["street-guid"];
+        delete setObj["region"];
+        delete setObj["id"];
+        setObj.region = this.useActiveRegion.region;
+        const { data } = await MailServices.payment(setObj);
+        window.open(data.confirmation.confirmation_url, "_self");
+        localStorage.clear();
+        // this.checkVarible = 0;
+        // this.counterCheck = true;
+        // this.loadingButton = false;
+      } catch {}
     },
     async createCdekDocument(item, arr) {
-      const codePvzCdek = item?.buyer?.codeCity?.code;
-      let { inputVal: fullName } = codePvzCdek
-        ? item.buyer.inputsInfo[0]
-        : item.buyer[0];
-      if (this.useInputMobile.length > 18) {
-        let splitNumber = this.useInputMobile.split("");
-        splitNumber.splice(this.useInputMobile.length - 1, 1);
-        this.useInputMobile = splitNumber.join("");
-      }
-      const cleanedPhoneNumber = this.useInputMobile.replace(/\D/g, "");
-
-      const setObj = {
-        name: fullName,
-        phone: cleanedPhoneNumber,
-        items: arr,
-        promocode: item.promocode.promocodeText,
-        amount: item.promocode.summ,
-        place: codePvzCdek
-          ? item.buyer.codeCity.city
-          : this.useActiveRegion.settlement,
-        adress: codePvzCdek
-          ? item.buyer.inputsInfo[2].inputVal
-          : item.buyer[2].inputVal,
-        shipment_point: "KRV2",
-        tariff_code: item.delivery.codeTariff,
-        comments: codePvzCdek
-          ? item.buyer.inputsInfo[3].inputVal
-          : item.buyer[3].inputVal,
-        delivery: {
-          name: "СДЕК",
-          quantity: 1,
-          price: item.promocode.summDelivery,
-        },
-      };
-      if (codePvzCdek) {
-        setObj.delivery_point = codePvzCdek;
-      }
-      console.log(setObj);
+      try {
+        const codePvzCdek = item?.buyer?.codeCity?.code;
+        let { inputVal: fullName } = codePvzCdek
+          ? item.buyer.inputsInfo[0]
+          : item.buyer[0];
+        if (this.useInputMobile.length > 18) {
+          let splitNumber = this.useInputMobile.split("");
+          splitNumber.splice(this.useInputMobile.length - 1, 1);
+          this.useInputMobile = splitNumber.join("");
+        }
+        const cleanedPhoneNumber = this.useInputMobile.replace(/\D/g, "");
+        const regionAddress =
+          "г. " +
+          this.useActiveRegion.settlement +
+          ", " +
+          this.useActiveRegion.region +
+          ", ";
+        const setObj = {
+          name: fullName,
+          phone: cleanedPhoneNumber,
+          items: arr,
+          promocode: item.promocode.promocodeText,
+          amount: item.promocode.summ,
+          place: codePvzCdek
+            ? item.buyer.codeCity.city
+            : this.useActiveRegion.settlement,
+          adress: codePvzCdek
+            ? regionAddress + item.buyer.inputsInfo[2].inputVal
+            : regionAddress + item.buyer[2].inputVal,
+          shipment_point: "KRV2",
+          tariff_code: item.delivery.codeTariff,
+          comments: codePvzCdek
+            ? item.buyer.inputsInfo[3].inputVal
+            : item.buyer[3].inputVal,
+          delivery: {
+            name: "СДЕК",
+            quantity: 1,
+            price: item.promocode.summDelivery,
+          },
+        };
+        if (codePvzCdek) {
+          setObj.delivery_point = codePvzCdek;
+        }
+        const { data } = await MailServices.payment(setObj);
+        window.open(data.confirmation.confirmation_url, "_self");
+        localStorage.clear();
+        // this.checkVarible = 0;
+        // this.counterCheck = true;
+        // this.loadingButton = false;
+      } catch {}
     },
     async redirectPayment(item) {
       if (this.counterCheck) {
@@ -191,9 +212,6 @@ export default {
           await this.createCdekDocument(item, newArrProducts);
         }
       }
-      this.checkVarible = 0;
-      this.counterCheck = true;
-      this.loadingButton = false;
     },
     async checkPromocode(name) {
       try {

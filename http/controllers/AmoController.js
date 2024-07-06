@@ -1,8 +1,7 @@
-import $api from "..";
 import AmoService from "../services/AmoService";
 
 export default class AmoController {
-  static async create(login) {
+  static async create(data) {
     try {
       const response = await AmoService.create(data);
       return response.status;

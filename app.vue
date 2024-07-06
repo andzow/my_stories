@@ -1,6 +1,6 @@
 <template>
   <Transition>
-    <UIMyPreloader v-if="!preloader"/>
+    <UIMyPreloader v-if="!preloader" />
   </Transition>
   <UIMyHeader v-if="headerVisible" />
   <main class="page">
@@ -66,13 +66,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 * {
   cursor: none !important;
 }
 button {
-  cursor: none;
+  cursor: none !important;
 }
+</style>
+<style scoped>
 .page {
   position: relative;
   width: 100%;
@@ -80,18 +82,20 @@ button {
 }
 .v-enter-active,
 .v-leave-active {
-  transition: all .7s ease-in-out;
+  transition: all 0.7s ease-in-out;
 }
 .v-enter-from,
 .v-leave-to {
   transform: translateY(-100%);
   border-radius: 80%;
 }
-@media(max-width: 470px) {
+@media (max-width: 767px) {
   .v-enter-from,
   .v-leave-to {
     transform: translateY(-100%);
-    border-radius: 20%;
+    border-radius: 0%;
+    border-bottom-left-radius: 500px;
+    border-bottom-right-radius: 500px;
   }
 }
 </style>

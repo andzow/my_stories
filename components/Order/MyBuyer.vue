@@ -210,12 +210,12 @@ export default {
             this.useOrderInfo.buyer = false;
             return;
           }
+          const street = this.useInputStreet;
+          const house = this.useInputHouse;
+          const apartment = this.useInputApartment;
+          const corpus = this.useInputCorpus;
           if (val && this.useactivePvzMail && !this.deliveryOptions?.loadText) {
             const region = this.useActiveRegion;
-            const street = this.useInputStreet;
-            const house = this.useInputHouse;
-            const apartment = this.useInputApartment;
-            const corpus = this.useInputCorpus;
             const fullAddress = `${street}, ${house}${
               corpus ? `, ${corpus}` : ""
             }${apartment ? `, ${apartment}` : ""}`;
@@ -277,6 +277,22 @@ export default {
             !this.deliveryOptions?.loadText &&
             !this.useactivePvzMail
           ) {
+            const fullAddress = this.arrBuyerInput[2].inputVal;
+            const addressPvzMail = await this.setNormalizeAddress(
+              fullAddress,
+              true
+            );
+            const qualityCode = addressPvzMail["validation-code"];
+            if (
+              qualityCode !== "VALIDATED" &&
+              qualityCode !== "OVERRIDDEN" &&
+              qualityCode !== "CONFIRMED_MANUALLY" &&
+              addressPvzMail?.length !== 0
+            ) {
+              this.checkNormalizeError();
+              this.useOrderInfo.buyer = false;
+              return;
+            }
             this.arrBuyerInput[2].textError = "";
             if (checkError) {
               const address = JSON.parse(JSON.stringify(this.arrBuyerInput));
@@ -338,7 +354,7 @@ export default {
       }
       return true;
     },
-    async setNormalizeAddress(item) {
+    async setNormalizeAddress(item, check) {
       try {
         const region = this.useActiveRegion;
         const address = `г ${region.settlement}, ${region.region}, ${item}`;
@@ -349,10 +365,25 @@ export default {
         });
         return data;
       } catch {
+        if (check) {
+          return "VALIDATED";
+        }
         return [];
       }
     },
     checkNormalizeError() {
+      if (!this.useactivePvzMail) {
+        this.arrBuyerInput[2].textError = "Такого адреса не существует";
+        const findIndexError = this.arrErrors.findIndex(
+          (nameEl) => nameEl === "Адрес доставки*"
+        );
+        if (findIndexError === -1) {
+          this.arrErrors.push("Адрес доставки*");
+          return;
+        }
+        this.arrErrors.splice(findIndexError, 1);
+        return;
+      }
       this.inputsPochta[2].textError = "Такой улицы не существует";
       this.inputsPochta[3].textError = "Такого дома не существует";
       const arrError = [
