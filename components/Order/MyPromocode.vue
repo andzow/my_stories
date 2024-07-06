@@ -246,16 +246,19 @@ export default {
           scrollTrigger: {
             trigger: ".main__menu",
             start: () => "top top",
-            end: () =>
-              `bottom ${
+            end: () => {
+              if (
                 document
-                  .getElementById("order__promocode")
-                  .getBoundingClientRect()
-                  ? document
-                      .getElementById("order__promocode")
-                      .getBoundingClientRect().height + "px"
-                  : ""
-              }`,
+                  ?.getElementById("order__promocode")
+                  ?.getBoundingClientRect()
+              ) {
+                const heightEl =
+                  document
+                    .getElementById("order__promocode")
+                    .getBoundingClientRect().height + "px";
+                return `bottom ${heightEl}`;
+              }
+            },
             pin: ".promocode",
             markers: false,
             invalidateOnRefresh: true,

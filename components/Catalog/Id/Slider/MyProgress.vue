@@ -47,7 +47,9 @@ export default {
     },
   },
   mounted() {
-    this.initChangeFunc();
+    setTimeout(() => {
+      this.initChangeFunc();
+    }, 0);
   },
   watch: {
     useProductObject(val) {
