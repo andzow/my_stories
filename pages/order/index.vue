@@ -52,7 +52,6 @@ export default {
           },
         ];
       } else {
-        this.animationDuration = "13";
         this.arrAnimationLine = [
           { name: ".header__logo", defaultLine: false, indent: "left" },
           {
