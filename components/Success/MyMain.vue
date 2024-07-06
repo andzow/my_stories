@@ -2,7 +2,7 @@
   <section class="main">
     <div class="main__block success__block">
       <p class="main__text">
-        на ваш Telegram / WhatsApp вотсап придет информация и статус заказа
+        на ваш Telegram / WhatsApp придет информация и статус заказа
       </p>
       <div class="main__run">
         <span class="main__run_text">( &nbsp;спасибо за заказ&nbsp; )</span>
@@ -81,5 +81,36 @@ export default {};
 }
 .main__btn {
   min-width: 230px;
+}
+
+@media(max-width:730px) {
+  .main__text {
+    padding: 0 20px;
+    text-align: center;
+  }
+  .main__block {
+    width: 480px;
+  }
+}
+@media(max-width:520px) {
+  .main__text {
+    padding: 0 20px;
+    text-align: center;
+  }
+  .main__block {
+    width: 380px;
+  }
+    .main__run {
+    font-size: 60px;
+  }
+}
+@media(max-width:410px) {
+  .main__text {
+    padding: 0 20px;
+    text-align: center;
+  }
+  .main__block {
+    width: 300px;
+  }
 }
 </style>

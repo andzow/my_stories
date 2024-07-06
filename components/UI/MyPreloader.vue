@@ -2,43 +2,30 @@
   <div class="preloader">
     <div class="preloader__content">
       <div class="preloader__text">
-        <div
-          class="preload__item"
-          :class="['preload__item' + (idx + 1)]"
-          v-for="(item, idx) in arrItem"
-          :key="item"
+        <p
+          v-for="(item, idx) in wordArray"
+          :key="idx"
+          class="preloader__letter"
+          :class="'preloader__letter_' + idx"
         >
           {{ item }}
-        </div>
-        <span class="preloader__span">...</span>
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { gsap } from "gsap";
-
 export default {
   data() {
     return {
-      arrItem: ["M", "Y ", "S", "T", "O", "R", "I", "E", "S"],
-      gsapArr: [],
+      wordArray: ["M", "Y", "S", "T", "O", "R", "I", "E", "S", ".", ".", "."],
     };
   },
   mounted() {
-    let delayEl = 0.2;
-    this.arrItem.forEach((el, idx) => {
-      const nameClass = ".preload__item" + (idx + 1);
-      const tl = gsap.timeline({
-        defaults: { ease: "linear" },
-      });
-      gsap.to(".preload__item" + (idx + 1), {
-        y: 0,
-        delay: 0.1 + delayEl,
-      });
-      delayEl += 0.1;
-    });
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
   },
 };
 </script>
@@ -72,5 +59,70 @@ export default {
 }
 .preloader__span {
   font-family: "Inter", sans-serif;
+}
+.preloader__letter {
+  font-size: 40px;
+  opacity: 0;
+  animation: appear 0.5s ease forwards;
+}
+
+@keyframes appear {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.preloader__letter_0 {
+  animation-delay: 0.1s;
+}
+.preloader__letter_1 {
+  animation-delay: 0.2s;
+  margin-right: 10px;
+}
+.preloader__letter_2 {
+  animation-delay: 0.3s;
+}
+.preloader__letter_3 {
+  animation-delay: 0.4s;
+}
+.preloader__letter_4 {
+  animation-delay: 0.5s;
+}
+.preloader__letter_5 {
+  animation-delay: 0.6s;
+}
+.preloader__letter_6 {
+  animation-delay: 0.7s;
+}
+.preloader__letter_7 {
+  animation-delay: 0.8s;
+}
+.preloader__letter_8 {
+  animation-delay: 0.9s;
+}
+.preloader__letter_9 {
+  animation-delay: 1s;
+}
+.preloader__letter_10 {
+  animation-delay: 1.1s;
+}
+.preloader__letter_11 {
+  animation-delay: 1.2s;
+}
+.preloader__letter_12 {
+  animation-delay: 1.3s;
+}
+@media(max-width: 470px) {
+  .preloader__letter {
+  font-size: 30px;
+}
 }
 </style>

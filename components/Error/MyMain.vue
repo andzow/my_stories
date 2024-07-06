@@ -3,8 +3,7 @@
     <div class="main__content">
       <div class="main__image">
         <svg
-          width="1201"
-          height="557"
+          class="main__svg"
           viewBox="0 0 1201 557"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +64,12 @@ export default {};
   margin: 0 auto;
   padding: 0 30px;
 }
+.main__svg {
+  width: 100%;
+}
 .main__image {
+  max-width: 1201px;
+  height: auto;
   transform: translateY(10px);
 }
 .main__image svg {
@@ -88,6 +92,7 @@ export default {};
   font-weight: 400;
   font-size: 16px;
   color: var(--brown);
+  white-space: nowrap;
 }
 .main__item {
   font-weight: 400;
@@ -95,9 +100,37 @@ export default {};
   color: var(--brown);
   max-width: 250px;
   text-align: justify;
+  margin-left: 15px;
+  width: 250px;
 }
 .main__btn {
+  margin-top: 20px;
   margin-bottom: 30px;
   width: 100%;
+}
+@media(max-width: 1300px) {
+  .main__image {
+    transform: translateX(100px);
+}
+}
+@media(max-width: 800px) {
+  .main {
+  padding-top: 0px;
+  height: 80vh;
+}
+  .main__image {
+    display: none;
+}
+.main__block {
+  margin-right: 0;
+}
+  .main__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>
