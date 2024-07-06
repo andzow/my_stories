@@ -9,7 +9,7 @@
       <MainNewMyNew />
       <UIMyAnimationLine
         v-if="arrAnimationLine"
-        duration="11"
+        duration="9"
         :arrAnimationLine="arrAnimationLine"
       />
       <UIMyNoise />

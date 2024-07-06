@@ -22,14 +22,17 @@ export default {
       this.$emit("nextSlide");
     },
     async initActivePagination() {
-      nextTick(() => {
-        const elHtmlProgress = document.querySelector(".slider__progress");
-        const elHtmlActiveBtn = document.querySelector(
-          ".slider__swiper .swiper-pagination-bullet-active"
-        );
-        elHtmlActiveBtn.appendChild(elHtmlProgress);
-        this.$refs.sliderProgress.style.animationDuration = this.activeDuration;
-      });
+      setTimeout(() => {
+        nextTick(() => {
+          const elHtmlProgress = document.querySelector(".slider__progress");
+          const elHtmlActiveBtn = document.querySelector(
+            ".slider__swiper .swiper-pagination-bullet-active"
+          );
+          elHtmlActiveBtn.appendChild(elHtmlProgress);
+          this.$refs.sliderProgress.style.animationDuration =
+            this.activeDuration;
+        });
+      }, 0);
     },
     initChangeFunc() {
       let duration = !this.activeDurationVideo
@@ -43,7 +46,9 @@ export default {
       this.$emit("change");
     },
   },
-  mounted() {},
+  mounted() {
+    this.initChangeFunc();
+  },
   watch: {
     useProductObject(val) {
       if (val) {

@@ -113,4 +113,14 @@ export default {
   margin-bottom: 35px;
   z-index: 15;
 }
+@media screen and (max-width: 930px) {
+  .delivery__map {
+    height: 400px;
+  }
+}
+@media screen and (max-width: 536px) {
+  .delivery__map {
+    height: 300px;
+  }
+}
 </style>

@@ -55,12 +55,13 @@
             "
           >
             <UIButtonMyButton
-              info="Выбрать ПВЗ"
-              aria-label="Выбрать ПВЗ"
+              class="delivery__button"
+              info="Выбрать адрес"
+              aria-label="Выбрать адрес"
               fontSize="18"
               padding="10px 30px"
               data-cursor-class="animateCursor"
-              @click="usePvzModal = true"
+              @click="openPvz(option)"
             />
           </div>
         </div>
@@ -77,6 +78,7 @@
 
 <script>
 import CdekController from "~/http/controllers/CdekController";
+import MailServices from "~/http/services/MailServices";
 
 export default {
   data() {
@@ -95,6 +97,16 @@ export default {
       useSelectedSamovivos: useSelectedSamovivos(),
       useBuyerAddress: useBuyerAddress(),
       activePvzObj: null,
+      useDeliveryMail: useDeliveryMail(),
+      useCheckPvzMail: useCheckPvzMail,
+      useGetPvzMail: useGetPvzMail,
+      useActiveRegion: useActiveRegion(),
+      useactivePvzMail: useActivePvzMail(),
+      useInputMobile: useInputMobile(),
+      useInputStreet: useInputStreet(),
+      useInputHouse: useInputHouse(),
+      useInputApartment: useInputApartment(),
+      useInputCorpus: useInputCorpus(),
     };
   },
   computed: {
@@ -112,13 +124,49 @@ export default {
       }
       return false;
     },
+    async initMailDelivery(mass, checkAction) {
+      try {
+        const getMailObj = this.useDeliveryMail;
+        getMailObj.mass = mass;
+        const { data } = await MailServices.getPrice(getMailObj);
+        if (!data || data?.length < 0) {
+          return [];
+        }
+        const getPvz = this.useCheckPvzMail(data);
+        return this.useGetPvzMail(getPvz, checkAction);
+      } catch {
+        return [];
+      }
+    },
     async initApp() {
       try {
         const packagesArr = this.useFilterDeliveryPackages();
         this.objSet.packages = packagesArr;
-        const response = await CdekController.getOptions(this.objSet);
         const check = this.changeSumm();
+        //Статичные данные, иммитация запроса к серверу
+        const responseMail = await this.initMailDelivery(
+          packagesArr[0].weight,
+          check
+        );
+
+        //Пример ответа с сервера почты России
+        // const responseMail = [
+        //   {
+        //     calendar_max: 4,
+        //     calendar_min: 2,
+        //     day: "дня",
+        //     deliveryTime: "2-4",
+        //     des: "Почта России (самовывоз)",
+        //     name: "Почта России (самовывоз)",
+        //     nameCompany: "Почта России",
+        //     sumDelivery: 222,
+        //   },
+        // ];
+        const response = await CdekController.getOptions(this.objSet);
         const newArr = this.useDeliveryLoad(check, response);
+        if (responseMail && responseMail?.length > 0) {
+          responseMail.forEach((el) => newArr.push(el));
+        }
         this.useDeliveryPrice = newArr[0].sumDelivery;
         this.deliveryOptions = newArr;
         setTimeout(() => {
@@ -127,6 +175,9 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+    openPvz(item) {
+      this.usePvzModal = true;
     },
   },
   mounted() {
@@ -137,8 +188,18 @@ export default {
       handler(val) {
         //Очистить переменные доставки
         this.selectedOption = 0;
+        this.useactivePvzMail = false;
+        this.useInputStreet = "";
+        this.useInputHouse = "";
+        this.useInputApartment = "";
+        this.useInputCorpus = "";
 
         const item = this.deliveryOptions[this.selectedOption];
+        if (item?.nameCompany === "Почта России") {
+          this.useactivePvzMail = true;
+        } else {
+          this.useactivePvzMail = false;
+        }
         const findName = item?.name?.toLowerCase().includes("самовывоз");
         if (findName) {
           this.useSelectedSamovivos = true;
@@ -155,6 +216,11 @@ export default {
     selectedOption(val) {
       if (!this.deliveryOptions) return;
       const item = this.deliveryOptions[val];
+      if (item.nameCompany === "Почта России") {
+        this.useactivePvzMail = true;
+      } else {
+        this.useactivePvzMail = false;
+      }
       if (!item?.name) return;
       const findSamovivos = item.name.toLowerCase().includes("самовывоз");
       if (findSamovivos) {
@@ -165,6 +231,14 @@ export default {
       delete this.objSet.to_location.address_full;
       this.useBuyerAddress = "";
       this.useActiveAddress = null;
+      this.useInputStreet = "";
+      this.useInputHouse = "";
+      this.useInputApartment = "";
+      this.useInputCorpus = "";
+      this.useCursor = false;
+      setTimeout(() => {
+        this.useCursor = true;
+      }, 10);
     },
     useOrderInfo(val) {
       if (val && (this.selectedOption || this.selectedOption <= 0)) {
@@ -178,8 +252,28 @@ export default {
       }
     },
   },
+  unmounted() {
+    this.useInputStreet = "";
+    this.useInputHouse = "";
+    this.useInputApartment = "";
+    this.useInputCorpus = "";
+    this.useInputMobile = "";
+  },
 };
 </script>
+
+<style>
+@media screen and (max-width: 1400px) {
+  .delivery__button .button__btn {
+    font-size: 18px !important;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .delivery__button .button__btn {
+    font-size: 17px !important;
+  }
+}
+</style>
 
 <style scoped>
 .delivery {
@@ -220,8 +314,8 @@ export default {
 }
 
 .delivery__custom + .delivery__custom_radio {
-  width: 20px;
-  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   border-radius: 50%;
   border: 1.2px solid #af9280;
   background-color: #fff;
@@ -282,5 +376,18 @@ export default {
 }
 .delivery__btn {
   margin-left: 30px;
+}
+@media screen and (max-width: 1400px) {
+  .delivery__name {
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 20px;
+  }
+  .delivery__price {
+    font-size: 24px;
+  }
+  .delivery__description {
+    font-size: 15px;
+  }
 }
 </style>

@@ -38,7 +38,9 @@
           ref="mainFull"
         >
           <div class="main__full_block">
-            <div class="main__full_price">{{ fullSumm }} ₽</div>
+            <div class="main__full_price">
+              {{ fullSumm.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
+            </div>
             <div class="main__full_button">
               <UIButtonMyButton
                 @click="$router.push('/order')"
@@ -198,7 +200,7 @@ export default {
 .main {
   position: relative;
   width: 100%;
-  padding-top: 150px;
+  padding-top: 120px;
   padding-bottom: 56px;
   z-index: 17;
 }
@@ -213,7 +215,7 @@ export default {
   flex-direction: column;
 }
 .main__items {
-  margin-right: 64px;
+  margin-right: 67px;
   border-top: 1px solid rgba(0, 0, 0, 0);
   transition: all 0.4s ease;
 }
@@ -230,7 +232,7 @@ export default {
   /* background: red; */
 }
 .main__full {
-  padding-right: 64px;
+  padding-right: 67px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -260,5 +262,39 @@ export default {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+@media screen and (max-width: 1400px) {
+  .main__full_price {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 1130px) {
+  .main__items {
+    margin-right: 0px;
+  }
+  .main__full {
+    padding-right: 0;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .main {
+    padding-top: 110px;
+  }
+}
+
+@media screen and (max-width: 776px) {
+  .main__full_price {
+    text-align: start;
+  }
+  .main__full_button {
+    display: flex;
+    justify-content: flex-end;
+    text-align: end;
+    max-width: 250px;
+  }
+  .main__full_block {
+    min-width: 100%;
+  }
 }
 </style>

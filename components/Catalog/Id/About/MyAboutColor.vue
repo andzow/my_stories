@@ -105,8 +105,8 @@ export default {
   max-width: 40%;
 }
 .about__color_item {
-  width: 47px;
-  height: 47px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   padding: 5px;
 }

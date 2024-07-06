@@ -160,7 +160,9 @@ export default {
   color: var(--brown);
   font-weight: 400;
   text-transform: lowercase;
-  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   max-width: 320px;
 }
 .alert__size {
@@ -184,5 +186,29 @@ export default {
   color: var(--brown);
   font-weight: 400;
   text-transform: lowercase;
+}
+@media screen and (max-width: 748px) {
+  .alert {
+    top: 26px;
+    right: 30px;
+    min-width: 408px;
+  }
+  .alert__summ {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 478px) {
+  .alert {
+    top: 26px;
+    right: 5px;
+    min-width: 358px;
+  }
+}
+@media screen and (max-width: 390px) {
+  .alert {
+    top: 26px;
+    right: 5px;
+    min-width: 308px;
+  }
 }
 </style>

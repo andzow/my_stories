@@ -21,6 +21,7 @@
             @input="typePromocode"
             type="text"
             class="promocode__input"
+            data-cursor-class="animateCursor"
             v-model="inputVal"
             :class="{
               activeStateType: promocodeState === 'type',
@@ -95,6 +96,8 @@
             <div
               class="promocode__icon reject"
               v-if="promocodeState === 'reject'"
+              data-cursor-class="animateCursor"
+              @click="resetPromocode"
             >
               <svg
                 width="24"
@@ -148,6 +151,7 @@
 <script>
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import PromoServices from "~/http/services/PromoServices";
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
@@ -169,6 +173,16 @@ export default {
       localStorageArr: null,
       checkSumm: false,
       checkLoadPromocode: false,
+      useactivePvzMail: useActivePvzMail(),
+      useInputMobile: useInputMobile(),
+      arrErrors: useCheckErrors(),
+      useActiveRegion: useActiveRegion(),
+      useCursor: useCursor(),
+      discountedPrice: 0,
+      discountSumm: 0,
+      objMobile: {
+        name: "телефон Telegram / WhatsApp*",
+      },
     };
   },
   methods: {
@@ -182,17 +196,32 @@ export default {
       }
       this.useCursor = true;
     },
-    checkPromocode() {
-      const checkPromocode = this.inputPrimer.includes(this.inputVal);
-      if (checkPromocode) {
-        this.activePromocode = this.inputVal;
-        this.promocodeState = "success";
-        this.promocodeText = "промокод применен";
-        document.querySelector(".promocode__input").disabled = true;
-        return;
+    async checkPromocode() {
+      try {
+        const { data } = await PromoServices.checkPromo({
+          promo: this.inputVal,
+        });
+        const elHtml = document.querySelector(".promocode__input");
+        if (data.status !== "error") {
+          this.discountSumm = parseInt(data.discount);
+          this.discountedPrice = (this.fullSumm * this.discountSumm) / 100;
+          this.fullSumm = Math.ceil(this.fullSumm - this.discountedPrice);
+          this.promocodeState = "success";
+          this.promocodeText = `промокод применен / ${this.discountSumm}%`;
+          this.activePromocode = this.inputVal;
+          elHtml.disabled = true;
+        } else {
+          this.promocodeText = `промокод введен неверно или срок его действия истек`;
+          this.promocodeState = "";
+          this.inputVal = "";
+          elHtml.disabled = false;
+        }
+      } catch {
+        this.promocodeText = `промокод введен неверно или срок его действия истек`;
+        this.inputVal = "";
+        this.promocodeState = "";
+        elHtml.disabled = false;
       }
-      this.promocodeText = "промокод введен не верно";
-      this.promocodeState = "reject";
     },
     initPromocode() {
       const parseCart = JSON.parse(localStorage.getItem("cart"));
@@ -211,21 +240,28 @@ export default {
     initScrollTrigger() {
       if (!document.getElementById("order__promocode")?.getBoundingClientRect())
         return;
-      this.timeLine = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".main__menu",
-          start: () => "top top",
-          end: () =>
-            `bottom ${
-              document
-                .getElementById("order__promocode")
-                .getBoundingClientRect().height + "px"
-            }`,
-          pin: ".promocode",
-          markers: false,
-          invalidateOnRefresh: true,
-        },
-      });
+
+      if (window.innerWidth > 1276) {
+        this.timeLine = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".main__menu",
+            start: () => "top top",
+            end: () =>
+              `bottom ${
+                document
+                  .getElementById("order__promocode")
+                  .getBoundingClientRect()
+                  ? document
+                      .getElementById("order__promocode")
+                      .getBoundingClientRect().height + "px"
+                  : ""
+              }`,
+            pin: ".promocode",
+            markers: false,
+            invalidateOnRefresh: true,
+          },
+        });
+      }
     },
     changeSumm() {
       this.checkSumm = true;
@@ -237,6 +273,14 @@ export default {
       }
       return false;
     },
+    resetPromocode() {
+      this.promocodeText = "промокод";
+      this.promocodeState = "";
+      this.inputVal = "";
+      this.discountedPrice = 0;
+      this.discountSumm = 0;
+      document.querySelector(".promocode__input").disabled = false;
+    },
   },
   mounted() {
     this.initPromocode();
@@ -245,19 +289,45 @@ export default {
   watch: {
     useOrderInfo(val) {
       if (val) {
-        this.useOrderInfo.promocode = this.activePromocode;
+        this.useOrderInfo.promocode = {
+          promocodeText: this.activePromocode,
+          summ: this.fullSumm,
+          summDelivery: this.useDeliveryPrice,
+        };
+      }
+    },
+    promocodeState(val) {
+      if (val === "reject") {
+        this.useCursor = false;
+        setTimeout(() => {
+          this.useCursor = true;
+        }, 10);
       }
     },
     useDeliveryPrice(val) {
-      this.fullSumm = this.summ + val;
+      const fullSummPrice = this.summ + val;
+      if (this.discountSumm !== 0 && this.discountedPrice !== 0) {
+        this.discountedPrice = (fullSummPrice * this.discountSumm) / 100;
+        this.fullSumm = Math.ceil(fullSummPrice - this.discountedPrice);
+      } else {
+        this.fullSumm = fullSummPrice;
+      }
       this.checkFirstLoad = true;
     },
     selectedOption() {
+      if (this.discountSumm === 0) {
+        this.resetPromocode();
+      }
       setTimeout(() => {
         nextTick(() => {
           this.timeLine.scrollTrigger.refresh();
         });
       }, 0);
+    },
+    useActiveRegion(val) {
+      if (this.discountSumm === 0) {
+        this.resetPromocode();
+      }
     },
     deliveryOptions() {
       setTimeout(() => {
@@ -266,12 +336,18 @@ export default {
             this.initScrollTrigger();
             this.checkLoadPromocode = true;
           }
-          this.timeLine.scrollTrigger.refresh();
+          if (this.timeLine) {
+            this.timeLine.scrollTrigger.refresh();
+          }
         });
       }, 0);
     },
   },
-  unmounted() {},
+  unmounted() {
+    // if (this.timeLine) {
+    //   this.timeLine.kill();
+    // }
+  },
 };
 </script>
 
@@ -375,5 +451,11 @@ export default {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+@media screen and (max-width: 1276px) {
+  .promocode {
+    margin-top: 10px;
+  }
 }
 </style>

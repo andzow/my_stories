@@ -1,24 +1,43 @@
 <template>
-  <div class="slider">
-    <div class="slider__content">
-      <swiper
-        v-if="arrNew"
-        class="slider_sw"
-        :slidesPerView="4"
-        :slidesPerGroup="1"
-        :spaceBetween="25"
-        :speed="500"
+  <section class="slider">
+    <swiper
+      :slidesPerView="4"
+      :slidesPerGroup="1"
+      :spaceBetween="25"
+      :speed="500"
+      :freemode="true"
+      :breakpoints="{
+        1154: {
+          slidesPerView: 4,
+        },
+        876: {
+          slidesPerView: 3,
+        },
+        576: {
+          slidesPerView: 2,
+        },
+        470: {
+          slidesPerView: 1.5,
+        },
+        0: {
+          slidesPerView: 1,
+        },
+      }"
+      v-if="arrNew"
+    >
+      <swiper-slide
+        class="slider__slide"
+        v-for="(item, idx) in arrNew.filter((el, idx) => idx <= 5)"
+        :key="item"
       >
-        <swiper-slide
-          class="slider__slide"
-          v-for="(item, idx) in arrNew"
-          :key="item"
-        >
-          <UICardMyCard heightImage="576px" :item="item" :idx="idx" />
-        </swiper-slide>
-      </swiper>
-    </div>
-  </div>
+        <MainNewMyNewItem
+          :item="item"
+          :class="['new__item' + (idx + 1)]"
+          :idx="idx"
+        />
+      </swiper-slide>
+    </swiper>
+  </section>
 </template>
 
 <script>
@@ -30,20 +49,47 @@ export default {
   data() {
     return {
       arrNew: null,
+      arrAnimationOpacityGsap: [],
+      arrAnimationGsapPrices: [],
       useGsapAnimationOpacity: useGsapAnimationOpacity,
     };
   },
   methods: {
-    async initApp() {
+    async initArr() {
       try {
         const res = await ProductController.getNew();
         this.arrNew = res;
+        this.initAnimationArr();
       } catch {}
+    },
+    initAnimationArr() {
+      nextTick(() => {
+        this.arrNew.forEach((el, idx) => {
+          this.arrAnimationOpacityGsap.push(`.new__item_image${idx + 1}`);
+          this.arrAnimationGsapPrices.push(
+            `.new__item_name${idx + 1}`,
+            `.new__item_prices${idx + 1}`
+          );
+        });
+        this.playAnimationGsap();
+      });
+    },
+    playAnimationGsap() {
+      this.useGsapAnimationOpacity(
+        this.arrAnimationOpacityGsap,
+        ".slider",
+        false,
+        0.4
+      );
+      this.useGsapAnimationOpacity(
+        this.arrAnimationGsapPrices,
+        ".new__item_name1",
+        true
+      );
     },
   },
   mounted() {
-    this.initApp();
-    this.useGsapAnimationOpacity([".slider"], ".main");
+    this.initArr();
   },
   components: {
     Swiper,
@@ -55,15 +101,17 @@ export default {
 .slider {
   position: relative;
   width: 100%;
+  padding-top: 50px;
   padding-bottom: 56px;
-  z-index: 17;
-  opacity: 0;
-}
-.slider__content {
-  max-width: 1920px;
-  width: 100%;
+  padding-right: 30px;
+  padding-left: 30px;
   margin: 0 auto;
-  padding: 0 30px;
-  min-height: 576px;
+  max-width: 1920px;
+  z-index: 17;
+}
+@media screen and (max-width: 768px) {
+  .slider {
+    padding-top: 20px;
+  }
 }
 </style>

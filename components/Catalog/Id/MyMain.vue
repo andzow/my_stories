@@ -44,6 +44,7 @@ export default {
       let tableSize = useTableSize();
       let tableMeus = useTableMeus();
       const route = useRoute().params;
+      let getOther = null;
       const { data: responseItems } = await useAsyncData(
         "responseItems",
         async () =>
@@ -55,8 +56,8 @@ export default {
         useRouter().push("/error");
       }
       productObject.value = responseItems.value;
-      // tableSize.value = productObject.value.product[0].dimension;
-      // tableMeus.value = productObject.value.product[0].measurement;
+      this.$emit("load");
+      return { getOther };
     } catch {}
   },
   data() {
@@ -129,9 +130,8 @@ export default {
   padding: 0 30px;
 }
 .main__menu {
-  position: relative;
   display: grid;
-  grid-template-columns: 0.5fr 1fr;
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
 }
 .table__blur {
   position: fixed;
@@ -166,11 +166,14 @@ export default {
 .v-leave-to {
   width: 0;
 }
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1720px) {
   .main__menu {
-    position: relative;
-    display: grid;
-    grid-template-columns: 0.7fr 1fr;
+    grid-template-columns: 0.4fr 1fr;
+  }
+}
+@media screen and (max-width: 1240px) {
+  .main__menu {
+    grid-template-columns: 0.5fr 1fr;
   }
 }
 @media screen and (max-width: 1100px) {

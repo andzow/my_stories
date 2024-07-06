@@ -5,6 +5,7 @@
     @input="updateInput"
     :value="modelValue"
     :class="{ activeInputOrder: active }"
+    :placeholder="item?.placeholder"
     v-if="!textArea"
   />
   <textarea
@@ -14,6 +15,7 @@
     @input="updateInput"
     :value="modelValue"
     :class="{ activeInputOrder: active }"
+    :placeholder="item?.placeholder"
   ></textarea>
 </template>
 
@@ -23,6 +25,7 @@ export default {
     modelValue: [String, Number],
     textArea: Boolean,
     active: Boolean,
+    item: {},
   },
   methods: {
     updateInput(event) {
@@ -45,7 +48,7 @@ export default {
   transition: all 0.4s ease;
 }
 .order__inputs::placeholder {
-  color: #a09a96;
+  color: #d2bcae;
 }
 .order__textarea {
   width: 100%;
@@ -62,7 +65,18 @@ export default {
   border: 1px solid rgba(0, 0, 0, 0);
   transition: all 0.4s ease;
 }
+.order__textarea::placeholder {
+  color: #d2bcae;
+}
 .activeInputOrder {
   border: 1px solid red !important;
+}
+@media screen and (max-width: 930px) {
+  .order__inputs {
+    font-size: 16px;
+  }
+  .order__textarea {
+    font-size: 16px;
+  }
 }
 </style>

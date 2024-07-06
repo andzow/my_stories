@@ -60,7 +60,7 @@ export const useFormatNumberToPrice = (number) => {
   if (!numbers) {
     numbers = number;
   }
-  return numbers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return numbers.toString().replace(/\s/g, "");
 };
 
 export const useReplaceOrDeleteWordQuery = (

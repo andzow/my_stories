@@ -7,6 +7,11 @@
         @keydown.esc="usePvzModal = false"
       />
     </Transition>
+    <UIMyAnimationLine
+      duration="7"
+      :arrAnimationLine="arrAnimationLine"
+      v-if="arrAnimationLine"
+    />
     <UIMyNoise />
   </div>
 </template>
@@ -25,7 +30,40 @@ export default {
   data() {
     return {
       usePvzModal: usePvzModal(),
+      usePvzCode: usePvzCode(),
+      arrAnimationLine: null,
     };
+  },
+  methods: {
+    initGsap() {
+      if (window.innerWidth > 936) {
+        this.arrAnimationLine = [
+          { name: ".header__logo", defaultLine: false, indent: "left" },
+          {
+            name: ".main__info",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+          {
+            name: ".header__interaction_search",
+            defaultLine: false,
+            indent: "left",
+          },
+        ];
+      } else {
+        this.animationDuration = "13";
+        this.arrAnimationLine = [
+          { name: ".header__logo", defaultLine: false, indent: "left" },
+          {
+            name: ".header__interaction_cart",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+        ];
+      }
+    },
   },
   beforeMount() {
     if (
@@ -36,9 +74,15 @@ export default {
       this.$router.push("/page/not-found");
     }
   },
+  unmounted() {
+    this.usePvzCode = null;
+  },
   mounted() {
     const bodyEl = document.body;
     bodyEl.style.overflow = "auto";
+    setTimeout(() => {
+      this.initGsap();
+    }, 0);
   },
 };
 </script>

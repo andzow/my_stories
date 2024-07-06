@@ -13,9 +13,10 @@
           @input="debouncedSearch"
           v-model="inpVal"
           :class="{ disableInput: !checkRegion }"
+          data-cursor-class="animateCursor"
         />
         <div class="region__img">
-          <button class="region__btn" data-cursor-class="animateCursor">
+          <button class="region__btn">
             <svg
               width="24"
               height="24"
@@ -57,6 +58,7 @@
 <script>
 import CdekController from "~/http/controllers/CdekController";
 import debounce from "lodash.debounce";
+import MailServices from "~/http/services/MailServices";
 
 export default {
   data() {
@@ -81,6 +83,11 @@ export default {
       useSelectedSamovivos: useSelectedSamovivos(),
       arrErrors: useCheckErrors(),
       counterErrors: false,
+      usePvzCode: usePvzCode(),
+      useDeliveryMail: useDeliveryMail(),
+      useGetPvzMail: useGetPvzMail,
+      useCheckPvzMail: useCheckPvzMail,
+      useActiveRegion: useActiveRegion(),
       debouncedSearch: debounce(async () => {
         try {
           const response = await CdekController.getCity({ name: this.inpVal });
@@ -122,14 +129,38 @@ export default {
         this.useCursor = true;
       } catch {}
     },
+    async getInfoCityMail(item) {
+      try {
+        const obj = {
+          settlement: item.city,
+          region: item.region,
+        };
+        const {
+          data: [data],
+        } = await MailServices.getPvz(obj);
+        if (!data || data?.length <= 0) return [];
+        this.useDeliveryMail["index-to"] = data["postal-code"];
+      } catch {}
+    },
+    async initMailDelivery(mass, checkAction) {
+      try {
+        const getMailObj = this.useDeliveryMail;
+        getMailObj.mass = mass;
+        const { data } = await MailServices.getPrice(getMailObj);
+        const getPvz = this.useCheckPvzMail(data);
+        return this.useGetPvzMail(getPvz, checkAction);
+      } catch {
+        return "error";
+      }
+    },
     async setCity(arr, idx) {
       try {
         //Удалить старую инфу
         delete this.objSet.to_location.address;
         this.useBuyerAddress = "";
         this.useActiveAddress = null;
-
         const item = arr[idx];
+
         this.deliveryOptions = false;
         this.inpVal =
           item.city +
@@ -137,22 +168,43 @@ export default {
             ? ", " + item.country
             : ", " + item.region + ", " + item.country);
         this.activeDropdown = false;
-
+        const check = this.changeSumm();
         this.objSet.to_location.code = item.code;
         const response = await CdekController.getOptions(this.objSet);
-        if (!response) {
+        const newArr = this.useDeliveryLoad(check, response);
+        await this.getInfoCityMail(item);
+        const getPvzMail = await this.initMailDelivery(
+          this.objSet?.packages[0]?.weight
+            ? this.objSet?.packages[0]?.weight
+            : [],
+          check
+        );
+
+        if (!response && getPvzMail === "error") {
           this.deliveryOptions = {
             loadText: "Для данного населенного пункта тарифы отсутствуют",
           };
           this.useDeliveryPrice = 0;
           return;
         }
-        const check = this.changeSumm();
-        const newArr = this.useDeliveryLoad(check, response);
+
+        if (
+          getPvzMail &&
+          getPvzMail?.length > 0 &&
+          Array.isArray(newArr) &&
+          getPvzMail !== "error"
+        ) {
+          getPvzMail.forEach((el) => newArr.push(el));
+        }
         this.checkDeliveryScrollToTop(false, false);
         this.useDeliveryPrice = newArr[0].sumDelivery;
         this.deliveryOptions = newArr;
         this.useCityCode = item.code;
+        this.usePvzCode = null;
+        this.useActiveRegion = {
+          settlement: item.city,
+          region: item.region,
+        };
       } catch {
         this.deliveryOptions = {
           loadText: "Для данного населенного пункта тарифы отсутствуют",
@@ -224,6 +276,17 @@ export default {
     this.useCityCode = 44;
     this.useBuyerAddress = "";
     this.useSelectedSamovivos = false;
+    this.useActiveRegion = {
+      settlement: "Москва",
+      region: "Москва",
+    };
+    this.useDeliveryMail["index-to"] = "109289";
+    this.useInfoObjPochta = {
+      street: "",
+      house: "",
+      apartment: "",
+      corpus: "",
+    };
   },
   watch: {
     async useOrderInfo(val) {
@@ -298,5 +361,11 @@ export default {
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.4s ease;
+}
+@media screen and (max-width: 680px) {
+  .region__input {
+    font-size: 16px;
+    padding: 13px 45px 13px 20px;
+  }
 }
 </style>

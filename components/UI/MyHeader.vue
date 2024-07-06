@@ -7,11 +7,17 @@
             <div class="header__burger_block">
               <div
                 class="header__burger_line"
-                :class="{ activeLineFirst: activeMenu }"
+                :class="{
+                  activeLineFirst: activeMenu,
+                  activeLineStyle: changeHeader,
+                }"
               ></div>
               <div
                 class="header__burger_line"
-                :class="{ activeLineSec: activeMenu }"
+                :class="{
+                  activeLineSec: activeMenu,
+                  activeLineStyle: changeHeader,
+                }"
               ></div>
             </div>
           </div>
@@ -262,6 +268,9 @@ header {
 }
 .activeLineSec {
   transform: translateY(-5px) rotate(-45deg);
+  border: 1px solid var(--brown);
+}
+.activeLineStyle {
   border: 1px solid var(--brown);
 }
 .activeLi {

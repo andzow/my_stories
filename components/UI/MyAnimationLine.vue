@@ -114,4 +114,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.lines {
+  overflow: visible !important;
+}
+</style>

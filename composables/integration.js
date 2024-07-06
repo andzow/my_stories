@@ -8,6 +8,16 @@ export const useDeliveryObj = () =>
       code: 44,
     },
   }));
+export const useDeliveryMail = () =>
+  useState("use_delivery_mail", () => ({
+    "mail-category": "ORDINARY",
+    "mail-type": "POSTAL_PARCEL",
+    "index-from": "610000",
+    "index-to": "109289",
+    "mail-direct": 643,
+    mass: 100,
+  }));
+
 export const useFilterDeliveryPackages = () => {
   const parseCart = JSON.parse(localStorage.getItem("cart"));
   const newArr = parseCart.map((el) => {
@@ -41,6 +51,7 @@ export const useFilterDeliveryPackages = () => {
     },
   ];
 };
+
 export const useCityCode = () => useState("use_city_code", () => 44);
 export const useBuyerAddress = () => useState("use_buyer_address", () => "");
 export const useIndexDelivery = () => useState("use_index_delivery", () => 0);
@@ -50,6 +61,14 @@ export const useSelectedSamovivos = () =>
 export const useActiveAddress = () =>
   useState("use_active_address", () => null);
 export const useLoadingButton = () => useState("use_loading_btn", () => false);
+export const usePvzCode = () => useState("use_pvz_code", () => null);
+export const useActiveRegion = () =>
+  useState("use_active_region", () => ({
+    settlement: "Москва",
+    region: "Москва",
+  }));
+
+export const useActivePvzMail = () => useState("active_pvz_mail", () => false);
 
 function getDayPadej(days) {
   if (days % 100 >= 11 && days % 100 <= 19) {
@@ -57,7 +76,7 @@ function getDayPadej(days) {
   }
   switch (days % 10) {
     case 1:
-      return "дня";
+      return "день";
     case 2:
     case 3:
     case 4:
@@ -66,17 +85,92 @@ function getDayPadej(days) {
       return "дней";
   }
 }
+
+function toCamelCase(str) {
+  return str.replace(/-./g, (match) => match.charAt(1).toUpperCase());
+}
+
+function convertKeysToCamelCase(obj) {
+  if (typeof obj !== "object" || obj === null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(convertKeysToCamelCase);
+  }
+
+  return Object.keys(obj).reduce((acc, key) => {
+    const camelCaseKey = toCamelCase(key);
+    acc[camelCaseKey] = convertKeysToCamelCase(obj[key]);
+    return acc;
+  }, {});
+}
+
+export const useGetPvzMail = (data, checkAction) => {
+  if (data.length <= 0) {
+    return null;
+  }
+  return data.map((element) => {
+    const deliveryObj = {};
+
+    const el = convertKeysToCamelCase(element);
+    if (el.deliveryTime?.minDays) {
+      deliveryObj.calendar_min = el.deliveryTime?.minDays;
+      deliveryObj.calendar_max = el.deliveryTime?.maxDays;
+      deliveryObj.deliveryTime =
+        deliveryObj.calendar_min === deliveryObj.calendar_max
+          ? deliveryObj.calendar_min
+          : deliveryObj.calendar_min + "-" + deliveryObj.calendar_max;
+    } else {
+      deliveryObj.calendar_max = el.deliveryTime?.maxDays;
+      deliveryObj.deliveryTime = `${el.deliveryTime?.maxDays}`;
+      deliveryObj.day = deliveryObj.calendar_max;
+    }
+    let minPadej = null;
+    let maxPadej = getDayPadej(deliveryObj?.calendar_max);
+    if (deliveryObj?.calendar_min) {
+      maxPadej = getDayPadej(deliveryObj?.calendar_min);
+    }
+    deliveryObj.nameCompany = "Почта России";
+    deliveryObj.name =
+      el.name === "package"
+        ? "Почта России (самовывоз)"
+        : "Почта России (доставка курьером)";
+    deliveryObj.day = minPadej === maxPadej ? minPadej : maxPadej;
+    deliveryObj.ship =
+      el.name === "courier" ? "ONLINE_COURIER" : "ONLINE_PARCEL";
+    deliveryObj.des =
+      el.name === "package"
+        ? "Почта России (самовывоз)"
+        : "доставка заказа осуществляется курьером компании Почта России";
+    deliveryObj.sumDelivery = checkAction
+      ? 0
+      : Math.ceil((el["totalRate"] + el["totalVat"]) / 100) + 7;
+    return deliveryObj;
+  });
+};
+export const useCheckPvzMail = (data) => {
+  const newArr = [];
+  for (let key in data) {
+    if (!data[key]?.errors) newArr.push({ ...data[key], name: key });
+  }
+  return newArr;
+};
 export const useDeliveryLoad = (check, response) => {
   const newArr = [];
   for (let key in response) {
     const minPadej = getDayPadej(response[key].period_min);
-    const maxPadej = getDayPadej(response[key].period_max);
-
+    response[key]?.period_max;
+    let maxPadej = null;
+    if (response[key]?.period_max) {
+      maxPadej = getDayPadej(response[key]?.period_max);
+    }
     newArr.push({
+      codeTariff: key === "tariff_136" ? 136 : 137,
       name:
         key === "tariff_136" ? "СДЭК (самовывоз)" : "СДЭК (Доставка курьером)",
       ...response[key],
-      nameCompany: "СДЭК",
+      nameCompany: "СДЕК",
       day: minPadej === maxPadej ? minPadej : maxPadej,
       des:
         key === "tariff_136"
@@ -93,3 +187,13 @@ export const useDeliveryLoad = (check, response) => {
 };
 
 export const useActiveMenu = () => useState("use_active_menu", () => false);
+export const useProductOther = () => useState("use_product_other", () => null);
+
+//Inputs val
+
+export const useInputMobile = () => useState("use_input_mobile", () => "");
+export const useInputStreet = () => useState("use_input_street", () => "");
+export const useInputHouse = () => useState("use_input_house", () => "");
+export const useInputApartment = () =>
+  useState("use_input_apartment", () => "");
+export const useInputCorpus = () => useState("use_input_corpus", () => "");

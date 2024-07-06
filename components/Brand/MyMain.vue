@@ -43,6 +43,8 @@ export default {
   mounted() {
     setTimeout(() => {
       this.setAnimateParallax();
+    }, 10);
+    setTimeout(() => {
       this.useGsapAnimationOpacity([".main__title"], ".main");
       this.useGsapAnimationOpacity(
         [".main__text", ".main__number"],
@@ -50,7 +52,7 @@ export default {
         false,
         0.5
       );
-    }, 10);
+    }, 100);
   },
 };
 </script>

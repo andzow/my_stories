@@ -37,3 +37,9 @@ export default {
   overflow: auto;
 }
 </style>
+
+<style>
+body {
+  overflow: hidden;
+}
+</style>

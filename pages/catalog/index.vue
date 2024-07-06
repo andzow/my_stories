@@ -3,7 +3,7 @@
     <CatalogIndexMyMain @activeLine="activeLine = true" />
     <UIMyNoise />
     <UIMyAnimationLine
-      duration="11"
+      :duration="animationDuration"
       :arrAnimationLine="arrAnimationLine"
       v-if="arrAnimationLine"
     />
@@ -21,6 +21,7 @@ export default {
       useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
       activeLine: false,
       arrAnimationLine: null,
+      animationDuration: "11",
     };
   },
   methods: {
@@ -78,25 +79,27 @@ export default {
       if (window.innerWidth > 936) {
         this.arrAnimationLine = [
           { name: ".header__logo", defaultLine: false, indent: "left" },
+          {
+            name: ".header__interaction_search",
+            defaultLine: false,
+            indent: "left",
+          },
           { name: ".card1", defaultLine: false, indent: "left" },
           {
             name: ".card2",
             defaultLine: false,
             indent: "left",
           },
-          {
-            name: ".header__interaction_search",
-            defaultLine: false,
-            indent: "left",
-          },
         ];
       } else {
+        this.animationDuration = "13";
         this.arrAnimationLine = [
           { name: ".header__logo", defaultLine: false, indent: "left" },
           {
-            name: ".header__interaction_search",
+            name: ".header__interaction_cart",
             defaultLine: false,
             indent: "left",
+            widthTo: true,
           },
         ];
       }
@@ -111,4 +114,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped></style>

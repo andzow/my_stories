@@ -27,7 +27,7 @@
   >
     <swiper-slide
       class="catalog__slide"
-      v-for="(item, idx) in arrNew"
+      v-for="(item, idx) in arrNew.filter((el, idx) => idx <= 5)"
       :key="item"
     >
       <MainNewMyNewItem
@@ -43,6 +43,7 @@
 import ProductController from "@/http/controllers/ProductController";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
+import axios from "axios";
 
 export default {
   data() {
@@ -51,15 +52,17 @@ export default {
       arrAnimationOpacityGsap: [],
       arrAnimationGsapPrices: [],
       useGsapAnimationOpacity: useGsapAnimationOpacity,
-      useProductObject: useProductObject(),
+      usePageUrlAsyncData: usePageUrlAsyncData(),
     };
   },
   methods: {
     async initArr() {
       try {
-        const res = await ProductController.getNew();
-        this.arrNew = res;
-
+        const route = this.$route.params;
+        const { data } = await axios.get(
+          `${this.usePageUrlAsyncData}product/${route.name}/${route.id}`
+        );
+        this.arrNew = data.other;
         this.initAnimationArr();
       } catch {}
     },
@@ -91,6 +94,8 @@ export default {
   mounted() {
     this.initArr();
   },
+
+  watch: {},
   components: {
     Swiper,
     SwiperSlide,

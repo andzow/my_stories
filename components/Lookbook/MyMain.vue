@@ -146,7 +146,9 @@ export default {
       this.changeCssStyle();
       this.$emit("openSection");
     }, 1300);
-    this.initGsapOpacity();
+    setTimeout(() => {
+      this.initGsapOpacity();
+    }, 100);
     // this.useGsapAnimationOpacity(this.initGsapOpacity(), ".main");
   },
 };

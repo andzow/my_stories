@@ -24,7 +24,7 @@
             height="665"
             class="card__item_imgs"
             v-lazy="{
-              src: 'http://localhost:8080/api/8fa53b65-36af-437a-978a-06c2c0829730.webp',
+              src: serverUrl + slide,
             }"
             :class="{ activeOpacity: checkLoad }"
             :alt="`${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(

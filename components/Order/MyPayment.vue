@@ -124,4 +124,17 @@ export default {
   line-height: 15px;
   text-transform: lowercase;
 }
+@media screen and (max-width: 1400px) {
+  .delivery__name {
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 20px;
+  }
+  .delivery__price {
+    font-size: 24px;
+  }
+  .delivery__description {
+    font-size: 15px;
+  }
+}
 </style>

@@ -127,7 +127,9 @@ export default {
   font-size: 17px;
   color: var(--brown);
   text-transform: lowercase;
-  text-align: justify;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
   white-space: pre-wrap;
   animation-name: animationOpacity;
   animation-duration: 1s;

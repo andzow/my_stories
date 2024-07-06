@@ -111,7 +111,9 @@ export default {
     if (window.innerWidth > 1240) {
       this.initGsap();
     } else {
-      this.useGsapAnimationOpacity([".main"], ".main");
+      setTimeout(() => {
+        this.useGsapAnimationOpacity([".main"], ".main");
+      }, 100);
     }
   },
 };

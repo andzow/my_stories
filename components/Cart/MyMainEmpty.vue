@@ -56,4 +56,45 @@ export default {
   margin-bottom: 40px;
   opacity: 0;
 }
+@media screen and (max-width: 1400px) {
+  .main__empty_title {
+    font-size: 30px;
+  }
+  .main__empty_btn {
+    max-width: 400px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .main__empty_title {
+    margin-bottom: 25px;
+  }
+  .main__empty_title {
+    font-size: 27px;
+  }
+  .main__empty_btn {
+    max-width: 350px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .main__empty_title {
+    margin-bottom: 25px;
+  }
+  .main__empty_title {
+    font-size: 27px;
+  }
+  .main__empty_btn {
+    max-width: 350px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .main__empty_title {
+    margin-bottom: 25px;
+  }
+  .main__empty_title {
+    font-size: 27px;
+  }
+  .main__empty_btn {
+    max-width: 250px;
+  }
+}
 </style>

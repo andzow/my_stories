@@ -86,6 +86,7 @@ export default {
       arrObj: [],
       arrProduct: null,
       arrProductSize: null,
+      useFormatNumberToPrice: useFormatNumberToPrice,
     };
   },
   methods: {
@@ -133,6 +134,7 @@ export default {
       const size = JSON.parse(product.dimension)[idx]?.name;
       this.primerObj = {
         id: product.id,
+        articul: product.articul.toString(),
         name: product.name.toLowerCase(),
         size: size,
         price: product[!product.discount ? "price" : "discount"],
@@ -140,8 +142,11 @@ export default {
         counter: 1,
         fullprice: "",
         imageSrc: USE_SERVER + product.images[0],
+        width: product.width,
+        height: product.height,
+        weight: product.weight,
+        length: product.lenght,
       };
-
       this.useAlertCart = this.primerObj;
       this.addToCart();
       this.getSize = false;
@@ -186,6 +191,7 @@ export default {
 </style>
 <style scoped>
 .about {
+  position: relative;
   margin-left: 135px;
   margin-right: 69px;
 }

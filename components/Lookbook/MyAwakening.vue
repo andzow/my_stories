@@ -300,5 +300,9 @@ export default {
   .awakening__mob_photo {
     display: block;
   }
+  .awakening__about_btn {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 </style>

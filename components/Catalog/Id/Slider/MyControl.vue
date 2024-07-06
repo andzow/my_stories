@@ -88,7 +88,7 @@ export default {
   position: absolute;
   display: flex;
   align-items: center;
-  bottom: 0%;
+  bottom: 1%;
   right: 0;
   z-index: 19;
 }
@@ -102,6 +102,11 @@ export default {
   margin-left: 20px;
 }
 @media screen and (max-width: 1600px) {
+  .slider__control {
+    bottom: -1.5%;
+  }
+}
+@media screen and (max-height: 760px) and (max-width: 1630px) {
   .slider__control {
     bottom: -1.5%;
   }

@@ -10,15 +10,22 @@
   >
     <div
       class="delivery__adress_dropdown"
-      v-for="(item, idx) in getArray"
+      v-for="(item, idx) in useactivePvzMail ? getPvzMail : getArray"
       :key="item"
       :class="{ activeDropdown: idx === activeIdx }"
       :ref="'dropdown' + idx"
       @click="activeDropdown(idx, item)"
       data-cursor-class="animateCursor"
     >
-      <span class="delivery__adress_span">{{
+      <span class="delivery__adress_span" v-if="!useactivePvzMail">{{
         item?.location?.city + `, ${item?.location?.address}`
+      }}</span>
+      <span class="delivery__adress_span" v-else>{{
+        `г.  ${
+          useActiveRegion.settlement === useActiveRegion.region
+            ? useActiveRegion.settlement
+            : useActiveRegion.settlement + ", " + useActiveRegion.region
+        }, ${item["address-source"]}`
       }}</span>
     </div>
   </div>
@@ -29,12 +36,15 @@ export default {
   props: {
     arrCitys: Array,
     pvzInputVal: String,
+    getPvzMail: Array,
   },
   data() {
     return {
       useCursor: useCursor(),
       activeIdx: 2,
       filterArr: [],
+      useactivePvzMail: useActivePvzMail(),
+      useActiveRegion: useActiveRegion(),
     };
   },
   computed: {
@@ -44,10 +54,10 @@ export default {
         const address = el.location.address ? el.location.address : "";
         const str = (city + ", " + address)
           .toLowerCase()
-          .replace(/[\s,]+/g, "");
+          .replace(/[\s,.-/]+/g, "");
         const strValInput = this.pvzInputVal
           .toLowerCase()
-          .replace(/[\s,]+/g, "");
+          .replace(/[\s,.-/]+/g, "");
         if (str.includes(strValInput)) {
           return el;
         }
@@ -57,6 +67,9 @@ export default {
     },
   },
   mounted() {
+    if (this.useactivePvzMail) {
+      this.filterArr = this.getPvzMail;
+    }
     this.useCursor = true;
     this.dropDownClose();
   },

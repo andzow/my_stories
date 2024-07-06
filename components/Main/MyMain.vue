@@ -64,8 +64,10 @@ export default {
     setTimeout(() => {
       this.setAnimateParallax();
     }, 10);
-    this.useGsapAnimationOpacity([".main__title", ".main__catalog"], ".main");
-    this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
+    setTimeout(() => {
+      this.useGsapAnimationOpacity([".main__title", ".main__catalog"], ".main");
+      this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
+    }, 100);
   },
   unmounted() {
     if (this.useScrollCheckMain) {

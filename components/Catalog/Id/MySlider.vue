@@ -51,6 +51,7 @@
         @next="controlSlideNext"
       />
       <CatalogIdSliderMyProgress
+        v-if="checkLoad"
         :useProductObject="useProductObject"
         :changeProgress="changeProgress"
         :activeDurationVideo="activeDurationVideo"
@@ -174,6 +175,9 @@ export default {
       }
     });
   },
+  unmounted() {
+    this.checkLoad = false;
+  },
   watch: {
     useProductObject(val) {
       if (val) {
@@ -296,6 +300,26 @@ export default {
 }
 @media screen and (max-width: 1600px) {
   .slider__controls {
+    height: calc(100vh - 95px);
+  }
+  .slider__card {
+    height: calc(100vh - 125px);
+  }
+  .slider__load {
+    height: calc(100vh - 125px);
+  }
+  .slider__back {
+    height: calc(100vh - 145px);
+    margin-bottom: 50px;
+  }
+}
+@media screen and (max-height: 790px) and (max-width: 1630px) {
+  .slider__controls {
+    height: calc(100vh - 105px);
+  }
+}
+@media screen and (max-width: 1240px) {
+  .slider__controls {
     height: calc(100vh - 140px);
   }
   .slider__card {
@@ -345,8 +369,17 @@ export default {
   .slider__swiper {
     max-width: 100%;
   }
+  .slider__load {
+    height: 768px;
+    opacity: 1;
+    width: 100%;
+    margin-bottom: 50px;
+  }
 }
 @media screen and (max-width: 556px) {
+  .slider__load {
+    height: 578px;
+  }
   .slider__controls {
     height: 612px;
   }
@@ -366,6 +399,9 @@ export default {
   .slider__swiper {
     padding-bottom: 46px;
   }
+  .slider__load {
+    height: 480px;
+  }
   .slider__controls {
     height: 505px;
   }
@@ -377,6 +413,9 @@ export default {
   }
 }
 @media screen and (max-width: 378px) {
+  .slider__load {
+    height: 410px;
+  }
   .slider__controls {
     height: 430px;
   }

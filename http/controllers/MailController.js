@@ -1,9 +1,9 @@
-import PromoServices from "../services/PromoServices";
+import MailServices from "../services/MailServices";
 
-export default class PromoController {
-  static async getAll() {
+export default class MailController {
+  static async getPvz(data) {
     try {
-      const response = await PromoServices.getAll();
+      const response = await MailServices.getPvz(data);
       return response.data;
     } catch (e) {
       console.log(e.response?.data?.message);
@@ -11,9 +11,9 @@ export default class PromoController {
     }
   }
 
-  static async deletePromo(id) {
+  static async deletePromo(data) {
     try {
-      const response = await PromoServices.deletePromo(id);
+      const response = await MailServices.getPrice(data);
       return response.status;
     } catch (e) {
       console.log(e.response?.data?.message);
@@ -31,18 +31,27 @@ export default class PromoController {
     }
   }
 
-  static async setPromo(dataObject) {
+  static async check(dataObject) {
     try {
-      const response = await PromoServices.setPromo(dataObject);
+      const response = await PromoServices.check(dataObject);
       return response.status;
     } catch (e) {
       console.log(e.response?.data?.message);
       return e.response.status;
     }
   }
-  static async checkPromo(dataObject) {
+  static async getAddresPvz(dataObject) {
     try {
-      const response = await PromoServices.checkPromo(dataObject);
+      const response = await PromoServices.getAddresPvz(dataObject);
+      return response.status;
+    } catch (e) {
+      console.log(e.response?.data?.message);
+      return e.response.status;
+    }
+  }
+  static async normalizeAddress(dataObject) {
+    try {
+      const response = await PromoServices.normalizeAddress(dataObject);
       return response.status;
     } catch (e) {
       console.log(e.response?.data?.message);

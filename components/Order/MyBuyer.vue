@@ -2,7 +2,11 @@
   <div class="buyer">
     <OrderUIMyTitle>покупатель</OrderUIMyTitle>
     <div class="buyer__content">
-      <div class="buyer__item" v-for="(item, idx) in arrBuyerInput" :key="item">
+      <div
+        class="buyer__item"
+        v-for="(item, idx) in !useactivePvzMail ? arrBuyerInput : inputsPochta"
+        :key="item"
+      >
         <div
           class="buyer__span"
           :class="{
@@ -14,6 +18,7 @@
         <OrderUIMyInput
           v-if="!item.mask"
           v-model="item.inputVal"
+          :item="item"
           data-cursor-class="animateCursor"
           :active="
             arrErrors.includes(item.name) || item.textError !== ''
@@ -33,6 +38,7 @@
           :class="{
             activeInp: arrErrors.includes(item.name) || item.textError !== '',
           }"
+          :placeholder="item?.placeholder ? item?.placeholder : ''"
           v-imask="maskInp"
         />
       </div>
@@ -44,6 +50,7 @@
 import { IMaskDirective } from "vue-imask";
 import debounce from "lodash.debounce";
 import CdekController from "~/http/controllers/CdekController";
+import MailServices from "~/http/services/MailServices";
 
 export default {
   data() {
@@ -54,13 +61,15 @@ export default {
       arrBuyerInput: [
         {
           name: "фио*",
-          regExp: /[^-А-ЯA-Z\x27а-яa-z]/,
+          regExp:
+            /^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)?\s[А-ЯЁ][а-яё]*\s[А-ЯЁ][а-яё]*$/,
           regExpWord: "Фио должен быть корректным",
           mask: false,
-          lengthWord: 120,
+          lengthWord: 320,
           textArea: false,
           inputVal: "",
           textError: "",
+          placeholder: "Иванов Иван Иванович",
         },
         {
           name: "телефон Telegram / WhatsApp*",
@@ -68,21 +77,104 @@ export default {
           regExp: false,
           mask: true,
           textArea: false,
-          inputVal: "",
+          inputVal: useInputMobile(),
           textError: "",
+          placeholder: "+7 (999)-999-99-99",
         },
         {
           name: "Адрес доставки*",
-          regExp: /^.{2,}$/,
+          regExp: /^[A-Za-zА-Яа-яЁё0-9\s,./№-]+$/,
           regExpWord: "Адрес доставки должен быть корректным",
           lengthWord: 200,
           mask: false,
           textArea: true,
           inputVal: useBuyerAddress(),
           textError: "",
+          placeholder: "ул. Азовская, дом. 35 корп. 3 подъезд 8",
         },
         {
-          name: "комментарий к заказу*",
+          name: "комментарий к заказу",
+          regExp: /^[a-zA-Zа-яА-Я0-9\s.,/()-]*$/,
+          regExpWord: "Комментарий должен быть корректным",
+          mask: false,
+          lengthWord: 300,
+          textArea: true,
+          inputVal: "",
+          optional: true,
+          textError: "",
+        },
+      ],
+      inputsPochta: [
+        {
+          name: "фио*",
+          regExp:
+            /^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)?\s[А-ЯЁ][а-яё]*\s[А-ЯЁ][а-яё]*$/,
+          regExpWord: "Фио должен быть корректным",
+          mask: false,
+          lengthWord: 320,
+          textArea: false,
+          inputVal: "",
+          textError: "",
+          placeholder: "Иванов Иван Иванович",
+        },
+        {
+          name: "телефон Telegram / WhatsApp*",
+          regExpWord: "Номер телефона должен быть корректным",
+          regExp: false,
+          mask: true,
+          textArea: false,
+          inputVal: useInputMobile(),
+          textError: "",
+          placeholder: "+7 (999)-999-99-99",
+        },
+        {
+          name: "Улица*",
+          regExp: /^[A-Za-zА-Яа-яЁё0-9\s,./№-]+$/,
+          regExpWord: "Улица должен быть корректным",
+          lengthWord: 200,
+          mask: false,
+          textArea: false,
+          inputVal: useInputStreet(),
+          textError: "",
+          placeholder: "Ул. Московская, стр.1,",
+        },
+        {
+          name: "Дом*",
+          regExp: /^[A-Za-zА-Яа-яЁё0-9\s,./№-]+$/,
+          regExpWord: "Дом должен быть корректным",
+          lengthWord: 200,
+          mask: false,
+          textArea: false,
+          inputVal: useInputHouse(),
+          textError: "",
+          placeholder: "д. 158",
+        },
+        {
+          name: "Квартира/офис",
+          regExp: /^[A-Za-zА-Яа-яЁё0-9\s,./№-]+$/,
+          regExpWord: "Дом должен быть корректным",
+          lengthWord: 200,
+          mask: false,
+          textArea: false,
+          inputVal: useInputApartment(),
+          textError: "",
+          offMask: true,
+          placeholder: "кв. 24",
+        },
+        {
+          name: "Корпус",
+          regExp: /^[A-Za-zА-Яа-яЁё0-9\s,./№-]+$/,
+          regExpWord: "Корпус должен быть корректным",
+          lengthWord: 200,
+          mask: false,
+          textArea: false,
+          inputVal: useInputCorpus(),
+          textError: "",
+          offMask: true,
+          placeholder: "корп. 3",
+        },
+        {
+          name: "комментарий к заказу",
           regExp: /^[a-zA-Zа-яА-Я0-9\s.,/()-]*$/,
           regExpWord: "Комментарий должен быть корректным",
           mask: false,
@@ -103,16 +195,56 @@ export default {
       selectedOption: useIndexDelivery(),
       useSelectedSamovivos: useSelectedSamovivos(),
       useBuyerAddress: useBuyerAddress(),
+      usePvzCode: usePvzCode(),
+      useactivePvzMail: useActivePvzMail(),
+      useInputStreet: useInputStreet(),
+      useInputHouse: useInputHouse(),
+      useInputApartment: useInputApartment(),
+      useInputCorpus: useInputCorpus(),
+      useActiveRegion: useActiveRegion(),
+      useCursor: useCursor(),
       debouncedMethod: debounce(async (val) => {
         try {
           const checkError = this.checkErrors();
           if (!checkError || this.deliveryOptions?.loadText) {
             this.useOrderInfo.buyer = false;
+            return;
+          }
+          if (val && this.useactivePvzMail && !this.deliveryOptions?.loadText) {
+            const region = this.useActiveRegion;
+            const street = this.useInputStreet;
+            const house = this.useInputHouse;
+            const apartment = this.useInputApartment;
+            const corpus = this.useInputCorpus;
+            const fullAddress = `${street}, ${house}${
+              corpus ? `, ${corpus}` : ""
+            }${apartment ? `, ${apartment}` : ""}`;
+            const addressPvzMail = await this.setNormalizeAddress(fullAddress);
+            const qualityCode = addressPvzMail["validation-code"];
+            if (
+              qualityCode !== "VALIDATED" &&
+              qualityCode !== "OVERRIDDEN" &&
+              qualityCode !== "CONFIRMED_MANUALLY" &&
+              addressPvzMail?.length !== 0
+            ) {
+              this.checkNormalizeError();
+              this.useOrderInfo.buyer = false;
+              return;
+            }
+            this.inputsPochta[2].textError = "";
+            this.inputsPochta[3].textError = "";
+            const address = JSON.parse(JSON.stringify(this.inputsPochta));
+            this.useOrderInfo.buyer = {
+              inputsInfo: address,
+              codeCity: addressPvzMail,
+            };
+            return;
           }
           if (
             val &&
             this.useSelectedSamovivos &&
-            !this.deliveryOptions?.loadText
+            !this.deliveryOptions?.loadText &&
+            !this.useactivePvzMail
           ) {
             if (checkError) {
               const item = this.arrBuyerInput[2].inputVal;
@@ -120,7 +252,17 @@ export default {
 
               if (response) {
                 const address = JSON.parse(JSON.stringify(this.arrBuyerInput));
-                this.useOrderInfo.buyer = address;
+                if (this.usePvzCode) {
+                  this.useOrderInfo.buyer = {
+                    inputsInfo: address,
+                    codeCity: this.usePvzCode,
+                  };
+                } else {
+                  delete this.useOrderInfo?.buyer;
+                  this.useOrderInfo.buyer = {
+                    inputsInfo: address,
+                  };
+                }
                 this.arrBuyerInput[2].textError = "";
               } else {
                 this.useOrderInfo.buyer = false;
@@ -132,7 +274,8 @@ export default {
           } else if (
             val &&
             !this.useSelectedSamovivos &&
-            !this.deliveryOptions?.loadText
+            !this.deliveryOptions?.loadText &&
+            !this.useactivePvzMail
           ) {
             this.arrBuyerInput[2].textError = "";
             if (checkError) {
@@ -149,7 +292,9 @@ export default {
   },
   methods: {
     checkErrors() {
-      this.arrBuyerInput.forEach((el) => {
+      const activePvz = this.useactivePvzMail;
+      this[!activePvz ? "arrBuyerInput" : "inputsPochta"].forEach((el) => {
+        if (el?.offMask) return;
         const getIndexErrors = this.arrErrors.findIndex(
           (elName) => elName === el.name
         );
@@ -193,17 +338,62 @@ export default {
       }
       return true;
     },
+    async setNormalizeAddress(item) {
+      try {
+        const region = this.useActiveRegion;
+        const address = `г ${region.settlement}, ${region.region}, ${item}`;
+        const {
+          data: [data],
+        } = await MailServices.normalizeAddress({
+          originalAddress: address,
+        });
+        return data;
+      } catch {
+        return [];
+      }
+    },
+    checkNormalizeError() {
+      this.inputsPochta[2].textError = "Такой улицы не существует";
+      this.inputsPochta[3].textError = "Такого дома не существует";
+      const arrError = [
+        {
+          name: "Улица*",
+        },
+        {
+          name: "Дом*",
+        },
+      ];
+      arrError.forEach((el) => {
+        const findIndexError = this.arrErrors.findIndex(
+          (nameEl) => nameEl === el.name
+        );
+        if (findIndexError === -1) {
+          this.arrErrors.push(el.name);
+          return;
+        }
+        this.arrErrors.splice(findIndexError, 1);
+      });
+    },
   },
   watch: {
     deliveryOptions: {
       handler(val) {
         this.arrBuyerInput[2].textError = "";
+        this.arrBuyerInput[0].inputVal = "";
+        this.inputsPochta[0].inputVal = "";
       },
       deep: true,
     },
     selectedOption() {
+      this.useCursor = false;
+      setTimeout(() => {
+        this.useCursor = true;
+      }, 10);
       this.arrErrors = [];
       this.arrBuyerInput[2].textError = "";
+      this.usePvzCode = null;
+      this.arrBuyerInput[0].inputVal = "";
+      this.inputsPochta[0].inputVal = "";
     },
     useBuyerAddress(val) {
       // console.log(val);
@@ -216,6 +406,8 @@ export default {
     this.arrErrors = [];
     this.useStartCheck = false;
   },
+  mounted() {},
+
   directives: {
     imask: IMaskDirective,
   },
@@ -257,7 +449,24 @@ export default {
   border: 1px solid rgba(0, 0, 0, 0);
   transition: all 0.4s ease;
 }
+.order__input::placeholder {
+  color: #d2bcae;
+}
 .activeInp {
   border: 1px solid red;
+}
+@media screen and (max-width: 930px) {
+  .order__input {
+    font-size: 16px;
+  }
+  .buyer__content {
+    column-gap: 20px;
+  }
+}
+@media screen and (max-width: 680px) {
+  .buyer__content {
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: 80px;
+  }
 }
 </style>

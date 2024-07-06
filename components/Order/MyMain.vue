@@ -11,7 +11,9 @@
           <OrderMyBuyer />
         </div>
         <div class="main__set">
-          <OrderMyPromocode />
+          <NuxtErrorBoundary>
+            <OrderMyPromocode />
+          </NuxtErrorBoundary>
         </div>
       </div>
       <OrderMyRegistr />
@@ -34,7 +36,7 @@ export default {
 .main {
   position: relative;
   width: 100%;
-  padding-top: 150px;
+  padding-top: 120px;
   padding-bottom: 56px;
   z-index: 17;
 }
@@ -58,5 +60,25 @@ export default {
   grid-template-columns: 1fr 1fr;
   column-gap: 10px;
   margin-bottom: 10px;
+}
+@media screen and (max-width: 1400px) {
+  .main__menu {
+    grid-template-columns: 1fr 0.5fr;
+  }
+}
+@media screen and (max-width: 1276px) {
+  .main__menu {
+    grid-template-columns: repeat(1, 1fr);
+    margin-bottom: 35px;
+  }
+}
+@media screen and (max-width: 930px) {
+  .main__block {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: 0;
+    row-gap: 10px;
+    margin-bottom: 10px;
+  }
 }
 </style>

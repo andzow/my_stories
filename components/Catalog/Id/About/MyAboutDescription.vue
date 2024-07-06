@@ -81,8 +81,10 @@ export default {
 
 <style scoped>
 .about__description {
+  position: relative;
   margin-bottom: 0px;
   min-height: 50px;
+  max-width: 100%;
 }
 .activeDes {
   margin-bottom: 25px;
@@ -125,7 +127,9 @@ export default {
   font-size: 17px;
   color: var(--brown);
   text-transform: lowercase;
-  text-align: justify;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
   white-space: pre-wrap;
   animation-name: animationOpacity;
   animation-duration: 1s;

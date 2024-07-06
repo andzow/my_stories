@@ -46,12 +46,20 @@
         >
         {{ textActive }}
       </div>
-      <form class="delivery__pvz_form" @submit.prevent v-if="checkMapAndInput">
+      <form
+        class="delivery__pvz_form"
+        @submit.prevent
+        v-if="checkMapAndInput || useactivePvzMail"
+      >
         <div class="delivery__pvz_block">
           <input
             class="delivery__pvz_input"
             type="text"
-            placeholder="введите адрес..."
+            :placeholder="
+              useactivePvzMail
+                ? 'введите точный адрес: ул. спасская, дом 43'
+                : 'введите адрес...'
+            "
             ref="deliveryPvzInput"
             data-cursor-class="animateCursor"
             @input="setPvzAdress"
@@ -62,6 +70,7 @@
               v-if="activeDropdown"
               @close="activeDropdown = false"
               @keydown.esc="activeDropdown = false"
+              :getPvzMail="getPvzMail"
               @setCity="setCity"
               :arrCitys="arrPlacemarkAndInfo"
               :pvzInputVal="pvzInputVal"
@@ -76,22 +85,29 @@
           :changeMap="changeMap"
           @loadMap="setCity"
           @changeVal="changeMap = false"
+          :arrMarksMail="arrMarksMail"
         />
       </NuxtErrorBoundary>
       <div
         class="delivery__pvz_loading"
-        v-if="!arrPlacemarkAndInfo || loadingEl"
+        v-if="(!arrPlacemarkAndInfo || loadingEl) && !checkPvzMail"
       >
         <UIMyLoadItem :backgroundDisable="true" />
       </div>
-      <div class="delivery__pvz_pickup">
+      <div
+        class="delivery__pvz_pickup"
+        :class="{ activePvzMail: checkPvzMail }"
+      >
         <UIButtonMyButton
           info="применить"
           fontSize="20"
           data-cursor-class="animateCursor"
           @click="getDelivery"
+          class="delivery__pvz_buttons"
         />
         <UIButtonMyButton
+          class="delivery__pvz_buttons"
+          v-if="!checkPvzMail"
           :info="
             !checkMapAndInput
               ? 'выбрать ПВЗ вручную'
@@ -110,6 +126,8 @@
 <script>
 import CdekController from "~/http/controllers/CdekController";
 import CdekService from "~/http/services/Cdek.service";
+import MailServices from "~/http/services/MailServices";
+import debounce from "lodash.debounce";
 
 export default {
   data() {
@@ -127,25 +145,63 @@ export default {
       activeObj: null,
       changeMap: false,
       loadingEl: false,
+      arrMarksMail: null,
       useActiveAddress: useActiveAddress(),
       useFilterDeliveryPackages: useFilterDeliveryPackages,
       textActive: "Выберите ПВЗ с помощью карты*",
       checkMapAndInput: false,
       useBuyerAddress: useBuyerAddress(),
       arrErrors: useCheckErrors(),
+      usePvzCode: usePvzCode(),
+      useActiveRegion: useActiveRegion(),
+      useactivePvzMail: useActivePvzMail(),
+      checkPvzMail: false,
+      useInputStreet: useInputStreet(),
+      useInputHouse: useInputHouse(),
+      useInputApartment: useInputApartment(),
+      useInputCorpus: useInputCorpus(),
+      getPvzMail: [],
+      inputDisableRegion: "",
+      debouncedSearch: debounce(async () => {
+        try {
+          const region = this.useActiveRegion;
+          const address = `г ${region.settlement}, ${region.region}, ${this.pvzInputVal}`;
+          const { data } = await MailServices.getAddresPvz({
+            address: address,
+          });
+          this.getPvzMail = data;
+          this.activeDropdown = true;
+        } catch {}
+      }, 1500),
     };
   },
 
   methods: {
     setPvzAdress() {
       if (this.pvzInputVal.length > 0) {
-        this.activeDropdown = true;
+        if (this.useactivePvzMail) {
+          this.debouncedSearch();
+        } else {
+          this.activeDropdown = true;
+        }
       } else {
         this.activeDropdown = false;
       }
       this.useCursor = true;
     },
+    setPvzMail(item) {
+      const region = this.useActiveRegion;
+      const address = `г ${region.settlement}, ${item["address-source"]}`;
+      this.pvzInputVal = address;
+      this.inputDisableRegion = `${item["address-source"]}`;
+      this.activeDropdown = false;
+    },
     setCity(item) {
+      if (this.useactivePvzMail) {
+        this.setPvzMail(item);
+        this.activeObj = item;
+        return;
+      }
       if (!item?.location?.city) {
         return;
       }
@@ -160,6 +216,20 @@ export default {
       const click = e.composedPath().includes(blockEl);
       if (!click) {
         this.usePvzModal = false;
+      }
+    },
+    async setNormalizeAddress() {
+      try {
+        const region = this.useActiveRegion;
+        const address = `г ${region.settlement}, ${region.region}, ${this.pvzInputVal}`;
+        const {
+          data: [data],
+        } = await MailServices.normalizeAddress({
+          originalAddress: address,
+        });
+        return data;
+      } catch {
+        return [];
       }
     },
     async initApp() {
@@ -178,29 +248,59 @@ export default {
       }
       return false;
     },
+    async getPriceDeliveryMail() {
+      this.usePvzModal = false;
+    },
     async getDelivery() {
-      try {
-        this.loadingEl = true;
-        if (!this.activeObj) {
-          this.usePvzModal = false;
-        }
-        const packagesArr = this.useFilterDeliveryPackages();
-        this.objSet.packages = packagesArr;
-        delete this.objSet.to_location.code;
-
-        this.objSet.to_location.address = this.activeObj.location.address_full;
-        const response = await CdekController.getOptions(this.objSet);
-        this.arrErrors = [];
-        const check = this.changeSumm();
-        const newArr = this.useDeliveryLoad(check, response);
-        this.useDeliveryPrice = newArr[0].sumDelivery;
-        this.deliveryOptions = newArr;
-        this.usePvzModal = false;
-        this.useActiveAddress = this.activeObj;
-        this.useBuyerAddress = this.useActiveAddress.location.address_full;
-      } catch {
+      this.loadingEl = true;
+      // if (this.useactivePvzMail) {
+      //   this.getPriceDeliveryMail();
+      //   return;
+      // }
+      if (!this.activeObj) {
         this.usePvzModal = false;
       }
+
+      // const packagesArr = this.useFilterDeliveryPackages();
+      // this.objSet.packages = packagesArr;
+
+      // delete this.objSet.to_location.code;
+
+      // this.objSet.to_location.address = this.activeObj.location.address_full;
+      // const response = await CdekController.getOptions(this.objSet);
+      // this.arrErrors = [];
+      // const check = this.changeSumm();
+      // const newArr = this.useDeliveryLoad(check, response);
+      // this.useDeliveryPrice = newArr[0].sumDelivery;
+      // this.deliveryOptions = newArr;
+      if (this.useactivePvzMail) {
+        const addressPvzMail = await this.setNormalizeAddress();
+        if (addressPvzMail?.length <= 0) return;
+        const region = this.useActiveRegion;
+        const address = `г ${region.settlement}, ${region.region}, ${this.pvzInputVal}`;
+
+        this.useBuyerAddress =
+          this.inputDisableRegion !== ""
+            ? this.inputDisableRegion
+            : this.pvzInputVal;
+        this.useInputStreet = addressPvzMail["street"];
+        this.useInputHouse = addressPvzMail["house"];
+        this.useInputApartment = addressPvzMail?.room
+          ? addressPvzMail?.room
+          : "";
+        this.useInputCorpus = addressPvzMail?.corpus
+          ? addressPvzMail?.corpus
+          : "";
+      } else {
+        this.useActiveAddress = this.activeObj;
+        this.useBuyerAddress = this.useActiveAddress.location.address_full;
+        this.usePvzCode = {
+          code: this.activeObj.code,
+          region: this.activeObj?.location?.region,
+          city: this.activeObj?.location?.city,
+        };
+      }
+      this.usePvzModal = false;
     },
     setActiveMapOrInput() {
       if (!this.checkMapAndInput) {
@@ -218,8 +318,17 @@ export default {
       this.useActiveAddress = null;
     },
   },
+  created() {
+    if (this.useactivePvzMail) {
+      this.textActive = "Выберите ПВЗ с помощью поля ввода*";
+    }
+  },
   mounted() {
-    this.initApp();
+    if (!this.useactivePvzMail) {
+      this.initApp();
+    } else {
+      this.checkPvzMail = true;
+    }
     nextTick(() => {
       document.body.style.overflow = "hidden";
       this.useCursor = true;
@@ -233,8 +342,13 @@ export default {
 };
 </script>
 
-<style></style>
-
+<style>
+@media screen and (max-width: 736px) {
+  .delivery__pvz_buttons .button__btn {
+    font-size: 18px !important;
+  }
+}
+</style>
 <style scoped>
 .delivery__pvz {
   position: fixed;
@@ -319,6 +433,10 @@ export default {
   grid-template-columns: 1fr 0.5fr;
   column-gap: 10px;
 }
+.activePvzMail {
+  display: grid;
+  grid-template-columns: 1fr !important;
+}
 .fade-dropdown-enter-from {
   opacity: 0;
   transform: translateY(20px);
@@ -338,5 +456,46 @@ export default {
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.4s ease;
+}
+@media screen and (max-width: 1400px) {
+  .delivery__pvz_title {
+    font-size: 30px;
+  }
+  .delivery__pvz_name {
+    font-size: 17px;
+  }
+  .delivery__pvz_input {
+    font-size: 17px;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .delivery__pvz_title {
+    font-size: 27px;
+  }
+}
+@media screen and (max-width: 930px) {
+  .delivery__pvz_name {
+    font-size: 16px;
+  }
+  .delivery__pvz_input {
+    font-size: 16px;
+  }
+  .delivery__pvz_item {
+    min-width: 130px;
+  }
+  .delivery__pvz_loading {
+    height: 300px;
+  }
+}
+@media screen and (max-width: 536px) {
+  .delivery__pvz_item {
+    margin: 0 10px;
+  }
+  .delivery__pvz_pickup {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: 10px;
+    row-gap: 10px;
+  }
 }
 </style>

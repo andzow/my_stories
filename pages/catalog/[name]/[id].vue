@@ -3,6 +3,11 @@
     <CatalogIdMyMain />
     <CatalogIdMyCatalog />
     <UIMyNoise />
+    <UIMyAnimationLine
+      duration="6"
+      :arrAnimationLine="arrAnimationLine"
+      v-if="arrAnimationLine"
+    />
     <Transition name="fade-alert">
       <UIMyAlertCart v-if="useAlertCart" />
     </Transition>
@@ -15,6 +20,7 @@ export default {
     return {
       useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
       useAlertCart: useAlertCart(),
+      arrAnimationLine: null,
     };
   },
   methods: {
@@ -24,6 +30,43 @@ export default {
     initApp() {
       this.replaceRoute();
     },
+    initGsap() {
+      if (window.innerWidth > 936) {
+        this.arrAnimationLine = [
+          {
+            name: ".header__logo",
+            defaultLine: false,
+            indent: "left",
+          },
+          {
+            name: ".about",
+            defaultLine: false,
+            indent: "left",
+          },
+          {
+            name: ".header__ul",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+          {
+            name: ".header__interaction_search",
+            defaultLine: false,
+            indent: "left",
+          },
+        ];
+      } else {
+        this.arrAnimationLine = [
+          { name: ".header__logo", defaultLine: false, indent: "left" },
+          {
+            name: ".header__interaction_cart",
+            defaultLine: false,
+            indent: "left",
+            widthTo: true,
+          },
+        ];
+      }
+    },
   },
   created() {
     this.initApp();
@@ -32,6 +75,9 @@ export default {
   async mounted() {
     const bodyEl = document.body;
     bodyEl.style.overflow = "auto";
+    setTimeout(() => {
+      this.initGsap();
+    }, 100);
   },
   watch: {},
 };
