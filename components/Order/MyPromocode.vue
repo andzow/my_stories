@@ -204,8 +204,9 @@ export default {
         const elHtml = document.querySelector(".promocode__input");
         if (data.status !== "error") {
           this.discountSumm = parseInt(data.discount);
-          this.discountedPrice = (this.fullSumm * this.discountSumm) / 100;
-          this.fullSumm = Math.ceil(this.fullSumm - this.discountedPrice);
+          this.discountedPrice = (this.summ * this.discountSumm) / 100;
+          this.fullSumm =
+            Math.ceil(this.summ - this.discountedPrice) + this.useDeliveryPrice;
           this.promocodeState = "success";
           this.promocodeText = `промокод применен / ${this.discountSumm}%`;
           this.activePromocode = this.inputVal;
@@ -308,10 +309,10 @@ export default {
       }
     },
     useDeliveryPrice(val) {
-      const fullSummPrice = this.summ + val;
+      const fullSummPrice = this.summ;
       if (this.discountSumm !== 0 && this.discountedPrice !== 0) {
         this.discountedPrice = (fullSummPrice * this.discountSumm) / 100;
-        this.fullSumm = Math.ceil(fullSummPrice - this.discountedPrice);
+        this.fullSumm = Math.ceil(fullSummPrice - this.discountedPrice) + val;
       } else {
         this.fullSumm = fullSummPrice;
       }
