@@ -7,12 +7,13 @@
     <h3 class="collection__mob_title">
       летний ветер <span class="span__mob_inter">. . .</span>
     </h3>
-    <img
+    <NuxtImg
       class="collection__mob_inner"
-      src="@/assets/images/Main/collectionF.webp"
+      src="/Preload/collectionF.webp"
       width="474"
       height="128"
       alt="Фотография коллекции"
+      format="webp"
     />
     <div class="collection__mob_content">
       <div class="collection__mob_block">
@@ -32,12 +33,13 @@
         </div>
       </div>
       <div class="collection__mob_img">
-        <img
+        <NuxtImg
           class="collection__mob_image"
-          src="@/assets/images/Main/collectionF.webp"
+          src="/Preload/collectionF.webp"
           width="304"
           height="328"
           alt="Фотография коллекции"
+          format="webp"
         />
       </div>
     </div>

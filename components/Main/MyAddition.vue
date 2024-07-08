@@ -4,12 +4,13 @@
       <div class="addition__menu">
         <div class="addition__number">( &nbsp;2&nbsp; )</div>
         <div class="addition__image">
-          <img
+          <NuxtImg
             class="addition__img"
-            src="@/assets/images/Main/additionF.webp"
+            src="/Preload/additionF.webp"
             alt="платье в каталоге"
             width="136"
             height="119"
+            format="webp"
           />
         </div>
         <p class="addition__text">
@@ -22,12 +23,13 @@
     </div>
     <div class="addition__mob">
       <div class="addition__mob_img">
-        <img
+        <NuxtImg
           class="addition__mob_image"
-          src="@/assets/images/Main/additionF.webp"
+          src="/Preload/additionF.webp"
           alt="платье в каталоге"
           width="136"
           height="119"
+          format="webp"
         />
       </div>
       <h2 class="addition__mob_title">( &nbsp;о бренде&nbsp; )</h2>

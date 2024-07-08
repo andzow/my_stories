@@ -2,21 +2,23 @@
   <div class="collection__mobile">
     <h2 class="collection__mobile_title">( &nbsp;новая коллекция&nbsp; )</h2>
     <div class="collection__mobile_photo">
-      <img
+      <NuxtImg
         class="collection__mobile_img"
-        src="@/assets/images/Main/collectionS.webp"
+        src="/Preload/collectionS.webp"
         width="111"
         height="117"
         alt="Фотография новой коллекции - летний ветер"
+        format="webp"
       />
     </div>
     <div class="collection__mobile_image">
-      <img
+      <NuxtImg
         class="collection__new_item"
-        src="@/assets/images/Main/collectionF.webp"
+        src="/Preload/collectionF.webp"
         width="450"
         height="472"
         alt="Фотография коллекции"
+        format="webp"
       />
     </div>
   </div>

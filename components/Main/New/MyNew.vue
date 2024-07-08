@@ -1,11 +1,11 @@
 <template>
-  <section class="new">
+  <section class="new" v-preload="() => (checkPreload = true)">
     <div class="new__content">
       <div class="new__header">
         <h2 class="new__title">( &nbsp;новинки&nbsp; )</h2>
         <div class="new__number">( &nbsp;3&nbsp; )</div>
       </div>
-      <LazyMainNewMyNewSwiper v-if="checkSwiper && checkHydrate" />
+      <LazyMainNewMyNewSwiper v-if="checkSwiper && checkPreload" />
       <div class="new__btn">
         <UIButtonMyButton
           @click="$router.push('/catalog')"
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       checkSwiper: false,
-      checkHydrate: useCheckHydration(),
+      checkPreload: false,
     };
   },
   methods: {},

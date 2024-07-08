@@ -1,7 +1,7 @@
 <template>
-  <section class="catalog">
+  <section class="catalog" v-preload="() => (checkPreload = true)">
     <div class="catalog__content">
-      <LazyMainCatalogMyCatalogSwiper v-if="checkSwiper && checkHydrate" />
+      <LazyMainCatalogMyCatalogSwiper v-if="checkSwiper && checkPreload" />
     </div>
     <div class="catalog__btn">
       <UIButtonMyButton
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       checkSwiper: false,
-      checkHydrate: useCheckHydration(),
+      checkPreload: false,
     };
   },
 

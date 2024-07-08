@@ -25,7 +25,17 @@ export default {
         {
           rel: "preload",
           as: "image",
-          href: "/Preload/back.webp",
+          href: "/Preload/additionF.webp",
+        },
+        {
+          rel: "preload",
+          as: "image",
+          href: "/Preload/collectionF.webp",
+        },
+        {
+          rel: "preload",
+          as: "image",
+          href: "/Preload/collectionS.webp",
         },
       ],
     });

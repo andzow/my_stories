@@ -28,13 +28,11 @@
       v-for="(item, idx) in arrCatalog"
       :key="item.imageSrc"
       :class="['catalog__img' + (idx + 1)]"
+      :style="{
+        background: `url(${item.imageSrc}) no-repeat`,
+        backgroundSize: 'cover',
+      }"
     >
-      <NuxtImg
-        class="catalog__image"
-        :src="item.imageSrc"
-        loading="lazy"
-        alt="фотографии каталога майсторис"
-      />
     </swiper-slide>
   </swiper>
 </template>

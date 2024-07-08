@@ -3,12 +3,13 @@
     <div class="collection__new_content">
       <h2 class="collection__new_title">( &nbsp;новая коллекция&nbsp; )</h2>
       <div class="collection__new_img">
-        <img
+        <NuxtImg
           class="collection__new_image"
-          src="@/assets/images/Main/collectionF.webp"
+          src="/Preload/collectionF.webp"
           width="504"
           height="528"
           alt="Фотография коллекции"
+          format="webp"
         />
       </div>
     </div>

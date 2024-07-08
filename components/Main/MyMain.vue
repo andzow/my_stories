@@ -38,13 +38,13 @@
 <script>
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
 
 export default {
   data() {
     return {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
       useScrollCheckMain: useScrollCheckMain,
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {
@@ -60,19 +60,26 @@ export default {
       });
     },
   },
-  mounted() {
-    setTimeout(() => {
-      this.setAnimateParallax();
-    }, 10);
-    setTimeout(() => {
-      this.useGsapAnimationOpacity([".main__title", ".main__catalog"], ".main");
-      this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
-    }, 100);
-  },
+  mounted() {},
   unmounted() {
     // if (this.useScrollCheckMain) {
     //   this.useScrollCheckMain.revert();
     // }
+  },
+  watch: {
+    checkHydrate() {
+      gsap.registerPlugin(ScrollTrigger);
+      setTimeout(() => {
+        this.setAnimateParallax();
+      }, 10);
+      setTimeout(() => {
+        this.useGsapAnimationOpacity(
+          [".main__title", ".main__catalog"],
+          ".main"
+        );
+        this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
+      }, 100);
+    },
   },
 };
 </script>
