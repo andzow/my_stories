@@ -3,12 +3,11 @@
     <UIMyPreloader v-if="!preloader" />
   </Transition>
   <UIMyHeader v-if="headerVisible" />
-  <main class="page">
-    <NuxtPage />
-    <!-- <UIMyPreloader v-if="preloader" /> -->
+  <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
+    1
     <UIMyModalStatus />
-    <UIMyCursor />
-    <UIMyCursorCircle />
+    <LazyUIMyCursor v-if="checkHydrate && checkMobile === false" />
+    <LazyUIMyCursorCircle v-if="checkHydrate && checkMobile === false" />
   </main>
   <UIMyFooter />
 </template>
@@ -23,9 +22,39 @@ export default {
       useCursor: useCursor(),
       headerVisible: true,
       preloader: false,
+      checkHydrate: useCheckHydration(),
+      checkMobile: null,
     };
   },
+  methods: {
+    isMobile() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      if (/android/i.test(userAgent)) {
+        return true;
+      }
+
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return true;
+      }
+
+      if (/windows phone/i.test(userAgent)) {
+        return true;
+      }
+
+      if (
+        /blackberry|webos|opera mini|opera mobi|bada|tizen|windows ce|palm/i.test(
+          userAgent
+        )
+      ) {
+        return true;
+      }
+
+      return false;
+    },
+  },
   async mounted() {
+    this.checkMobile = this.isMobile();
     if (this.$route.path === "/admin" || this.$route.path === "/login") {
       this.headerVisible = false;
     } else {
