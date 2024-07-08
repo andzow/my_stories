@@ -105,6 +105,5 @@ export default {
 <style scoped>
 .catalog__swiper {
   margin-bottom: 40px;
-  min-height: 300px;
 }
 </style>

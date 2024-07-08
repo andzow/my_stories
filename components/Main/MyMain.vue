@@ -70,9 +70,9 @@ export default {
     }, 100);
   },
   unmounted() {
-    if (this.useScrollCheckMain) {
-      this.useScrollCheckMain.revert();
-    }
+    // if (this.useScrollCheckMain) {
+    //   this.useScrollCheckMain.revert();
+    // }
   },
 };
 </script>
@@ -92,7 +92,7 @@ export default {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: url("@/assets/images/Main/back.webp") no-repeat;
+  background: url("/Preload/back.webp") no-repeat;
   background-size: cover;
   z-index: 0;
 }

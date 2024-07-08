@@ -2,8 +2,12 @@
   <div>
     <DeliveryMyMain />
     <DeliveryMyAbout />
-    <UIMyAnimationLine duration="4" :arrAnimationLine="arrAnimationLine" />
-    <UIMyNoise />
+    <LazyUIMyAnimationLine
+      duration="4"
+      :arrAnimationLine="arrAnimationLine"
+      v-if="arrAnimationLine && checkHydrate"
+    />
+    <LazyUIMyNoise v-if="checkHydrate" />
   </div>
 </template>
 
@@ -11,29 +15,8 @@
 export default {
   data() {
     return {
-      arrAnimationLine: [
-        {
-          name: ".header__logo",
-          defaultLine: false,
-          indent: "left",
-        },
-        {
-          name: ".about__info_image",
-          defaultLine: false,
-          widthTo: true,
-          indent: "left",
-        },
-        {
-          name: ".main__delivery_title",
-          defaultLine: false,
-          indent: "left",
-        },
-        {
-          name: ".main__delivery_number",
-          defaultLine: false,
-          indent: "left",
-        },
-      ],
+      arrAnimationLine: null,
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {

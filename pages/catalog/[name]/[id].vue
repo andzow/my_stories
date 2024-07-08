@@ -2,12 +2,14 @@
   <div>
     <CatalogIdMyMain />
     <CatalogIdMyCatalog />
-    <UIMyNoise />
-    <UIMyAnimationLine
+
+    <LazyUIMyNoise v-if="checkHydrate" />
+    <LazyUIMyAnimationLine
       duration="6"
       :arrAnimationLine="arrAnimationLine"
-      v-if="arrAnimationLine"
+      v-if="arrAnimationLine && checkHydrate"
     />
+
     <Transition name="fade-alert">
       <UIMyAlertCart v-if="useAlertCart" />
     </Transition>
@@ -21,6 +23,7 @@ export default {
       useReplaceOrDeleteWordQuery: useReplaceOrDeleteWordQuery,
       useAlertCart: useAlertCart(),
       arrAnimationLine: null,
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {

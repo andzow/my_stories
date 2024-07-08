@@ -128,6 +128,7 @@ export default {
   font-weight: 400;
   font-size: 26px;
   color: var(--brown);
+  display: none;
 }
 @media screen and (max-width: 1778px) {
   .addition__menu {
@@ -186,6 +187,9 @@ export default {
   }
   .addition__new_title {
     display: none;
+  }
+  .addition__mob_title {
+    display: block;
   }
   .addition__mob {
     display: flex;

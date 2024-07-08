@@ -1,7 +1,7 @@
 <template>
   <section class="catalog">
     <div class="catalog__content">
-      <MainCatalogMyCatalogSwiper v-if="checkSwiper" />
+      <LazyMainCatalogMyCatalogSwiper v-if="checkSwiper && checkHydrate" />
     </div>
     <div class="catalog__btn">
       <UIButtonMyButton
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       checkSwiper: false,
+      checkHydrate: useCheckHydration(),
     };
   },
 

@@ -4,7 +4,7 @@
   </Transition>
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
-    1
+    <NuxtPage />
     <UIMyModalStatus />
     <LazyUIMyCursor v-if="checkHydrate && checkMobile === false" />
     <LazyUIMyCursorCircle v-if="checkHydrate && checkMobile === false" />

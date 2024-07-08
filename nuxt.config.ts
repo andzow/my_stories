@@ -1,8 +1,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  css: ["~/assets/style/main.css"],
   plugins: ["~/plugins/animate.connect.js", "~/plugins/v-click-outside.js"],
-
+  css: ["~/assets/style/main.css", "~/assets/style/fonts.css"],
   app: {
     pageTransition: {
       name: "page",
@@ -14,5 +13,10 @@ export default defineNuxtConfig({
     "/login": { ssr: false },
   },
   ssr: true,
-  modules: ["@nuxt/image"],
+  components: true,
+  modules: ["@nuxt/image", "nuxt-delay-hydration"],
+  delayHydration: {
+    debug: process.env.NODE_ENV === "development",
+    mode: "mount",
+  },
 });

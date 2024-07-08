@@ -197,3 +197,5 @@ export const useInputHouse = () => useState("use_input_house", () => "");
 export const useInputApartment = () =>
   useState("use_input_apartment", () => "");
 export const useInputCorpus = () => useState("use_input_corpus", () => "");
+export const useCheckHydration = () =>
+  useState("use_check_hydration", () => false);

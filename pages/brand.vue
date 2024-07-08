@@ -8,12 +8,12 @@
       <BrandMyPhrase />
       <BrandMyFacts />
       <BrandMySubscribe />
-      <UIMyAnimationLine
+      <LazyUIMyAnimationLine
         duration="7"
         :arrAnimationLine="arrAnimationLine"
-        v-if="arrAnimationLine"
+        v-if="arrAnimationLine && checkHydrate"
       />
-      <UIMyNoise />
+      <LazyUIMyNoise v-if="checkHydrate" />
     </section>
   </div>
 </template>
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       arrAnimationLine: null,
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {

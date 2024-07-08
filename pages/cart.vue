@@ -2,12 +2,12 @@
   <div>
     <CartMyMain />
     <CartMySlider />
-    <UIMyAnimationLine
-      v-if="arrAnimationLine"
+    <LazyBrandMyFacts
+      v-if="arrAnimationLine && checkHydrate"
       duration="4"
       :arrAnimationLine="arrAnimationLine"
     />
-    <UIMyNoise />
+    <LazyUIMyNoise v-if="checkHydrate" />
   </div>
 </template>
 
@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       arrAnimationLine: null,
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {

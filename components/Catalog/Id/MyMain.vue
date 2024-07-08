@@ -9,7 +9,7 @@
     </div>
   </section>
   <Transition>
-    <CatalogIdTablesMyTable
+    <LazyCatalogIdTablesMyTable
       v-if="useTableSize && arrTableSize"
       :arrTable="arrTableSize"
       :arrObjectSize="arrObjectSize"
@@ -18,7 +18,7 @@
     />
   </Transition>
   <Transition>
-    <CatalogIdTablesMyTable
+    <LazyCatalogIdTablesMyTable
       v-if="useTableMeus && arrTableMeus"
       :arrTable="arrTableMeus"
       :arrObjectSize="arrObjectSize"

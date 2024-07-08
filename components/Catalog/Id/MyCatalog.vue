@@ -2,14 +2,20 @@
   <section class="catalog">
     <div class="catalog__content">
       <NuxtErrorBoundary>
-        <CatalogIdCatalogMySwiper />
+        <LazyCatalogIdCatalogMySwiper v-if="checkHydrate" />
       </NuxtErrorBoundary>
     </div>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      checkHydrate: useCheckHydration(),
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -24,5 +30,6 @@ export default {};
   width: 100%;
   margin: 0 auto;
   padding: 0 30px;
+  min-height: 300px;
 }
 </style>

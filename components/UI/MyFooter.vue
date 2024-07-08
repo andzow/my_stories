@@ -87,7 +87,7 @@
                 :key="item"
               >
                 <NuxtLink
-                  class="footer__about_link"
+                  class="footer__about_lin"
                   :to="item.path"
                   data-cursor-class="animateCursor"
                   >{{ item.name }}</NuxtLink
@@ -402,6 +402,13 @@ export default {
   font-weight: 300;
   font-size: 16px;
   color: #868975;
+  transition: all 0.4s ease;
+}
+.footer__about_lin {
+  text-transform: lowercase;
+  font-weight: 300;
+  font-size: 16px;
+  color: white;
   transition: all 0.4s ease;
 }
 .footer__about_link:hover {

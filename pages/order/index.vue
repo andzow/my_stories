@@ -7,12 +7,13 @@
         @keydown.esc="usePvzModal = false"
       />
     </Transition>
-    <UIMyAnimationLine
+
+    <LazyUIMyAnimationLine
       duration="7"
       :arrAnimationLine="arrAnimationLine"
-      v-if="arrAnimationLine"
+      v-if="arrAnimationLine && checkHydrate"
     />
-    <UIMyNoise />
+    <LazyUIMyNoise v-if="checkHydrate" />
   </div>
 </template>
 
@@ -32,6 +33,7 @@ export default {
       usePvzModal: usePvzModal(),
       usePvzCode: usePvzCode(),
       arrAnimationLine: null,
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {

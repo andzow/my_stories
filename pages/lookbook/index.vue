@@ -5,13 +5,17 @@
       <LookbookMyAbout />
       <LookbookMySummer />
       <LookbookMyAwakening />
-      <UIMyAnimationLine
+      <LazyUIMyAnimationLine
         duration="7"
         :arrAnimationLine="arrAnimationLine"
-        v-if="arrAnimationLine"
+        v-if="arrAnimationLine && checkHydrate"
       />
     </section>
-    <UIMyNoise />
+    <LazyUIMyAnimationLine
+      duration="7"
+      :arrAnimationLine="arrAnimationLine"
+      v-if="arrAnimationLine && checkHydrate"
+    />
   </div>
 </template>
 
@@ -26,6 +30,7 @@ export default {
       checkAnimation: false,
       useCursor: useCursor(),
       arrAnimationLine: null,
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {

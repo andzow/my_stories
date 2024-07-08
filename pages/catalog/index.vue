@@ -1,11 +1,12 @@
 <template>
   <div>
     <CatalogIndexMyMain @activeLine="activeLine = true" />
-    <UIMyNoise />
-    <UIMyAnimationLine
+
+    <LazyUIMyNoise v-if="checkHydrate" />
+    <LazyUIMyAnimationLine
       :duration="animationDuration"
       :arrAnimationLine="arrAnimationLine"
-      v-if="arrAnimationLine"
+      v-if="arrAnimationLine && checkHydrate"
     />
   </div>
 </template>
@@ -22,6 +23,7 @@ export default {
       activeLine: false,
       arrAnimationLine: null,
       animationDuration: "11",
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {

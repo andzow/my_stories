@@ -7,21 +7,33 @@
       <MainMyAddition />
       <MainCatalogMyCatalog />
       <MainNewMyNew />
-      <UIMyAnimationLine
-        v-if="arrAnimationLine"
+      <LazyUIMyAnimationLine
+        v-if="arrAnimationLine && checkHydrate"
         duration="9"
         :arrAnimationLine="arrAnimationLine"
       />
-      <UIMyNoise />
+      <LazyUIMyNoise v-if="checkHydrate" />
     </section>
   </div>
 </template>
 
 <script>
 export default {
+  setup() {
+    useHead({
+      link: [
+        {
+          rel: "preload",
+          as: "image",
+          href: "/Preload/back.webp",
+        },
+      ],
+    });
+  },
   data() {
     return {
       arrAnimationLine: null,
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {

@@ -3,8 +3,12 @@
     <LookbookIdMyMain v-if="arrActive" :arrActive="arrActive" />
     <section class="index" v-if="arrActive">
       <LookbookIdMyPhotos :arrPhotos="arrActive.arrPhotos" />
-      <UIMyAnimationLine duration="8" :arrAnimationLine="arrAnimationLine" />
-      <UIMyNoise />
+      <LazyUIMyAnimationLine
+        duration="8"
+        :arrAnimationLine="arrAnimationLine"
+        v-if="checkHydrate"
+      />
+      <LazyUIMyNoise v-if="checkHydrate" />
     </section>
   </div>
 </template>
@@ -62,6 +66,7 @@ export default {
           indent: "right",
         },
       ],
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {

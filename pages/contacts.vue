@@ -1,12 +1,12 @@
 <template>
   <div>
     <ContactsMyMain />
-    <UIMyAnimationLine
+    <LazyUIMyAnimationLine
       duration="2"
       :arrAnimationLine="arrAnimationLine"
-      v-if="arrAnimationLine"
+      v-if="arrAnimationLine && checkHydrate"
     />
-    <UIMyNoise />
+    <LazyUIMyNoise v-if="checkHydrate" />
   </div>
 </template>
 
@@ -15,6 +15,7 @@ export default {
   data() {
     return {
       arrAnimationLine: null,
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {
