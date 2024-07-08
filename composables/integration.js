@@ -199,3 +199,4 @@ export const useInputApartment = () =>
 export const useInputCorpus = () => useState("use_input_corpus", () => "");
 export const useCheckHydration = () =>
   useState("use_check_hydration", () => false);
+export const useCheckPreload = () => useState("use_check_preload", () => false);

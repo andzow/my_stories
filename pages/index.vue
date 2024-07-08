@@ -3,7 +3,7 @@
     <MainMyMain />
     <section class="index">
       <MainCollectionMyCollection />
-      <MainBrandMyBrand />
+      <MainBrandMyBrand v-preload="() => (checkPreload = true)" />
       <MainMyAddition />
       <MainCatalogMyCatalog />
       <MainNewMyNew />
@@ -44,6 +44,7 @@ export default {
     return {
       arrAnimationLine: null,
       checkHydrate: useCheckHydration(),
+      checkPreload: useCheckPreload(),
     };
   },
   methods: {

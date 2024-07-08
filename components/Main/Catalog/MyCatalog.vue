@@ -1,5 +1,5 @@
 <template>
-  <section class="catalog" v-preload="() => (checkPreload = true)">
+  <section class="catalog">
     <div class="catalog__content">
       <LazyMainCatalogMyCatalogSwiper v-if="checkSwiper && checkPreload" />
     </div>
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       checkSwiper: false,
-      checkPreload: false,
+      checkPreload: useCheckPreload(),
     };
   },
 

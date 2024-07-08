@@ -1,5 +1,5 @@
 <template>
-  <section class="new" v-preload="() => (checkPreload = true)">
+  <section class="new">
     <div class="new__content">
       <div class="new__header">
         <h2 class="new__title">( &nbsp;новинки&nbsp; )</h2>
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       checkSwiper: false,
-      checkPreload: false,
+      checkPreload: useCheckPreload(),
     };
   },
   methods: {},

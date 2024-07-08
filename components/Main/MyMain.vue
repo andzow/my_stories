@@ -1,5 +1,6 @@
 <template>
   <section class="main">
+    1
     <div class="main__menu">
       <div class="main__content">
         <div class="main__about">
