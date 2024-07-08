@@ -7,8 +7,10 @@
 dist
 
 # Node dependencies
+composables/axios.js
 node_modules
 url
+
 # Logs
 logs
 *.log
