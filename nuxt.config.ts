@@ -13,9 +13,6 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    "/": { delayHydration: "mount" },
-    "/catalog/": { delayHydration: false },
-    "/catalog/:id/:id/": { delayHydration: false },
     "/admin": { ssr: false },
     "/login": { ssr: false },
   },
@@ -24,5 +21,6 @@ export default defineNuxtConfig({
   modules: ["@nuxt/image", "nuxt-delay-hydration"],
   delayHydration: {
     debug: process.env.NODE_ENV === "development",
+    mode: "init",
   },
 });
