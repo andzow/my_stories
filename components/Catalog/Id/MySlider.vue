@@ -213,34 +213,36 @@ export default {
   },
   watch: {
     useProductObject(val) {
-      if (val) {
-        let arrImages = val.product[0].images.map((el) => ({
-          imageSrc: this.urlServer + el,
-        }));
-        const objVideo = val.product[0].video ? val.product[0].video : false;
-        if (objVideo && !this.isMobile()) {
-          setTimeout(() => {
-            const mediaElem = document.querySelector(".slider__video");
-            fetch(this.urlServer + objVideo)
-              .then((resp) => resp.blob())
-              .then((blob) => {
-                const blobUrl = URL.createObjectURL(blob);
-                mediaElem.src = blobUrl;
-                mediaElem.hidden = false;
-                arrImages = [...arrImages, { videoSrc: blobUrl }];
-                this.checkLoad = true;
-              });
-          }, 0);
-          arrImages = [...arrImages, { videoSrc: this.urlServer + objVideo }];
+      setTimeout(() => {
+        if (val) {
+          let arrImages = val.product[0].images.map((el) => ({
+            imageSrc: this.urlServer + el,
+          }));
+          const objVideo = val.product[0].video ? val.product[0].video : false;
+          if (objVideo && !this.isMobile()) {
+            setTimeout(() => {
+              const mediaElem = document.querySelector(".slider__video");
+              fetch(this.urlServer + objVideo)
+                .then((resp) => resp.blob())
+                .then((blob) => {
+                  const blobUrl = URL.createObjectURL(blob);
+                  mediaElem.src = blobUrl;
+                  mediaElem.hidden = false;
+                  arrImages = [...arrImages, { videoSrc: blobUrl }];
+                  this.checkLoad = true;
+                });
+            }, 0);
+            arrImages = [...arrImages, { videoSrc: this.urlServer + objVideo }];
+            this.arrSlider = arrImages;
+            // this.loadContent();
+            return arrImages;
+          }
           this.arrSlider = arrImages;
+          this.getImage();
           // this.loadContent();
-          return arrImages;
+          // return arrImages;
         }
-        this.arrSlider = arrImages;
-        this.getImage();
-        // this.loadContent();
-        // return arrImages;
-      }
+      }, 1000);
     },
   },
   components: {
