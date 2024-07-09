@@ -29,7 +29,7 @@
         v-for="(item, idx) in arrTable"
         :key="item"
         data-cursor-class="animateCursor"
-        @click="idx === 0 ? (useTableSize = true) : (useTableMeus = true)"
+        @click="setActiveTable(idx)"
       >
         {{ item }}
         <div class="about__size_vector">
@@ -69,6 +69,15 @@ export default {
       useTableMeus: useTableMeus(),
       activeIdx: 0,
     };
+  },
+  methods: {
+    setActiveTable(idx) {
+      if (idx === 0) {
+        this.useTableSize = true;
+        return;
+      }
+      this.useTableMeus = true;
+    },
   },
   mounted() {},
   watch: {

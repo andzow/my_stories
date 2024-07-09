@@ -2,7 +2,9 @@
   <section class="table">
     <div class="table__container">
       <div class="table__header">
-        <div class="table__title">{{ arrObjectSize.title }}</div>
+        <div class="table__title">
+          {{ useTableSize ? "Таблица размеров" : "Обмеры изделия" }}
+        </div>
         <div clas="table__close">
           <button
             class="table__close_btn"
@@ -36,7 +38,7 @@
         </div>
       </div>
       <p class="table__text">
-        {{ arrObjectSize.text }}
+        Общая таблица размеров показывает нашу стандартную размерную линейку
       </p>
       <div class="table__content">
         <CatalogIdTablesMyTableItem :arrTable="arrTable" />

@@ -22,7 +22,8 @@
       :key="item.id"
     >
       <div class="slider__card">
-        <NuxtImg
+        <img
+          v-if="item.imageSrc"
           class="slider__imgs"
           :src="item.imageSrc"
           width="620"
