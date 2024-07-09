@@ -21,6 +21,6 @@ export default defineNuxtConfig({
   modules: ["@nuxt/image", "nuxt-delay-hydration"],
   delayHydration: {
     debug: process.env.NODE_ENV === "development",
-    mode: "init",
+    mode: "mount",
   },
 });
