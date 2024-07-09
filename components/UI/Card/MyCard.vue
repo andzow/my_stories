@@ -10,7 +10,11 @@
       <UIMyLoadItem />
     </div>
     <div class="card__content">
-      <div class="card__image" :class="['card__image' + (idx + 1)]">
+      <div
+        class="card__image"
+        :class="['card__image' + (idx + 1)]"
+        @click="$router.push(`/catalog/${item.name}/${item.id}`)"
+      >
         <div
           class="card__photo"
           data-cursor-class="animateCursor"
@@ -18,10 +22,7 @@
             height: heightImage ? heightImage : '',
           }"
         >
-          <div
-            class="card__im"
-            @click="$router.push(`/catalog/${item.name}/${item.id}`)"
-          >
+          <div class="card__im">
             <NuxtErrorBoundary>
               <UICardMyCardImage
                 :images="item.images"

@@ -34,7 +34,6 @@
           v-if="!item.imageSrc"
           class="slider__video"
           :poster="item.videoSrc"
-          type="video/mp4"
           muted
           preload="metadata"
           :data-index-video="idx"
@@ -166,6 +165,41 @@ export default {
           this.checkLoad = true;
         });
     },
+    async getImage() {
+      const newRr = await Promise.all(
+        this.arrSlider.map(async (el, idx) => {
+          if (idx > 1) return true;
+          const response = await fetch(el.imageSrc);
+          return this.loadImage(response.url);
+        })
+      );
+      this.checkLoad = true;
+    },
+    isMobile() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      if (/android/i.test(userAgent)) {
+        return true;
+      }
+
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return true;
+      }
+
+      if (/windows phone/i.test(userAgent)) {
+        return true;
+      }
+
+      if (
+        /blackberry|webos|opera mini|opera mobi|bada|tizen|windows ce|palm/i.test(
+          userAgent
+        )
+      ) {
+        return true;
+      }
+
+      return false;
+    },
   },
   mounted() {
     document.addEventListener("visibilitychange", () => {
@@ -185,15 +219,28 @@ export default {
           imageSrc: this.urlServer + el,
         }));
         const objVideo = val.product[0].video ? val.product[0].video : false;
-        if (objVideo) {
+        if (objVideo && !this.isMobile()) {
+          setTimeout(() => {
+            const mediaElem = document.querySelector(".slider__video");
+            fetch(this.urlServer + objVideo)
+              .then((resp) => resp.blob())
+              .then((blob) => {
+                const blobUrl = URL.createObjectURL(blob);
+                mediaElem.src = blobUrl;
+                mediaElem.hidden = false;
+                arrImages = [...arrImages, { videoSrc: blobUrl }];
+                this.checkLoad = true;
+              });
+          }, 0);
           arrImages = [...arrImages, { videoSrc: this.urlServer + objVideo }];
           this.arrSlider = arrImages;
-          this.loadContent();
+          // this.loadContent();
           return arrImages;
         }
         this.arrSlider = arrImages;
-        this.loadContent();
-        return arrImages;
+        this.getImage();
+        // this.loadContent();
+        // return arrImages;
       }
     },
   },

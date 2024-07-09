@@ -19,13 +19,12 @@
     >
       <div class="card__item_card">
         <NuxtLink :to="item.name ? `/catalog/${item?.name}/${item?.id}` : '/'">
-          <img
+          <NuxtImg
             width="490"
             height="665"
             class="card__item_imgs"
-            v-lazy="{
-              src: serverUrl + slide,
-            }"
+            :src="serverUrl + slide"
+            @load="loadContent"
             :class="{ activeOpacity: checkLoad }"
             :alt="`${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
               /\r\n/g,
@@ -78,6 +77,10 @@ export default {
     },
   },
   methods: {
+    loadContent() {
+      this.checkLoad = true;
+      this.$emit("loadPhoto");
+    },
     onSwiperInit(instance) {
       this.swiper = instance;
       this.initMouseEnter();
@@ -92,37 +95,39 @@ export default {
         });
       });
     },
-    onImageLoad(idx) {
-      this.checkLoad = true;
-      this.$emit("loadPhoto");
-    },
-    loadImage(srcImage) {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = srcImage;
-        img.onload = () => {
-          resolve(true);
-        };
-      });
-    },
-    loadContent() {
-      const arrPromise = [];
-      this.images.forEach((el) => {
-        arrPromise.push(this.loadImage(USE_SERVER + el));
-      });
-      Promise.all(arrPromise)
-        .then(() => {
-          this.checkLoad = true;
-          this.$emit("loadPhoto");
-        })
-        .catch(() => {
-          this.checkLoad = true;
-          this.$emit("loadPhoto");
-        });
-    },
+    // onImageLoad(idx) {
+    // this.checkLoad = true;
+    // this.$emit("loadPhoto");
+    // },
+    // loadImage(srcImage) {
+    //   return new Promise((resolve, reject) => {
+    //     const img = new Image();
+    //     img.src = srcImage;
+    //     img.onload = () => {
+    //       resolve(true);
+    //     };
+    //   });
+    // },
+    // loadContent() {
+    //   const arrPromise = [];
+    //   this.images.forEach((el) => {
+    //     arrPromise.push(this.loadImage(USE_SERVER + el));
+    //   });
+    //   Promise.all(arrPromise)
+    //     .then(() => {
+    //       this.checkLoad = true;
+    //       this.$emit("loadPhoto");
+    //     })
+    //     .catch(() => {
+    //       this.checkLoad = true;
+    //       this.$emit("loadPhoto");
+    //     });
+    // },
   },
   mounted() {
-    this.loadContent();
+    this.checkLoad = true;
+    this.$emit("loadPhoto");
+    // this.loadContent();
   },
   unmounted() {
     if (this.swiper) {
