@@ -23,7 +23,6 @@
     >
       <div class="slider__card">
         <img
-          v-if="item.imageSrc"
           class="slider__imgs"
           :src="item.imageSrc"
           width="620"
