@@ -61,14 +61,28 @@ export default {
       });
     },
   },
-  mounted() {},
+  mounted() {
+    if (this.checkHydrate) {
+      gsap.registerPlugin(ScrollTrigger);
+      setTimeout(() => {
+        this.setAnimateParallax();
+      }, 10);
+      setTimeout(() => {
+        this.useGsapAnimationOpacity(
+          [".main__title", ".main__catalog"],
+          ".main"
+        );
+        this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
+      }, 100);
+    }
+  },
   unmounted() {
     // if (this.useScrollCheckMain) {
     //   this.useScrollCheckMain.revert();
     // }
   },
   watch: {
-    checkHydrate() {
+    checkHydrate(val) {
       gsap.registerPlugin(ScrollTrigger);
       setTimeout(() => {
         this.setAnimateParallax();

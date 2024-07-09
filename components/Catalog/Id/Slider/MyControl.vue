@@ -101,12 +101,12 @@ export default {
 .slider__control_next {
   margin-left: 20px;
 }
-@media screen and (max-width: 1600px) {
+/* @media screen and (max-width: 1600px) {
   .slider__control {
     bottom: -1.5%;
   }
-}
-@media screen and (max-height: 760px) and (max-width: 1630px) {
+} */
+@media screen and (max-height: 760px) and (max-width: 1720px) {
   .slider__control {
     bottom: -1.5%;
   }

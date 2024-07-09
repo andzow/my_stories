@@ -21,9 +21,8 @@
         <NuxtLink :to="item.name ? `/catalog/${item?.name}/${item?.id}` : '/'">
           <NuxtImg
             class="new__item_imgs"
-            :src="'http://localhost:8080/api/' + slide"
+            :src="serverUrl + slide"
             :alt="item.name"
-            @load="onImageLoad"
             width="451"
             height="565"
             loading="lazy"
@@ -57,7 +56,7 @@ export default {
       arrImages: null,
       checkLoad: false,
       useCursor: useCursor(),
-      useServ: null,
+      serverUrl: USE_SERVER,
     };
   },
   setup() {
@@ -88,13 +87,29 @@ export default {
         });
       });
     },
-    onImageLoad() {
+    async getImage() {
+      await Promise.all(
+        this.images.map(async (el, idx) => {
+          if (idx > 1) return true;
+          const response = await fetch(this.serverUrl + el);
+          return this.loadImage(response.url);
+        })
+      );
       this.$emit("load");
+    },
+    loadImage(srcImage) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = srcImage;
+        img.onload = () => {
+          resolve(true);
+        };
+      });
     },
   },
   mounted() {
     this.useCursor = true;
-    this.useServ = USE_SERVER;
+    this.getImage();
   },
   components: {
     Swiper,

@@ -24,7 +24,6 @@
             height="665"
             class="card__item_imgs"
             :src="serverUrl + slide"
-            @load="loadContent"
             :class="{ activeOpacity: checkLoad }"
             :alt="`${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
               /\r\n/g,
@@ -95,19 +94,30 @@ export default {
         });
       });
     },
+    async getImage() {
+      await Promise.all(
+        this.images.map(async (el, idx) => {
+          if (idx > 1) return true;
+          const response = await fetch(this.serverUrl + el);
+          return this.loadImage(response.url);
+        })
+      );
+      this.checkLoad = true;
+      this.$emit("loadPhoto");
+    },
     // onImageLoad(idx) {
     // this.checkLoad = true;
     // this.$emit("loadPhoto");
     // },
-    // loadImage(srcImage) {
-    //   return new Promise((resolve, reject) => {
-    //     const img = new Image();
-    //     img.src = srcImage;
-    //     img.onload = () => {
-    //       resolve(true);
-    //     };
-    //   });
-    // },
+    loadImage(srcImage) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = srcImage;
+        img.onload = () => {
+          resolve(true);
+        };
+      });
+    },
     // loadContent() {
     //   const arrPromise = [];
     //   this.images.forEach((el) => {
@@ -125,8 +135,7 @@ export default {
     // },
   },
   mounted() {
-    this.checkLoad = true;
-    this.$emit("loadPhoto");
+    this.getImage();
     // this.loadContent();
   },
   unmounted() {

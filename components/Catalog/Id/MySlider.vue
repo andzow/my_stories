@@ -166,7 +166,7 @@ export default {
         });
     },
     async getImage() {
-      const newRr = await Promise.all(
+      await Promise.all(
         this.arrSlider.map(async (el, idx) => {
           if (idx > 1) return true;
           const response = await fetch(el.imageSrc);
@@ -360,7 +360,7 @@ export default {
     margin-bottom: 50px;
   }
 }
-@media screen and (max-height: 790px) and (max-width: 1630px) {
+@media screen and (max-height: 790px) and (max-width: 1720px) {
   .slider__controls {
     height: calc(100vh - 105px);
   }
