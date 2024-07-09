@@ -6,12 +6,12 @@ export default defineNuxtConfig({
     "~/plugins/v-preload.js",
   ],
   css: ["~/assets/style/main.css", "~/assets/style/fonts.css"],
-  app: {
-    pageTransition: {
-      name: "page",
-      mode: "out-in",
-    },
-  },
+  // app: {
+  //   pageTransition: {
+  //     name: "page",
+  //     mode: "out-in",
+  //   },
+  // },
   routeRules: {
     // "/": { delayHydration: "mount" },
     // "/catalog/": { delayHydration: false },
