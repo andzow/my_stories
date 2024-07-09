@@ -3,7 +3,7 @@
     <UIMyPreloader v-if="!preloader" />
   </Transition>
   <UIMyHeader v-if="headerVisible" />
-  <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
+  <main class="page">
     <NuxtPage />
     <UIMyModalStatus />
     <LazyUIMyCursor v-if="checkHydrate && checkMobile === false" />
