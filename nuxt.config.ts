@@ -7,6 +7,19 @@ export default defineNuxtConfig({
   ],
   css: ["~/assets/style/main.css", "~/assets/style/fonts.css"],
   app: {
+    head: {
+      title: "Интернет-магазин одежды | MyStories",
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+      link: [
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          href: "/favicon.png",
+        },
+      ],
+      htmlAttrs: { lang: "ru-RU" },
+    },
     pageTransition: {
       name: "page",
       mode: "out-in",
