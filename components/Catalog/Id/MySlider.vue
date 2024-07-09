@@ -238,12 +238,12 @@ export default {
             return arrImages;
           }
           this.arrSlider = arrImages;
-          // this.getImage();
+          this.getImage();
           this.checkLoad = true;
           // this.loadContent();
           // return arrImages;
         }
-      }, 1000);
+      }, 0);
     },
   },
   components: {

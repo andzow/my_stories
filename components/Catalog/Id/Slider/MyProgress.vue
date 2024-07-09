@@ -49,7 +49,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.initChangeFunc();
-    }, 0);
+    }, 1000);
   },
   watch: {
     useProductObject(val) {
