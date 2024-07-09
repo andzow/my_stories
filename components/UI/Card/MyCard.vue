@@ -13,7 +13,7 @@
       <div
         class="card__image"
         :class="['card__image' + (idx + 1)]"
-        @click="$router.push(`/catalog/${item.name}/${item.id}`)"
+        @click="redirectRoute(item)"
       >
         <div
           class="card__photo"
@@ -85,6 +85,13 @@ export default {
         this.useCursor = true;
         this.$emit("activeLine");
       });
+    },
+    redirectRoute(item) {
+      // $router.push(`/catalog/${item.name}/${item.id}`)
+      const routeData = this.$router.resolve({
+        path: `/catalog/${item.name}/${item.id}`,
+      });
+      window.open(routeData.href, "_blank");
     },
     initWidth() {
       const elementsCard = document.querySelectorAll(".card");
