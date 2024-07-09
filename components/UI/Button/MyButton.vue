@@ -48,13 +48,18 @@ export default {
     squareStyle() {
       const tX = this.mouseX / 5;
       const tY = this.mouseY / 2;
-      return {
+      const objStyle = {
         fontSize: this.fontSize + "px",
         transform: `translateX(${tX}px) translateY(${tY}px)`,
-        padding: this.padding ? this.padding : "",
-        height: this.heightEl ? this.heightEl : "",
         transition: "all 0.4s ease",
       };
+      if (this.padding) {
+        objStyle.padding = this.padding;
+      }
+      if (this.heightEl) {
+        objStyle.height = this.heightEl;
+      }
+      return objStyle;
     },
     circleStyle() {
       return {
