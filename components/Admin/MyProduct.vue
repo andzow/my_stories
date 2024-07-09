@@ -49,7 +49,7 @@
                 </div>
                 <div class="product__info">
                   <span class="product__prefix" :class="{'product__prefix_error': articulValidator === 1}">артикул</span>
-                  <input class="product__input" :class="{'product__input_error': articulValidator === 1}" type="number" placeholder="пусто" v-model="isArticul" @input="validator">
+                  <input class="product__input" :class="{'product__input_error': articulValidator === 1}" type="text" placeholder="пусто" v-model="isArticul" @input="validator">
                 </div>
               </div>
               <div class="product__info">
