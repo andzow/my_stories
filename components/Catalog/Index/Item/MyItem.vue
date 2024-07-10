@@ -86,7 +86,6 @@ export default {
   },
   mounted() {
     this.setWidthName();
-    console.log(this.item);
   },
 };
 </script>
