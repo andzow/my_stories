@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     "/admin": { ssr: false },
     "/login": { ssr: false },
   },
-  ssr: false,
+  ssr: true,
   components: true,
   modules: ["@nuxt/image", "nuxt-delay-hydration", "@nuxtjs/device"],
   delayHydration: {
