@@ -109,10 +109,10 @@
     </header>
   </Transition>
   <UIMyBlur :searchVisible="searchVisible" @keydown.esc="searchVisible = false">
-    <LazyUIHeaderMySearch @closeSearch="searchVisible = false" @close="close" />
+    <UIHeaderMySearch @closeSearch="searchVisible = false" @close="close" />
   </UIMyBlur>
   <Transition name="fade-menu">
-    <LazyUIMenuMyMenu v-if="activeMenu" />
+    <UIMenuMyMenu v-if="activeMenu" />
   </Transition>
 </template>
 
