@@ -1,8 +1,8 @@
 <template>
+  <!-- :centeredSlides="true" -->
   <swiper
     class="catalog__swiper"
     :loop="true"
-    :centeredSlides="true"
     :allowTouchMove="false"
     :autoplay="swiperAutoPlay"
     :slidesPerView="2.7"
@@ -13,6 +13,7 @@
     :breakpoints="{
       876: {
         slidesPerView: 2.7,
+        allowTouchMove: false,
       },
       434: {
         slidesPerView: 1.5,
@@ -20,6 +21,7 @@
       0: {
         slidesPerView: 1,
         spaceBetween: -1,
+        allowTouchMove: true,
       },
     }"
   >
