@@ -274,17 +274,6 @@ export default {
     font-size: 16px;
   }
 }
-@media screen and (max-width: 1100px) {
-  .card__name {
-    font-size: 18px;
-  }
-  .card__price {
-    font-size: 16px;
-  }
-  .card__sale {
-    font-size: 16px;
-  }
-}
 @media screen and (max-width: 1020px) {
   .card__name {
     font-size: 17px;

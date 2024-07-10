@@ -5,13 +5,21 @@
         v-if="(catalogItems?.length <= 0 || !catalogItems) && checkEmpty"
       />
     </Transition>
-    <div class="catalog__content">
-      <UICardMyCard
+    <div class="catalog__menu">
+      <div class="catalog__content">
+        <CatalogIndexItemMyItem
+          v-for="(item, idx) in catalogItems"
+          :key="item"
+          :item="item"
+          :idx="idx"
+        />
+      </div>
+      <!-- <UICardMyCard
         v-for="(item, idx) in catalogItems"
         :key="item"
         :item="item"
         :idx="idx"
-      />
+      /> -->
     </div>
   </section>
 </template>
@@ -69,13 +77,16 @@ export default {
 .catalog {
   position: relative;
 }
+.catalog__menu {
+  min-height: 900px;
+}
 .catalog__content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 10px;
   row-gap: 65px;
   margin-bottom: 20px;
-  min-height: 900px;
+  /* min-height: 900px; */
 }
 .v-enter-from {
   opacity: 0;

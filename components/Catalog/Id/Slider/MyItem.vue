@@ -97,7 +97,7 @@ export default {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 .activeImageSlider {
   opacity: 1;
@@ -126,7 +126,7 @@ export default {
 }
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
 }
 
 .v-enter-from,

@@ -5,7 +5,7 @@
         <h2 class="new__title">( &nbsp;новинки&nbsp; )</h2>
         <div class="new__number">( &nbsp;3&nbsp; )</div>
       </div>
-      <LazyMainNewMyNewSwiper v-if="checkSwiper && checkPreload" />
+      <LazyMainNewMyNewSwiper v-if="checkSwiper && checkHydrate" />
       <div class="new__btn">
         <UIButtonMyButton
           @click="$router.push('/catalog')"
@@ -26,6 +26,7 @@ export default {
     return {
       checkSwiper: false,
       checkPreload: useCheckPreload(),
+      checkHydrate: useCheckHydration(),
     };
   },
   methods: {},

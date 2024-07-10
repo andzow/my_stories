@@ -184,6 +184,9 @@ export default {
     min-width: 233px;
     max-width: 233px;
   }
+  .main__menu {
+    padding: 0 20px;
+  }
 }
 @media screen and (max-width: 648px) {
   .main__logo {

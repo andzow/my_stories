@@ -79,11 +79,12 @@ export default {
   mounted() {
     const body = document.body;
     body.style.overflow = "hidden";
+    this.useCursor = false;
     nextTick(() => {
-      this.useCursor = true;
       this.$refs.tableClose.focus();
     });
     setTimeout(() => {
+      this.useCursor = true;
       const blockEl = document.querySelector(".table__container");
       document.addEventListener("mouseup", (e) => {
         const click = e.composedPath().includes(blockEl);
