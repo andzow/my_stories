@@ -203,4 +203,9 @@ export default {
     height: 578px;
   }
 }
+@media screen and (max-width: 450px) {
+  .slider {
+    height: 480px;
+  }
+}
 </style>
