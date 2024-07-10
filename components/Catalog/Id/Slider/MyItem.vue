@@ -4,7 +4,12 @@
       v-if="item.type === 'img'"
       class="slider__item_imgs"
       :src="serverUrl + item.srcContent"
-      alt="Фотография товара"
+      :alt="`Фотография ${
+        idx + 1
+      }, ${objectProduct.name.toLowerCase()} ${objectProduct.color.toLowerCase()}, ${objectProduct.characteristic.replace(
+        /\r\n/g,
+        ', '
+      )}`"
       format="webp"
     />
     <video
@@ -34,6 +39,7 @@ export default {
     activeIdx: Number,
     typeVideo: Boolean,
     lengthItems: Number,
+    objectProduct: Object,
   },
   data() {
     return {

@@ -2,7 +2,7 @@
   <section class="main">
     <div class="main__content">
       <div class="main__menu">
-        <CatalogIdMyImgSeo :productObject="productObject" />
+        <!-- <CatalogIdMyImgSeo :productObject="productObject" /> -->
         <CatalogIdMySliderSec :images="productObject" />
         <!-- <CatalogIdMySlider :useProductObject="productObjectClient" /> -->
         <CatalogIdMyAbout :useProductObject="productObject" />

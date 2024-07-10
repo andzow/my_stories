@@ -10,6 +10,7 @@
         @load="loadContent = true"
         :typeVideo="typeVideo"
         :lengthItems="imagesArr?.length"
+        :objectProduct="objectProduct"
         @loadVideo="getLoadVideo"
       />
     </div>
@@ -43,6 +44,7 @@ export default {
       durationDelay: 0,
       typeVideo: false,
       videolElement: null,
+      objectProduct: null,
     };
   },
   methods: {
@@ -149,6 +151,7 @@ export default {
       srcContent: el,
       type: "img",
     }));
+    this.objectProduct = this.useProductObject.product[0];
     const { isMobile } = useDevice();
     if (videoItem && !isMobile) {
       this.imagesArr.push({ srcContent: videoItem, type: "video" });
