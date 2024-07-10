@@ -40,26 +40,26 @@ import ProductController from "@/http/controllers/ProductController";
 
 export default {
   async setup() {
-    try {
-      let productObject = useProductObject();
-      let tableSize = useTableSize();
-      let tableMeus = useTableMeus();
-      const route = useRoute().params;
-      let getOther = null;
-      const { data: responseItems } = await useAsyncData(
-        "responseItems",
-        async () =>
-          $fetch(
-            usePageUrlAsyncData() + "product/" + `${route.name}/${route.id}`
-          )
-      );
-      if (!responseItems.value || responseItems.value?.length <= 0) {
-        useRouter().push("/error");
-      }
-      productObject.value = responseItems.value;
-      this.$emit("load");
-      return { getOther };
-    } catch {}
+    // try {
+    //   let productObject = useProductObject();
+    //   let tableSize = useTableSize();
+    //   let tableMeus = useTableMeus();
+    //   const route = useRoute().params;
+    //   let getOther = null;
+    //   const { data: responseItems } = await useAsyncData(
+    //     "responseItems",
+    //     async () =>
+    //       $fetch(
+    //         usePageUrlAsyncData() + "product/" + `${route.name}/${route.id}`
+    //       )
+    //   );
+    //   if (!responseItems.value || responseItems.value?.length <= 0) {
+    //     useRouter().push("/error");
+    //   }
+    //   productObject.value = responseItems.value;
+    //   this.$emit("load");
+    //   return { getOther };
+    // } catch {}
   },
   data() {
     return {

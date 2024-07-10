@@ -22,17 +22,17 @@ import ProductController from "@/http/controllers/ProductController";
 
 export default {
   async setup() {
-    try {
-      let catalogItems = useCatalogItems();
-      const { data: responseItems } = await useAsyncData(
-        "responseItems",
-        async () =>
-          $fetch(usePageUrlAsyncData() + "product/getFilter", {
-            params: useRoute().query,
-          })
-      );
-      catalogItems.value = responseItems.value;
-    } catch {}
+    // try {
+    //   let catalogItems = useCatalogItems();
+    //   const { data: responseItems } = await useAsyncData(
+    //     "responseItems",
+    //     async () =>
+    //       $fetch(usePageUrlAsyncData() + "product/getFilter", {
+    //         params: useRoute().query,
+    //       })
+    //   );
+    //   catalogItems.value = responseItems.value;
+    // } catch {}
   },
   data() {
     return {
