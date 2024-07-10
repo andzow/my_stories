@@ -18,9 +18,11 @@
       :activeIdx="activeIdx"
       :duratinAnimate="duratinAnimate"
       v-if="loadContent && checkDuration"
+      @prev="prevSlide"
+      @next="nextSlide"
     />
     <Transition>
-      <div class="slider__loadin" v-if="!loadContent && typeVideo">
+      <div class="slider__loading" v-if="!loadContent && typeVideo">
         <UIMyLoadItem />
       </div>
     </Transition>
@@ -47,8 +49,8 @@ export default {
     startAnimationLine() {
       const activeItem = this.imagesArr[this.activeIdx];
       if (activeItem.type === "img") {
-        this.duratinAnimate = "1s";
-        this.durationDelay = 1000;
+        this.duratinAnimate = "5s";
+        this.durationDelay = 5000;
         this.checkDuration = true;
         this.setTimeValue();
         return;
@@ -89,6 +91,28 @@ export default {
         this.activeIdx += 1;
         this.startAnimationLine();
       }
+    },
+    prevSlide() {
+      if (this.timeOut) {
+        clearTimeout(this.timeOut);
+      }
+      if (this.activeIdx === 0) {
+        this.activeIdx = this.imagesArr.length - 1;
+      } else {
+        this.activeIdx -= 1;
+      }
+      this.startAnimationLine();
+    },
+    nextSlide() {
+      if (this.timeOut) {
+        clearTimeout(this.timeOut);
+      }
+      if (this.activeIdx === this.imagesArr.length - 1) {
+        this.activeIdx = 0;
+      } else {
+        this.activeIdx += 1;
+      }
+      this.startAnimationLine();
     },
   },
   mounted() {
@@ -133,12 +157,50 @@ export default {
   height: 100%;
   z-index: 4;
 }
-.slider__loadin {
+.slider__loading {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  height: 100.5%;
+  width: 100.5%;
+  transform: translateY(-1px) translateX(-1px);
   top: 0;
   left: 0;
   z-index: 5;
+}
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+@media screen and (max-width: 1340px) {
+  .slider {
+    height: 500px;
+  }
+}
+@media screen and (max-width: 936px) {
+  .slider {
+    height: 808px;
+    margin-bottom: 50px;
+  }
+  .slider__loading {
+    padding: 0 10%;
+  }
+}
+@media screen and (max-width: 686px) {
+  .slider {
+    height: 748px;
+    margin-bottom: 35px;
+  }
+  .slider__loading {
+    padding: 0 0;
+  }
+}
+@media screen and (max-width: 556px) {
+  .slider {
+    height: 578px;
+  }
 }
 </style>

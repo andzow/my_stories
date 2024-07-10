@@ -7,6 +7,7 @@
             <button
               class="slider__progress_button"
               data-cursor-class="animateCursor"
+              @click="$emit('prev')"
             >
               <svg
                 width="23"
@@ -38,6 +39,7 @@
             <button
               class="slider__progress_button"
               data-cursor-class="animateCursor"
+              @click="$emit('next')"
             >
               <svg
                 width="23"
@@ -81,7 +83,9 @@
         </div>
       </div>
     </div>
-    <div class="slider__progress_shadow"></div>
+    <div class="slider__progress_sh">
+      <div class="slider__progress_shadow"></div>
+    </div>
   </div>
 </template>
 
@@ -171,7 +175,7 @@ export default {
 .slider__progress_menu {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
   /* background: black; */
   gap: 15px;
   width: 100%;
@@ -185,12 +189,18 @@ export default {
   border-radius: 300px;
   overflow: hidden;
 }
-.slider__progress_shadow {
+.slider__progress_sh {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 120px;
+  z-index: 4;
+}
+.slider__progress_shadow {
+  position: relative;
+  height: 100%;
+  width: 100%;
   background: linear-gradient(to top, rgb(0%, 0%, 0%, 0.9), rgba(0, 0, 0, 0));
   z-index: 4;
 }
@@ -212,6 +222,39 @@ export default {
   }
   to {
     transform: translateX(0%);
+  }
+}
+@media screen and (max-width: 1320px) {
+  .slider__progress_menu {
+    gap: 5px;
+  }
+}
+@media screen and (max-width: 936px) {
+  .slider__progress {
+    padding: 0 10%;
+  }
+  .slider__progress_item {
+    padding: 0 10%;
+  }
+  .slider__progress_sh {
+    padding: 0 10%;
+  }
+  .slider__progress_active {
+    padding: 0 10%;
+  }
+}
+@media screen and (max-width: 686px) {
+  .slider__progress {
+    padding: 0 0;
+  }
+  .slider__progress_item {
+    padding: 0 0;
+  }
+  .slider__progress_sh {
+    padding: 0 0;
+  }
+  .slider__progress_active {
+    padding: 0 0;
   }
 }
 </style>

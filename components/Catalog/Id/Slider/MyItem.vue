@@ -4,6 +4,7 @@
       v-if="item.type === 'img'"
       class="slider__item_imgs"
       :src="serverUrl + item.srcContent"
+      alt="Фотография товара"
       format="webp"
     />
     <video
@@ -61,7 +62,6 @@ export default {
           mediaElem.src = blobUrl;
           mediaElem.hidden = false;
           mediaElem.pause();
-
           mediaElem.onloadedmetadata = () => {
             this.checkLoadImg = true;
             this.$emit("loadVideo", mediaElem);
@@ -126,5 +126,15 @@ export default {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+@media screen and (max-width: 936px) {
+  .slider__item {
+    padding: 0 10%;
+  }
+}
+@media screen and (max-width: 686px) {
+  .slider__item {
+    padding: 0 0;
+  }
 }
 </style>

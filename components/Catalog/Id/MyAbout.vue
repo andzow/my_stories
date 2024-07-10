@@ -327,6 +327,7 @@ export default {
   .about {
     margin: 0;
     padding: 0 10%;
+    width: 100%;
   }
 }
 @media screen and (max-width: 686px) {
