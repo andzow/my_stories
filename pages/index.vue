@@ -20,25 +20,25 @@
 <script>
 export default {
   setup() {
-    useHead({
-      link: [
-        {
-          rel: "preload",
-          as: "image",
-          href: "../Preload/additionF.webp",
-        },
-        {
-          rel: "preload",
-          as: "image",
-          href: "../Preload/collectionF.webp",
-        },
-        {
-          rel: "preload",
-          as: "image",
-          href: "../Preload/collectionS.webp",
-        },
-      ],
-    });
+    // useHead({
+    //   link: [
+    //     {
+    //       rel: "preload",
+    //       as: "image",
+    //       href: "../Preload/additionF.webp",
+    //     },
+    //     {
+    //       rel: "preload",
+    //       as: "image",
+    //       href: "../Preload/collectionF.webp",
+    //     },
+    //     {
+    //       rel: "preload",
+    //       as: "image",
+    //       href: "../Preload/collectionS.webp",
+    //     },
+    //   ],
+    // });
   },
   data() {
     return {

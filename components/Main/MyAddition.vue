@@ -10,7 +10,6 @@
             alt="платье в каталоге"
             width="136"
             height="119"
-            format="webp"
           />
         </div>
         <p class="addition__text">
@@ -23,13 +22,12 @@
     </div>
     <div class="addition__mob">
       <div class="addition__mob_img">
-        <NuxtImg
+        <img
           class="addition__mob_image"
           src="/Preload/additionF.webp"
           alt="платье в каталоге"
           width="136"
           height="119"
-          format="webp"
         />
       </div>
       <h2 class="addition__mob_title">( &nbsp;о бренде&nbsp; )</h2>

@@ -27,13 +27,12 @@
       <MainCollectionMyNewCollection />
       <div class="collection__photo">
         <div class="collection__photo_content">
-          <NuxtImg
+          <img
             class="collection__photo_img"
             src="/Preload/collectionS.webp"
             width="131"
             height="137"
             alt="Фотография новой коллекции - летний ветер"
-            format="webp"
           />
         </div>
       </div>
