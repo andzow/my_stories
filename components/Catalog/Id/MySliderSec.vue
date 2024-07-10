@@ -114,6 +114,31 @@ export default {
       }
       this.startAnimationLine();
     },
+    isMobile() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      if (/android/i.test(userAgent)) {
+        return true;
+      }
+
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return true;
+      }
+
+      if (/windows phone/i.test(userAgent)) {
+        return true;
+      }
+
+      if (
+        /blackberry|webos|opera mini|opera mobi|bada|tizen|windows ce|palm/i.test(
+          userAgent
+        )
+      ) {
+        return true;
+      }
+
+      return false;
+    },
   },
   mounted() {
     document.addEventListener("visibilitychange", this.leavePage);
@@ -124,7 +149,8 @@ export default {
       srcContent: el,
       type: "img",
     }));
-    if (videoItem) {
+    const { isMobile } = useDevice();
+    if (videoItem && !isMobile) {
       this.imagesArr.push({ srcContent: videoItem, type: "video" });
       this.typeVideo = true;
     }

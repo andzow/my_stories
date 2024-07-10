@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   },
   ssr: true,
   components: true,
-  modules: ["@nuxt/image", "nuxt-delay-hydration"],
+  modules: ["@nuxt/image", "nuxt-delay-hydration", "@nuxtjs/device"],
   delayHydration: {
     debug: process.env.NODE_ENV === "development",
   },
