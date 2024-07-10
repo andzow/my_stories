@@ -46,21 +46,22 @@ import ProductController from "@/http/controllers/ProductController";
 
 export default {
   async setup() {
-    // try {
-    //   let arrFilterChapter = useArrFilterChapter();
-    //   let arrFilterSize = useArrFilterSize();
-    //   let minVal = useMinVal();
-    //   let maxVal = useMaxVal();
-    //   const { data: response } = await useAsyncData("data", async () =>
-    //     $fetch(usePageUrlAsyncData() + "category/getCategory", {
-    //       params: useRoute().query,
-    //     })
-    //   );
-    //   arrFilterChapter.value = response.value.categorys;
-    //   arrFilterSize.value = response.value.uniqueNameArray;
-    //   minVal.value = !response.value.minPrice ? 0 : response.value.minPrice;
-    //   maxVal.value = !response.value.maxPrice ? 35000 : response.value.maxPrice;
-    // } catch {}
+    try {
+      let arrFilterChapter = useArrFilterChapter();
+      let arrFilterSize = useArrFilterSize();
+      let minVal = useMinVal();
+      let maxVal = useMaxVal();
+
+      const { data: response } = await useAsyncData("data", async () =>
+        $fetch(usePageUrlAsyncData() + "category/getCategory", {
+          params: useRoute().query,
+        })
+      );
+      arrFilterChapter.value = response.value.categorys;
+      arrFilterSize.value = response.value.uniqueNameArray;
+      minVal.value = !response.value.minPrice ? 0 : response.value.minPrice;
+      maxVal.value = !response.value.maxPrice ? 35000 : response.value.maxPrice;
+    } catch {}
   },
   data() {
     return {
