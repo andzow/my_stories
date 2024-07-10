@@ -20,22 +20,22 @@ export default defineNuxtConfig({
       ],
       htmlAttrs: { lang: "ru-RU" },
     },
-    // pageTransition: {
-    //   name: "page",
-    //   mode: "out-in",
-    // },
+    pageTransition: {
+      name: "page",
+      mode: "out-in",
+    },
   },
   routeRules: {
-    // "/": { delayHydration: "mount" },
-    // "/catalog/": { delayHydration: false },
-    // "/catalog/:id/:id/": { delayHydration: false },
+    "/": { delayHydration: "mount" },
+    "/catalog/": { delayHydration: false },
+    "/catalog/:id/:id/": { delayHydration: false },
     "/admin": { ssr: false },
     "/login": { ssr: false },
   },
   ssr: true,
   components: true,
-  modules: ["@nuxt/image", "@nuxtjs/device"],
-  // delayHydration: {
-  //   debug: process.env.NODE_ENV === "development",
-  // },
+  modules: ["@nuxt/image", "nuxt-delay-hydration", "@nuxtjs/device"],
+  delayHydration: {
+    debug: process.env.NODE_ENV === "development",
+  },
 });
