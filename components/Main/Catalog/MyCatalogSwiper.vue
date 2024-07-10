@@ -1,8 +1,8 @@
 <template>
-  <!-- :centeredSlides="true" -->
   <swiper
     class="catalog__swiper"
     :loop="true"
+    :centeredSlides="true"
     :allowTouchMove="false"
     :autoplay="swiperAutoPlay"
     :slidesPerView="2.7"
