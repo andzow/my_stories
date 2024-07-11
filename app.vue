@@ -4,7 +4,7 @@
   </Transition>
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
-    <MyLoadCss v-if="!$device.isApple" />
+    <MyLoadCss :apple="$device.isApple" />
     <NuxtPage />
     <UIMyModalStatus />
     <LazyUIMyCursor v-if="isMobile === false && !$device.isApple" />
@@ -67,6 +67,12 @@ export default {
   },
 };
 </script>
+
+<style>
+* {
+  cursor: none;
+}
+</style>
 
 <style scoped>
 .page {

@@ -85,7 +85,6 @@ export default {
   mounted() {},
 };
 </script>
-
 <style scoped>
 .button {
   perspective: 1000px;
@@ -105,7 +104,6 @@ export default {
   overflow: hidden;
   text-transform: lowercase;
   white-space: nowrap;
-  cursor: none;
 }
 .green {
   background-color: #ede9df;
