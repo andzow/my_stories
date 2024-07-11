@@ -25,8 +25,8 @@ export default defineNuxtConfig({
     "/": { delayHydration: "mount" },
     "/catalog/": { delayHydration: false },
     "/catalog/:id/:id": { delayHydration: false },
-    "/admin": { ssr: false, robots: false },
-    "/login": { ssr: false, robots: false },
+    "/admin": { ssr: false },
+    "/login": { ssr: false },
   },
   // nitro: {
   //   prerender: {
