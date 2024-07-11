@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style>
-* {
+html {
   cursor: none;
 }
 </style>
