@@ -10,6 +10,7 @@ export default {
   mounted() {
     if (this.apple) {
       document.documentElement.classList.add("dynamicStyleOn");
+      return;
     }
     document.documentElement.classList.add("dynamicStyle");
   },
