@@ -6,8 +6,8 @@
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
     <NuxtPage />
     <UIMyModalStatus />
-    <LazyUIMyCursor v-if="checkHydrate && checkMobile === false" />
-    <LazyUIMyCursorCircle v-if="checkHydrate && checkMobile === false" />
+    <LazyUIMyCursor v-if="isMobile === false && !$device.isApple" />
+    <LazyUIMyCursorCircle v-if="isMobile === false && !$device.isApple" />
   </main>
   <UIMyFooter />
 </template>
@@ -16,6 +16,16 @@
 import AuthController from "@/http/controllers/AuthController";
 
 export default {
+  setup() {
+    const isMobileApple = useDevice().isApple;
+    const { isMobile } = useDevice();
+    if (!isMobileApple) {
+      import("~/assets/style/disable.css");
+    }
+    return {
+      isMobile,
+    };
+  },
   data() {
     return {
       useCheckAnimationArr: useCheckAnimationArr(),
@@ -26,35 +36,8 @@ export default {
       checkMobile: null,
     };
   },
-  methods: {
-    isMobile() {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-      if (/android/i.test(userAgent)) {
-        return true;
-      }
-
-      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        return true;
-      }
-
-      if (/windows phone/i.test(userAgent)) {
-        return true;
-      }
-
-      if (
-        /blackberry|webos|opera mini|opera mobi|bada|tizen|windows ce|palm/i.test(
-          userAgent
-        )
-      ) {
-        return true;
-      }
-
-      return false;
-    },
-  },
+  methods: {},
   async mounted() {
-    this.checkMobile = this.isMobile();
     if (this.$route.path === "/admin" || this.$route.path === "/login") {
       this.headerVisible = false;
     } else {
@@ -63,13 +46,6 @@ export default {
     if (localStorage.getItem("accessToken")) {
       await AuthController.cheackAuth();
     }
-    // document.addEventListener("visibilitychange", () => {
-    //   if (!document.hidden && this.swiper) {
-    //     this.useCheckAnimationArr.forEach((el) => {
-    //       el.revert();
-    //     });
-    //   }
-    // });
     setTimeout(() => {
       this.preloader = true;
     }, 1800);
@@ -95,14 +71,6 @@ export default {
 };
 </script>
 
-<style>
-* {
-  cursor: none !important;
-}
-button {
-  cursor: none !important;
-}
-</style>
 <style scoped>
 .page {
   position: relative;

@@ -4,7 +4,7 @@
       class="catalog__control"
       v-for="(item, idx) in lengthEl"
       :key="item"
-      @mouseenter="$emit('setImage', idx)"
+      @mouseenter="setActiveIdx(idx)"
     ></div>
   </div>
 </template>
@@ -13,8 +13,18 @@
 export default {
   props: {
     lengthEl: Number,
+    item: Object,
   },
-  methods: {},
+  methods: {
+    setActiveIdx(idx) {
+      const { isMobile } = useDevice();
+      if (!isMobile) {
+        this.$emit("setImage", idx);
+        return;
+      }
+      this.$router.push(`/catalog/${this.item.name}/${this.item.id}`);
+    },
+  },
   mounted() {},
 };
 </script>

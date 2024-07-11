@@ -19,6 +19,7 @@
       <CatalogIndexItemMyConrols
         :lengthEl="arrImages.length"
         @setImage="setImage"
+        :item="item"
       />
     </div>
     <div class="catalog__item_about">

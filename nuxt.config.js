@@ -28,13 +28,32 @@ export default defineNuxtConfig({
   routeRules: {
     "/": { delayHydration: "mount" },
     "/catalog/": { delayHydration: false },
-    "/catalog/:id/:id/": { delayHydration: false },
-    "/admin": { ssr: false },
-    "/login": { ssr: false },
+    "/catalog/**": { delayHydration: false },
+    "/admin": { ssr: false, robots: false },
+    "/login": { ssr: false, robots: false },
+  },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ["/sitemap.xml", "/robots.txt"],
+    },
+  },
+  sitemap: {
+    exclude: ["/login", "/admin", "/order", "/order/**", "/cart"],
+    sources: ["/api/sitemap"],
+    xslTips: false,
+  },
+  site: {
+    url: "https://xn--80aqckmmfdf.xn--p1ai",
   },
   ssr: true,
   components: true,
-  modules: ["@nuxt/image", "nuxt-delay-hydration", "@nuxtjs/device"],
+  modules: [
+    "@nuxt/image",
+    "nuxt-delay-hydration",
+    "@nuxtjs/device",
+    "@nuxtjs/sitemap",
+  ],
   delayHydration: {
     debug: process.env.NODE_ENV === "development",
   },

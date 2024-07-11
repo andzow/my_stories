@@ -5,7 +5,7 @@
         <h2 class="new__title">( &nbsp;новинки&nbsp; )</h2>
         <div class="new__number">( &nbsp;3&nbsp; )</div>
       </div>
-      <MainNewMyNewSwiper v-if="checkSwiper" />
+      <LazyMainNewMyNewSwiper v-if="checkSwiper && checkHydrate" />
       <div class="new__btn">
         <UIButtonMyButton
           @click="$router.push('/catalog')"
