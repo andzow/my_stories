@@ -1,10 +1,6 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  plugins: [
-    "~/plugins/animate.connect.js",
-    "~/plugins/v-click-outside.js",
-    "~/plugins/v-preload.js",
-  ],
+  plugins: ["~/plugins/animate.connect.js", "~/plugins/v-click-outside.js"],
   css: ["~/assets/style/main.css", "~/assets/style/fonts.css"],
   app: {
     head: {

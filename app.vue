@@ -4,6 +4,7 @@
   </Transition>
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
+    <MyLoadCss v-if="!$device.isApple" />
     <NuxtPage />
     <UIMyModalStatus />
     <LazyUIMyCursor v-if="isMobile === false && !$device.isApple" />
@@ -17,11 +18,7 @@ import AuthController from "@/http/controllers/AuthController";
 
 export default {
   setup() {
-    const isMobileApple = useDevice().isApple;
     const { isMobile } = useDevice();
-    if (!isMobileApple) {
-      import("~/assets/style/disable.css");
-    }
     return {
       isMobile,
     };

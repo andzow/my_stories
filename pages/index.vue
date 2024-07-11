@@ -3,7 +3,7 @@
     <MainMyMain />
     <section class="index">
       <MainCollectionMyCollection />
-      <MainBrandMyBrand v-preload="() => (checkPreload = true)" />
+      <MainBrandMyBrand />
       <MainMyAddition />
       <MainCatalogMyCatalog />
       <MainNewMyNew />
