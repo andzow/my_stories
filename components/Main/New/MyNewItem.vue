@@ -64,7 +64,7 @@ export default {
   margin-bottom: 15px;
   width: 100%;
   height: 100%;
-  opacity: 0;
+  /* opacity: 0; */
   overflow: hidden;
 }
 .new__item_loading {
@@ -99,12 +99,12 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  opacity: 0;
+  /* opacity: 0; */
 }
 .new__item_prices {
   display: flex;
   align-items: center;
-  opacity: 0;
+  /* opacity: 0; */
 }
 .new__item_price {
   font-weight: 400;

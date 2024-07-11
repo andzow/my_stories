@@ -80,11 +80,11 @@ export default {
     },
   },
   mounted() {
-    // if (window.innerWidth > 876) {
-    //   this.initGsap();
-    // } else {
-    //   this.useGsapAnimationOpacity([".collection"], ".collection");
-    // }
+    if (window.innerWidth > 876) {
+      this.initGsap();
+    } else {
+      this.useGsapAnimationOpacity([".collection"], ".collection");
+    }
   },
 };
 </script>

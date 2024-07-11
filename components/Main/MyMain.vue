@@ -135,13 +135,13 @@ export default {
 }
 .main__catalog {
   min-width: 306px;
-  opacity: 0;
+  /* opacity: 0; */
 }
 .main__logo {
   margin-bottom: 85px;
 }
 .main__img {
-  opacity: 0;
+  /* opacity: 0; */
 }
 .main__title {
   font-size: 17px;
@@ -150,7 +150,7 @@ export default {
   line-height: 120%;
   max-width: 350px;
   text-align: justify;
-  opacity: 0;
+  /* opacity: 0; */
 }
 @media screen and (max-width: 1400px) {
   .main__logo {

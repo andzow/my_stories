@@ -92,7 +92,7 @@ export default {
   font-weight: 500;
   font-size: 36px;
   color: var(--brown);
-  opacity: 0;
+  /* opacity: 0; */
 }
 .addition__text {
   font-size: 16px;
@@ -101,10 +101,10 @@ export default {
   text-align: justify;
   max-width: 360px;
   text-transform: lowercase;
-  opacity: 0;
+  /* opacity: 0; */
 }
 .addition__image {
-  opacity: 0;
+  /* opacity: 0; */
 }
 .addition__img {
   width: 130px;
@@ -119,7 +119,7 @@ export default {
   font-size: 36px;
   color: var(--brown);
   padding: 0 30px 90px 30px;
-  opacity: 0;
+  /* opacity: 0; */
 }
 .addition__mob {
   display: none;

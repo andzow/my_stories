@@ -160,7 +160,7 @@ export default {
 .catalog__img {
   display: block;
   margin: 0;
-  opacity: 0;
+  /* opacity: 0; */
   height: 790px;
   border: 1px solid rgba(0, 0, 0, 0);
 }
