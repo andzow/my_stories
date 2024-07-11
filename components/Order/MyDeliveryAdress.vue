@@ -163,13 +163,15 @@ export default {
   margin-bottom: 5px;
   transition: all 0.2s ease;
 }
-.delivery__adress_dropdown:hover {
-  background: var(--brown);
-  color: #fff;
-}
+@media (hover: hover) and (pointer: fine) {
+  .delivery__adress_dropdown:hover {
+    background: var(--brown);
+    color: #fff;
+  }
 
-.activeDropdown {
-  background: var(--brown);
-  color: #fff;
+  .activeDropdown {
+    background: var(--brown);
+    color: #fff;
+  }
 }
 </style>
