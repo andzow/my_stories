@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    "/": { delayHydration: "mount" },
+    "/": { delayHydration: "mount", swr: true },
     "/catalog/": { delayHydration: false },
     "/catalog/:id/:id": { delayHydration: false },
     "/admin": { ssr: false },
