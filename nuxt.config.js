@@ -28,16 +28,16 @@ export default defineNuxtConfig({
     "/admin": { ssr: false, robots: false },
     "/login": { ssr: false, robots: false },
   },
-  nitro: {
-    prerender: {
-      crawlLinks: true,
-      routes: ["/sitemap.xml"],
-    },
-  },
+  // nitro: {
+  //   prerender: {
+  //     crawlLinks: true,
+  //     routes: ["/sitemap.xml"],
+  //   },
+  // },
   sitemap: {
-    exclude: ["/login", "/admin", "/order", "/order/**", "/cart"],
+    // exclude: ["/login", "/admin", "/order", "/order/**", "/cart"],
     sources: ["/api/sitemap"],
-    xslTips: false,
+    // xslTips: false,
   },
   site: {
     url: "https://xn--80aqckmmfdf.xn--p1ai",
