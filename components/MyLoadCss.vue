@@ -30,10 +30,10 @@ export default {
   cursor: auto !important;
 }
 .dynamicStyleOn button {
-  cursor: auto !important;
+  cursor: pointer !important;
 }
 .dynamicStyleOn a {
-  cursor: auto !important;
+  cursor: pointer !important;
 }
 </style>
 <style scoped>
