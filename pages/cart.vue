@@ -2,7 +2,7 @@
   <div>
     <CartMyMain />
     <CartMySlider />
-    <LazyBrandMyFacts
+    <LazyUIMyAnimationLine
       v-if="arrAnimationLine && checkHydrate"
       duration="4"
       :arrAnimationLine="arrAnimationLine"

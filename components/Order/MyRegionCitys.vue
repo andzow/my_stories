@@ -119,13 +119,14 @@ export default {
   margin-bottom: 5px;
   transition: all 0.2s ease;
 }
-.region__item_dropdown:hover {
-  background: var(--brown);
-  color: #fff;
-}
-
-.activeDropdown {
-  background: var(--brown);
-  color: #fff;
+@media (hover: hover) and (pointer: fine) {
+  .region__item_dropdown:hover {
+    background: var(--brown);
+    color: #fff;
+  }
+  .activeDropdown {
+    background: var(--brown);
+    color: #fff;
+  }
 }
 </style>
