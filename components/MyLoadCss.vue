@@ -35,6 +35,12 @@ export default {
 .dynamicStyleOn a {
   cursor: pointer !important;
 }
+.dynamicStyleOn .catalog__image_link {
+  cursor: pointer !important;
+}
+.dynamicStyleOn .new__item_card {
+  cursor: pointer !important;
+}
 </style>
 <style scoped>
 .css {
