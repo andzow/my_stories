@@ -40,7 +40,7 @@ export default defineNuxtConfig({
   site: {
     url: "https://xn--80aqckmmfdf.xn--p1ai",
   },
-  ssr: false,
+  ssr: true,
   components: true,
   modules: [
     "@nuxt/image",

@@ -136,12 +136,12 @@ export default {
     },
   },
   mounted() {
-    gsap.registerPlugin(ScrollTrigger);
-    this.initAnimationArr();
-    this.useGsapAnimationOpacity(
-      this.arrAnimationOpacityGsap,
-      ".catalog__swiper"
-    );
+    // gsap.registerPlugin(ScrollTrigger);
+    // this.initAnimationArr();
+    // this.useGsapAnimationOpacity(
+    //   this.arrAnimationOpacityGsap,
+    //   ".catalog__swiper"
+    // );
   },
   unmounted() {
     if (this.scrollTriggerGsap) {

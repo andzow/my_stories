@@ -58,11 +58,11 @@ export default {
     },
   },
   mounted() {
-    if (window.innerWidth > 876) {
-      this.initGsap();
-    } else {
-      this.useGsapAnimationOpacity([".addition"], ".addition");
-    }
+    // if (window.innerWidth > 876) {
+    //   this.initGsap();
+    // } else {
+    //   this.useGsapAnimationOpacity([".addition"], ".addition");
+    // }
   },
 };
 </script>
