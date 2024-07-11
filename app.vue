@@ -1,14 +1,18 @@
 <template>
-  <Transition>
+  <!-- <Transition>
     <UIMyPreloader v-if="!preloader" />
-  </Transition>
+  </Transition> -->
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
-    <MyLoadCss :apple="$device.isApple" />
+    <MyLoadCss :apple="$device.isApple" :checkRoute="checkRoute" />
     <NuxtPage />
     <UIMyModalStatus />
-    <LazyUIMyCursor v-if="isMobile === false && !$device.isApple" />
-    <LazyUIMyCursorCircle v-if="isMobile === false && !$device.isApple" />
+    <LazyUIMyCursor
+      v-if="isMobile === false && !$device.isApple && !checkRoute"
+    />
+    <LazyUIMyCursorCircle
+      v-if="isMobile === false && !$device.isApple && !checkRoute"
+    />
   </main>
   <UIMyFooter />
 </template>
@@ -19,8 +23,15 @@ import AuthController from "@/http/controllers/AuthController";
 export default {
   setup() {
     const { isMobile } = useDevice();
+    const routePath = useRoute().path;
+    let checkRoute = false;
+    if (routePath === "/login" || routePath === "/admin") {
+      checkRoute = true;
+    }
+
     return {
       isMobile,
+      checkRoute,
     };
   },
   data() {
@@ -28,7 +39,7 @@ export default {
       useCheckAnimationArr: useCheckAnimationArr(),
       useCursor: useCursor(),
       headerVisible: true,
-      preloader: false,
+      preloader: useMainPreload(),
       checkHydrate: useCheckHydration(),
       checkMobile: null,
     };

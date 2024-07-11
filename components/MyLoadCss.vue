@@ -6,8 +6,13 @@
 export default {
   props: {
     apple: {},
+    checkRoute: Boolean,
   },
   mounted() {
+    if (this.checkRoute) {
+      document.documentElement.classList.add("dynamicStyleOn");
+      return;
+    }
     if (this.apple) {
       document.documentElement.classList.add("dynamicStyleOn");
       return;

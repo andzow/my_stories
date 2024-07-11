@@ -1,6 +1,5 @@
 <template>
   <section class="main">
-    1
     <div class="main__menu">
       <div class="main__content">
         <div class="main__about">
@@ -211,6 +210,9 @@ export default {
 @media screen and (max-width: 490px) {
   .main__paralax {
     background-position: 30%;
+  }
+  .main__content {
+    margin-bottom: 101px;
   }
 }
 @media screen and (max-width: 460px) {
