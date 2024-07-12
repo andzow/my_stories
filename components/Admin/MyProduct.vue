@@ -299,7 +299,7 @@ export default {
       this.$refs.fileInput.click();
     },
     saveImages(event) {
-      const files = Array.from(event.target.files).reverse();
+      const files = Array.from(event.target.files);
       for (let i = 0; i < files.length; i++) {
         this.fileIn.push(files[i]);
         this.listImages.push({ src: URL.createObjectURL(files[i]) });
