@@ -12,7 +12,6 @@
         duration="9"
         :arrAnimationLine="arrAnimationLine"
       />
-      -->
       <LazyUIMyNoise v-if="checkHydrate" />
     </section>
   </div>

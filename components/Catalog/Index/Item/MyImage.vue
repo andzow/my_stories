@@ -50,6 +50,7 @@ export default {
           resolve(true);
         };
       });
+      this.$emit("loadImage");
       this.checkLoadImg = true;
     },
   },

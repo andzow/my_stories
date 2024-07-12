@@ -61,7 +61,7 @@ export default {
     if (window.innerWidth > 876) {
       this.initGsap();
     } else {
-      this.useScrollObserver([".addition"], ".addition");
+      this.useGsapAnimationOpacity([".addition"], ".addition");
     }
   },
 };

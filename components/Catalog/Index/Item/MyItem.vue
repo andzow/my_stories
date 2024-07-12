@@ -7,6 +7,7 @@
     <div
       class="catalog__item_images"
       @click="$router.push(`/catalog/${item.name}/${item.id}`)"
+      data-cursor-class="animateCursor"
     >
       <CatalogIndexItemMyImage
         v-for="(image, idx) in arrImages"
@@ -15,6 +16,7 @@
         :idx="idx"
         :activeIdx="activeIdx"
         :item="item"
+        @loadImage="loadContent = true"
       />
       <CatalogIndexItemMyConrols
         :lengthEl="arrImages.length"
@@ -59,10 +61,13 @@ export default {
     return {
       activeIdx: 0,
       arrImages: null,
+      loadContent: false,
+      useCursor: useCursor(),
     };
   },
   methods: {
     setImage(idx) {
+      if (!this.loadContent) return;
       this.activeIdx = idx;
     },
     setWidthName() {
@@ -87,6 +92,10 @@ export default {
   },
   mounted() {
     this.setWidthName();
+    this.useCursor = false;
+    setTimeout(() => {
+      this.useCursor = true;
+    }, 0);
   },
 };
 </script>
