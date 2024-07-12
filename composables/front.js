@@ -23,7 +23,6 @@ export const useScrollCheckMain = () =>
 export const useTableSize = () => useState("use_table_size", () => false);
 export const useTableMeus = () => useState("use_table_meus", () => false);
 export const useAlertCart = () => useState("use_alert_cart", () => false);
-const animationsArrGsap = [];
 
 // export const useGsapAnimationOpacity = (
 //   arr,

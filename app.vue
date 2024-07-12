@@ -1,7 +1,7 @@
 <template>
-  <!-- <Transition>
+  <Transition>
     <UIMyPreloader v-if="!preloader" />
-  </Transition> -->
+  </Transition>
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
     <!-- <MyLoadCss :apple="$device.isApple" :checkRoute="checkRoute" /> -->
