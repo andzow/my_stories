@@ -54,7 +54,7 @@ export default {
     }
     setTimeout(() => {
       this.preloader = true;
-    }, 1800);
+    }, 1000);
   },
   watch: {
     $route() {
@@ -96,7 +96,6 @@ html {
 .v-enter-from,
 .v-leave-to {
   transform: translateY(-100%);
-  border-radius: 80%;
 }
 @media (max-width: 767px) {
   .v-enter-from,
