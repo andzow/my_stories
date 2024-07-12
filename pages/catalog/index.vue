@@ -86,9 +86,9 @@ export default {
             defaultLine: false,
             indent: "left",
           },
-          { name: ".card1", defaultLine: false, indent: "left" },
+          { name: ".catalog__item1", defaultLine: false, indent: "left" },
           {
-            name: ".card2",
+            name: ".catalog__item3",
             defaultLine: false,
             indent: "left",
           },

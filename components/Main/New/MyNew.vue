@@ -51,7 +51,7 @@ export default {
   margin: 0 auto;
   padding: 0 30px;
   min-height: 800px;
-  max-height: 800px;
+  /* max-height: 800px; */
 }
 .new__header {
   display: flex;

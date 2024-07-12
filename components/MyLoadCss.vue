@@ -19,10 +19,14 @@ export default {
 .dynamicStyleOn {
   cursor: auto !important;
 }
-.dynamicStyleOn button,
-a,
-input {
+.dynamicStyleOn button {
   cursor: pointer !important;
+}
+.dynamicStyleOn input {
+  cursor: auto !important;
+}
+.dynamicStyleOn a {
+  cursor: auto !important;
 }
 </style>
 <style scoped>

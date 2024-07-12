@@ -30,11 +30,7 @@
         v-for="(item, idx) in arrNew.filter((el, idx) => idx <= 5)"
         :key="item"
       >
-        <MainNewMyNewItem
-          :item="item"
-          :class="['new__item' + (idx + 1)]"
-          :idx="idx"
-        />
+        <UINewMyItem :item="item" :idx="idx" />
       </swiper-slide>
     </swiper>
   </section>

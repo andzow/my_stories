@@ -4,7 +4,7 @@
       <div class="filter__price_header">
         <div class="filter__price_title">цена</div>
       </div>
-      <div clas="filter__price_form">
+      <div class="filter__price_form">
         <form class="filter__price_inputs" @submit.prevent="send">
           <div class="filter__price_block">
             <input

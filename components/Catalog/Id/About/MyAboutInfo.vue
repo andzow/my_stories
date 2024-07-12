@@ -68,12 +68,13 @@ export default {
   },
   mounted() {
     this.initHeightTextContent();
+  },
+  created() {
     const val = this.arrProduct;
     if (val) {
       this.text = val.characteristic;
     }
   },
-  created() {},
 };
 </script>
 

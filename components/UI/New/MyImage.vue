@@ -1,24 +1,36 @@
 <template>
-  <div class="catalog__image" :class="{ activeImage: activeIdx === idx }">
+  <div class="new__image" :class="{ activeImage: activeIdx === idx }">
     <NuxtLink
-      class="catalog__image_link"
+      class="new__image_link"
       :to="item.name ? `/catalog/${item?.name}/${item?.id}` : '/'"
     >
-      <NuxtImg
-        class="catalog__image_img"
-        :src="urlServer + image"
+      <img
+        class="new__image_img"
+        :v-lazy="urlServer + image"
         :alt="`Фотография ${
           idx + 1
         }, ${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
           /\r\n/g,
           ', '
         )}`"
-        loading="lazy"
         format="webp"
       />
+      <noscript>
+        <img
+          class="new__image_img"
+          :src="urlServer + image"
+          format="webp"
+          :alt="`Фотография ${
+            idx + 1
+          }, ${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
+            /\r\n/g,
+            ', '
+          )}`"
+        />
+      </noscript>
     </NuxtLink>
     <Transition>
-      <div class="catalog__image_loading" v-if="!checkLoadImg">
+      <div class="new__image_loading" v-if="!checkLoadImg">
         <UIMyLoadItem />
       </div>
     </Transition>
@@ -62,7 +74,7 @@ export default {
 </script>
 
 <style scoped>
-.catalog__image {
+.new__image {
   position: absolute;
   top: 0;
   left: 0;
@@ -76,14 +88,14 @@ export default {
 .activeImage {
   opacity: 1;
 }
-.catalog__image_img {
+.new__image_img {
   position: relative;
   width: 100%;
   height: 100%;
   object-fit: cover;
   z-index: 4;
 }
-.catalog__image_loading {
+.new__image_loading {
   position: absolute;
   top: 0;
   left: 0;
