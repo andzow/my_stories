@@ -1,6 +1,6 @@
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
+// import { gsap } from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+// gsap.registerPlugin(ScrollTrigger);
 
 export const useCursor = () => useState("use_cursor", () => null);
 export const useVeriableAnimationLine = () => useState("use_line", () => null);
