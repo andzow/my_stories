@@ -13,7 +13,7 @@
         :arrAnimationLine="arrAnimationLine"
       />
       -->
-      <!-- <LazyUIMyNoise v-if="checkHydrate" /> -->
+      <UIMyNoise v-if="checkHydrate" />
     </section>
   </div>
 </template>
