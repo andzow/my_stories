@@ -1,13 +1,13 @@
 <template>
   <div class="admin">
-    <AdminMyHeader/>
-    <AdminMyButtons/>
-    <AdminMyPromocode/>
-    <AdminMyCategory/>
-    <AdminMyProduct/>
-    <AdminMyCategoryLine/>
-    <AdminMyProductsGrid/>
-    <AdminMyPagination/>
+    <AdminMyHeader />
+    <AdminMyButtons />
+    <AdminMyPromocode />
+    <AdminMyCategory />
+    <AdminMyProduct />
+    <AdminMyCategoryLine />
+    <AdminMyProductsGrid />
+    <AdminMyPagination />
   </div>
 </template>
 
@@ -19,29 +19,30 @@ export default {
       useCategoryAll: useCategoryAll(),
       useCode: useCode(),
       useProduct: useProduct(),
-      useCategory: useCategory()
-    }
+      useCategory: useCategory(),
+    };
   },
   setup() {
     definePageMeta({
-      middleware: ["role"]
-    })
+      middleware: ["role"],
+    });
   },
   async mounted() {
-    this.useCategoryAll = await CategoryController.getAll()
+    document.body.style.overflow = "auto";
+    this.useCategoryAll = await CategoryController.getAll();
   },
   watch: {
     useCode() {
-      document.body.style.overflow = this.useCode ? 'hidden' : '';
+      document.body.style.overflow = this.useCode ? "hidden" : "auto";
     },
     useProduct() {
-      document.body.style.overflow = this.useProduct ? 'hidden' : '';
+      document.body.style.overflow = this.useProduct ? "hidden" : "auto";
     },
     useCategory() {
-      document.body.style.overflow = this.useCategory ? 'hidden' : '';
-    }
-  }
-}
+      document.body.style.overflow = this.useCategory ? "hidden" : "auto";
+    },
+  },
+};
 </script>
 
 <style scoped>

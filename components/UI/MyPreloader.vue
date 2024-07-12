@@ -65,6 +65,15 @@ export default {
   opacity: 0;
   animation: appear 1s ease forwards;
 }
+.preloader__letter_9 {
+  font-family: "Inter", sans-serif;
+}
+.preloader__letter_10 {
+  font-family: "Inter", sans-serif;
+}
+.preloader__letter_11 {
+  font-family: "Inter", sans-serif;
+}
 
 @keyframes appear {
   0% {
