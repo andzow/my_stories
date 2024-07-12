@@ -13,7 +13,7 @@
         :arrAnimationLine="arrAnimationLine"
       />
       -->
-      <LazyUIMyNoise v-if="checkHydrate && !$device.isSafari" />
+      <LazyUIMyNoise v-if="checkHydrate" />
     </section>
   </div>
 </template>
