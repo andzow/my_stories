@@ -1,18 +1,18 @@
 <template>
-  <Transition>
+  <!-- <Transition>
     <UIMyPreloader v-if="!preloader" />
-  </Transition>
+  </Transition> -->
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
-    <MyLoadCss :apple="$device.isApple" :checkRoute="checkRoute" />
+    <!-- <MyLoadCss :apple="$device.isApple" :checkRoute="checkRoute" /> -->
     <NuxtPage />
     <UIMyModalStatus />
-    <LazyUIMyCursor
-      v-if="isMobile === false && !$device.isApple && !checkRoute"
+    <!-- <LazyUIMyCursor
+      v-if="!$device.isMobile && !$device.isApple && !checkRoute"
     />
     <LazyUIMyCursorCircle
-      v-if="isMobile === false && !$device.isApple && !checkRoute"
-    />
+      v-if="!$device.isMobile && !$device.isApple && !checkRoute"
+    /> -->
   </main>
   <UIMyFooter />
 </template>
@@ -22,7 +22,6 @@ import AuthController from "@/http/controllers/AuthController";
 
 export default {
   setup() {
-    const { isMobile } = useDevice();
     const routePath = useRoute().path;
     let checkRoute = false;
     if (routePath === "/login" || routePath === "/admin") {
@@ -30,7 +29,6 @@ export default {
     }
 
     return {
-      isMobile,
       checkRoute,
     };
   },
@@ -65,10 +63,10 @@ export default {
       } else {
         this.headerVisible = true;
       }
-      this.useCheckAnimationArr.forEach((el) => {
-        el.revert();
-      });
-      this.useCheckAnimationArr = [];
+      // this.useCheckAnimationArr.forEach((el) => {
+      //   el.revert();
+      // });
+      // this.useCheckAnimationArr = [];
       setTimeout(() => {
         if (this.$route.path !== "/lookbook") {
           this.useCursor = true;
@@ -81,7 +79,7 @@ export default {
 
 <style>
 html {
-  cursor: none;
+  cursor: auto;
 }
 </style>
 
