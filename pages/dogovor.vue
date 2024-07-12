@@ -17,7 +17,7 @@
       </div>
     </div>
   </section>
-  <LazyUIMyNoise v-if="checkHydrate && !$device.isSafari" />
+  <LazyUIMyNoise v-if="checkHydrate" />
 </template>
 
 <script>

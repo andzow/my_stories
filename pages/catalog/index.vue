@@ -2,7 +2,7 @@
   <div>
     <CatalogIndexMyMain @activeLine="activeLine = true" />
 
-    <LazyUIMyNoise v-if="checkHydrate && !$device.isSafari" />
+    <LazyUIMyNoise v-if="checkHydrate" />
     <LazyUIMyAnimationLine
       :duration="animationDuration"
       :arrAnimationLine="arrAnimationLine"

@@ -7,7 +7,7 @@
       :arrAnimationLine="arrAnimationLine"
       v-if="arrAnimationLine && checkHydrate"
     />
-    <LazyUIMyNoise v-if="checkHydrate && !$device.isSafari" />
+    <LazyUIMyNoise v-if="checkHydrate" />
   </div>
 </template>
 

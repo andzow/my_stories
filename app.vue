@@ -5,7 +5,8 @@
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
     <!-- <MyLoadCss :apple="$device.isApple" :checkRoute="checkRoute" /> -->
-    <NuxtPage />
+    h1
+    <!-- <NuxtPage /> -->
     <UIMyModalStatus />
     <!-- <LazyUIMyCursor v-if="!$device.isMobile && !checkRoute" />
     <LazyUIMyCursorCircle v-if="!$device.isMobile && !checkRoute" /> -->
