@@ -245,6 +245,7 @@ header {
   color: #fff;
   font-size: 16px;
   text-transform: lowercase;
+  padding: 7px 0;
   transition: all 0.4s ease;
 }
 .header__burger {

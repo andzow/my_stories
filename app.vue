@@ -75,7 +75,12 @@ export default {
 
 <style>
 html {
-  cursor: none;
+  cursor: none !important;
+}
+html button,
+input,
+a {
+  cursor: none !important;
 }
 </style>
 
