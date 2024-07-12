@@ -86,7 +86,7 @@ export default {
     },
   },
   mounted() {
-    // this.initArr();
+    this.initArr();
   },
   components: {
     Swiper,

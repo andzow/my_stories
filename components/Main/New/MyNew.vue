@@ -63,19 +63,19 @@ export default {
   font-weight: 500;
   font-size: 36px;
   color: var(--brown);
-  /* opacity: 0; */
+  opacity: 0;
 }
 .new__number {
   font-weight: 500;
   font-size: 36px;
   color: var(--brown);
-  /* opacity: 0; */
+  opacity: 0;
 }
 .new__swiper {
   margin-bottom: 40px;
 }
 .new__btn {
-  /* opacity: 0; */
+  opacity: 0;
 }
 @media screen and (max-width: 1630px) {
   .new__content {

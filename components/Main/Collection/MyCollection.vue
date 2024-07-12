@@ -80,11 +80,11 @@ export default {
     },
   },
   mounted() {
-    // if (window.innerWidth > 876) {
-    //   this.initGsap();
-    // } else {
-    //   this.useGsapAnimationOpacity([".collection"], ".collection");
-    // }
+    if (window.innerWidth > 876) {
+      this.initGsap();
+    } else {
+      this.useGsapAnimationOpacity([".collection"], ".collection");
+    }
   },
 };
 </script>
@@ -113,14 +113,14 @@ export default {
   max-width: 320px;
 }
 .collection__btn {
-  /* opacity: 0; */
+  opacity: 0;
 }
 .collection__number {
   font-weight: 500;
   font-size: 36px;
   color: var(--brown);
   margin-bottom: 50px;
-  /* opacity: 0; */
+  opacity: 0;
 }
 .collection__text {
   font-size: 17px;
@@ -129,13 +129,13 @@ export default {
   text-align: justify;
   margin-bottom: 75px;
   max-width: 260px;
-  /* opacity: 0; */
+  opacity: 0;
 }
 .collection__name {
   font-weight: 500;
   font-size: 36px;
   color: var(--brown);
-  /* opacity: 0; */
+  opacity: 0;
 }
 .collection__photo {
   display: flex;
@@ -144,7 +144,7 @@ export default {
 .collection__photo_img {
   object-fit: cover;
   margin-right: 60px;
-  /* opacity: 0; */
+  opacity: 0;
 }
 @media screen and (max-width: 1600px) {
   .collection {

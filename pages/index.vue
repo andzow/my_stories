@@ -7,11 +7,12 @@
       <MainMyAddition />
       <MainCatalogMyCatalog />
       <MainNewMyNew />
-      <!-- <LazyUIMyAnimationLine
+      <LazyUIMyAnimationLine
         v-if="arrAnimationLine && checkHydrate"
         duration="9"
         :arrAnimationLine="arrAnimationLine"
-      /> -->
+      />
+      -->
       <!-- <LazyUIMyNoise v-if="checkHydrate" /> -->
     </section>
   </div>
