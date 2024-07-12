@@ -4,7 +4,7 @@
   </Transition>
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
-    <!-- <MyLoadCss :apple="$device.isApple" :checkRoute="checkRoute" /> -->
+    <MyLoadCss :checkRoute="checkRoute" />
     <NuxtPage />
     <UIMyModalStatus />
     <LazyUIMyCursor v-if="!$device.isMobile && !checkRoute" />
@@ -75,12 +75,12 @@ export default {
 
 <style>
 html {
-  cursor: none !important;
+  cursor: none;
 }
 html button,
 input,
 a {
-  cursor: none !important;
+  cursor: none;
 }
 </style>
 

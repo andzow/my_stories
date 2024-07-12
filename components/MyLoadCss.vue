@@ -5,7 +5,6 @@
 <script>
 export default {
   props: {
-    apple: {},
     checkRoute: Boolean,
   },
   mounted() {
@@ -13,37 +12,16 @@ export default {
       document.documentElement.classList.add("dynamicStyleOn");
       return;
     }
-    if (this.apple) {
-      document.documentElement.classList.add("dynamicStyleOn");
-      return;
-    }
-    document.documentElement.classList.add("dynamicStyle");
   },
 };
 </script>
 <style>
-.dynamicStyle {
-  cursor: none !important;
-}
-.dynamicStyle button {
-  cursor: none !important;
-}
-.dynamicStyle a {
-  cursor: none !important;
-}
 .dynamicStyleOn {
   cursor: auto !important;
 }
-.dynamicStyleOn button {
-  cursor: pointer !important;
-}
-.dynamicStyleOn a {
-  cursor: pointer !important;
-}
-.dynamicStyleOn .catalog__image_link {
-  cursor: pointer !important;
-}
-.dynamicStyleOn .new__item_card {
+.dynamicStyleOn button,
+a,
+input {
   cursor: pointer !important;
 }
 </style>
