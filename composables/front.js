@@ -25,32 +25,32 @@ export const useTableMeus = () => useState("use_table_meus", () => false);
 export const useAlertCart = () => useState("use_alert_cart", () => false);
 const animationsArrGsap = [];
 
-export const useGsapAnimationOpacity = (
-  arr,
-  triggerEl,
-  startMarker,
-  delayN
-) => {
-  if (!Array.isArray(arr)) {
-    return;
-  }
+// export const useGsapAnimationOpacity = (
+//   arr,
+//   triggerEl,
+//   startMarker,
+//   delayN
+// ) => {
+//   if (!Array.isArray(arr)) {
+//     return;
+//   }
 
-  arr.forEach((el, idx) => {
-    const animation = gsap.to(el, {
-      scrollTrigger: {
-        trigger: triggerEl,
-        start: `top ${startMarker ? "90%" : "80%"}`,
-        markers: false,
-      },
-      delay: delayN ? delayN : 0,
-      opacity: 1,
-      ease: "linear",
-      duration: 1,
-    });
-    animationsArrGsap.push(animation);
-    useCheckAnimationArr().value = animationsArrGsap;
-  });
-};
+//   arr.forEach((el, idx) => {
+//     const animation = gsap.to(el, {
+//       scrollTrigger: {
+//         trigger: triggerEl,
+//         start: `top ${startMarker ? "90%" : "80%"}`,
+//         markers: false,
+//       },
+//       delay: delayN ? delayN : 0,
+//       opacity: 1,
+//       ease: "linear",
+//       duration: 1,
+//     });
+//     animationsArrGsap.push(animation);
+//     useCheckAnimationArr().value = animationsArrGsap;
+//   });
+// };
 export const useFormatNumberToPrice = (number) => {
   let numbers = null;
   if (typeof number !== "number") {
