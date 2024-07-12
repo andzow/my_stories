@@ -8,7 +8,7 @@ export default defineSitemapEventHandler(async (e) => {
   return data.map((p) => {
     return {
       loc: p._path,
-      lastmod: p.modifiedAt,
+      lastmod: new Date(),
     };
   });
 });
