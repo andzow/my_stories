@@ -136,12 +136,12 @@ export default {
     },
   },
   mounted() {
-    gsap.registerPlugin(ScrollTrigger);
-    this.initAnimationArr();
-    this.useGsapAnimationOpacity(
-      this.arrAnimationOpacityGsap,
-      ".catalog__swiper"
-    );
+    // gsap.registerPlugin(ScrollTrigger);
+    // this.initAnimationArr();
+    // this.useGsapAnimationOpacity(
+    //   this.arrAnimationOpacityGsap,
+    //   ".catalog__swiper"
+    // );
   },
   unmounted() {
     if (this.scrollTriggerGsap) {
@@ -160,7 +160,7 @@ export default {
 .catalog__img {
   display: block;
   margin: 0;
-  opacity: 0;
+  /* opacity: 0; */
   height: 790px;
   border: 1px solid rgba(0, 0, 0, 0);
 }

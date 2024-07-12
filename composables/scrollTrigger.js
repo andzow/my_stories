@@ -23,9 +23,9 @@ export const useGsapAnimationOpacity = (
       arr.forEach((el) => {
         const elHtml = document.querySelector(el);
         if (delayN) {
-          elHtml.style.transition = `opacity 0.4s linear ${delayN}s`;
+          elHtml.style.transition = `opacity 1.5s ease ${delayN}s`;
         } else {
-          elHtml.style.transition = `opacity 0.4s linear`;
+          elHtml.style.transition = `opacity 1.5s ease`;
         }
         elHtml.style.opacity = "1";
       });

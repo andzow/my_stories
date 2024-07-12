@@ -25,11 +25,11 @@ export default {};
   font-size: 36px;
   color: var(--brown);
   margin-bottom: 50px;
-  opacity: 0;
+  /* opacity: 0; */
   max-width: 361px;
 }
 .collection__new_img {
-  opacity: 0;
+  /* opacity: 0; */
 }
 .collection__new_image {
   object-fit: cover;
