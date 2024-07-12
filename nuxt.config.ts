@@ -2,6 +2,11 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   plugins: ["~/plugins/animate.connect.js", "~/plugins/v-click-outside.js"],
   css: ["~/assets/style/main.css", "~/assets/style/fonts.css"],
+  nitro: {
+    prerender: {
+      routes: ["/sitemap.xml"],
+    },
+  },
   app: {
     head: {
       title: "Интернет-магазин одежды | MyStories",

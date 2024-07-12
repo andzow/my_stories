@@ -26,7 +26,7 @@ export default {
   cursor: auto !important;
 }
 .dynamicStyleOn a {
-  cursor: auto !important;
+  cursor: pointer !important;
 }
 </style>
 <style scoped>

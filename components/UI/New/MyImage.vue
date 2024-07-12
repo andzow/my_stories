@@ -4,9 +4,9 @@
       class="new__image_link"
       :to="item.name ? `/catalog/${item?.name}/${item?.id}` : '/'"
     >
-      <img
+      <NuxtImg
         class="new__image_img"
-        :v-lazy="urlServer + image"
+        :src="urlServer + image"
         :alt="`Фотография ${
           idx + 1
         }, ${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
