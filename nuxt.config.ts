@@ -28,11 +28,6 @@ export default defineNuxtConfig({
     "/admin": { ssr: false },
     "/login": { ssr: false },
   },
-  nitro: {
-    prerender: {
-      routes: ["/sitemap.xml"],
-    },
-  },
   sitemap: {
     exclude: ["/login", "/admin", "/order", "/order/**", "/cart"],
     sources: ["/api/sitemap"],
