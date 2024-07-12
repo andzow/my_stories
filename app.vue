@@ -80,7 +80,7 @@ html {
 html button,
 input,
 a {
-  cursor: none;
+  cursor: none !important;
 }
 </style>
 
