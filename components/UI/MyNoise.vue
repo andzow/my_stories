@@ -20,7 +20,7 @@ export default {};
 .bg:after {
   position: fixed;
   animation: grain 9s steps(10) infinite;
-  background-image: url("@/assets/images/Main/шум.svg");
+  background-image: url("/noise.png");
   content: "";
   height: 300%;
   width: 300%;
