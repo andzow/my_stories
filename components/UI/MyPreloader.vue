@@ -63,66 +63,16 @@ export default {
 .preloader__letter {
   font-size: 40px;
   opacity: 0;
-  animation: appear 0.5s ease forwards;
+  animation: appear 1s ease forwards;
 }
 
 @keyframes appear {
   0% {
-    transform: translateY(15px);
     opacity: 0;
   }
-  50% {
-    transform: translateY(-10px);
-    opacity: 1;
-  }
   100% {
-    transform: translateY(0);
     opacity: 1;
   }
-}
-.preloader__letter_0 {
-  animation-delay: 0.1s;
-}
-.preloader__letter_1 {
-  animation-delay: 0.2s;
-  margin-right: 10px;
-}
-.preloader__letter_2 {
-  animation-delay: 0.3s;
-}
-.preloader__letter_3 {
-  animation-delay: 0.4s;
-}
-.preloader__letter_4 {
-  animation-delay: 0.5s;
-}
-.preloader__letter_5 {
-  animation-delay: 0.6s;
-}
-.preloader__letter_6 {
-  animation-delay: 0.7s;
-}
-.preloader__letter_7 {
-  animation-delay: 0.8s;
-}
-.preloader__letter_8 {
-  animation-delay: 0.9s;
-}
-.preloader__letter_9 {
-  animation-delay: 1s;
-  font-family: "Inter", sans-serif;
-}
-.preloader__letter_10 {
-  animation-delay: 1.1s;
-  font-family: "Inter", sans-serif;
-}
-.preloader__letter_11 {
-  animation-delay: 1.2s;
-  font-family: "Inter", sans-serif;
-}
-.preloader__letter_12 {
-  animation-delay: 1.3s;
-  font-family: "Inter", sans-serif;
 }
 @media (max-width: 470px) {
   .preloader__letter {
