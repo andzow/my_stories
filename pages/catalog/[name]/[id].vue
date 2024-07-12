@@ -3,7 +3,7 @@
     <CatalogIdMyMain />
     <CatalogIdMyCatalog />
 
-    <LazyUIMyNoise v-if="checkHydrate" />
+    <LazyUIMyNoise v-if="checkHydrate && !$device.isSafari" />
     <LazyUIMyAnimationLine
       duration="6"
       :arrAnimationLine="arrAnimationLine"

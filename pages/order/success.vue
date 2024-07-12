@@ -1,7 +1,7 @@
 <template>
   <div>
     <SuccessMyMain />
-    <LazyUIMyNoise v-if="checkHydrate" />
+    <LazyUIMyNoise v-if="checkHydrate && !$device.isSafari" />
   </div>
 </template>
 

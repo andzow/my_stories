@@ -7,12 +7,8 @@
     <!-- <MyLoadCss :apple="$device.isApple" :checkRoute="checkRoute" /> -->
     <NuxtPage />
     <UIMyModalStatus />
-    <!-- <LazyUIMyCursor
-      v-if="!$device.isMobile && !$device.isApple && !checkRoute"
-    />
-    <LazyUIMyCursorCircle
-      v-if="!$device.isMobile && !$device.isApple && !checkRoute"
-    /> -->
+    <LazyUIMyCursor v-if="!$device.isMobile && !checkRoute" />
+    <LazyUIMyCursorCircle v-if="!$device.isMobile && !checkRoute" />
   </main>
   <UIMyFooter />
 </template>
@@ -79,7 +75,7 @@ export default {
 
 <style>
 html {
-  cursor: auto;
+  cursor: none;
 }
 </style>
 

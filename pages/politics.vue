@@ -18,6 +18,7 @@
       </div>
     </div>
   </section>
+  <LazyUIMyNoise v-if="checkHydrate && !$device.isSafari" />
 </template>
 
 <script>
@@ -27,6 +28,7 @@ export default {
   data() {
     return {
       politics: politicsData,
+      checkHydrate: useCheckHydration(),
     };
   },
 };
