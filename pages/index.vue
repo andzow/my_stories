@@ -5,7 +5,8 @@
       <MainCollectionMyCollection />
       <MainBrandMyBrand />
       <MainMyAddition />
-
+      <MainCatalogMyCatalog />
+      <MainNewMyNew />
       <LazyUIMyAnimationLine
         v-if="arrAnimationLine && checkHydrate"
         duration="9"

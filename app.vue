@@ -70,12 +70,7 @@ export default {
       }, 500);
     },
   },
-  mounted() {
-    const str = "S:)0207ERGQREG88349F82!efRF".split("");
-    const arr = str.map((el) => {
-      console.log(typeof parseInt(el));
-    });
-  },
+  mounted() {},
 };
 </script>
 
