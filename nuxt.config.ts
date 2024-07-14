@@ -51,7 +51,16 @@ export default defineNuxtConfig({
     "nuxt-delay-hydration",
     "@nuxtjs/device",
     "@nuxtjs/sitemap",
+    "nuxt-multi-cache",
   ],
+  multiCache: {
+    component: {
+      enabled: true,
+    },
+    data: {
+      enabled: true,
+    },
+  },
   delayHydration: {
     debug: process.env.NODE_ENV === "development",
   },
