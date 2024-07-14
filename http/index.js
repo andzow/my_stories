@@ -1,15 +1,17 @@
-import axios from "axios";
+import Axios from "axios";
+import { setupCache } from "axios-cache-interceptor";
 import { USE_SERVER } from "~/url";
 
 export const API_URL = USE_SERVER;
 
-const $api = axios.create({
+const instance = Axios.create({
   withCredentials: true,
   baseURL: API_URL,
   //   cache: {
   //     maxAge: 15 * 60 * 1000, // Кеширование на 15 минут
   //   },
 });
+const $api = setupCache(instance);
 
 $api.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
@@ -29,7 +31,7 @@ $api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.get(`${API_URL}auth/refresh`, {
+        const response = await Axios.get(`${API_URL}auth/refresh`, {
           withCredentials: true,
         });
         localStorage.setItem("token", response.data);
