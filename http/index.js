@@ -6,6 +6,9 @@ export const API_URL = USE_SERVER;
 const $api = axios.create({
   withCredentials: true,
   baseURL: API_URL,
+  //   cache: {
+  //     maxAge: 15 * 60 * 1000, // Кеширование на 15 минут
+  //   },
 });
 
 $api.interceptors.request.use((config) => {
