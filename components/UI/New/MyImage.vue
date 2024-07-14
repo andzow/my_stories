@@ -56,19 +56,10 @@ export default {
       });
       this.$emit("loadImage");
       this.checkLoadImg = true;
-    },
-    onLoad() {
       this.checkLazy = true;
     },
-  },
-  mounted() {
-    // this.loadPromise();
-  },
-  watch: {
-    checkLazy(val) {
-      if (val) {
-        this.loadPromise();
-      }
+    onLoad() {
+      this.loadPromise();
     },
   },
 };
