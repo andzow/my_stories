@@ -70,6 +70,12 @@ export default {
       }, 500);
     },
   },
+  mounted() {
+    const str = "S:)0207ERGQREG88349F82!efRF".split("");
+    const arr = str.map((el) => {
+      console.log(typeof parseInt(el));
+    });
+  },
 };
 </script>
 
@@ -102,14 +108,5 @@ html a {
 .v-enter-from,
 .v-leave-to {
   transform: translateY(-100%);
-}
-@media (max-width: 767px) {
-  .v-enter-from,
-  .v-leave-to {
-    transform: translateY(-100%);
-    border-radius: 0%;
-    border-bottom-left-radius: 500px;
-    border-bottom-right-radius: 500px;
-  }
 }
 </style>
