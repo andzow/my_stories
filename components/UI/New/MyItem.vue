@@ -98,7 +98,14 @@ export default {
   },
   created() {
     if (!this.item?.images) return;
-    this.arrImages = this.item.images.filter((el, idx) => idx <= 2);
+    const { isMobile } = useDevice();
+    this.arrImages = this.item.images.filter((el, idx) => {
+      if (isMobile && idx < 1) {
+        return el;
+      } else if (!isMobile && idx <= 2) {
+        return el;
+      }
+    });
   },
   mounted() {
     this.setWidthName();

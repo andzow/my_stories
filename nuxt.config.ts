@@ -1,6 +1,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  plugins: ["~/plugins/animate.connect.js", "~/plugins/v-click-outside.js"],
+  plugins: [
+    "~/plugins/animate.connect.js",
+    "~/plugins/v-click-outside.js",
+    "~/plugins/v-lazy-loading.js",
+  ],
   css: ["~/assets/style/main.css", "~/assets/style/fonts.css"],
   nitro: {
     prerender: {

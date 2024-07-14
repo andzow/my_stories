@@ -17,6 +17,7 @@ export default {
     };
   },
   mounted() {
+    document.body.style.cursor = "none";
     ymaps.ready(() => {
       const objSett = this.arrPlacemarkAndInfo[0];
       let map = new ymaps.Map("mapContainer", {
@@ -111,6 +112,7 @@ export default {
   width: 100%;
   height: 500px;
   margin-bottom: 35px;
+  cursor: none !important;
   z-index: 15;
 }
 @media screen and (max-width: 930px) {

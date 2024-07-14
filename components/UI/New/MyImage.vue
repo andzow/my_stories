@@ -4,9 +4,12 @@
       class="new__image_link"
       :to="item.name ? `/catalog/${item?.name}/${item?.id}` : '/'"
     >
-      <NuxtImg
+      <img
         class="new__image_img"
-        :src="urlServer + image"
+        v-lazy-loading="{
+          src: urlServer + image,
+          onLoad,
+        }"
         :alt="`Фотография ${
           idx + 1
         }, ${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
@@ -15,22 +18,9 @@
         )}`"
         format="webp"
       />
-      <noscript>
-        <img
-          class="new__image_img"
-          :src="urlServer + image"
-          format="webp"
-          :alt="`Фотография ${
-            idx + 1
-          }, ${item.name.toLowerCase()} ${item.color.toLowerCase()}, ${item.characteristic.replace(
-            /\r\n/g,
-            ', '
-          )}`"
-        />
-      </noscript>
     </NuxtLink>
     <Transition>
-      <div class="new__image_loading" v-if="!checkLoadImg">
+      <div class="new__image_loading" v-if="!checkLoadImg && !checkLazy">
         <UIMyLoadItem />
       </div>
     </Transition>
@@ -51,6 +41,7 @@ export default {
     return {
       urlServer: USE_SERVER,
       checkLoadImg: false,
+      checkLazy: false,
     };
   },
   methods: {
@@ -66,9 +57,19 @@ export default {
       this.$emit("loadImage");
       this.checkLoadImg = true;
     },
+    onLoad() {
+      this.checkLazy = true;
+    },
   },
   mounted() {
-    this.loadPromise();
+    // this.loadPromise();
+  },
+  watch: {
+    checkLazy(val) {
+      if (val) {
+        this.loadPromise();
+      }
+    },
   },
 };
 </script>

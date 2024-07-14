@@ -75,11 +75,18 @@ export default {
 
 <style>
 html {
-  cursor: none;
+  cursor: none !important;
 }
-html button,
-input,
-a {
+html button {
+  cursor: none !important;
+}
+html input {
+  cursor: none !important;
+}
+html div {
+  cursor: none !important;
+}
+html a {
   cursor: none !important;
 }
 </style>
