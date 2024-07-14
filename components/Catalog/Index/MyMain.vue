@@ -2,8 +2,12 @@
   <section class="main">
     <h1 class="main__title">Каталог | Mystories</h1>
     <div class="main__content">
-      <CatalogIndexMyFilter />
-      <CatalogIndexMyCatalog @activeLine="$emit('activeLine')" />
+      <RenderCacheable :async-data-keys="['filter']" :max-age="3600">
+        <CatalogIndexMyFilter />
+      </RenderCacheable>
+      <RenderCacheable :async-data-keys="['catalog']" :max-age="3600">
+        <CatalogIndexMyCatalog @activeLine="$emit('activeLine')" />
+      </RenderCacheable>
     </div>
   </section>
 </template>

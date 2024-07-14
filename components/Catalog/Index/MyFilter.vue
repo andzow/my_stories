@@ -52,7 +52,7 @@ export default {
       let minVal = useMinVal();
       let maxVal = useMaxVal();
 
-      const { data: response } = await useAsyncData("data", async () =>
+      const { data: response } = await useAsyncData("filter", async () =>
         $fetch(usePageUrlAsyncData() + "category/getCategory", {
           params: useRoute().query,
         })
