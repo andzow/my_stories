@@ -83,9 +83,7 @@ html button {
 html input {
   cursor: none !important;
 }
-html div {
-  cursor: none !important;
-}
+
 html a {
   cursor: none !important;
 }

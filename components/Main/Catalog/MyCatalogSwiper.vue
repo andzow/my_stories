@@ -4,7 +4,10 @@
     :loop="true"
     :centeredSlides="true"
     :allowTouchMove="false"
-    :autoplay="swiperAutoPlay"
+    :autoplay="{
+      delay: 2500,
+      disableOnInteraction: false,
+    }"
     :slidesPerView="2.7"
     :slidesPerGroup="1"
     :spaceBetween="-3"
@@ -40,9 +43,6 @@
 </template>
 
 <script>
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper/modules";
 
@@ -111,11 +111,6 @@ export default {
       ],
       arrAnimationOpacityGsap: [],
       useGsapAnimationOpacity: useGsapAnimationOpacity,
-      swiperAutoPlay: {
-        delay: 2500,
-        disableOnInteraction: false,
-      },
-      scrollTriggerGsap: null,
     };
   },
   methods: {
@@ -136,17 +131,11 @@ export default {
     },
   },
   mounted() {
-    gsap.registerPlugin(ScrollTrigger);
     this.initAnimationArr();
     this.useGsapAnimationOpacity(
       this.arrAnimationOpacityGsap,
       ".catalog__swiper"
     );
-  },
-  unmounted() {
-    if (this.scrollTriggerGsap) {
-      this.scrollTriggerGsap.revert();
-    }
   },
 
   components: {

@@ -5,7 +5,9 @@
         <h2 class="new__title">( &nbsp;новинки&nbsp; )</h2>
         <div class="new__number">( &nbsp;3&nbsp; )</div>
       </div>
-      <MainNewMyNewSwiper v-if="checkSwiper" />
+      <NuxtErrorBoundary>
+        <MainNewMyNewSwiper />
+      </NuxtErrorBoundary>
       <div class="new__btn">
         <UIButtonMyButton
           @click="$router.push('/catalog')"
@@ -30,11 +32,7 @@ export default {
     };
   },
   methods: {},
-  mounted() {
-    setTimeout(() => {
-      this.checkSwiper = true;
-    }, 0);
-  },
+  mounted() {},
 };
 </script>
 

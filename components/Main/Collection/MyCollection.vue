@@ -9,9 +9,9 @@
             миди, уютные стеганные жакеты свободного кроя, логсливы из
             конопляной ткани с оригинальным узором
           </p>
-          <h3 class="collection__name">
+          <h2 class="collection__name">
             летний ветер <span class="span__inter">. . .</span>
-          </h3>
+          </h2>
         </div>
         <div class="collection__btn">
           <UIButtonMyButton
