@@ -4,7 +4,7 @@
   </Transition>
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
-    <!-- <MyLoadCss :apple="$device.isApple" :checkRoute="checkRoute" /> -->
+    <MyLoadCss :checkRoute="checkRoute" />
     <NuxtPage />
     <UIMyModalStatus />
     <LazyUIMyCursor v-if="!$device.isMobile && !checkRoute" />
@@ -43,7 +43,7 @@ export default {
       await AuthController.cheackAuth();
     },
   },
-  async mounted() {
+  mounted() {
     if (this.$route.path === "/admin" || this.$route.path === "/login") {
       this.headerVisible = false;
     } else {
@@ -63,6 +63,10 @@ export default {
       } else {
         this.headerVisible = true;
       }
+      // this.useCheckAnimationArr.forEach((el) => {
+      //   el.revert();
+      // });
+      // this.useCheckAnimationArr = [];
       setTimeout(() => {
         if (this.$route.path !== "/lookbook") {
           this.useCursor = true;
