@@ -53,20 +53,23 @@ export default {
   methods: {
     async initArr() {
       try {
-        const res = await $fetch("http://localhost:8080/api/product/getNew", {
-          key: "my-data",
-          getCachedData: (key) => {
-            if (nuxt.isHydrating && nuxt.payload.data[key]) {
-              return nuxt.payload.data[key];
-            }
+        const res = await $fetch(
+          "https://xn--80aqckmmfdf.xn--p1ai/api/product/getNew",
+          {
+            key: "my-data",
+            getCachedData: (key) => {
+              if (nuxt.isHydrating && nuxt.payload.data[key]) {
+                return nuxt.payload.data[key];
+              }
 
-            if (nuxt.static.data[key]) {
-              return nuxt.static.data[key];
-            }
+              if (nuxt.static.data[key]) {
+                return nuxt.static.data[key];
+              }
 
-            return null;
-          },
-        });
+              return null;
+            },
+          }
+        );
         // const res = await ProductController.getNew();
         this.arrNew = res;
         this.initAnimationArr();
