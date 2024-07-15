@@ -21,7 +21,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       binding.instance.observer.observe(elementHtml);
     },
     updated(elementHtml, binding) {
-      if (!binding.instance.observer) {
+      if (!binding?.instance?.observer) {
         return;
       }
       binding.instance.observer.unobserve(elementHtml);

@@ -12,7 +12,7 @@
           <div class="register__details">
             Нажимая на кнопку, вы даете согласие на обработку персональных
             данных и соглашаетесь c
-            <NuxtLink class="register__link" :to="'/'"
+            <NuxtLink class="register__link" :to="'/politics'"
               >политикой конфиденциальности</NuxtLink
             >
           </div>
@@ -52,31 +52,6 @@ export default {
       objSet: useDeliveryObj(),
       useActiveRegion: useActiveRegion(),
       useBuyerAddress: useBuyerAddress(),
-      objSetPayment: {
-        name: "Алексей",
-        phone: "+7 242 423 34 34",
-        adress: "Г. Киров, ул. Молодая гвардия 32, д. 120",
-        promocode: "САНЯ - ВАДИЛА",
-        comments: "Я хочу на мальдивы",
-        amount: 1300.0,
-        items: [
-          {
-            name: "Product 1",
-            quantity: 2,
-            price: 300.0,
-          },
-          {
-            name: "Product 2",
-            quantity: 1,
-            price: 400.0,
-          },
-        ],
-        delivery: {
-          name: "CDEK",
-          quantity: 1,
-          price: 300.0,
-        },
-      },
       loadingButton: useLoadingButton(),
       errorCheck: false,
       counterCheck: false,
@@ -296,7 +271,9 @@ export default {
   display: flex;
   align-items: flex-start;
 }
-
+.register__custom {
+  cursor: none;
+}
 .register__custom + .register__custom_radio {
   min-width: 20px;
   min-height: 20px;
@@ -308,6 +285,7 @@ export default {
   cursor: pointer;
   margin-right: 10px;
   transition: border-color 0.4s ease;
+  cursor: none;
 }
 
 .register__custom + .register__custom_radio::before {
