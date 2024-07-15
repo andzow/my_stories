@@ -19,14 +19,14 @@ export default {};
 
 .bg:after {
   position: fixed;
-  /* animation: grain 9s steps(10) infinite; */
-  background: url("/noise2.png");
+  animation: grain 9s steps(10) infinite;
+  background: url("/noise3.png");
   content: "";
   height: 300%;
   width: 300%;
   left: -100%;
   top: -110%;
-  opacity: 0.2;
+  opacity: 0.025;
   z-index: 11;
 }
 
