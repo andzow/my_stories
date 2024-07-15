@@ -270,6 +270,7 @@ export default {
 .register__label {
   display: flex;
   align-items: flex-start;
+  cursor: none;
 }
 .register__custom {
   cursor: none;
