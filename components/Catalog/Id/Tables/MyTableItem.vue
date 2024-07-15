@@ -76,9 +76,15 @@ export default {
   .table__item td {
     font-size: 17px;
   }
+  .table__item th {
+    font-size: 17px;
+  }
 }
 @media screen and (max-width: 936px) {
   .table__item td {
+    font-size: 16px;
+  }
+  .table__item th {
     font-size: 16px;
   }
 }
