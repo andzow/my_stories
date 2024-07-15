@@ -89,6 +89,8 @@
 </template>
 
 <script>
+import debounce from "lodash.debounce";
+
 export default {
   data() {
     return {
@@ -98,6 +100,9 @@ export default {
       useCursor: useCursor(),
       useCheckReset: useCheckReset(),
       activeVector: false,
+      debouncedMethod: debounce(async (filterArr) => {
+        this.replaceRoute(filterArr);
+      }, 200),
     };
   },
   methods: {
@@ -112,7 +117,7 @@ export default {
       routeQuery.push(item.name.toLowerCase());
       const filterArr = routeQuery.filter((el) => el.length > 1);
       this.filterArrActiveQueryWord = filterArr;
-      this.replaceRoute(filterArr);
+      this.debouncedMethod(filterArr);
     },
     async replaceRoute(arr) {
       await this.$router.replace({
