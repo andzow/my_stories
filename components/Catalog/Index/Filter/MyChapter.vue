@@ -102,6 +102,7 @@ export default {
       activeVector: false,
       debouncedMethod: debounce(async (filterArr) => {
         this.replaceRoute(filterArr);
+        t;
       }, 200),
     };
   },
@@ -117,7 +118,7 @@ export default {
       routeQuery.push(item.name.toLowerCase());
       const filterArr = routeQuery.filter((el) => el.length > 1);
       this.filterArrActiveQueryWord = filterArr;
-      this.debouncedMethod(filterArr);
+      this.replaceRoute(filterArr);
     },
     async replaceRoute(arr) {
       await this.$router.replace({
@@ -207,10 +208,10 @@ export default {
   color: var(--brown);
   margin-bottom: 15px;
   text-transform: lowercase;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 }
 .activeTitle {
-  font-weight: 600;
+  font-weight: 500;
 }
 .filter__chapter_icon {
   display: flex;

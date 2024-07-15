@@ -180,7 +180,7 @@ export default {
 
       this.useFilterPrice.activeMinVal = minElRange.value;
       this.useFilterPrice.activeMaxVal = maxElRange.value;
-      this.$emit("openMethod");
+      // this.$emit("openMethod");
     },
     changeValue() {
       document.querySelector(".filter__price_input").value = this.minVal;

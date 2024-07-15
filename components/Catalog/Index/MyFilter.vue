@@ -10,11 +10,23 @@
         "
       />
       <div class="filter__bl">
-        <CatalogIndexFilterMySize />
+        <CatalogIndexFilterMySize
+          @openMethod="
+            () => {
+              checkResetBtn();
+              filterReadyCheck = true;
+            }
+          "
+        />
         <CatalogIndexFilterMyPrice
           :minVal="minVal"
           :maxVal="maxVal"
-          @openMethod="checkResetBtn"
+          @openMethod="
+            () => {
+              checkResetBtn();
+              filterReadyCheck = true;
+            }
+          "
         />
       </div>
 
@@ -181,23 +193,22 @@ export default {
   watch: {
     $route: {
       handler(val) {
-        const routeQuery = val.query;
-        let sizeArr = null;
-        if (routeQuery.size) {
-          sizeArr = routeQuery.size.split(";");
-        }
-        const parsePriceMin = parseInt(this.useFilterPrice.activeMinVal);
-        const parsePriceMax = parseInt(this.useFilterPrice.activeMaxVal);
-
-        if (
-          sizeArr !== null ||
-          parsePriceMin !== this.minVal ||
-          parsePriceMax !== this.maxVal
-        ) {
-          this.filterReadyCheck = true;
-          return;
-        }
-        this.filterReadyCheck = false;
+        // const routeQuery = val.query;
+        // let sizeArr = null;
+        // if (routeQuery.size) {
+        //   sizeArr = routeQuery.size.split(";");
+        // }
+        // const parsePriceMin = parseInt(this.useFilterPrice.activeMinVal);
+        // const parsePriceMax = parseInt(this.useFilterPrice.activeMaxVal);
+        // if (
+        //   sizeArr !== null ||
+        //   parsePriceMin !== this.minVal ||
+        //   parsePriceMax !== this.maxVal
+        // ) {
+        //   this.filterReadyCheck = true;
+        //   return;
+        // }
+        // this.filterReadyCheck = false;
       },
       deep: true,
     },
@@ -273,6 +284,7 @@ export default {
 .filter__btns {
   display: flex;
   flex-direction: column;
+  height: 155px;
 }
 .filter__bl {
   display: flex;
@@ -285,17 +297,19 @@ export default {
   transition: all 0.5s ease;
 }
 .activeBtnReady {
-  height: 65px;
+  padding-bottom: 25px;
+  height: auto;
   opacity: 1;
 }
 .filter__delete {
   opacity: 0;
   display: block !important;
-  height: 0;
+  padding-bottom: 25px;
+  /* height: 0; */
   transition: all 0.5s ease;
 }
 .activeBtnDel {
-  height: 45px;
+  /* height: 45px; */
   opacity: 1;
 }
 .filter-fade-enter-from {
