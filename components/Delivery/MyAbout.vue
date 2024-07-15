@@ -108,8 +108,7 @@ export default {
       this.useGsapAnimationOpacity(
         [".about__calc_img"],
         ".about__calc_image",
-        false,
-        1
+        false
       );
     },
   },
