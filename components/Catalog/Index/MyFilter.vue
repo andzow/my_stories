@@ -1,9 +1,16 @@
 <template>
   <section class="filter">
     <div class="filter__item" ref="filterItem" id="filter__item">
-      <CatalogIndexFilterMyChapter @openMethod="checkResetBtn" />
+      <CatalogIndexFilterMyChapter
+        @openMethod="
+          () => {
+            checkResetBtn();
+            sendFilter();
+          }
+        "
+      />
       <div class="filter__bl">
-        <CatalogIndexFilterMySize @openMethod="checkResetBtn" />
+        <CatalogIndexFilterMySize />
         <CatalogIndexFilterMyPrice
           :minVal="minVal"
           :maxVal="maxVal"
@@ -12,7 +19,10 @@
       </div>
 
       <div class="filter__btns">
-        <div class="filter__ready">
+        <div
+          class="filter__ready"
+          :class="{ activeBtnReady: filterReadyCheck }"
+        >
           <UIButtonMyButton
             class="filter__item_btn"
             aria-label="применить"
@@ -23,7 +33,12 @@
           />
         </div>
         <Transition name="filter-fade">
-          <div class="filter__delete" :class="{ activeBtnDel: checkReset }">
+          <div
+            class="filter__delete"
+            :class="{
+              activeBtnDel: checkReset || useCatalogItems?.length === 0,
+            }"
+          >
             <UIButtonMyButton
               class="filter__item_btn"
               aria-label="сбросить"
@@ -77,6 +92,7 @@ export default {
       timeLineGsap: null,
       useGsapAnimationOpacity: useGsapAnimationOpacity,
       useFilterReset: useFilterReset(),
+      filterReadyCheck: false,
     };
   },
   methods: {
@@ -113,11 +129,13 @@ export default {
       }
       this.checkReset = false;
     },
-    scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+    async scrollToTop() {
+      await setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }, 100);
       return new Promise((resolve) => {
         const scrollInterval = setInterval(() => {
           if (document.documentElement.scrollTop === 0) {
@@ -132,6 +150,7 @@ export default {
       await this.scrollToTop();
       await this.initFilter();
       await this.initItems();
+      this.filterReadyCheck = false;
     },
     async reset() {
       this.useCheckReset = true;
@@ -160,6 +179,28 @@ export default {
     this.useGsapAnimationOpacity([".filter"], ".catalog");
   },
   watch: {
+    $route: {
+      handler(val) {
+        const routeQuery = val.query;
+        let sizeArr = null;
+        if (routeQuery.size) {
+          sizeArr = routeQuery.size.split(";");
+        }
+        const parsePriceMin = parseInt(this.useFilterPrice.activeMinVal);
+        const parsePriceMax = parseInt(this.useFilterPrice.activeMaxVal);
+
+        if (
+          sizeArr !== null ||
+          parsePriceMin !== this.minVal ||
+          parsePriceMax !== this.maxVal
+        ) {
+          this.filterReadyCheck = true;
+          return;
+        }
+        this.filterReadyCheck = false;
+      },
+      deep: true,
+    },
     async useCheckReset(val) {
       if (!val) {
         await this.$router.replace({
@@ -238,15 +279,23 @@ export default {
   flex-direction: column;
 }
 .filter__ready {
-  padding-bottom: 25px;
+  padding-bottom: 0px;
+  height: 0;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.activeBtnReady {
+  height: 65px;
+  opacity: 1;
 }
 .filter__delete {
   opacity: 0;
   display: block !important;
-  height: auto !important;
-  transition: all 0.4s ease;
+  height: 0;
+  transition: all 0.5s ease;
 }
 .activeBtnDel {
+  height: 45px;
   opacity: 1;
 }
 .filter-fade-enter-from {

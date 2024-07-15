@@ -20,6 +20,15 @@ export default defineNuxtPlugin((nuxtApp) => {
       binding.instance.observer = new IntersectionObserver(callback, options);
       binding.instance.observer.observe(elementHtml);
     },
+    updated(elementHtml, binding) {
+      if (!binding.instance.observer) {
+        return;
+      }
+      binding.instance.observer.unobserve(elementHtml);
+      setTimeout(() => {
+        binding.instance.observer.observe(elementHtml);
+      }, 100);
+    },
     beforeUnmount(elementHtml, binding) {
       if (!binding.instance.observer) {
         return;

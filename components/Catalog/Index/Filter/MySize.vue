@@ -104,7 +104,7 @@ export default {
           size: arr.join(";"),
         },
       });
-      this.$emit("openMethod");
+      // this.$emit("openMethod");
     },
     initApp(route) {
       const queryParams = route.query;
@@ -134,13 +134,13 @@ export default {
       this.arrFilterQuery.push(item);
       this.replaceRoute(this.arrFilterQuery);
       this.checkDelBtn();
-      this.$emit("openMethod");
+      // this.$emit("openMethod");
     },
     async deleteQuery() {
       this.arrFilterQuery = [];
       this.checkFilter = false;
       await this.replaceRoute([]);
-      this.$emit("openMethod", true);
+      // this.$emit("openMethod", true);
     },
   },
   created() {
