@@ -56,6 +56,7 @@
             fontSize="22"
             padding="12px 0"
             data-cursor-class="animateCursor"
+            @click="redirectTelegram"
           />
         </div>
       </div>
@@ -76,7 +77,11 @@ export default {
       useCursor: useCursor(),
     };
   },
-  methods: {},
+  methods: {
+    redirectTelegram() {
+      window.open("https://t.me/mystoriesdress", "_blank");
+    },
+  },
   mounted() {
     const body = document.body;
     body.style.overflow = "hidden";
