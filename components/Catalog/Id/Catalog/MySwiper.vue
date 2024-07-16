@@ -33,6 +33,7 @@
       <UINewMyItem :item="item" :idx="idx" />
     </swiper-slide>
   </swiper>
+  <UINewMyMobile :arrNew="arrNew.filter((el, idx) => idx <= 2)" v-if="arrNew" />
 </template>
 
 <script>
@@ -101,5 +102,10 @@ export default {
 <style scoped>
 .catalog__swiper {
   margin-bottom: 40px;
+}
+@media screen and (max-width: 468px) {
+  .catalog__swiper {
+    display: none;
+  }
 }
 </style>

@@ -34,4 +34,10 @@ export default {};
 .menu__information_btn {
   max-width: 290px;
 }
+@media screen and (max-width: 434px) {
+  .menu__information_btn {
+    max-width: 100%;
+    width: 100%;
+  }
+}
 </style>

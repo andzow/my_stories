@@ -27,13 +27,9 @@
   >
     <swiper-slide class="new__slide" v-for="(item, idx) in arrNew" :key="item">
       <UINewMyItem :item="item" :idx="idx" :activeOpacity="true" />
-      <!-- <MainNewMyNewItem
-        :item="item"
-        :class="['new__item' + (idx + 1)]"
-        :idx="idx"
-      /> -->
     </swiper-slide>
   </swiper>
+  <UINewMyMobile :arrNew="arrNew.filter((el, idx) => idx <= 2)" v-if="arrNew" />
 </template>
 
 <script>
@@ -98,5 +94,10 @@ export default {
 <style scoped>
 .new__swiper {
   margin-bottom: 40px;
+}
+@media screen and (max-width: 468px) {
+  .new__swiper {
+    display: none;
+  }
 }
 </style>

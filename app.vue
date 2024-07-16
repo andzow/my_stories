@@ -1,16 +1,15 @@
 <template>
-  <Transition>
+  <!-- <Transition>
     <UIMyPreloader v-if="!preloader" />
-  </Transition>
+  </Transition> -->
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
-    <MyLoadCss :checkRoute="checkRoute" />
     <NuxtPage />
     <UIMyModalStatus />
-    <LazyUIMyCursor v-if="!$device.isMobile && !checkRoute" />
-    <LazyUIMyCursorCircle v-if="!$device.isMobile && !checkRoute" />
+    <LazyUIMyCursor v-if="!$device.isMobile && cursorFooter" />
+    <LazyUIMyCursorCircle v-if="!$device.isMobile && cursorFooter" />
   </main>
-  <UIMyFooter />
+  <UIMyFooter @openFooter="openFooter" @closeFooter="closeFooter" />
 </template>
 
 <script>
@@ -23,7 +22,6 @@ export default {
     if (routePath === "/login" || routePath === "/admin") {
       checkRoute = true;
     }
-
     return {
       checkRoute,
     };
@@ -36,14 +34,25 @@ export default {
       preloader: useMainPreload(),
       checkHydrate: useCheckHydration(),
       checkMobile: null,
+      cursorFooter: false,
     };
   },
   methods: {
     async checkAuthApp() {
       await AuthController.cheackAuth();
     },
+    closeFooter() {
+      document.documentElement.classList.remove("dynamicStyleOn");
+      this.cursorFooter = false;
+    },
+    openFooter() {
+      document.documentElement.classList.add("dynamicStyleOn");
+      this.cursorFooter = true;
+    },
   },
   mounted() {
+    document.documentElement.classList.add("autoCursor");
+    document.documentElement.classList.add("pointerCursor");
     if (this.$route.path === "/admin" || this.$route.path === "/login") {
       this.headerVisible = false;
     } else {
@@ -63,10 +72,6 @@ export default {
       } else {
         this.headerVisible = true;
       }
-      // this.useCheckAnimationArr.forEach((el) => {
-      //   el.revert();
-      // });
-      // this.useCheckAnimationArr = [];
       setTimeout(() => {
         if (this.$route.path !== "/lookbook") {
           this.useCursor = true;
@@ -76,21 +81,13 @@ export default {
   },
 };
 </script>
-
 <style>
-html {
+.dynamicStyleOn {
   cursor: none !important;
 }
-html button {
-  cursor: none !important;
-}
-html input {
-  cursor: none !important;
-}
-
-html a {
-  cursor: none !important;
-}
+/* .pointerCursor {
+  cursor: url("/pointer.png"), pointer;
+} */
 </style>
 
 <style scoped>

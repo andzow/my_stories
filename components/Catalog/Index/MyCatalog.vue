@@ -76,7 +76,7 @@ export default {
   position: relative;
 }
 .catalog__menu {
-  min-height: 900px;
+  /* min-height: 900px; */
 }
 .catalog__content {
   display: grid;

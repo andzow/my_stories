@@ -1,6 +1,7 @@
 <template>
   <section class="slider">
     <swiper
+      class="slider__swiper"
       :slidesPerView="4"
       :slidesPerGroup="1"
       :spaceBetween="25"
@@ -33,6 +34,10 @@
         <UINewMyItem :item="item" :idx="idx" />
       </swiper-slide>
     </swiper>
+    <UINewMyMobile
+      :arrNew="arrNew.filter((el, idx) => idx <= 2)"
+      v-if="arrNew"
+    />
   </section>
 </template>
 
@@ -108,6 +113,11 @@ export default {
 @media screen and (max-width: 768px) {
   .slider {
     padding-top: 20px;
+  }
+}
+@media screen and (max-width: 468px) {
+  .slider__swiper {
+    display: none;
   }
 }
 </style>

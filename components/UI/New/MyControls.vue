@@ -37,6 +37,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
   gap: 15px;
+  cursor: pointer;
   z-index: 5;
 }
 .new__control {

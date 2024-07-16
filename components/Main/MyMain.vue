@@ -66,10 +66,10 @@ export default {
     setTimeout(() => {
       this.setAnimateParallax();
     }, 10);
-    setTimeout(() => {
-      this.useGsapAnimationOpacity([".main__title", ".main__catalog"], ".main");
-      this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
-    }, 100);
+    // setTimeout(() => {
+    //   this.useGsapAnimationOpacity([".main__title", ".main__catalog"], ".main");
+    //   this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
+    // }, 100);
   },
   watch: {
     checkHydrate(val) {
@@ -77,13 +77,13 @@ export default {
       setTimeout(() => {
         this.setAnimateParallax();
       }, 10);
-      setTimeout(() => {
-        this.useGsapAnimationOpacity(
-          [".main__title", ".main__catalog"],
-          ".main"
-        );
-        this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
-      }, 100);
+      // setTimeout(() => {
+      //   this.useGsapAnimationOpacity(
+      //     [".main__title", ".main__catalog"],
+      //     ".main"
+      //   );
+      //   this.useGsapAnimationOpacity([".main__img"], ".main", false, 0.3);
+      // }, 100);
     },
   },
 };
@@ -125,13 +125,17 @@ export default {
 }
 .main__catalog {
   min-width: 306px;
-  opacity: 0;
+  animation-name: opacityAnimation;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
 }
 .main__logo {
   margin-bottom: 85px;
 }
 .main__img {
-  opacity: 0;
+  animation-name: opacityAnimation;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
 }
 .main__title {
   font-size: 17px;
@@ -140,7 +144,20 @@ export default {
   line-height: 120%;
   max-width: 350px;
   text-align: justify;
+  animation-name: opacityAnimation;
+  animation-duration: 1.5s;
+  animation-delay: 0.3s;
   opacity: 0;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+@keyframes opacityAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @media screen and (max-width: 1400px) {
   .main__logo {
@@ -203,7 +220,11 @@ export default {
     background-position: 30%;
   }
   .main__content {
-    margin-bottom: 101px;
+    margin-bottom: 60px;
+  }
+  .main__catalog {
+    max-width: 100%;
+    width: 100%;
   }
 }
 @media screen and (max-width: 460px) {

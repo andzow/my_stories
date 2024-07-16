@@ -2,6 +2,7 @@
   <section class="filter">
     <div class="filter__item" ref="filterItem" id="filter__item">
       <CatalogIndexFilterMyChapter
+        :useCheckReset="useCheckReset"
         @openMethod="
           () => {
             checkResetBtn();
@@ -10,6 +11,7 @@
         "
       />
       <div class="filter__bl">
+        <div class="filter__bl_name">Фильтр</div>
         <CatalogIndexFilterMySize
           @openMethod="
             () => {
@@ -23,7 +25,6 @@
           :maxVal="maxVal"
           @openMethod="
             () => {
-              checkResetBtn();
               filterReadyCheck = true;
             }
           "
@@ -44,7 +45,7 @@
             @click="sendFilter"
           />
         </div>
-        <Transition name="filter-fade">
+        <!-- <Transition name="filter-fade">
           <div
             class="filter__delete"
             :class="{
@@ -61,7 +62,7 @@
               data-cursor-class="animateCursor"
             />
           </div>
-        </Transition>
+        </Transition> -->
       </div>
     </div>
   </section>
@@ -110,13 +111,7 @@ export default {
   methods: {
     async checkResetBtn(check) {
       const routeQuery = this.$route.query;
-      let sizeArr,
-        chapterArr = null;
-      if (routeQuery.chapter) {
-        chapterArr = routeQuery.chapter.split(";");
-      } else {
-        chapterArr = [];
-      }
+      let sizeArr = null;
       if (routeQuery.size) {
         sizeArr = routeQuery.size.split(";");
       }
@@ -130,8 +125,7 @@ export default {
       }
 
       if (
-        chapterArr.length > 0 ||
-        sizeArr === null ||
+        sizeArr !== null ||
         Array.isArray(sizeArr) ||
         parsePriceMin !== this.minVal ||
         parsePriceMax !== this.maxVal
@@ -143,6 +137,9 @@ export default {
     },
     async scrollToTop() {
       await setTimeout(() => {
+        if (window.scrollY <= 120) {
+          return;
+        }
         window.scrollTo({
           top: 0,
           behavior: "smooth",
@@ -150,7 +147,7 @@ export default {
       }, 100);
       return new Promise((resolve) => {
         const scrollInterval = setInterval(() => {
-          if (document.documentElement.scrollTop === 0) {
+          if (document.documentElement.scrollTop <= 120) {
             clearInterval(scrollInterval);
             resolve();
           }
@@ -163,6 +160,7 @@ export default {
       await this.initFilter();
       await this.initItems();
       this.filterReadyCheck = false;
+      this.checkResetBtn();
     },
     async reset() {
       this.useCheckReset = true;
@@ -191,32 +189,12 @@ export default {
     this.useGsapAnimationOpacity([".filter"], ".catalog");
   },
   watch: {
-    $route: {
-      handler(val) {
-        // const routeQuery = val.query;
-        // let sizeArr = null;
-        // if (routeQuery.size) {
-        //   sizeArr = routeQuery.size.split(";");
-        // }
-        // const parsePriceMin = parseInt(this.useFilterPrice.activeMinVal);
-        // const parsePriceMax = parseInt(this.useFilterPrice.activeMaxVal);
-        // if (
-        //   sizeArr !== null ||
-        //   parsePriceMin !== this.minVal ||
-        //   parsePriceMax !== this.maxVal
-        // ) {
-        //   this.filterReadyCheck = true;
-        //   return;
-        // }
-        // this.filterReadyCheck = false;
-      },
-      deep: true,
-    },
     async useCheckReset(val) {
       if (!val) {
         await this.$router.replace({
           path: "/catalog",
           query: {
+            chapter: "все",
             min: "0",
             max: "35000",
           },
@@ -270,6 +248,13 @@ export default {
   top: 0;
   /* opacity: 0; */
 }
+.filter__bl_name {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--brown);
+  text-transform: lowercase;
+  margin-bottom: 20px;
+}
 .activeFilter {
   animation-name: animationOpacity;
   animation-duration: 1s;
@@ -284,7 +269,7 @@ export default {
 .filter__btns {
   display: flex;
   flex-direction: column;
-  height: 155px;
+  height: 105px;
 }
 .filter__bl {
   display: flex;
@@ -301,17 +286,17 @@ export default {
   height: auto;
   opacity: 1;
 }
-.filter__delete {
+/* .filter__delete {
   opacity: 0;
   display: block !important;
   padding-bottom: 25px;
-  /* height: 0; */
+  height: 0;
   transition: all 0.5s ease;
 }
 .activeBtnDel {
-  /* height: 45px; */
+  height: 45px;
   opacity: 1;
-}
+} */
 .filter-fade-enter-from {
   opacity: 0;
   transition: all 0.4s ease;

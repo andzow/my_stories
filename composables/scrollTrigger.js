@@ -11,7 +11,7 @@ export const useGsapAnimationOpacity = (
   let options = {
     root: null,
     rootMargin: "0px",
-    threshold: 0.45,
+    threshold: 0.35,
   };
   let target = document.querySelector(`${triggerEl}`);
   if (!target) {

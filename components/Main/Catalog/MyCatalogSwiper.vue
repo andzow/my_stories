@@ -19,7 +19,7 @@
         allowTouchMove: false,
       },
       434: {
-        slidesPerView: 1.5,
+        slidesPerView: 1.3,
       },
       0: {
         slidesPerView: 1,

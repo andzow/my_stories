@@ -52,7 +52,7 @@
             class="filter__chapter_icon"
             v-if="filterArrActiveQueryWord.includes(item.name.toLowerCase())"
           >
-            <button
+            <!-- <button
               class="filter__chapter_btn"
               aria-label="удалить"
               data-cursor-class="animateCursor"
@@ -80,7 +80,7 @@
                   stroke-linejoin="round"
                 />
               </svg>
-            </button>
+            </button> -->
           </div>
         </Transition>
       </div>
@@ -100,32 +100,23 @@ export default {
       useCursor: useCursor(),
       useCheckReset: useCheckReset(),
       activeVector: false,
-      debouncedMethod: debounce(async (filterArr) => {
-        this.replaceRoute(filterArr);
-        t;
-      }, 200),
+      debouncedMethod: debounce(async (name) => {
+        this.replaceRoute(name);
+      }, 300),
     };
   },
   methods: {
     async addChapter(item, checkActive) {
       if (checkActive) return;
-      let routeQuery = null;
-      if (!this.$route?.query?.chapter) {
-        routeQuery = [];
-      } else {
-        routeQuery = this.$route?.query?.chapter.split(";");
-      }
-      routeQuery.push(item.name.toLowerCase());
-      const filterArr = routeQuery.filter((el) => el.length > 1);
-      this.filterArrActiveQueryWord = filterArr;
-      this.replaceRoute(filterArr);
+      this.filterArrActiveQueryWord = [item.name.toLowerCase()];
+      this.debouncedMethod(item.name);
     },
-    async replaceRoute(arr) {
+    async replaceRoute(name) {
       await this.$router.replace({
         path: "/catalog",
         query: {
           ...this.$route.query,
-          chapter: arr.join(";"),
+          chapter: name,
         },
       });
       this.$emit("openMethod");
@@ -153,7 +144,7 @@ export default {
       this.filterArrActiveQueryWord = this.filterArrActiveQueryWord.filter(
         (el, idx) => idx !== findIndex
       );
-      this.replaceRoute(this.filterArrActiveQueryWord);
+      this.replaceRoute(this.filterArrActiveQueryWord, item.name);
     },
     initApp(route) {
       if (!route?.query?.chapter) {
@@ -161,7 +152,8 @@ export default {
         return;
       }
       const routeQuery = route?.query?.chapter.split(";");
-      this.filterArrActiveQueryWord = routeQuery;
+
+      this.filterArrActiveQueryWord = routeQuery.map((el) => el.toLowerCase());
     },
     async initCursor() {
       await nextTick(() => {
@@ -179,7 +171,7 @@ export default {
   watch: {
     async useCheckReset(val) {
       if (val) {
-        this.filterArrActiveQueryWord = [];
+        this.filterArrActiveQueryWord = ["все"];
       }
     },
     filterArrActiveQueryWord(val) {
@@ -197,6 +189,8 @@ export default {
 <style scoped>
 .filter__chapter {
   margin-bottom: 45px;
+  /* max-height: 300px;
+  overflow: auto; */
 }
 .filter__chapter_item {
   display: flex;
@@ -212,6 +206,7 @@ export default {
 }
 .activeTitle {
   font-weight: 500;
+  transform: translateX(0.1px) scale(1.01);
 }
 .filter__chapter_icon {
   display: flex;

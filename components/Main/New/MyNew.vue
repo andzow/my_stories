@@ -103,4 +103,14 @@ export default {
     font-size: 26px;
   }
 }
+@media screen and (max-width: 468px) {
+  .new__content {
+    min-height: auto;
+    max-height: 100%;
+    height: 100%;
+  }
+  .new__btn {
+    opacity: 1;
+  }
+}
 </style>

@@ -28,54 +28,54 @@ export default {
   },
   methods: {
     async replaceRoute(querySettings) {
-      await this.$router.replace({
+      const queryPath = useRoute().query;
+      if (!queryPath?.chapter) {
+        queryPath.chapter = "все";
+      }
+      await useRouter().replace({
         path: "/catalog",
-        query: querySettings,
+        query: { ...queryPath, ...querySettings },
       });
-      this.checkBlock = true;
+      // this.checkBlock = true;
     },
     async initRoute() {
       const queryRoutePrice = useRoute().query;
       const readyQueryChapter = this.useReplaceOrDeleteWordQuery(
         "chapter",
-        false,
-        true
+        "все",
+        false
       );
-      const readyQueryPrice = this.useReplaceOrDeleteWordQuery(
-        "min",
-        !queryRoutePrice.min ? "0" : useRoute().query.min,
-        false,
-        {
-          check: true,
-          value: "0",
-        }
-      );
-      const readyQueryPriceMax = this.useReplaceOrDeleteWordQuery(
-        "max",
-        !queryRoutePrice.max ? "35000" : useRoute().query.max,
-        false,
-        {
-          check: true,
-          value: "12000",
-        }
-      );
-      const readyQueryWithoutName = this.useReplaceOrDeleteWordQuery(
-        "size",
-        false,
-        true
-      );
-      const settingsObj = {};
-      const newArr = [
-        readyQueryChapter,
-        readyQueryWithoutName,
-        readyQueryPrice,
-        readyQueryPriceMax,
-      ].filter((el) => Object.values(el)[0]);
-      newArr.forEach((el) => {
-        const [[key, value]] = Object.entries(el);
-        settingsObj[key] = value;
-      });
-      this.replaceRoute(settingsObj);
+      this.replaceRoute(queryRoutePrice, readyQueryChapter);
+      // console.log(readyQueryChapter);
+      // const readyQueryPrice = this.useReplaceOrDeleteWordQuery(
+      //   "min",
+      //   !queryRoutePrice.min ? "0" : useRoute().query.min,
+      //   false,
+      //   {
+      //     check: true,
+      //     value: "0",
+      //   }
+      // );
+      // const readyQueryPriceMax = this.useReplaceOrDeleteWordQuery(
+      //   "max",
+      //   !queryRoutePrice.max ? "35000" : useRoute().query.max,
+      //   false,
+      //   {
+      //     check: true,
+      //     value: "12000",
+      //   }
+      // );
+      // const readyQueryWithoutName = this.useReplaceOrDeleteWordQuery(
+      //   "size",
+      //   false,
+      //   true
+      // );
+      // const settingsObj = {};
+      // const newArr = [readyQueryChapter].filter((el) => Object.values(el)[0]);
+      // newArr.forEach((el) => {
+      //   const [[key, value]] = Object.entries(el);
+      //   settingsObj[key] = value;
+      // });
     },
     initGsap() {
       if (window.innerWidth > 936) {
@@ -106,6 +106,9 @@ export default {
         ];
       }
     },
+  },
+  created() {
+    this.initRoute();
   },
   mounted() {
     const bodyEl = document.body;
