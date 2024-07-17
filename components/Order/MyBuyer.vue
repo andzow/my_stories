@@ -324,9 +324,15 @@ export default {
           }
           return;
         }
-        if (el.inputVal.length < 18 && getIndexErrors < 0) {
+        let cleanedPhoneNumber = el.inputVal.replace(/\D/g, "");
+        if (cleanedPhoneNumber.length > 11) {
+          let splitNumber = cleanedPhoneNumber.split("");
+          splitNumber.splice(cleanedPhoneNumber.length - 1, 1);
+          cleanedPhoneNumber = splitNumber.join("");
+        }
+        if (cleanedPhoneNumber.length < 11 && getIndexErrors < 0) {
           this.arrErrors.push(el.name);
-        } else if (el.inputVal.length >= 18 && getIndexErrors >= 0) {
+        } else if (cleanedPhoneNumber.length >= 11 && getIndexErrors >= 0) {
           this.arrErrors.splice(getIndexErrors, 1);
         }
       });
