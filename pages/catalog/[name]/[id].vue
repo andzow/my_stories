@@ -1,15 +1,15 @@
 <template>
   <div>
-    <CatalogIdMyMain />
+    <RenderCacheable :async-data-keys="['product']" :max-age="3600">
+      <CatalogIdMyMain />
+    </RenderCacheable>
     <CatalogIdMyCatalog />
-
-    <LazyUIMyNoise v-if="checkHydrate && !$device.isSafari" />
+    <LazyUIMyNoise v-if="checkHydrate" />
     <LazyUIMyAnimationLine
       duration="6"
       :arrAnimationLine="arrAnimationLine"
       v-if="arrAnimationLine && checkHydrate"
     />
-
     <Transition name="fade-alert">
       <UIMyAlertCart v-if="useAlertCart" />
     </Transition>

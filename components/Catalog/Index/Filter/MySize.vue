@@ -140,7 +140,7 @@ export default {
       this.arrFilterQuery = [];
       this.checkFilter = false;
       await this.replaceRoute([]);
-      this.$emit("openMethod", true);
+      this.$emit("openMethod");
     },
   },
   created() {

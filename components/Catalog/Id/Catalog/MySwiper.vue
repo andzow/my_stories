@@ -30,13 +30,10 @@
       v-for="(item, idx) in arrNew.filter((el, idx) => idx <= 5)"
       :key="item"
     >
-      <MainNewMyNewItem
-        :item="item"
-        :class="['new__item' + (idx + 1)]"
-        :idx="idx"
-      />
+      <UINewMyItem :item="item" :idx="idx" />
     </swiper-slide>
   </swiper>
+  <UINewMyMobile :arrNew="arrNew.filter((el, idx) => idx <= 2)" v-if="arrNew" />
 </template>
 
 <script>
@@ -105,5 +102,10 @@ export default {
 <style scoped>
 .catalog__swiper {
   margin-bottom: 40px;
+}
+@media screen and (max-width: 468px) {
+  .catalog__swiper {
+    display: none;
+  }
 }
 </style>

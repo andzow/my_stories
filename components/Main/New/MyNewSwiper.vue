@@ -26,13 +26,10 @@
     v-if="arrNew"
   >
     <swiper-slide class="new__slide" v-for="(item, idx) in arrNew" :key="item">
-      <MainNewMyNewItem
-        :item="item"
-        :class="['new__item' + (idx + 1)]"
-        :idx="idx"
-      />
+      <UINewMyItem :item="item" :idx="idx" :activeOpacity="true" />
     </swiper-slide>
   </swiper>
+  <UINewMyMobile :arrNew="arrNew.filter((el, idx) => idx <= 2)" v-if="arrNew" />
 </template>
 
 <script>
@@ -60,10 +57,10 @@ export default {
     initAnimationArr() {
       nextTick(() => {
         this.arrNew.forEach((el, idx) => {
-          this.arrAnimationOpacityGsap.push(`.new__item_image${idx + 1}`);
+          this.arrAnimationOpacityGsap.push(`.new__item_images${idx + 1}`);
           this.arrAnimationGsapPrices.push(
-            `.new__item_name${idx + 1}`,
-            `.new__item_prices${idx + 1}`
+            `.new__item_title${idx + 1}`,
+            `.new__item_summ${idx + 1}`
           );
         });
         this.arrAnimationGsapPrices.push(".new__btn");
@@ -80,7 +77,7 @@ export default {
       this.useGsapAnimationOpacity([".new__title", ".new__number"], ".new");
       this.useGsapAnimationOpacity(
         this.arrAnimationGsapPrices,
-        ".new__item_name1",
+        ".new__item_title1",
         true
       );
     },
@@ -97,5 +94,10 @@ export default {
 <style scoped>
 .new__swiper {
   margin-bottom: 40px;
+}
+@media screen and (max-width: 468px) {
+  .new__swiper {
+    display: none;
+  }
 }
 </style>

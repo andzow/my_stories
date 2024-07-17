@@ -5,7 +5,9 @@
         <h2 class="new__title">( &nbsp;новинки&nbsp; )</h2>
         <div class="new__number">( &nbsp;3&nbsp; )</div>
       </div>
-      <MainNewMyNewSwiper v-if="checkSwiper" />
+      <NuxtErrorBoundary>
+        <MainNewMyNewSwiper />
+      </NuxtErrorBoundary>
       <div class="new__btn">
         <UIButtonMyButton
           @click="$router.push('/catalog')"
@@ -30,11 +32,7 @@ export default {
     };
   },
   methods: {},
-  mounted() {
-    setTimeout(() => {
-      this.checkSwiper = true;
-    }, 0);
-  },
+  mounted() {},
 };
 </script>
 
@@ -51,7 +49,7 @@ export default {
   margin: 0 auto;
   padding: 0 30px;
   min-height: 800px;
-  max-height: 800px;
+  /* max-height: 800px; */
 }
 .new__header {
   display: flex;
@@ -103,6 +101,16 @@ export default {
 @media screen and (max-width: 1100px) {
   .new__number {
     font-size: 26px;
+  }
+}
+@media screen and (max-width: 468px) {
+  .new__content {
+    min-height: auto;
+    max-height: 100%;
+    height: 100%;
+  }
+  .new__btn {
+    opacity: 1;
   }
 }
 </style>

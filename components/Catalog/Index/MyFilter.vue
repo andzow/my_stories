@@ -1,18 +1,41 @@
 <template>
   <section class="filter">
     <div class="filter__item" ref="filterItem" id="filter__item">
-      <CatalogIndexFilterMyChapter @openMethod="checkResetBtn" />
+      <CatalogIndexFilterMyChapter
+        :useCheckReset="useCheckReset"
+        @openMethod="
+          () => {
+            checkResetBtn();
+            sendFilter();
+          }
+        "
+      />
       <div class="filter__bl">
-        <CatalogIndexFilterMySize @openMethod="checkResetBtn" />
+        <div class="filter__bl_name">Фильтр</div>
+        <CatalogIndexFilterMySize
+          @openMethod="
+            () => {
+              checkResetBtn();
+              filterReadyCheck = true;
+            }
+          "
+        />
         <CatalogIndexFilterMyPrice
           :minVal="minVal"
           :maxVal="maxVal"
-          @openMethod="checkResetBtn"
+          @openMethod="
+            () => {
+              filterReadyCheck = true;
+            }
+          "
         />
       </div>
 
       <div class="filter__btns">
-        <div class="filter__ready">
+        <div
+          class="filter__ready"
+          :class="{ activeBtnReady: filterReadyCheck }"
+        >
           <UIButtonMyButton
             class="filter__item_btn"
             aria-label="применить"
@@ -22,8 +45,13 @@
             @click="sendFilter"
           />
         </div>
-        <Transition name="filter-fade">
-          <div class="filter__delete" :class="{ activeBtnDel: checkReset }">
+        <!-- <Transition name="filter-fade">
+          <div
+            class="filter__delete"
+            :class="{
+              activeBtnDel: checkReset || useCatalogItems?.length === 0,
+            }"
+          >
             <UIButtonMyButton
               class="filter__item_btn"
               aria-label="сбросить"
@@ -34,7 +62,7 @@
               data-cursor-class="animateCursor"
             />
           </div>
-        </Transition>
+        </Transition> -->
       </div>
     </div>
   </section>
@@ -52,7 +80,7 @@ export default {
       let minVal = useMinVal();
       let maxVal = useMaxVal();
 
-      const { data: response } = await useAsyncData("data", async () =>
+      const { data: response } = await useAsyncData("filter", async () =>
         $fetch(usePageUrlAsyncData() + "category/getCategory", {
           params: useRoute().query,
         })
@@ -77,18 +105,13 @@ export default {
       timeLineGsap: null,
       useGsapAnimationOpacity: useGsapAnimationOpacity,
       useFilterReset: useFilterReset(),
+      filterReadyCheck: false,
     };
   },
   methods: {
     async checkResetBtn(check) {
       const routeQuery = this.$route.query;
-      let sizeArr,
-        chapterArr = null;
-      if (routeQuery.chapter) {
-        chapterArr = routeQuery.chapter.split(";");
-      } else {
-        chapterArr = [];
-      }
+      let sizeArr = null;
       if (routeQuery.size) {
         sizeArr = routeQuery.size.split(";");
       }
@@ -102,8 +125,7 @@ export default {
       }
 
       if (
-        chapterArr.length > 0 ||
-        sizeArr === null ||
+        sizeArr !== null ||
         Array.isArray(sizeArr) ||
         parsePriceMin !== this.minVal ||
         parsePriceMax !== this.maxVal
@@ -113,14 +135,19 @@ export default {
       }
       this.checkReset = false;
     },
-    scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+    async scrollToTop() {
+      await setTimeout(() => {
+        if (window.scrollY <= 120) {
+          return;
+        }
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }, 100);
       return new Promise((resolve) => {
         const scrollInterval = setInterval(() => {
-          if (document.documentElement.scrollTop === 0) {
+          if (document.documentElement.scrollTop <= 120) {
             clearInterval(scrollInterval);
             resolve();
           }
@@ -132,6 +159,8 @@ export default {
       await this.scrollToTop();
       await this.initFilter();
       await this.initItems();
+      this.filterReadyCheck = false;
+      this.checkResetBtn();
     },
     async reset() {
       this.useCheckReset = true;
@@ -165,6 +194,7 @@ export default {
         await this.$router.replace({
           path: "/catalog",
           query: {
+            chapter: "все",
             min: "0",
             max: "35000",
           },
@@ -218,6 +248,13 @@ export default {
   top: 0;
   /* opacity: 0; */
 }
+.filter__bl_name {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--brown);
+  text-transform: lowercase;
+  margin-bottom: 20px;
+}
 .activeFilter {
   animation-name: animationOpacity;
   animation-duration: 1s;
@@ -232,23 +269,34 @@ export default {
 .filter__btns {
   display: flex;
   flex-direction: column;
+  height: 105px;
 }
 .filter__bl {
   display: flex;
   flex-direction: column;
 }
 .filter__ready {
-  padding-bottom: 25px;
-}
-.filter__delete {
+  padding-bottom: 0px;
+  height: 0;
   opacity: 0;
-  display: block !important;
-  height: auto !important;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
-.activeBtnDel {
+.activeBtnReady {
+  padding-bottom: 25px;
+  height: auto;
   opacity: 1;
 }
+/* .filter__delete {
+  opacity: 0;
+  display: block !important;
+  padding-bottom: 25px;
+  height: 0;
+  transition: all 0.5s ease;
+}
+.activeBtnDel {
+  height: 45px;
+  opacity: 1;
+} */
 .filter-fade-enter-from {
   opacity: 0;
   transition: all 0.4s ease;

@@ -32,12 +32,10 @@ export default {
   async setup() {
     try {
       let catalogItems = useCatalogItems();
-      const { data: responseItems } = await useAsyncData(
-        "responseItems",
-        async () =>
-          $fetch(usePageUrlAsyncData() + "product/getFilter", {
-            params: useRoute().query,
-          })
+      const { data: responseItems } = await useAsyncData("catalog", async () =>
+        $fetch(usePageUrlAsyncData() + "product/getFilter", {
+          params: useRoute().query,
+        })
       );
       catalogItems.value = responseItems.value;
     } catch {}
@@ -78,7 +76,7 @@ export default {
   position: relative;
 }
 .catalog__menu {
-  min-height: 900px;
+  /* min-height: 900px; */
 }
 .catalog__content {
   display: grid;

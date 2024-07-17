@@ -1,7 +1,16 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  plugins: ["~/plugins/animate.connect.js", "~/plugins/v-click-outside.js"],
+  plugins: [
+    "~/plugins/animate.connect.js",
+    "~/plugins/v-click-outside.js",
+    "~/plugins/v-lazy-loading.js",
+  ],
   css: ["~/assets/style/main.css", "~/assets/style/fonts.css"],
+  nitro: {
+    prerender: {
+      routes: ["/sitemap.xml"],
+    },
+  },
   app: {
     head: {
       title: "Интернет-магазин одежды | MyStories",
@@ -22,16 +31,16 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    "/": { delayHydration: "mount", swr: true },
-    "/catalog/": { delayHydration: false },
-    "/catalog/:id/:id": { delayHydration: false },
+    "/": { delayHydration: "mount" },
+    "/catalog/**": { delayHydration: false },
+    "/lookbook/**": { delayHydration: false },
+    "/brand/**": { delayHydration: false },
+    "/contacts": { delayHydration: false },
+    "/delivery-and-payment": { delayHydration: false },
+    "/politics": { delayHydration: false, ssr: false },
+    "/dogovor": { delayHydration: false, ssr: false },
     "/admin": { ssr: false },
     "/login": { ssr: false },
-  },
-  nitro: {
-    prerender: {
-      routes: ["/sitemap.xml"],
-    },
   },
   sitemap: {
     exclude: ["/login", "/admin", "/order", "/order/**", "/cart"],
@@ -47,7 +56,16 @@ export default defineNuxtConfig({
     "nuxt-delay-hydration",
     "@nuxtjs/device",
     "@nuxtjs/sitemap",
+    "nuxt-multi-cache",
   ],
+  multiCache: {
+    component: {
+      enabled: true,
+    },
+    data: {
+      enabled: true,
+    },
+  },
   delayHydration: {
     debug: process.env.NODE_ENV === "development",
   },

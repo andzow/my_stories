@@ -61,12 +61,22 @@
           <div class="main__about_mess">
             <div class="main__about_link">
               <button class="main__about_btn" data-cursor-class="animateCursor">
-                ( &nbsp;написать в Telegram&nbsp; )
+                <a
+                  class="main__about_links"
+                  href="https://t.me/+79536886333"
+                  target="_blank"
+                  >( &nbsp;написать в Telegram&nbsp; )</a
+                >
               </button>
             </div>
             <div class="main__about_link">
               <button class="main__about_btn" data-cursor-class="animateCursor">
-                ( &nbsp;написать в WhatsApp&nbsp; )
+                <a
+                  class="main__about_links"
+                  href="https://wa.me/79536886333"
+                  target="_blank"
+                  >( &nbsp;написать в WhatsApp&nbsp; )</a
+                >
               </button>
             </div>
           </div>
@@ -181,6 +191,12 @@ export default {
 .main__about_btn {
   border: none;
   background: none;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--brown);
+  text-transform: lowercase;
+}
+.main__about_links {
   font-weight: 500;
   font-size: 22px;
   color: var(--brown);

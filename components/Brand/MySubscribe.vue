@@ -71,6 +71,7 @@
             variant="green"
             fontSize="24"
             data-cursor-class="animateCursor"
+            @click="redirectTellegram"
           />
         </div>
       </div>
@@ -84,6 +85,11 @@ export default {
     return {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
     };
+  },
+  methods: {
+    redirectTellegram() {
+      window.open("https://t.me/mystoriesdress", "_blank");
+    },
   },
   mounted() {
     this.useGsapAnimationOpacity(

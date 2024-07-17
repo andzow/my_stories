@@ -7,14 +7,16 @@
     <div
       class="catalog__item_images"
       @click="$router.push(`/catalog/${item.name}/${item.id}`)"
+      data-cursor-class="animateCursor"
     >
       <CatalogIndexItemMyImage
         v-for="(image, idx) in arrImages"
-        :key="image"
+        :key="idx"
         :image="image"
         :idx="idx"
         :activeIdx="activeIdx"
         :item="item"
+        @loadImage="loadContent = true"
       />
       <CatalogIndexItemMyConrols
         :lengthEl="arrImages.length"
@@ -43,9 +45,9 @@
         </div>
       </div>
     </div>
-    <p class="catalog__item_des">
+    <!-- <p class="catalog__item_des">
       {{ `${item?.text}, ${item?.characteristic}` }}
-    </p>
+    </p> -->
   </div>
 </template>
 
@@ -59,10 +61,13 @@ export default {
     return {
       activeIdx: 0,
       arrImages: null,
+      loadContent: false,
+      useCursor: useCursor(),
     };
   },
   methods: {
     setImage(idx) {
+      if (!this.loadContent) return;
       this.activeIdx = idx;
     },
     setWidthName() {
@@ -83,10 +88,21 @@ export default {
   },
   created() {
     if (!this.item?.images) return;
-    this.arrImages = this.item.images.filter((el, idx) => idx <= 2);
+    const { isMobile } = useDevice();
+    this.arrImages = this.item.images.filter((el, idx) => {
+      if (isMobile && idx < 1) {
+        return el;
+      } else if (!isMobile && idx <= 2) {
+        return el;
+      }
+    });
   },
   mounted() {
     this.setWidthName();
+    this.useCursor = false;
+    setTimeout(() => {
+      this.useCursor = true;
+    }, 0);
   },
 };
 </script>

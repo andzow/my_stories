@@ -4,7 +4,7 @@
       <div class="filter__price_header">
         <div class="filter__price_title">цена</div>
       </div>
-      <div clas="filter__price_form">
+      <div class="filter__price_form">
         <form class="filter__price_inputs" @submit.prevent="send">
           <div class="filter__price_block">
             <input
@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import debounce from "lodash.debounce";
+
 export default {
   props: {
     minVal: Number,
@@ -65,12 +67,18 @@ export default {
       activeMinVal: null,
       activeMaxVal: null,
       useCheckReset: useCheckReset(),
+      debouncedPrice: debounce(async () => {
+        try {
+          this.replaceRoute();
+        } catch {}
+      }, 300),
     };
   },
   methods: {
     setPriceInputs(rangeInput, priceInput) {
       priceInput.forEach((input) => {
         input.addEventListener("input", (e) => {
+          this.debouncedPrice();
           let minPrice = parseInt(priceInput[0].value),
             maxPrice = parseInt(priceInput[1].value);
           this.useFilterPrice.activeMinVal = minPrice;
@@ -92,6 +100,7 @@ export default {
     setRangeInputs(rangeInput, priceInput) {
       rangeInput.forEach((input) => {
         input.addEventListener("input", (e) => {
+          this.debouncedPrice();
           let minVal = parseInt(rangeInput[0].value),
             maxVal = parseInt(rangeInput[1].value);
           this.useFilterPrice.activeMinVal = minVal;
@@ -171,7 +180,7 @@ export default {
 
       this.useFilterPrice.activeMinVal = minElRange.value;
       this.useFilterPrice.activeMaxVal = maxElRange.value;
-      this.$emit("openMethod");
+      // this.$emit("openMethod");
     },
     changeValue() {
       document.querySelector(".filter__price_input").value = this.minVal;
@@ -221,7 +230,7 @@ export default {
 
 <style scoped>
 .filter__price {
-  margin-bottom: 65px;
+  margin-bottom: 50px;
 }
 .filter__price_header {
   display: flex;

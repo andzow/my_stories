@@ -105,12 +105,7 @@ export default {
     initGsap() {
       this.useGsapAnimationOpacity([".about__text"], ".about", false, 1);
       this.useGsapAnimationOpacity([".about__info_img"], ".about", false, 1);
-      this.useGsapAnimationOpacity(
-        [".about__calc_img"],
-        ".about__calc_image",
-        false,
-        1
-      );
+      this.useGsapAnimationOpacity([".about__calc_img"], ".about", false, 1.2);
     },
   },
   mounted() {

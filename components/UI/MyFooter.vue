@@ -1,5 +1,9 @@
 <template>
-  <footer class="footer">
+  <footer
+    class="footer"
+    @mouseenter="$emit('openFooter')"
+    @mouseleave="$emit('closeFooter')"
+  >
     <div class="footer__content">
       <div class="footer__logo">
         <svg
@@ -95,6 +99,24 @@
               </li>
             </ul>
           </div>
+          <div class="footer__under">
+            <div class="footer__mob_href">
+              <a
+                class="footer__data_link"
+                href="https://t.me/+79536886333"
+                target="_blank"
+                >( &nbsp;Telegram&nbsp; )</a
+              >
+            </div>
+            <div class="footer__mob_href">
+              <a
+                class="footer__data_link"
+                href="https://wa.me/79536886333"
+                target="_blank"
+                >( &nbsp;WhatsApp&nbsp; )</a
+              >
+            </div>
+          </div>
           <div class="footer__about_information">
             <div class="footer__about_data">
               <div class="footer__about_text">
@@ -104,7 +126,7 @@
               <div class="footer__about_text">( ОГРН ) 323430000001420</div>
             </div>
             <div class="footer__about_contacts">
-              <div class="footer__about_text">г.Киров, ул.Московская 29в</div>
+              <div class="footer__about_text">г. Киров, ул.Московская 29в</div>
               <div
                 class="footer__about_text footer__about_animate"
                 data-cursor-class="animateCursor"
@@ -220,7 +242,7 @@
                   class="footer__data_mobile"
                   data-cursor-class="animateCursor"
                 >
-                  г.Киров, ул.Московская 29в
+                  г. Киров, ул.Московская 29в
                 </div>
                 <div
                   class="footer__data_mobile"
@@ -336,6 +358,15 @@ export default {
   width: 100%;
   /* background: blue; */
 }
+.footer input {
+  cursor: none !important;
+}
+.footer a {
+  cursor: none !important;
+}
+.footer button {
+  cursor: none !important;
+}
 .footer::before {
   content: "";
   position: absolute;
@@ -353,6 +384,9 @@ export default {
   margin: 0 auto;
   padding: 50px 30px 30px 30px;
   z-index: 17;
+}
+.footer__under {
+  display: none;
 }
 .footer__logo {
   display: flex;
@@ -390,7 +424,6 @@ export default {
   margin-left: 90px;
 }
 .footer__about_text {
-  text-transform: lowercase;
   font-weight: 300;
   font-size: 16px;
   color: #868975;
@@ -496,7 +529,6 @@ export default {
   margin-bottom: 10px;
 }
 .footer__data_mobile {
-  text-transform: lowercase;
   font-weight: 300;
   font-size: 15px;
   color: #868975;
@@ -597,9 +629,24 @@ export default {
   }
 }
 @media screen and (max-width: 597px) {
+  .footer__mob {
+    display: none;
+  }
   .footer__menu {
     height: auto;
     flex-direction: column;
+  }
+  .footer__about_nav {
+    margin-bottom: 50px;
+  }
+  .footer__under {
+    display: flex;
+    align-items: center;
+    column-gap: 50px;
+    margin-bottom: 50px;
+  }
+  .footer__data_link {
+    color: #868975;
   }
   .footer__data_mob {
     margin-bottom: 20px;

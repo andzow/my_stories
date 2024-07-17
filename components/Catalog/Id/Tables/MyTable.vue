@@ -38,7 +38,8 @@
         </div>
       </div>
       <p class="table__text">
-        Общая таблица размеров показывает нашу стандартную размерную линейку
+        Общая таблица размеров показывает<wbr /> нашу стандартную размерную
+        линейку
       </p>
       <div class="table__content">
         <CatalogIdTablesMyTableItem :arrTable="arrTable" />
@@ -55,6 +56,7 @@
             fontSize="22"
             padding="12px 0"
             data-cursor-class="animateCursor"
+            @click="redirectTelegram"
           />
         </div>
       </div>
@@ -75,7 +77,11 @@ export default {
       useCursor: useCursor(),
     };
   },
-  methods: {},
+  methods: {
+    redirectTelegram() {
+      window.open("https://t.me/mystoriesdress", "_blank");
+    },
+  },
   mounted() {
     const body = document.body;
     body.style.overflow = "hidden";
@@ -146,6 +152,8 @@ export default {
   font-weight: 300;
   color: var(--brown);
   text-transform: lowercase;
+  word-break: break-all;
+  max-width: 100%;
 }
 .table__des {
   padding-top: 15px;
@@ -181,6 +189,12 @@ export default {
 
   .table__text {
     font-size: 15px;
+  }
+}
+@media screen and (max-width: 550px) {
+  .table__text {
+    font-size: 14px;
+    max-width: 150px;
   }
 }
 @media screen and (max-width: 370px) {

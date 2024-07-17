@@ -83,4 +83,11 @@ export default {
     min-height: 555px;
   }
 }
+@media screen and (max-width: 434px) {
+  .catalog {
+    max-height: 100%;
+    min-height: 100%;
+    height: 90vh;
+  }
+}
 </style>

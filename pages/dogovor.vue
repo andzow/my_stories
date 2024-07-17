@@ -1,23 +1,29 @@
 <template>
-  <section class="dogovor">
-    <div class="dogovor__container">
-      <h1 class="dogovor__title">
-        (&nbsp; ДОГОВОР-ОФЕРТА ИНТЕРНЕТ-МАГАЗИНА «my stories» &nbsp;)
-      </h1>
-      <div class="dogovor__block" v-for="(item, idx) in dogovor" :key="idx">
-        <p v-if="item.termin" class="dogovor__termin" v-html="item.termin"></p>
-        <div class="dogovor__info">
+  <div>
+    <section class="dogovor">
+      <div class="dogovor__container">
+        <h1 class="dogovor__title">
+          (&nbsp; ДОГОВОР-ОФЕРТА ИНТЕРНЕТ-МАГАЗИНА «my stories» &nbsp;)
+        </h1>
+        <div class="dogovor__block" v-for="(item, idx) in dogovor" :key="idx">
           <p
-            class="dogovor__text"
-            v-for="(info, i) in item.text"
-            v-html="info"
-            :key="i"
+            v-if="item.termin"
+            class="dogovor__termin"
+            v-html="item.termin"
           ></p>
+          <div class="dogovor__info">
+            <p
+              class="dogovor__text"
+              v-for="(info, i) in item.text"
+              v-html="info"
+              :key="i"
+            ></p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  <LazyUIMyNoise v-if="checkHydrate && !$device.isSafari" />
+    </section>
+    <LazyUIMyNoise v-if="checkHydrate" />
+  </div>
 </template>
 
 <script>
