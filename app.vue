@@ -2,14 +2,18 @@
   <!-- <Transition>
     <UIMyPreloader v-if="!preloader" />
   </Transition> -->
-  <UIMyHeader v-if="headerVisible" />
+  <LazyUIMyHeader v-if="headerVisible && checkHydrate" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
     <NuxtPage />
     <UIMyModalStatus />
     <LazyUIMyCursor v-if="!$device.isMobile && cursorFooter" />
     <LazyUIMyCursorCircle v-if="!$device.isMobile && cursorFooter" />
   </main>
-  <UIMyFooter @openFooter="openFooter" @closeFooter="closeFooter" />
+  <LazyUIMyFooter
+    v-if="checkHydrate"
+    @openFooter="openFooter"
+    @closeFooter="closeFooter"
+  />
 </template>
 
 <script>
