@@ -15,13 +15,7 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      checkHydrate: useCheckHydration(),
-    };
-  },
-};
+export default {};
 </script>
 
 <style scoped>

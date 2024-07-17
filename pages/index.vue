@@ -2,8 +2,8 @@
   <div class="page">
     <MainMyMain />
     <section class="index">
-      <LazyMainCollectionMyCollection v-if="checkHydrate" />
-      <LazyMainBrandMyBrand v-if="checkHydrate" />
+      <MainCollectionMyCollection />
+      <MainBrandMyBrand />
       <MainMyAddition />
       <MainCatalogMyCatalog />
       <MainNewMyNew />

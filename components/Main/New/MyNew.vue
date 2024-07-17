@@ -6,7 +6,7 @@
         <div class="new__number">( &nbsp;3&nbsp; )</div>
       </div>
       <NuxtErrorBoundary>
-        <LazyMainNewMyNewSwiper v-if="checkHydrate" />
+        <MainNewMyNewSwiper />
       </NuxtErrorBoundary>
       <div class="new__btn">
         <UIButtonMyButton

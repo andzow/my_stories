@@ -109,14 +109,10 @@
     </header>
   </Transition>
   <UIMyBlur :searchVisible="searchVisible" @keydown.esc="searchVisible = false">
-    <LazyUIHeaderMySearch
-      @closeSearch="searchVisible = false"
-      @close="close"
-      v-if="checkHydrate"
-    />
+    <UIHeaderMySearch @closeSearch="searchVisible = false" @close="close" />
   </UIMyBlur>
   <Transition name="fade-menu">
-    <LazyUIMenuMyMenu v-if="activeMenu && checkHydrate" />
+    <UIMenuMyMenu v-if="activeMenu" />
   </Transition>
 </template>
 
@@ -128,7 +124,6 @@ export default {
       searchVisible: false,
       changeHeader: false,
       activeLiPath: null,
-      checkHydrate: useCheckHydration(),
       activeMenu: useActiveMenu(),
       navArr: [
         {
