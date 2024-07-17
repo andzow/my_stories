@@ -57,7 +57,7 @@
         </button>
       </div>
     </form>
-    <LazyUIHeaderMySearchMenu :arrMenu="arrSendMenu" @close="close" />
+    <UIHeaderMySearchMenu :arrMenu="arrSendMenu" @close="close" />
     <div class="search__empty" v-if="arrSendMenu.length <= 0 && checkSearch">
       <div class="search__empty_title">товаров нет</div>
       <div class="search__empty_text">По вашему запросу ничего не найдено</div>
@@ -78,7 +78,6 @@ export default {
       placeholderVal: "Поиск...",
       useCursor: useCursor(),
       checkSearch: false,
-
       debouncedSearch: debounce(async () => {
         try {
           const res = await ProductController.getSearch({
