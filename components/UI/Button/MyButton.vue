@@ -7,13 +7,14 @@
   >
     <button
       class="button__btn"
-      :class="[variant, size, bigSize]"
+      :class="[variant, size, bigSize, 'button__btn_disable' + numberClass]"
       :style="squareStyle"
       ref="button"
     >
-      <span class="button__spinner" v-if="loadingBtn"></span>
+      <span class="button__spinner" v-if="loadingBtn && !disableButton"></span>
       {{ !loadingBtn ? info : "" }}
       <span
+        v-if="!disableButton"
         class="button__cirlce"
         :class="[variant + '__circle', bigSize + '__circle']"
         :style="circleStyle"
@@ -35,6 +36,8 @@ export default {
     padding: String,
     loadingBtn: Boolean,
     heightEl: String,
+    disableButton: Boolean,
+    numberClass: String,
   },
   data() {
     return {
@@ -82,7 +85,26 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() {
+    if (this.disableButton) {
+      const elButton = document.querySelector(
+        ".button__btn_disable" + this.numberClass
+      );
+      elButton.disabled = true;
+    }
+  },
+  watch: {
+    disableButton(val) {
+      const elButton = document.querySelector(
+        ".button__btn_disable" + this.numberClass
+      );
+      if (val) {
+        elButton.disabled = true;
+      } else {
+        elButton.disabled = false;
+      }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -104,6 +126,17 @@ export default {
   overflow: hidden;
   text-transform: lowercase;
   white-space: nowrap;
+}
+.button__btn_disable,
+.button__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.button__btn_disable:hover,
+.button__btn:disabled:hover {
+  color: inherit;
 }
 .green {
   background-color: #ede9df;

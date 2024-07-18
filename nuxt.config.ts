@@ -22,6 +22,16 @@ export default defineNuxtConfig({
           type: "image/x-icon",
           href: "/favicon.png",
         },
+        {
+          rel: "preload",
+          as: "image",
+          href: "/Lookbook/letniy/letniyBack.webp",
+        },
+        {
+          rel: "preload",
+          as: "image",
+          href: "/Lookbook/awakening/awakeningBack.webp",
+        },
       ],
       htmlAttrs: { lang: "ru-RU" },
     },

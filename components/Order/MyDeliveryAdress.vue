@@ -161,6 +161,7 @@ export default {
   font-weight: 300;
   padding: 15px 10px;
   margin-bottom: 5px;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 @media (hover: hover) and (pointer: fine) {

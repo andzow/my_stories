@@ -8,6 +8,7 @@
             class="facts__mob_block"
             v-for="(item, idx) in arrFactsFirst"
             :key="item"
+            :class="['facts__mob_block' + (idx + 1)]"
           >
             <div class="facts__mob_number">
               {{ `( &nbsp;${idx + 1}&nbsp; )` }}
@@ -32,12 +33,7 @@
             <div class="facts__number" :class="['facts__number' + (idx + 1)]">
               {{ `( &nbsp;${idx + 1}&nbsp; )` }}
             </div>
-            <p
-              class="facts__text"
-              ref="factsText"
-              :class="['facts__text' + (idx + 1)]"
-              v-html="item.text"
-            ></p>
+            <p class="facts__text" ref="factsText" v-html="item.text"></p>
           </div>
         </div>
       </div>
@@ -46,6 +42,7 @@
       <div
         class="facts__mob_block"
         v-for="(item, idx) in arrFactsSec"
+        :class="['facts__mob_block' + (idx + 3)]"
         :key="item"
       >
         <div class="facts__mob_number">
@@ -420,6 +417,9 @@ export default {
   }
 }
 @media screen and (max-width: 453px) {
+  .facts__mob_name {
+    margin-bottom: 45px;
+  }
   .facts__mob_items {
     display: flex;
     flex-direction: column;
@@ -431,6 +431,18 @@ export default {
     flex-direction: column;
     gap: 30px;
     max-width: 250px;
+  }
+  .facts__mob_block1 {
+    width: 93%;
+  }
+  .facts__mob_block2 {
+    width: 87%;
+  }
+  .facts__mob_block3 {
+    width: 92%;
+  }
+  .facts__mob_block4 {
+    width: 97%;
   }
 }
 </style>

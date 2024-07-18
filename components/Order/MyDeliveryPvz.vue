@@ -361,6 +361,7 @@ export default {
   align-items: center;
   justify-content: center;
   transition: all 0.4s ease;
+  cursor: auto !important;
   z-index: 90;
 }
 .delivery__pvz_item {

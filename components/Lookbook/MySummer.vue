@@ -24,7 +24,7 @@
         </div>
         <div class="summer__about_btn">
           <UIButtonMyButton
-            @click="$router.push('/lookbook/letniy-vecher')"
+            @click="$router.push('/lookbook/letniy-veter')"
             aria-label="перейти"
             info="перейти"
             fontSize="24"

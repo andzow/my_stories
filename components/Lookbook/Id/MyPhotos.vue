@@ -9,13 +9,7 @@
             :key="item"
             :class="['photos__image' + (idx + 1)]"
           >
-            <img
-              class="photos__img"
-              :src="item"
-              alt="Фотография коллекции"
-              onmousedown="return false"
-              onselectstart="return false"
-            />
+            <img class="photos__img" :src="item" alt="Фотография коллекции" />
           </div>
         </div>
         <div class="photos__btn">

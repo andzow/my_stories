@@ -19,7 +19,7 @@
             info="к коллекции"
             fontSize="24"
             data-cursor-class="animateCursor"
-            @click="$router.push('/lookbook/letniy-vecher')"
+            @click="$router.push('/lookbook/letniy-veter')"
           />
         </div>
       </div>

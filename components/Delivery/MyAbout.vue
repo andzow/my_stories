@@ -113,7 +113,7 @@ export default {
     if (window.innerWidth > 1240) {
       this.initGsap();
     } else {
-      this.useGsapAnimationOpacity([".about"], ".about");
+      this.useGsapAnimationOpacity([".about"], ".main");
     }
   },
 };
@@ -254,6 +254,9 @@ export default {
   }
 }
 @media screen and (max-width: 520px) {
+  .about__about_header {
+    justify-content: space-between;
+  }
   .about__about_img {
     display: none;
   }

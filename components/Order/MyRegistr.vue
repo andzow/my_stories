@@ -2,7 +2,7 @@
   <div class="registr">
     <div class="registr__content">
       <div class="register__option">
-        <label class="register__label" data-cursor-class="animateCursor">
+        <label class="register__label">
           <input
             type="checkbox"
             v-model="selectedOption"
@@ -21,6 +21,7 @@
     </div>
     <div class="register__btn">
       <UIButtonMyButton
+        :disableButton="checkRadio"
         class="registr__button"
         aria-label="оформить заказ"
         info="оформить заказ"
@@ -29,6 +30,7 @@
         bigSize="bigSize"
         :heightEl="'60px'"
         :loadingBtn="loadingButton"
+        numberClass="55"
         @click="getInformationUser"
       />
     </div>
@@ -55,6 +57,7 @@ export default {
       loadingButton: useLoadingButton(),
       errorCheck: false,
       counterCheck: false,
+      checkRadio: true,
       useInputMobile: useInputMobile(),
       useactivePvzMail: useActivePvzMail(),
       useLengthCart: useLengthCart(),
@@ -221,7 +224,8 @@ export default {
     },
   },
   mounted() {
-    // const elButton = document.querySelector(".registr__button .button__btn");
+    // const elButton = document.querySelector(".button__btn_disable");
+    // elButton.disabled = true;
   },
   watch: {
     useOrderInfo: {
@@ -256,6 +260,13 @@ export default {
       },
       deep: true,
     },
+    selectedOption(val) {
+      if (val) {
+        this.checkRadio = false;
+      } else {
+        this.checkRadio = true;
+      }
+    },
   },
 };
 </script>
@@ -273,23 +284,18 @@ export default {
 .register__label {
   display: flex;
   align-items: flex-start;
-  cursor: none;
-}
-.register__custom {
-  cursor: none;
 }
 .register__custom + .register__custom_radio {
-  min-width: 20px;
-  min-height: 20px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: 1.2px solid #af9280;
   background-color: #fff;
   display: inline-block;
   position: relative;
-  cursor: pointer;
   margin-right: 10px;
   transition: border-color 0.4s ease;
-  cursor: none;
+  cursor: pointer;
 }
 
 .register__custom + .register__custom_radio::before {
@@ -306,8 +312,8 @@ export default {
 }
 
 .register__custom:checked + .register__custom_radio::before {
-  min-width: 12px;
-  min-height: 12px;
+  width: 12px;
+  height: 12px;
 }
 
 .register__custom:checked + .register__custom_radio {

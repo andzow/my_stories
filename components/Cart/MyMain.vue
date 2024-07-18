@@ -145,6 +145,7 @@ export default {
       });
       this.initFullPrice();
       this.updateLocalStorage(this.arrLocale);
+      this.initCartLength();
     },
     initLocalStorage() {
       // localStorage.clear();

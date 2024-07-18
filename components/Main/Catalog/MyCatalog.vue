@@ -87,7 +87,7 @@ export default {
   .catalog {
     max-height: 100%;
     min-height: 100%;
-    height: 90vh;
+    height: 85vh;
   }
 }
 </style>

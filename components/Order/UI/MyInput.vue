@@ -64,7 +64,6 @@ export default {
   color: var(--brown);
   border: 1px solid rgba(0, 0, 0, 0);
   transition: all 0.4s ease;
-  cursor: none;
 }
 .order__textarea::placeholder {
   color: #d2bcae;

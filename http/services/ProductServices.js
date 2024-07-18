@@ -27,9 +27,9 @@ export default class ProductServices {
     return $api.get("/product/getNew");
   }
 
-    static async productOne(data) {
-        return $api.get('/product/' + data.name + '/' + data.id)
-    }
+  static async productOne(data) {
+    return $api.get("/product/" + data.name + "/" + data.id);
+  }
 
   static async updateProduct(dataObject) {
     return $api.put("/product/update", dataObject);
@@ -41,5 +41,8 @@ export default class ProductServices {
 
   static async deleteProduct(id) {
     return $api.delete("/product/delete", { data: { id } });
+  }
+  static async getRandomCard() {
+    return $api.get("/product/getRandom");
   }
 }

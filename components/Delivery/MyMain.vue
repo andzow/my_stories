@@ -465,6 +465,9 @@ export default {
   }
 }
 @media screen and (max-width: 930px) {
+  .main__delivery_number {
+    transform: translateX(0);
+  }
   .main__about_images {
     display: none;
   }
@@ -510,6 +513,17 @@ export default {
 @media screen and (max-width: 520px) {
   .main__mobile {
     display: none;
+  }
+  .main__delivery_number {
+    transform: translateX(0);
+    padding: 0;
+    margin: 0;
+  }
+  .main__about_header {
+    justify-content: space-between;
+  }
+  .main__delivery_header {
+    justify-content: space-between;
   }
 }
 </style>

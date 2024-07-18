@@ -72,12 +72,10 @@ export default {
 
 .payment__custom {
   display: none;
-  cursor: none;
 }
 .payment__label {
   display: flex;
   align-items: flex-start;
-  cursor: none;
 }
 
 .payment__custom + .payment__custom_radio {
@@ -88,9 +86,9 @@ export default {
   background-color: #fff;
   display: inline-block;
   position: relative;
-  cursor: none;
   margin-right: 10px;
   transition: border-color 0.4s ease;
+  cursor: pointer;
 }
 
 .payment__custom + .payment__custom_radio::before {

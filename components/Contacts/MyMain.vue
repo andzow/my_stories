@@ -3,13 +3,9 @@
     <div class="main__mobile">
       <div class="main__mobile_header">
         <h1 class="main__mobile_title">
-          ( &nbsp;мы всегда с вами на связи&nbsp; )
+          ( &nbsp;мы всегда с вами <br />
+          на связи&nbsp; )
         </h1>
-        <p class="main__mobile_text">
-          Если у вас есть какие-то вопросы, предложения, хотите оставить отзыв,
-          или вам нужна наша помощь - напишите нам, мы всегда на связи по
-          указанным ниже контактам.
-        </p>
       </div>
       <div class="main__mobile_content">
         <div class="main__mobile_href">
@@ -36,6 +32,11 @@
         страницы"
         />
       </div>
+      <p class="main__mobile_text">
+        Если у вас есть какие-то вопросы, предложения, хотите оставить отзыв,
+        или вам нужна наша помощь - напишите нам, мы всегда на связи по
+        указанным ниже контактам.
+      </p>
     </div>
     <div class="main__content">
       <div class="main__image">
@@ -246,6 +247,9 @@ export default {
   color: var(--brown);
   text-transform: lowercase;
 }
+.main__mobile_img {
+  margin-bottom: 25px;
+}
 @media screen and (max-width: 1600px) {
   .main__about {
     transform: translateX(-100px);
@@ -354,17 +358,17 @@ export default {
   .main__mobile_header {
     flex-direction: column;
   }
-  .main__mobile_title {
+  /* .main__mobile_title {
     margin-bottom: 30px;
-  }
+  } */
 }
 @media screen and (max-width: 560px) {
   .main__mobile_header {
     flex-direction: column;
   }
-  .main__mobile_title {
+  /* .main__mobile_title {
     margin-bottom: 30px;
-  }
+  } */
   .main__mobile_content {
     align-items: flex-start;
     justify-content: flex-start;

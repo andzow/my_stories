@@ -277,7 +277,6 @@ export default {
 .delivery {
   padding: 20px 15px;
   border: 1px solid #af9280;
-  cursor: none !important;
 }
 
 .delivery__option {
@@ -306,12 +305,10 @@ export default {
 
 .delivery__custom {
   display: none;
-  cursor: none;
 }
 .delivery__label {
   display: flex;
   align-items: flex-start;
-  cursor: none;
 }
 
 .delivery__custom + .delivery__custom_radio {
@@ -322,9 +319,9 @@ export default {
   background-color: #fff;
   display: inline-block;
   position: relative;
-  cursor: none;
   margin-right: 10px;
   transition: border-color 0.4s ease;
+  cursor: pointer;
 }
 
 .delivery__custom + .delivery__custom_radio::before {

@@ -1,7 +1,7 @@
 <template>
   <section class="slider">
     <swiper
-      class="slider__swiper"
+      class="slider__cart"
       :slidesPerView="4"
       :slidesPerGroup="1"
       :spaceBetween="25"
@@ -58,7 +58,8 @@ export default {
   methods: {
     async initArr() {
       try {
-        const res = await ProductController.getNew();
+        const res = await ProductController.getRandomCard();
+        console.log(res);
         this.arrNew = res;
         this.initAnimationArr();
       } catch {}
@@ -116,7 +117,7 @@ export default {
   }
 }
 @media screen and (max-width: 468px) {
-  .slider__swiper {
+  .slider__cart {
     display: none;
   }
 }

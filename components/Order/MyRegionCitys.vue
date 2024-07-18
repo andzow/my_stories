@@ -118,6 +118,7 @@ export default {
   padding: 15px 10px;
   margin-bottom: 5px;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 @media (hover: hover) and (pointer: fine) {
   .region__item_dropdown:hover {

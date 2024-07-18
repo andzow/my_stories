@@ -123,6 +123,7 @@ export default {
   align-items: center;
   animation-name: animationOpacity;
   animation-duration: 1s;
+  cursor: pointer;
 }
 .about__size_empty {
   font-size: 16px;

@@ -23,7 +23,7 @@
         </div>
         <div class="awakening__about_btn">
           <UIButtonMyButton
-            @click="$router.push('/lookbook/letniy-vecher')"
+            @click="$router.push('/lookbook/awakening')"
             aria-label="перейти"
             info="перейти"
             fontSize="24"
