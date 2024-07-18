@@ -231,6 +231,7 @@ export default {
 <style scoped>
 .filter__price {
   margin-bottom: 50px;
+  width: 100%;
 }
 .filter__price_header {
   display: flex;
@@ -311,6 +312,7 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   background: var(--brown);
   border: none;
+  cursor: pointer;
 }
 input[type="range"]::-moz-range-thumb {
   height: 20px;
@@ -320,6 +322,7 @@ input[type="range"]::-moz-range-thumb {
   border: none;
   -moz-appearance: none;
   background: var(--brown);
+  cursor: pointer;
 }
 @media screen and (max-width: 1400px) {
   .filter__price_input {
@@ -346,14 +349,14 @@ input[type="range"]::-moz-range-thumb {
 @media screen and (max-width: 836px) {
   .filter__price {
     margin-bottom: 0;
-    max-width: 200px;
+    min-width: 265px;
   }
-  .filter__price_title {
+  /* .filter__price_title {
     font-weight: 400;
     color: var(--brown);
     font-size: 20px;
     text-transform: lowercase;
-  }
+  } */
 }
 @media screen and (max-width: 474px) {
   .filter__price {

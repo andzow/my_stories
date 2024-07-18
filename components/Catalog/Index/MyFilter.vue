@@ -1,12 +1,36 @@
 <template>
-  <section class="filter">
+  <section class="filter" ref="filter">
     <div class="filter__item" ref="filterItem" id="filter__item">
+      <button class="filter__item_close" @click="useOpenFilter = false">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0.999542 14.9985L14.998 1"
+            stroke="#AF9280"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M1.00195 1L15.0005 14.9985"
+            stroke="#AF9280"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
       <CatalogIndexFilterMyChapter
         :useCheckReset="useCheckReset"
         @openMethod="
           () => {
             checkResetBtn();
-            sendFilter();
+            sendFilter(true);
           }
         "
       />
@@ -73,6 +97,9 @@ import CategoryController from "@/http/controllers/CategoryController";
 import ProductController from "@/http/controllers/ProductController";
 
 export default {
+  props: {
+    checkMobile: Boolean,
+  },
   async setup() {
     try {
       let arrFilterChapter = useArrFilterChapter();
@@ -106,6 +133,7 @@ export default {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
       useFilterReset: useFilterReset(),
       filterReadyCheck: false,
+      useOpenFilter: useOpenFilter(),
     };
   },
   methods: {
@@ -154,7 +182,19 @@ export default {
         }, 100);
       });
     },
-    async sendFilter() {
+    async sendFilter(checkFilter) {
+      if (window.innerWidth <= 836) {
+        if (!checkFilter && !this.filterReadyCheck) {
+          return;
+        }
+        this.useCheckPrice = true;
+        await this.scrollToTop();
+        await this.initFilter();
+        await this.initItems();
+        this.filterReadyCheck = false;
+        this.useOpenFilter = false;
+        return;
+      }
       this.useCheckPrice = true;
       await this.scrollToTop();
       await this.initFilter();
@@ -186,7 +226,7 @@ export default {
   },
   mounted() {
     this.checkResetBtn();
-    this.useGsapAnimationOpacity([".filter"], ".catalog");
+    // this.useGsapAnimationOpacity([".filter"], ".catalog");
   },
   watch: {
     async useCheckReset(val) {
@@ -209,7 +249,28 @@ export default {
         this.useFilterReset = false;
       }
     },
+    useOpenFilter(val) {
+      const elementHtml = this.$refs.filter;
+      if (val) {
+        setTimeout(() => {
+          if (elementHtml.getBoundingClientRect()) {
+            const styleEl = elementHtml.getBoundingClientRect().height;
+            const applyEl = document.querySelector(".main__content_bl");
+            elementHtml.style.opacity = "1";
+            elementHtml.style.zIndex = "30";
+            if (styleEl <= applyEl.getBoundingClientRect().height) return;
+            applyEl.style.height = styleEl + 50 + "px";
+          }
+        }, 0);
+        return;
+      }
+      const applyEl = document.querySelector(".main__content_bl");
+      applyEl.style.height = "";
+      elementHtml.style.opacity = "";
+      elementHtml.style.zIndex = "";
+    },
   },
+  unmounted() {},
 };
 </script>
 
@@ -314,6 +375,10 @@ export default {
   opacity: 0;
   transition: all 0.4s ease;
 }
+
+.filter__item_close {
+  display: none;
+}
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.4s ease;
@@ -333,6 +398,36 @@ export default {
 }
 @media screen and (max-width: 836px) {
   .filter {
+    position: absolute;
+    opacity: 0;
+    top: 110px;
+    left: 30px;
+    min-width: 305px;
+    box-shadow: 1px 1px 15px 0px rgba(175, 146, 128, 0.3);
+    transition: all 0.5s ease;
+    z-index: -1;
+  }
+  .filter__item {
+    background: #f9f5ee;
+    padding: 20px;
+  }
+  .filter__btns {
+    margin-top: 40px;
+    height: 65px;
+  }
+  .filter__ready {
+    height: auto;
+    opacity: 1;
+    transition: all 0.5s ease;
+  }
+  .filter__item_close {
+    position: absolute;
+    display: flex;
+    top: 20px;
+    right: 20px;
+    z-index: 5;
+  }
+  /* .filter {
     margin-right: 0px;
     max-width: 100%;
   }
@@ -355,7 +450,7 @@ export default {
     flex-direction: row;
     column-gap: 20px;
     margin-top: 30px;
-  }
+  } */
 }
 @media screen and (max-width: 474px) {
   .filter__bl {

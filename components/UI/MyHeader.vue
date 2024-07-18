@@ -247,7 +247,7 @@ header {
   font-size: 16px;
   text-transform: lowercase;
   padding: 7px 0;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 .header__burger {
   display: flex;
@@ -259,7 +259,7 @@ header {
 .header__burger_line {
   width: 100%;
   border: 1px solid #ede9df;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 .header__burger_line:first-child {
   margin-bottom: 8px;
@@ -283,19 +283,19 @@ header {
 }
 .header-fade-enter-from {
   opacity: 0;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 .header-fade-enter-to {
   opacity: 1;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 .header-fade-leave-from {
   opacity: 1;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 .header-fade-leave-to {
   opacity: 0;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
 .fade-menu-enter-from {
   transform: translateX(-100%) scale(1);

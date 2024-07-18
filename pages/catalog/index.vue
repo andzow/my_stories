@@ -1,7 +1,6 @@
 <template>
   <div>
     <CatalogIndexMyMain @activeLine="activeLine = true" />
-
     <LazyUIMyNoise v-if="checkHydrate" />
     <LazyUIMyAnimationLine
       :duration="animationDuration"
@@ -24,6 +23,7 @@ export default {
       arrAnimationLine: null,
       animationDuration: "11",
       checkHydrate: useCheckHydration(),
+      searchVisible: true,
     };
   },
   methods: {
@@ -46,36 +46,6 @@ export default {
         false
       );
       this.replaceRoute(queryRoutePrice, readyQueryChapter);
-      // console.log(readyQueryChapter);
-      // const readyQueryPrice = this.useReplaceOrDeleteWordQuery(
-      //   "min",
-      //   !queryRoutePrice.min ? "0" : useRoute().query.min,
-      //   false,
-      //   {
-      //     check: true,
-      //     value: "0",
-      //   }
-      // );
-      // const readyQueryPriceMax = this.useReplaceOrDeleteWordQuery(
-      //   "max",
-      //   !queryRoutePrice.max ? "35000" : useRoute().query.max,
-      //   false,
-      //   {
-      //     check: true,
-      //     value: "12000",
-      //   }
-      // );
-      // const readyQueryWithoutName = this.useReplaceOrDeleteWordQuery(
-      //   "size",
-      //   false,
-      //   true
-      // );
-      // const settingsObj = {};
-      // const newArr = [readyQueryChapter].filter((el) => Object.values(el)[0]);
-      // newArr.forEach((el) => {
-      //   const [[key, value]] = Object.entries(el);
-      //   settingsObj[key] = value;
-      // });
     },
     initGsap() {
       if (window.innerWidth > 936) {
@@ -119,4 +89,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(5px);
+  /* background: rgba(0, 0, 0, 0.6); */
+  z-index: 20;
+}
+</style>

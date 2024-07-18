@@ -201,3 +201,4 @@ export const useCheckHydration = () =>
   useState("use_check_hydration", () => false);
 export const useCheckPreload = () => useState("use_check_preload", () => false);
 export const useMainPreload = () => useState("use_main_preload", () => false);
+export const useOpenFilter = () => useState("use_open_filter", () => false);

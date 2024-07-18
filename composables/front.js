@@ -253,3 +253,4 @@ export const useDeliveryPrice = () =>
   useState("use_delivery_price", () => null);
 export const useWidthLookbook = () =>
   useState("use_width_lookbook", () => null);
+export const useLengthCart = () => useState("use_length_cart", () => null);

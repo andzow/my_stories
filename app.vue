@@ -33,6 +33,7 @@ export default {
       headerVisible: true,
       preloader: useMainPreload(),
       checkHydrate: useCheckHydration(),
+      useLengthCart: useLengthCart(),
       checkMobile: null,
       cursorFooter: false,
     };
@@ -49,10 +50,17 @@ export default {
       document.documentElement.classList.add("dynamicStyleOn");
       this.cursorFooter = true;
     },
+    initCartLength() {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      if (!cart || cart?.length <= 0) {
+        this.useLengthCart = null;
+      } else {
+        this.useLengthCart = cart.length;
+      }
+    },
   },
   mounted() {
-    document.documentElement.classList.add("autoCursor");
-    document.documentElement.classList.add("pointerCursor");
+    this.initCartLength();
     if (this.$route.path === "/admin" || this.$route.path === "/login") {
       this.headerVisible = false;
     } else {

@@ -87,6 +87,7 @@ export default {
       arrProduct: null,
       arrProductSize: null,
       useFormatNumberToPrice: useFormatNumberToPrice,
+      useLengthCart: useLengthCart(),
     };
   },
   methods: {
@@ -151,12 +152,21 @@ export default {
       this.addToCart();
       this.getSize = false;
     },
+    initCartLength() {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      if (!cart || cart?.length <= 0) {
+        this.useLengthCart = null;
+      } else {
+        this.useLengthCart = cart.length;
+      }
+    },
     addToCart() {
       const arrLocaleStore = JSON.parse(localStorage.getItem("cart"));
       if (!arrLocaleStore || arrLocaleStore?.length <= 0) {
         this.arrObj.push(this.primerObj);
         localStorage.setItem("cart", JSON.stringify(this.arrObj));
         this.useAlertCart = this.primerObj;
+        this.initCartLength();
         return;
       }
       const checkIdx = this.checkInCart(arrLocaleStore);
@@ -164,12 +174,14 @@ export default {
         arrLocaleStore.push(this.primerObj);
         localStorage.setItem("cart", JSON.stringify(arrLocaleStore));
         this.useAlertCart = this.primerObj;
+        this.initCartLength();
         return;
       }
       const newObj = this.summPrice(arrLocaleStore, checkIdx);
       arrLocaleStore.splice(checkIdx, 1, newObj);
       localStorage.setItem("cart", JSON.stringify(arrLocaleStore));
       this.useAlertCart = this.primerObj;
+      this.initCartLength();
     },
   },
   created() {

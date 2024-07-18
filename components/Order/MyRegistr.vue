@@ -57,6 +57,7 @@ export default {
       counterCheck: false,
       useInputMobile: useInputMobile(),
       useactivePvzMail: useActivePvzMail(),
+      useLengthCart: useLengthCart(),
     };
   },
   methods: {
@@ -105,6 +106,7 @@ export default {
         const { data } = await MailServices.payment(setObj);
         window.open(data.confirmation.confirmation_url, "_self");
         localStorage.clear();
+        this.useLengthCart = null;
         // this.checkVarible = 0;
         // this.counterCheck = true;
         // this.loadingButton = false;
@@ -157,6 +159,7 @@ export default {
         const { data } = await MailServices.payment(setObj);
         window.open(data.confirmation.confirmation_url, "_self");
         localStorage.clear();
+        this.useLengthCart = null;
         // this.checkVarible = 0;
         // this.counterCheck = true;
         // this.loadingButton = false;

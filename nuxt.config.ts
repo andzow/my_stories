@@ -40,6 +40,7 @@ export default defineNuxtConfig({
     "/politics": { delayHydration: false },
     "/order/**": { delayHydration: false },
     "/dogovor": { delayHydration: false },
+    "/cart": { delayHydration: false },
     "/admin": { ssr: false },
     "/login": { ssr: false },
   },

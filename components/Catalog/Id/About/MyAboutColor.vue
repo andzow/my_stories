@@ -10,7 +10,7 @@
         :key="item"
         :style="{
           border: `1px solid ${
-            $route.params.id === item.id ? item.colorValue : 'rgba(0,0,0,0)'
+            $route.params.id === item.id ? '#af9280' : 'rgba(0,0,0,0)'
           }`,
         }"
       >

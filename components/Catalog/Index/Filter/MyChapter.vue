@@ -24,7 +24,10 @@
         </svg>
       </div>
     </div>
-    <div class="filter__chapter_menu" :class="{ activeItemMob: activeVector }">
+    <div
+      class="filter__chapter_menu"
+      :class="{ activeItemMob: activeVector && !$device.isMobile }"
+    >
       <div
         class="filter__chapter_item"
         v-for="item in arrFilterChapter"
@@ -202,6 +205,7 @@ export default {
   color: var(--brown);
   margin-bottom: 15px;
   text-transform: lowercase;
+  cursor: pointer;
   transition: all 0.5s ease;
 }
 .activeTitle {
@@ -274,7 +278,10 @@ export default {
   }
 }
 @media screen and (max-width: 836px) {
-  .filter__mobile {
+  .filter__chapter {
+    margin-bottom: 25px;
+  }
+  /* .filter__mobile {
     display: flex;
   }
   .filter__chapter_menu {
@@ -289,6 +296,6 @@ export default {
   }
   .filter__chapter {
     margin-bottom: 5px;
-  }
+  } */
 }
 </style>

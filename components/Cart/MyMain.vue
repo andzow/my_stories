@@ -65,6 +65,7 @@ export default {
       arrLocale: null,
       checkNews: false,
       useFormatNumberToPrice: useFormatNumberToPrice,
+      useLengthCart: useLengthCart(),
     };
   },
   computed: {
@@ -73,6 +74,14 @@ export default {
     },
   },
   methods: {
+    initCartLength() {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      if (!cart || cart?.length <= 0) {
+        this.useLengthCart = null;
+      } else {
+        this.useLengthCart = cart.length;
+      }
+    },
     updateLocalStorage(arr) {
       if (arr) {
         localStorage.setItem("cart", JSON.stringify(arr));
@@ -108,6 +117,7 @@ export default {
       this.arrLocale.splice(idx, 1);
       this.updateLocalStorage(this.arrLocale);
       this.initFullPrice();
+      this.initCartLength();
     },
     addCounter(item) {
       this.arrLocale.forEach((el, idx) => {

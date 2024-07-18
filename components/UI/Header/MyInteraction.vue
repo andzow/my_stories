@@ -36,6 +36,9 @@
       </button>
     </div>
     <div class="header__interaction_cart">
+      <div class="header__interaction_alert" v-if="useLengthCart">
+        {{ useLengthCart }}
+      </div>
       <button
         class="header__interaction_of"
         title="Открыть корзину"
@@ -92,6 +95,7 @@ export default {
     return {
       useCursor: useCursor(),
       activeMenu: useActiveMenu(),
+      useLengthCart: useLengthCart(),
     };
   },
   methods: {
@@ -109,6 +113,9 @@ export default {
   display: flex;
   align-items: center;
 }
+.header__interaction_cart {
+  position: relative;
+}
 .header__interaction path {
   transition: all 0.4s ease;
 }
@@ -117,5 +124,24 @@ export default {
 }
 .header__interaction_search {
   margin-right: 20px;
+}
+.header__interaction_of {
+  position: relative;
+  z-index: 4;
+}
+.header__interaction_alert {
+  position: absolute;
+  top: -15%;
+  right: -30%;
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 100%;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 5;
 }
 </style>

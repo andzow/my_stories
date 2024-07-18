@@ -45,9 +45,9 @@
         </div>
       </div>
     </div>
-    <!-- <p class="catalog__item_des">
+    <p class="catalog__item_des">
       {{ `${item?.text}, ${item?.characteristic}` }}
-    </p> -->
+    </p>
   </div>
 </template>
 

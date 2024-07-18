@@ -263,17 +263,20 @@ export default {
   }
 }
 @media screen and (max-width: 836px) {
-  .filter__size_text {
+  .filter__size {
+    margin-bottom: 25px;
+  }
+  /* .filter__size_text {
     font-weight: 400;
     color: var(--brown);
     font-size: 20px;
     text-transform: lowercase;
-  }
+  } */
 }
-@media screen and (max-width: 474px) {
+/* @media screen and (max-width: 474px) {
   .filter__size {
     max-width: 220px;
     margin-bottom: 25px;
   }
-}
+} */
 </style>
