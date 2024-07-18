@@ -37,9 +37,13 @@
           </button>
         </div>
       </div>
-      <p class="table__text">
+      <p class="table__text" v-if="!checkMobile">
         Общая таблица размеров показывает<wbr /> нашу стандартную размерную
         линейку
+      </p>
+      <p class="table__text" v-else>
+        Общая таблица размеров показывает<br />
+        нашу стандартную размерную линейку
       </p>
       <div class="table__content">
         <CatalogIdTablesMyTableItem :arrTable="arrTable" />
@@ -75,6 +79,7 @@ export default {
       useTableSize: useTableSize(),
       useTableMeus: useTableMeus(),
       useCursor: useCursor(),
+      checkMobile: false,
     };
   },
   methods: {
@@ -83,6 +88,9 @@ export default {
     },
   },
   mounted() {
+    if (window.innerWidth <= 836) {
+      this.checkMobile = true;
+    }
     const body = document.body;
     body.style.overflow = "hidden";
     this.useCursor = false;
@@ -147,6 +155,7 @@ export default {
   transform: translateY(3px) scale(1.4);
 }
 .table__text {
+  display: flex;
   margin-bottom: 40px;
   font-size: 17px;
   font-weight: 300;
