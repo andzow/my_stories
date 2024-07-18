@@ -286,8 +286,8 @@ export default {
   align-items: flex-start;
 }
 .register__custom + .register__custom_radio {
-  width: 20px;
-  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   border-radius: 50%;
   border: 1.2px solid #af9280;
   background-color: #fff;
