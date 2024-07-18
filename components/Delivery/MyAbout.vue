@@ -114,7 +114,9 @@ export default {
     if (window.innerWidth > 1240) {
       this.initGsap();
     } else {
-      this.useGsapAnimationOpacity([".about"], ".main");
+      setTimeout(() => {
+        this.useGsapAnimationOpacity([".about"], ".about");
+      }, 100);
     }
   },
 };
@@ -210,7 +212,7 @@ export default {
 }
 @media screen and (max-width: 1240px) {
   .about {
-    opacity: 1;
+    opacity: 0;
   }
   .about__text {
     opacity: 1;
