@@ -79,8 +79,8 @@ export default {
 }
 
 .payment__custom + .payment__custom_radio {
-  width: 20px;
-  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   border-radius: 50%;
   border: 1.2px solid #af9280;
   background-color: #fff;
