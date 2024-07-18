@@ -57,6 +57,7 @@
 
       <div class="about__buttons_btn">
         <UIButtonMyButton
+          @click="redirectTelegram"
           class="about__size_btn"
           aria-label="написать в телеграм"
           info="написать в телеграм"
@@ -103,6 +104,9 @@ export default {
     },
     priceConvert(el) {
       return parseInt(el.price.toString().replace(/\s/g, ""), 10);
+    },
+    redirectTelegram() {
+      window.open("https://t.me/mystoriesdress", "_blank");
     },
     checkInCart(arrLocal) {
       return arrLocal.findIndex((el) => {
