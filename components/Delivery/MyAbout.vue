@@ -89,6 +89,7 @@ export default {
   data() {
     return {
       useGsapAnimationOpacity: useGsapAnimationOpacity,
+      checkMobile: false,
     };
   },
   methods: {
@@ -209,7 +210,7 @@ export default {
 }
 @media screen and (max-width: 1240px) {
   .about {
-    opacity: 0;
+    opacity: 1;
   }
   .about__text {
     opacity: 1;
