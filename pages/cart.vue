@@ -13,6 +13,12 @@
 
 <script>
 export default {
+  setup() {
+    useHead({
+      title:
+        "Корзина - Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
+    });
+  },
   data() {
     return {
       arrAnimationLine: null,

@@ -14,6 +14,12 @@
 <script>
 import CategoryController from "@/http/controllers/CategoryController";
 export default {
+  setup() {
+    useHead({
+      title:
+        "Админ панель - Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
+    });
+  },
   data() {
     return {
       useCategoryAll: useCategoryAll(),

@@ -21,6 +21,8 @@
 export default {
   setup() {
     useHead({
+      title:
+        "Оформление заказа - Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
       script: [
         {
           src: "https://api-maps.yandex.ru/2.1/?apikey=3170b455-c141-4e3e-a844-79b04a6021eb&lang=ru_RU",
