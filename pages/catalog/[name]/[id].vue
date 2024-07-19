@@ -37,7 +37,9 @@ useHead({
     { name: "format-detection", content: "telephone=no" },
     {
       property: "og:title",
-      content: `Интернет-магазин модной женской одежды с доставкой по всей России | MyStories`,
+      content: `${
+        route.name
+      }, ${product.color.toLowerCase()} - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories`,
     },
     {
       property: "og:description",
