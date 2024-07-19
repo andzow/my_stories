@@ -13,6 +13,42 @@
 
 <script>
 export default {
+  setup() {
+    useHead({
+      title:
+        "Доставка и оплата - Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
+      meta: [
+        {
+          name: "description",
+          content: `Доставка и оплата - Интернет-магазин модной женской одежды и доставкой по всей России | MyStories`,
+        },
+        {
+          name: "keywords",
+          content:
+            "доставка и оплата, модная женская одежда, интернет-магазин, стильная одежда, mystories",
+        },
+        { name: "format-detection", content: "telephone=no" },
+        {
+          property: "og:title",
+          content:
+            "Доставка и оплата - Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:description",
+          content: `В интернет-магазине mystories вас ждет огромный выбор модной одежды различных размеров! Доставка по всей России.`,
+        },
+        {
+          property: "og:site_name",
+          content:
+            "Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:image",
+          content: "/Preload/collectionF.webp",
+        },
+      ],
+    });
+  },
   data() {
     return {
       arrAnimationLine: null,

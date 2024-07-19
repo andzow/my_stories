@@ -30,18 +30,59 @@
 import dogovorData from "~/assets/json/dogovor.json";
 
 export default {
+  setup() {
+    useHead({
+      title:
+        "Договор - Оферта - Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
+      meta: [
+        {
+          name: "description",
+          content: `ДОГОВОР-ОФЕРТА - Интернет-магазин модной женской одежды и доставкой по всей России | MyStories`,
+        },
+        {
+          name: "keywords",
+          content:
+            "ДОГОВОР-ОФЕРТА, модная женская одежда, интернет-магазин, стильная одежда, mystories",
+        },
+        { name: "format-detection", content: "telephone=no" },
+        {
+          property: "og:title",
+          content:
+            "ДОГОВОР-ОФЕРТА - Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:description",
+          content: `В интернет-магазине mystories вас ждет огромный выбор модной одежды различных размеров! Доставка по всей России.`,
+        },
+        {
+          property: "og:site_name",
+          content:
+            "Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:image",
+          content: "/Preload/collectionF.webp",
+        },
+      ],
+    });
+  },
   data() {
     return {
       dogovor: dogovorData,
       checkHydrate: useCheckHydration(),
     };
   },
+  mounted() {
+    document.body.style.overflow = "auto";
+  },
 };
 </script>
 
 <style scoped>
 .dogovor {
+  position: relative;
   padding-top: 110px;
+  z-index: 17;
 }
 .dogovor__container {
   max-width: 1200px;

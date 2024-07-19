@@ -35,7 +35,9 @@ export default {
 
 <style scoped>
 .politics {
+  position: relative;
   padding-top: 110px;
+  z-index: 17;
 }
 .politics__container {
   max-width: 1200px;
