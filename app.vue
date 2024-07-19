@@ -36,11 +36,19 @@ export default {
       useLengthCart: useLengthCart(),
       checkMobile: null,
       cursorFooter: false,
+      useCheckedAuth: useCheckedAuth(),
     };
   },
   methods: {
     async checkAuthApp() {
-      await AuthController.cheackAuth();
+      try {
+        const response = await AuthController.cheackAuth();
+        if (response) {
+          this.useCheckedAuth = true;
+        }
+      } catch {
+        this.useCheckedAuth = false;
+      }
     },
     closeFooter() {
       document.documentElement.classList.remove("dynamicStyleOn");
@@ -60,14 +68,14 @@ export default {
     },
   },
   mounted() {
+    if (localStorage.getItem("accessToken")) {
+      this.checkAuthApp();
+    }
     this.initCartLength();
     if (this.$route.path === "/admin" || this.$route.path === "/login") {
       this.headerVisible = false;
     } else {
       this.headerVisible = true;
-    }
-    if (localStorage.getItem("accessToken")) {
-      this.checkAuthApp();
     }
     setTimeout(() => {
       this.preloader = true;

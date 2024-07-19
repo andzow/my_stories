@@ -254,3 +254,4 @@ export const useDeliveryPrice = () =>
 export const useWidthLookbook = () =>
   useState("use_width_lookbook", () => null);
 export const useLengthCart = () => useState("use_length_cart", () => null);
+export const useCheckedAuth = () => useState("use_checked_auth", () => false);
