@@ -24,7 +24,7 @@ const { data } = await useFetch(
 
 const product = data.value.product[0];
 useHead({
-  title: `Купить ${route.name.toLowerCase()}, цвет: ${product.color.toLowerCase()} - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories`,
+  title: `Купить ${route.name.toLowerCase()} ${product.color.toLowerCase()} - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories`,
   meta: [
     {
       name: "description",
