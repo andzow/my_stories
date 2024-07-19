@@ -26,6 +26,42 @@ import gsap from "gsap";
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
+  setup() {
+    useHead({
+      title:
+        "Лукбук | Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+      meta: [
+        {
+          name: "description",
+          content: `Откройте для себя лукбук от mystories, где представлены актуальные образы и стильные комбинации женской одежды. Мы предлагаем доставку по всей России.`,
+        },
+        {
+          name: "keywords",
+          content:
+            "лукбук, модная женская одежда, интернет-магазин, стильные образы, mystories",
+        },
+        { name: "format-detection", content: "telephone=no" },
+        {
+          property: "og:title",
+          content:
+            "Лукбук | Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:description",
+          content: `Откройте для себя лукбук от mystories, где представлены актуальные образы и стильные комбинации женской одежды. Мы предлагаем доставку по всей России.`,
+        },
+        {
+          property: "og:site_name",
+          content:
+            "Лукбук | Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:image",
+          content: "/Preload/collectionS.webp",
+        },
+      ],
+    });
+  },
   data() {
     return {
       checkAnimation: false,

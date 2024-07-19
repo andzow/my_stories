@@ -12,6 +12,42 @@
 
 <script>
 export default {
+  setup() {
+    useHead({
+      title:
+        "Каталог | Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+      meta: [
+        {
+          name: "description",
+          content: `Изучите наш каталог в mystories, где представлены самые актуальные коллекции женской одежды. Доставка по всей России.`,
+        },
+        {
+          name: "keywords",
+          content:
+            "каталог, модная женская одежда, интернет-магазин, коллекции, mystories",
+        },
+        { name: "format-detection", content: "telephone=no" },
+        {
+          property: "og:title",
+          content:
+            "Каталог | Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:description",
+          content: `Изучите наш каталог в mystories, где представлены самые актуальные коллекции женской одежды. Доставка по всей России.`,
+        },
+        {
+          property: "og:site_name",
+          content:
+            "Каталог | Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:image",
+          content: "/Lookbook/letniy5.webp",
+        },
+      ],
+    });
+  },
   data() {
     return {
       arrFilterChapter: useArrFilterChapter(),

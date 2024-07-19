@@ -13,7 +13,8 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: "Интернет-магазин одежды | MyStories",
+      title:
+        "Интернет-магазин модной женской одежды и доставкой по всей России | MyStories",
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
       link: [
@@ -32,6 +33,10 @@ export default defineNuxtConfig({
           as: "image",
           href: "/Lookbook/awakening/awakeningBack.webp",
         },
+      ],
+      meta: [
+        { property: "og:type", content: "website" },
+        { property: "og:locale", content: "ru_RU" },
       ],
       htmlAttrs: { lang: "ru-RU" },
     },

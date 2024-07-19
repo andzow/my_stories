@@ -20,6 +20,42 @@
 
 <script>
 export default {
+  setup() {
+    useHead({
+      title:
+        "О бренде - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+      meta: [
+        {
+          name: "description",
+          content: `Откройте для себя бренд mystories в нашем интернет-магазине. Мы предлагаем широкий ассортимент модной женской одежды различных размеров и доставку по всей России.`,
+        },
+        {
+          name: "keywords",
+          content:
+            "о бренде, модная женская одежда, интернет-магазин, стильная одежда, mystories",
+        },
+        { name: "format-detection", content: "telephone=no" },
+        {
+          property: "og:title",
+          content:
+            "О бренде - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:description",
+          content: `Откройте для себя бренд mystories в нашем интернет-магазине. Мы предлагаем широкий ассортимент модной женской одежды различных размеров и доставку по всей России.`,
+        },
+        {
+          property: "og:site_name",
+          content:
+            "О бренде - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:image",
+          content: "/Preload/brandBack.webp",
+        },
+      ],
+    });
+  },
   data() {
     return {
       arrAnimationLine: null,

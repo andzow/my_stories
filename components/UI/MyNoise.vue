@@ -20,7 +20,7 @@ export default {};
 .bg:after {
   position: fixed;
   /* animation: grain 9s steps(10) infinite; */
-  background: url("/noise3.png");
+  background: url("/noise.png");
   content: "";
   height: 300%;
   width: 300%;

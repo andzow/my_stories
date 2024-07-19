@@ -48,7 +48,7 @@
           class="awakening__photo_img"
           src="@/assets/images/Lookbook/awakening2.webp"
           alt="Фотография коллекции пробуждение"
-          width="437"
+          width="457"
           height="458"
         />
       </div>
@@ -223,6 +223,11 @@ export default {
 .awakening__mob_photo {
   display: none;
   margin: 40px 0 50px 0;
+}
+.awakening__image_img {
+  object-fit: cover;
+  width: 130px;
+  height: 136px;
 }
 @media screen and (max-width: 1400px) {
   .awakening__about_title {

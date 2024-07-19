@@ -16,6 +16,48 @@
   </div>
 </template>
 
+<script setup>
+const route = useRoute().params;
+const { data } = await useFetch(
+  usePageUrlAsyncData() + "product/" + `${route.name}/${route.id}`
+);
+
+const product = data.value.product[0];
+useHead({
+  title: `Купить ${route.name.toLowerCase()}, цвет: ${product.color.toLowerCase()} - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories`,
+  meta: [
+    {
+      name: "description",
+      content: `${product.text}, характеристика: ${product.characteristic}`,
+    },
+    {
+      name: "keywords",
+      content: `${product.name}, модная женская одежда, интернет-магазин, коллекции, mystories`,
+    },
+    { name: "format-detection", content: "telephone=no" },
+    {
+      property: "og:title",
+      content: `${
+        route.name
+      }, ${product.color.toLowerCase()} - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories`,
+    },
+    {
+      property: "og:description",
+      content: `${product.text}`,
+    },
+    {
+      property: "og:site_name",
+      content: `${
+        route.name
+      }, ${product.color.toLowerCase()} - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories`,
+    },
+    {
+      property: "og:image",
+      content: usePageUrlAsyncData() + product.images[0],
+    },
+  ],
+});
+</script>
 <script>
 export default {
   data() {

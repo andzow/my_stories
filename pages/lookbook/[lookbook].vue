@@ -15,6 +15,50 @@
 
 <script>
 export default {
+  setup() {
+    let nameTitle =
+      useRoute().path === "/lookbook/letniy-veter"
+        ? "Летний ветер"
+        : "Пробуждение";
+    nameTitle =
+      nameTitle +
+      " | Интернет-магазин модной женской одежды с доставкой по всей России | MyStories";
+    let imageSrc =
+      useRoute().path === "/lookbook/letniy-veter"
+        ? "/Lookbook/letniy/letniyBack.webp"
+        : "/Lookbook/awakening/awakeningBack.webp";
+    useHead({
+      title: nameTitle,
+      meta: [
+        {
+          name: "description",
+          content: `Исследуйте лукбук от mystories, в котором представлены самые современные образы и стильные сочетания женской одежды. Мы предлагаем доставку по всей России.`,
+        },
+        {
+          name: "keywords",
+          content:
+            "лукбук, модная женская одежда, интернет-магазин, стильные образы, mystories",
+        },
+        { name: "format-detection", content: "telephone=no" },
+        {
+          property: "og:title",
+          content: nameTitle,
+        },
+        {
+          property: "og:description",
+          content: `Исследуйте лукбук от mystories, в котором представлены самые современные образы и стильные сочетания женской одежды. Мы предлагаем доставку по всей России.`,
+        },
+        {
+          property: "og:site_name",
+          content: nameTitle,
+        },
+        {
+          property: "og:image",
+          content: imageSrc,
+        },
+      ],
+    });
+  },
   data() {
     return {
       arrActive: null,

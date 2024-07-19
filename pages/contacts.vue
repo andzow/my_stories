@@ -12,6 +12,42 @@
 
 <script>
 export default {
+  setup() {
+    useHead({
+      title:
+        "Контакты - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+      meta: [
+        {
+          name: "description",
+          content: `Свяжитесь с нами в интернет-магазине mystories. Мы предлагаем модную женскую одежду различных размеров и доставку по всей России.`,
+        },
+        {
+          name: "keywords",
+          content:
+            "контакты, модная женская одежда, интернет-магазин, стильная одежда, mystories",
+        },
+        { name: "format-detection", content: "telephone=no" },
+        {
+          property: "og:title",
+          content:
+            "Контакты - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:description",
+          content: `Свяжитесь с нами в интернет-магазине mystories. Мы предлагаем модную женскую одежду различных размеров и доставку по всей России`,
+        },
+        {
+          property: "og:site_name",
+          content:
+            "Контакты - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories",
+        },
+        {
+          property: "og:image",
+          content: "/Preload/contacts.webp",
+        },
+      ],
+    });
+  },
   data() {
     return {
       arrAnimationLine: null,
