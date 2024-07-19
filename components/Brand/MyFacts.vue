@@ -33,7 +33,12 @@
             <div class="facts__number" :class="['facts__number' + (idx + 1)]">
               {{ `( &nbsp;${idx + 1}&nbsp; )` }}
             </div>
-            <p class="facts__text" ref="factsText" v-html="item.text"></p>
+            <p
+              class="facts__text"
+              :class="['facts__text' + (idx + 1)]"
+              ref="factsText"
+              v-html="item.text"
+            ></p>
           </div>
         </div>
       </div>
@@ -133,6 +138,7 @@ export default {
         ".facts__item"
       );
       let delay = 0.5;
+
       this.$refs.factsText.forEach((el, idx) => {
         this.useGsapAnimationOpacity(
           [".facts__text" + (idx + 1)],
