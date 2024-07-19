@@ -1,11 +1,6 @@
 <template>
   <Transition name="header-fade">
     <header class="header" v-if="!searchVisible">
-      <div class="header__log" v-if="useCheckedAuth">
-        <button class="header__log_btn" @click="$router.push('/admin')">
-          Войти в админ панель
-        </button>
-      </div>
       <div class="header__content">
         <div class="header__logo" data-cursor-class="animateCursor">
           <div class="header__burger" @click="activeMenu = !activeMenu">
@@ -238,16 +233,6 @@ header {
 }
 .header__logo svg path {
   transition: all 0.4s ease;
-}
-.header__log {
-  position: absolute;
-  top: 100%;
-  right: 30px;
-}
-.header__log_btn {
-  background: white;
-  padding: 10px;
-  cursor: pointer;
 }
 .activeSvg path {
   fill: var(--brown);

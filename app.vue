@@ -36,19 +36,13 @@ export default {
       useLengthCart: useLengthCart(),
       checkMobile: null,
       cursorFooter: false,
-      useCheckedAuth: useCheckedAuth(),
     };
   },
   methods: {
     async checkAuthApp() {
       try {
-        const response = await AuthController.cheackAuth();
-        if (response) {
-          this.useCheckedAuth = true;
-        }
-      } catch {
-        this.useCheckedAuth = false;
-      }
+        await AuthController.cheackAuth();
+      } catch {}
     },
     closeFooter() {
       document.documentElement.classList.remove("dynamicStyleOn");
