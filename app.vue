@@ -6,10 +6,8 @@
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
     <NuxtPage />
     <UIMyModalStatus />
-    <LazyUIMyCursor v-if="!$device.isMobile && cursorFooter" />
-    <LazyUIMyCursorCircle v-if="!$device.isMobile && cursorFooter" />
   </main>
-  <UIMyFooter @openFooter="openFooter" @closeFooter="closeFooter" />
+  <UIMyFooter />
 </template>
 
 <script>
@@ -43,14 +41,6 @@ export default {
       try {
         await AuthController.cheackAuth();
       } catch {}
-    },
-    closeFooter() {
-      document.documentElement.classList.remove("dynamicStyleOn");
-      this.cursorFooter = false;
-    },
-    openFooter() {
-      document.documentElement.classList.add("dynamicStyleOn");
-      this.cursorFooter = true;
     },
     initCartLength() {
       const cart = JSON.parse(localStorage.getItem("cart"));
@@ -92,9 +82,6 @@ export default {
 };
 </script>
 <style>
-.dynamicStyleOn {
-  cursor: none !important;
-}
 /* .pointerCursor {
   cursor: url("/pointer.png"), pointer;
 } */

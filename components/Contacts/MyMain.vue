@@ -11,7 +11,7 @@
         <div class="main__mobile_href">
           <a
             class="main__mobile_link main__mobile_link1"
-            href="https://t.me/+79536886333"
+            href="https://t.me/mystorieszakaz"
             target="_blank"
             >( &nbsp;написать в Telegram&nbsp; )</a
           >
@@ -64,7 +64,7 @@
               <button class="main__about_btn" data-cursor-class="animateCursor">
                 <a
                   class="main__about_links"
-                  href="https://t.me/+79536886333"
+                  href="https://t.me/mystorieszakaz"
                   target="_blank"
                   >( &nbsp;написать в Telegram&nbsp; )</a
                 >

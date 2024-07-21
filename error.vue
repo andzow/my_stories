@@ -3,10 +3,6 @@
   <div v-lazy-hydrate="() => (checkHydrate = true)">
     <ErrorMyMain />
     <UIMyNoise />
-    <LazyUIMyCursor v-if="checkMobile === false && checkHydrate === true" />
-    <LazyUIMyCursorCircle
-      v-if="checkMobile === false && checkHydrate === true"
-    />
   </div>
   <UIMyFooter />
 </template>

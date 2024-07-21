@@ -24,7 +24,7 @@
               >WhatsApp,
             </a>
             <a
-              href="https://t.me/+79536886333"
+              href="https://t.me/mystorieszakaz"
               class="about__info_link"
               data-cursor-class="animateCursor"
               target="_blank"
@@ -65,7 +65,7 @@
             >WhatsApp,
           </a>
           <a
-            href="https://t.me/+79536886333"
+            href="https://t.me/mystorieszakaz"
             class="about__calc_link"
             data-cursor-class="animateCursor"
             target="_blank"

@@ -103,7 +103,7 @@
             <div class="footer__mob_href">
               <a
                 class="footer__data_link"
-                href="https://t.me/+79536886333"
+                href="https://t.me/mystorieszakaz"
                 target="_blank"
                 >( &nbsp;Telegram&nbsp; )</a
               >
@@ -152,7 +152,7 @@
             <div class="footer__data_inf" data-cursor-class="animateCursor">
               <a
                 class="footer__data_link"
-                href="https://t.me/+79536886333"
+                href="https://t.me/mystorieszakaz"
                 target="_blank"
                 >( &nbsp;Telegram&nbsp; )</a
               >
@@ -357,15 +357,6 @@ export default {
   position: relative;
   width: 100%;
   /* background: blue; */
-}
-.footer input {
-  cursor: none !important;
-}
-.footer a {
-  cursor: none !important;
-}
-.footer button {
-  cursor: none !important;
 }
 .footer::before {
   content: "";

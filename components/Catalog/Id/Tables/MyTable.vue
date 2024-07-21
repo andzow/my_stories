@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     redirectTelegram() {
-      window.open("https://t.me/mystoriesdress", "_blank");
+      window.open("https://t.me/mystorieszakaz", "_blank");
     },
   },
   mounted() {

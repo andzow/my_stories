@@ -106,7 +106,7 @@ export default {
       return parseInt(el.price.toString().replace(/\s/g, ""), 10);
     },
     redirectTelegram() {
-      window.open("https://t.me/mystoriesdress", "_blank");
+      window.open("https://t.me/mystorieszakaz", "_blank");
     },
     checkInCart(arrLocal) {
       return arrLocal.findIndex((el) => {

@@ -10,13 +10,20 @@
         fontSize="20"
         variant="main"
         data-cursor-class="animateCursor"
+        @click="redirect"
       />
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    redirect() {
+      window.open("https://t.me/mystorieszakaz", "_blank");
+    },
+  },
+};
 </script>
 
 <style scoped>

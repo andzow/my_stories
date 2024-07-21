@@ -59,7 +59,6 @@ export default {
     async initArr() {
       try {
         const res = await ProductController.getRandomCard();
-        console.log(res);
         this.arrNew = res;
         this.initAnimationArr();
       } catch {}

@@ -21,7 +21,7 @@
               Если ни один из вариантов вам не подходит, Вы можете связаться с
               нами нажав на кнопку
               <a
-                href="https://t.me/+79536886333"
+                href="https://t.me/mystorieszakaz"
                 class="main__about_link"
                 data-cursor-class="animateCursor"
                 target="_blank"

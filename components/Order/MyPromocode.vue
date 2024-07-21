@@ -312,11 +312,12 @@ export default {
       const fullSummPrice = this.summ;
       if (this.discountSumm !== 0 && this.discountedPrice !== 0) {
         this.discountedPrice = (fullSummPrice * this.discountSumm) / 100;
-        this.fullSumm = Math.ceil(fullSummPrice - this.discountedPrice) + val;
+        this.fullSumm = Math.ceil(fullSummPrice - this.discountedPrice);
       } else {
         this.fullSumm = fullSummPrice;
       }
       this.checkFirstLoad = true;
+      this.fullSumm += val;
     },
     selectedOption() {
       if (this.discountSumm === 0) {
