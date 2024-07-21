@@ -33,15 +33,7 @@
         class="menu__catalog_item"
         v-for="item in arrCategory"
         :key="item"
-        @click="
-          (activeMenu = false),
-            $router.push({
-              path: '/catalog',
-              query: {
-                chapter: item.name,
-              },
-            })
-        "
+        @click="redirectPage(item)"
       >
         {{ item.name.toLowerCase() }}
       </div>
@@ -59,6 +51,7 @@ export default {
       heightEl: null,
       activeItems: true,
       activeMenu: useActiveMenu(),
+      useMenuChapter: useMenuChapter(),
     };
   },
   methods: {
@@ -67,6 +60,16 @@ export default {
         const { data } = await CategoryServices.getCategory(this.$route.query);
         this.arrCategory = data.categorys;
       } catch {}
+    },
+    async redirectPage(item) {
+      this.activeMenu = false;
+      await this.$router.push({
+        path: "/catalog",
+        query: {
+          chapter: item.name,
+        },
+      });
+      setTimeout(() => (this.useMenuChapter = true), 100);
     },
     initHeight() {
       nextTick(() => {

@@ -134,6 +134,7 @@ export default {
       useFilterReset: useFilterReset(),
       filterReadyCheck: false,
       useOpenFilter: useOpenFilter(),
+      useMenuChapter: useMenuChapter(),
     };
   },
   methods: {
@@ -185,6 +186,7 @@ export default {
     async sendFilter(checkFilter) {
       if (window.innerWidth <= 836) {
         if (!checkFilter && !this.filterReadyCheck) {
+          this.useMenuChapter = false;
           return;
         }
         this.useCheckPrice = true;
@@ -193,6 +195,7 @@ export default {
         await this.initItems();
         this.filterReadyCheck = false;
         this.useOpenFilter = false;
+        this.useMenuChapter = false;
         return;
       }
       this.useCheckPrice = true;
@@ -201,6 +204,7 @@ export default {
       await this.initItems();
       this.filterReadyCheck = false;
       this.checkResetBtn();
+      this.useMenuChapter = false;
     },
     async reset() {
       this.useCheckReset = true;
@@ -229,6 +233,15 @@ export default {
     // this.useGsapAnimationOpacity([".filter"], ".catalog");
   },
   watch: {
+    useMenuChapter(val) {
+      if (val && this.$route.path === "/catalog") {
+        this.useOpenFilter = false;
+        this.filterReadyCheck = true;
+        this.checkResetBtn();
+        this.sendFilter();
+      }
+      this.useMenuChapter = false;
+    },
     async useCheckReset(val) {
       if (!val) {
         await this.$router.replace({
