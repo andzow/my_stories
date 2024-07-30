@@ -82,6 +82,7 @@ export default {
 }
 .photos__img {
   width: 100%;
+  object-fit: cover;
 }
 .photos__btn {
   opacity: 0;
