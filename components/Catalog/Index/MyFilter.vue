@@ -223,7 +223,12 @@ export default {
     },
     async initItems() {
       try {
-        const res = await ProductController.getFilter(this.$route.query);
+        const customQuery = {
+          ...this.$route.query,
+          min:String(this.minVal),
+          max:String(this.maxVal)
+        }
+        const res = await ProductController.getFilter(customQuery);
         this.useCatalogItems = res;
       } catch {}
     },
