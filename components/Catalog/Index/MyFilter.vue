@@ -201,8 +201,8 @@ export default {
         this.useCheckPrice = true;
         await this.scrollToTop();
         await this.initFilter();
-        await this.resetQuery(this.minVal, this.maxVal)
         await this.initItems(checkFilter);
+        await this.resetQuery(this.minVal, this.maxVal)
         this.filterReadyCheck = false;
         this.useOpenFilter = false;
         this.useMenuChapter = false;
@@ -211,8 +211,8 @@ export default {
       this.useCheckPrice = true;
       await this.scrollToTop();
       await this.initFilter();
-      await this.resetQuery(this.minVal, this.maxVal)
       await this.initItems(checkFilter);
+      await this.resetQuery(this.minVal, this.maxVal)
       this.filterReadyCheck = false;
       this.checkResetBtn();
       this.useMenuChapter = false;
@@ -237,8 +237,8 @@ export default {
       try {
         const customQuery = {
           ...this.$route.query,
-          min:this.minVal,
-          max:this.maxVal
+          min:String(this.minVal),
+          max:String(this.maxVal)
         }
         const res = await ProductController.getFilter(checkFilter === true ? customQuery : this.$route.query);
         this.useCatalogItems = res;
