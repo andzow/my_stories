@@ -38,6 +38,7 @@ export default {
   border-top: 1px solid #d2bcae;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .search__item_title {
   margin-left: 40px;
