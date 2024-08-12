@@ -183,6 +183,15 @@ export default {
         }, 100);
       });
     },
+    async resetQuery(min,max) {
+      await this.$router.push({
+        query:{
+          ...this.$route.query,
+          min:min,
+          max:max
+        }
+      })
+    },
     async sendFilter(checkFilter) {
       if (window.innerWidth <= 836) {
         if (!checkFilter && !this.filterReadyCheck) {
@@ -192,7 +201,8 @@ export default {
         this.useCheckPrice = true;
         await this.scrollToTop();
         await this.initFilter();
-        await this.initItems();
+        await this.initItems(checkFilter);
+        await this.resetQuery(this.minVal, this.maxVal)
         this.filterReadyCheck = false;
         this.useOpenFilter = false;
         this.useMenuChapter = false;
@@ -201,7 +211,8 @@ export default {
       this.useCheckPrice = true;
       await this.scrollToTop();
       await this.initFilter();
-      await this.initItems();
+      await this.initItems(checkFilter);
+      await this.resetQuery(this.minVal, this.maxVal)
       this.filterReadyCheck = false;
       this.checkResetBtn();
       this.useMenuChapter = false;
@@ -219,11 +230,17 @@ export default {
         this.arrFilterSize = res.uniqueNameArray;
         this.minVal = !res.minPrice ? 0 : res.minPrice;
         this.maxVal = !res.maxPrice ? 35000 : res.maxPrice;
+        // this.resetQuery(this.minVal,this.maxVal)
       } catch {}
     },
-    async initItems() {
+    async initItems(checkFilter) {
       try {
-        const res = await ProductController.getFilter(this.$route.query);
+        const customQuery = {
+          ...this.$route.query,
+          min:String(this.minVal),
+          max:String(this.maxVal)
+        }
+        const res = await ProductController.getFilter(checkFilter === true ? customQuery : this.$route.query);
         this.useCatalogItems = res;
       } catch {}
     },
