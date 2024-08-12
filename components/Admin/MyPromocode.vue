@@ -54,7 +54,7 @@
                 </div>
                 <div class="promocode__line">
                   <h4 class="promocode__name">срок действия</h4>
-                  <p class="promocode__info">{{ item.date }}</p>
+                  <p class="promocode__info">до {{ item.date }}</p>
                 </div>
                 <div class="promocode__line">
                   <h4 class="promocode__name">количество</h4>

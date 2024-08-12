@@ -235,6 +235,7 @@
           />
           <UIMyButton
             class="product__btn_reset"
+            @click="resetdata"
             :info="'отмена'"
           />
         </div>

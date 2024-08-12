@@ -82,7 +82,7 @@
             :info="'сохранить'"
             :variant="'green'"
           />
-          <UIMyButton class="category__btn_reset" :info="'отмена'" />
+          <UIMyButton @click="resetAll" class="category__btn_reset" :info="'отмена'" />
         </div>
       </div>
     </section>
@@ -156,6 +156,10 @@ export default {
         behavior: "smooth",
       });
     },
+    resetAll() {
+      const filteredArray = this.isCategory.filter(item => item.status !== 'create');
+      this.isCategory = filteredArray
+    }
   },
 };
 </script>
