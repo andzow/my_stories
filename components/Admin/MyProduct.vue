@@ -235,7 +235,7 @@
           />
           <UIMyButton
             class="product__btn_reset"
-            @click="resetdata"
+            @click="close"
             :info="'отмена'"
           />
         </div>
@@ -363,7 +363,6 @@ export default {
       this.useStatus = 'addDimension'
       this.useDimensionItem = index
     },
-
     deleteDimension(index, idx) {
       this.useDimension[index].array.splice(idx, 1)
     },
@@ -457,6 +456,10 @@ export default {
       this.listImages = []
       this.isVideo = null
       this.videoUrl = null
+    },
+    close() {
+      this.resetdata
+      this.useProduct = false
     },
     async updateData() {
       this.validator()

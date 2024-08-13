@@ -267,6 +267,7 @@ export default {
       this.usePromoId = id;
     },
     resetAll() {
+      this.useCode = false;
       this.isCandidate = [];
     },
     scrollToBottom() {

@@ -159,6 +159,7 @@ export default {
     resetAll() {
       const filteredArray = this.isCategory.filter(item => item.status !== 'create');
       this.isCategory = filteredArray
+      this.useCategory = false
     }
   },
 };
