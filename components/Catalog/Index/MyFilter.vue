@@ -255,7 +255,7 @@ export default {
         this.useOpenFilter = false;
         this.filterReadyCheck = true;
         this.checkResetBtn();
-        this.sendFilter();
+        this.sendFilter(true);
       }
       this.useMenuChapter = false;
     },
