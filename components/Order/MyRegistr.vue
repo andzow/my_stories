@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import MailServices from '~/http/services/MailServices'
 import PromoServices from '~/http/services/PromoServices'
 
 export default {
@@ -78,18 +79,19 @@ export default {
 					this.useInputMobile = splitNumber.join('')
 				}
 				const cleanedPhoneNumber = this.useInputMobile.replace(/\D/g, '')
+				const getItemsAmount = this.summItems(arr, item)
 				const setObj = {
 					name: fullName,
 					firstName: firstName,
 					middleName: middleName,
 					surName: surName,
 					phone: cleanedPhoneNumber,
-					items: this.summItems(arr),
+					items: getItemsAmount.items,
 					...item.buyer.codeCity,
 					index_to: item.buyer.codeCity.index,
 					address: item.buyer.codeCity['original-address'],
 					promocode: item.promocode.promocodeText,
-					amount: item.promocode.summ,
+					amount: getItemsAmount.amountAllPrice,
 					comments:
 						item.buyer.inputsInfo[item.buyer.inputsInfo.length - 1].inputVal,
 					mail_type: item.delivery.ship,
@@ -110,6 +112,7 @@ export default {
 				delete setObj['region']
 				delete setObj['id']
 				setObj.region = this.useActiveRegion.region
+				console.log(getItemsAmount) //Раскомитить
 				if (item.payment === 'yookassa') {
 					const { data } = await MailServices.payment(setObj)
 					window.open(data.confirmation.confirmation_url, '_self')
@@ -141,12 +144,14 @@ export default {
 					', ' +
 					this.useActiveRegion.region +
 					', '
+				const getItemsAmount = this.summItems(arr, item)
+				console.log(getItemsAmount) //Раскомитить
 				const setObj = {
 					name: fullName,
 					phone: cleanedPhoneNumber,
-					items: this.summItems(arr),
+					items: getItemsAmount.items,
 					promocode: item.promocode.promocodeText,
-					amount: item.promocode.summ,
+					amount: getItemsAmount.amountAllPrice,
 					place: codePvzCdek
 						? item.buyer.codeCity.city
 						: this.useActiveRegion.settlement,
@@ -229,19 +234,31 @@ export default {
 				return 'Промокод уже использован'
 			}
 		},
-		summItems(arr) {
+		summItems(arr, item) {
 			if (!this.useDiscountSumm || this.useDiscountSumm === 0) {
-				return arr
+				return {
+					amountAllPrice: item.promocode.summ,
+					items: arr,
+				}
 			}
-			return arr.map(el => {
-				const price = el.price * el.counter
-				const discount = (price / 100) * (this.useDiscountSumm / arr.length)
-				const summDiscount = Math.round(price - discount * el.counter)
+			const arrDiscount = arr.map(el => {
+				const discount = el.price * (this.useDiscountSumm / 100)
+				const newPrice = el.price - discount
+				const roundedPrice = parseFloat(newPrice.toFixed(2))
 				return {
 					...el,
-					price: summDiscount,
+					price: roundedPrice,
 				}
 			})
+			const summPrice = arrDiscount.reduce((acc, item) => {
+				const price = item.counter * item.price
+				acc += price
+				return acc
+			}, 0)
+			return {
+				amountAllPrice: summPrice + item.promocode.summDelivery,
+				items: arrDiscount,
+			}
 		},
 		getInformationUser() {
 			if (!this.deliveryOptions || !this.selectedOption) return

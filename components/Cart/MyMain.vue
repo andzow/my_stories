@@ -123,7 +123,7 @@ export default {
 			this.arrLocale.forEach((el, idx) => {
 				if (idx === item.idx) {
 					const { fullPrice, counter } = this.сalcCounter(el, true)
-					this.arrLocale[idx].fullprice = fullPrice
+					this.arrLocale[idx].fullPrice = fullPrice
 					this.arrLocale[idx].counter = counter
 				}
 			})
