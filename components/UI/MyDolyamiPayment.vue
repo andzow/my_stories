@@ -12,7 +12,8 @@
 					{{ el }}
 				</div>
 				<div class="dolyami__modal__price" :class="{ activeText: idx === 0 }">
-					{{ paymentPrice ? paymentPrice : useDolyamiPrice }} ₽
+					{{ paymentAmount[idx].toLocaleString('ru-RU') }}
+					₽
 				</div>
 				<div
 					class="dolyami__modal__line"
@@ -74,6 +75,13 @@ export default {
 				n += 2
 			}
 			return datesArray
+		},
+		paymentAmount() {
+			const price = this.paymentPrice ? this.paymentPrice : this.useDolyamiPrice
+			const totalAmount = parseFloat(price.replace(/\s+/g, '')) * 4
+			const basePayment = Math.floor(totalAmount / 4)
+			const remainder = totalAmount - basePayment * 3
+			return [basePayment, basePayment, basePayment, Math.round(remainder)]
 		},
 	},
 }

@@ -28,6 +28,15 @@ const { data } = await useFetch(
 const product = data.value.product[0]
 useHead({
 	title: `Купить ${route.name.toLowerCase()} ${product.color.toLowerCase()} - Интернет-магазин модной женской одежды с доставкой по всей России | MyStories`,
+	charset: 'utf-8',
+	viewport: 'width=device-width, initial-scale=1',
+	link: [
+		{
+			rel: 'icon',
+			type: 'image/x-icon',
+			href: '/favicon.png',
+		},
+	],
 	meta: [
 		{
 			name: 'description',
@@ -56,7 +65,11 @@ useHead({
 			property: 'og:image',
 			content: usePageUrlAsyncData() + product.images[0],
 		},
+		{ property: 'og:type', content: 'website' },
+		{ property: 'og:locale', content: 'ru_RU' },
 	],
+	charset: 'utf-8',
+	htmlAttrs: { lang: 'ru-RU' },
 })
 </script>
 <script>

@@ -15,7 +15,7 @@
 			<p class="dolyamy__platesh">
 				4 платежа по
 				{{
-					`${(priceProduct / 4)
+					`${Math.floor(priceProduct / 4)
 						.toString()
 						.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}`
 				}}

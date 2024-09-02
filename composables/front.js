@@ -24,7 +24,7 @@ export const useTableMeus = () => useState('use_table_meus', () => false)
 export const useAlertCart = () => useState('use_alert_cart', () => false)
 export const useModalDolyami = () => useState('use_modal_dolyami', () => false)
 export const useDolyamiPrice = () =>
-	useState('use_dolyami_price', () => 'сумма не обновлена') //сумма не обновлена
+	useState('use_dolyami_price', () => 'сумма не объявлена') //сумма не обновлена
 export const useSummDolyami = () => useState('use_summ_dolyami', () => 0)
 
 // export const useGsapAnimationOpacity = (

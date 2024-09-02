@@ -63,7 +63,7 @@ export default {
 		document.body.style.overflow = 'hidden'
 	},
 	unmounted() {
-		this.useDolyamiPrice = 'сумма не обновлена'
+		this.useDolyamiPrice = 'сумма не объявлена'
 		document.body.style.overflow = 'auto'
 	},
 }

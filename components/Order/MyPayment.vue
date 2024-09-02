@@ -7,19 +7,18 @@
 				:key="index"
 				class="payment__option"
 			>
-				<label
-					class="payment__label"
-					:for="`payment__label${index + 1}`"
-					data-cursor-class="animateCursor"
-				>
+				<label class="payment__label" :for="`${index + 1}`">
 					<input
 						type="radio"
 						:id="`payment__label${index + 1}`"
-						:value="`payment__label${index + 1}`"
+						:value="`${index + 1}`"
 						v-model="selectedOption"
 						class="payment__custom"
 					/>
-					<span class="payment__custom_radio"></span>
+					<span
+						class="payment__custom_radio"
+						@click="selectedOption = index + 1"
+					></span>
 					<div class="payment__details">
 						<div class="payment__details_header">
 							<div class="payment__name">{{ option.name }}</div>
@@ -32,11 +31,7 @@
 						</div>
 						<div
 							class="payment__dolyami"
-							v-if="
-								index === 1 &&
-								deliveryOptions &&
-								selectedOption === 'payment__label2'
-							"
+							v-if="index === 1 && deliveryOptions && selectedOption === 2"
 						>
 							<p class="payment__dolyami_text">
 								разделите сумму покупки на 4 платежа. Сначала платите только
@@ -61,7 +56,7 @@
 export default {
 	data() {
 		return {
-			selectedOption: 'payment__label1',
+			selectedOption: 1,
 			paymentOptions: [
 				{
 					name: 'Банковской картой',
@@ -76,13 +71,10 @@ export default {
 		}
 	},
 	watch: {
-		deliveryOptions(val) {
-			console.log(val)
-		},
 		useOrderInfo(val) {
 			if (val && this.selectedOption) {
 				this.useOrderInfo.payment =
-					this.selectedOption === 'payment__label1' ? true : false
+					this.selectedOption === 1 ? 'yookassa' : 'dolyami'
 			}
 		},
 	},
@@ -91,7 +83,7 @@ export default {
 
 <style scoped>
 .payment {
-	padding: 20px 15px;
+	padding: 20px 40px 20px 15px;
 	border: 1px solid #af9280;
 }
 .payment__option {
