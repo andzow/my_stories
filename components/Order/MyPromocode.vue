@@ -209,7 +209,7 @@ export default {
 					this.useDiscountSumm = parseInt(data.discount)
 					this.discountedPrice = (this.summ * this.discountSumm) / 100
 					this.fullSumm =
-						Math.ceil(this.summ - this.discountedPrice) + this.useDeliveryPrice
+						this.summ - this.discountedPrice + this.useDeliveryPrice
 					this.useSummDolyami = this.fullSumm
 					this.promocodeState = 'success'
 					this.promocodeText = `промокод применен / ${this.discountSumm}%`
@@ -299,6 +299,7 @@ export default {
 	watch: {
 		useOrderInfo(val) {
 			if (val) {
+				console.log(val)
 				this.useOrderInfo.promocode = {
 					promocodeText: this.activePromocode,
 					summ: this.fullSumm,

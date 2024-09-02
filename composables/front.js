@@ -27,6 +27,7 @@ export const useDolyamiPrice = () =>
 	useState('use_dolyami_price', () => 'сумма не объявлена') //сумма не обновлена
 export const useSummDolyami = () => useState('use_summ_dolyami', () => 0)
 export const useDiscountSumm = () => useState('use_discount_summ', () => 0)
+export const useActPromocode = () => useState('use_act_promocode', () => false)
 
 // export const useGsapAnimationOpacity = (
 //   arr,
