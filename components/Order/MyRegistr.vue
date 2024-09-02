@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import MailServices from '~/http/services/MailServices'
 import PromoServices from '~/http/services/PromoServices'
 
 export default {
@@ -64,6 +63,8 @@ export default {
 			useInputMobile: useInputMobile(),
 			useactivePvzMail: useActivePvzMail(),
 			useLengthCart: useLengthCart(),
+			useSummDolyami: useSummDolyami(),
+			useDiscountSumm: useDiscountSumm(),
 		}
 	},
 	methods: {
@@ -83,7 +84,7 @@ export default {
 					middleName: middleName,
 					surName: surName,
 					phone: cleanedPhoneNumber,
-					items: arr,
+					items: this.summItems(arr),
 					...item.buyer.codeCity,
 					index_to: item.buyer.codeCity.index,
 					address: item.buyer.codeCity['original-address'],
@@ -109,7 +110,6 @@ export default {
 				delete setObj['region']
 				delete setObj['id']
 				setObj.region = this.useActiveRegion.region
-
 				if (item.payment === 'yookassa') {
 					const { data } = await MailServices.payment(setObj)
 					window.open(data.confirmation.confirmation_url, '_self')
@@ -144,7 +144,7 @@ export default {
 				const setObj = {
 					name: fullName,
 					phone: cleanedPhoneNumber,
-					items: arr,
+					items: this.summItems(arr),
 					promocode: item.promocode.promocodeText,
 					amount: item.promocode.summ,
 					place: codePvzCdek
@@ -228,6 +228,20 @@ export default {
 			} catch {
 				return 'Промокод уже использован'
 			}
+		},
+		summItems(arr) {
+			if (!this.useDiscountSumm || this.useDiscountSumm === 0) {
+				return arr
+			}
+			return arr.map(el => {
+				const price = el.price * el.counter
+				const discount = (price / 100) * (this.useDiscountSumm / arr.length)
+				const summDiscount = Math.round(price - discount * el.counter)
+				return {
+					...el,
+					price: summDiscount,
+				}
+			})
 		},
 		getInformationUser() {
 			if (!this.deliveryOptions || !this.selectedOption) return

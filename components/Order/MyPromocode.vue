@@ -184,6 +184,7 @@ export default {
 			objMobile: {
 				name: 'телефон Telegram / WhatsApp*',
 			},
+			useDiscountSumm: useDiscountSumm(),
 		}
 	},
 	methods: {
@@ -205,6 +206,7 @@ export default {
 				const elHtml = document.querySelector('.promocode__input')
 				if (data.status !== 'error') {
 					this.discountSumm = parseInt(data.discount)
+					this.useDiscountSumm = parseInt(data.discount)
 					this.discountedPrice = (this.summ * this.discountSumm) / 100
 					this.fullSumm =
 						Math.ceil(this.summ - this.discountedPrice) + this.useDeliveryPrice
@@ -356,6 +358,7 @@ export default {
 		},
 	},
 	unmounted() {
+		this.useDiscountSumm = 0
 		// if (this.timeLine) {
 		//   this.timeLine.kill();
 		// }
