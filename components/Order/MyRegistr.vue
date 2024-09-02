@@ -112,7 +112,7 @@ export default {
 				delete setObj['region']
 				delete setObj['id']
 				setObj.region = this.useActiveRegion.region
-				console.log(getItemsAmount) //Раскомитить
+				//console.log(getItemsAmount) //Раскомитить
 				if (item.payment === 'yookassa') {
 					const { data } = await MailServices.payment(setObj)
 					window.open(data.confirmation.confirmation_url, '_self')
@@ -145,7 +145,7 @@ export default {
 					this.useActiveRegion.region +
 					', '
 				const getItemsAmount = this.summItems(arr, item)
-				console.log(getItemsAmount) //Раскомитить
+				//cconsole.log(getItemsAmount) //Раскомитить
 				const setObj = {
 					name: fullName,
 					phone: cleanedPhoneNumber,
