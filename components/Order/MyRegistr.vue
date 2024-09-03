@@ -89,7 +89,7 @@ export default {
 					items: getItemsAmount.items,
 					...item.buyer.codeCity,
 					index_to: item.buyer.codeCity.index,
-					address: item.buyer.codeCity['original-address'],
+					adress: item.buyer.codeCity['original-address'],
 					promocode: item.promocode.promocodeText,
 					amount: getItemsAmount.amountAllPrice,
 					comments:
@@ -124,7 +124,9 @@ export default {
 					localStorage.clear()
 					this.useLengthCart = null
 				}
-			} catch {}
+			} catch (e) {
+				console.log(e)
+			}
 		},
 		async createCdekDocument(item, arr) {
 			try {
