@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import MailServices from '~/http/services/MailServices'
 import PromoServices from '~/http/services/PromoServices'
 
 export default {
@@ -112,18 +111,19 @@ export default {
 				delete setObj['region']
 				delete setObj['id']
 				setObj.region = this.useActiveRegion.region
-				//console.log(getItemsAmount) //Раскомитить
-				if (item.payment === 'yookassa') {
-					const { data } = await MailServices.payment(setObj)
-					window.open(data.confirmation.confirmation_url, '_self')
-					localStorage.clear()
-					this.useLengthCart = null
-				} else if (item.payment === 'dolyami') {
-					const { data } = await MailServices.paymentDolyami(setObj)
-					window.open(data.link, '_self')
-					localStorage.clear()
-					this.useLengthCart = null
-				}
+				console.log(setObj)
+
+				// if (item.payment === 'yookassa') {
+				// 	const { data } = await MailServices.payment(setObj)
+				// 	window.open(data.confirmation.confirmation_url, '_self')
+				// 	localStorage.clear()
+				// 	this.useLengthCart = null
+				// } else if (item.payment === 'dolyami') {
+				// 	const { data } = await MailServices.paymentDolyami(setObj)
+				// 	window.open(data.link, '_self')
+				// 	localStorage.clear()
+				// 	this.useLengthCart = null
+				// }
 			} catch {}
 		},
 		async createCdekDocument(item, arr) {
@@ -145,7 +145,7 @@ export default {
 					this.useActiveRegion.region +
 					', '
 				const getItemsAmount = this.summItems(arr, item)
-				//cconsole.log(getItemsAmount) //Раскомитить
+
 				const setObj = {
 					name: fullName,
 					phone: cleanedPhoneNumber,
@@ -169,20 +169,20 @@ export default {
 						price: item.promocode.summDelivery,
 					},
 				}
-				if (codePvzCdek) {
-					setObj.delivery_point = codePvzCdek
-				}
-				if (item.payment === 'yookassa') {
-					const { data } = await MailServices.payment(setObj)
-					window.open(data.confirmation.confirmation_url, '_self')
-					localStorage.clear()
-					this.useLengthCart = null
-				} else if (item.payment === 'dolyami') {
-					const { data } = await MailServices.paymentDolyami(setObj)
-					window.open(data.link, '_self')
-					localStorage.clear()
-					this.useLengthCart = null
-				}
+				// if (codePvzCdek) {
+				// 	setObj.delivery_point = codePvzCdek
+				// }
+				// if (item.payment === 'yookassa') {
+				// 	const { data } = await MailServices.payment(setObj)
+				// 	window.open(data.confirmation.confirmation_url, '_self')
+				// 	localStorage.clear()
+				// 	this.useLengthCart = null
+				// } else if (item.payment === 'dolyami') {
+				// 	const { data } = await MailServices.paymentDolyami(setObj)
+				// 	window.open(data.link, '_self')
+				// 	localStorage.clear()
+				// 	this.useLengthCart = null
+				// }
 			} catch {}
 		},
 		async redirectPayment(item) {
@@ -227,10 +227,12 @@ export default {
 				})
 
 				if (data.status === 'error') {
+					this.loadingButton = false
 					return data.info
 				}
 				return 'success'
 			} catch {
+				this.loadingButton = false
 				return 'Промокод уже использован'
 			}
 		},

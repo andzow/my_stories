@@ -66,6 +66,7 @@ export default {
 			checkNews: false,
 			useFormatNumberToPrice: useFormatNumberToPrice,
 			useLengthCart: useLengthCart(),
+			useCheckLoadImageCart: useCheckLoadImageCart,
 		}
 	},
 	computed: {
@@ -147,11 +148,14 @@ export default {
 			this.updateLocalStorage(this.arrLocale)
 			this.initCartLength()
 		},
-		initLocalStorage() {
+		async initLocalStorage() {
 			// localStorage.clear();
 			// localStorage.setItem("cart", JSON.stringify(this.arrNewLocale));
 			try {
-				const arrLocaleStore = JSON.parse(localStorage.getItem('cart'))
+				const arrLocaleStore = await this.useCheckLoadImageCart(
+					JSON.parse(localStorage.getItem('cart'))
+				)
+				this.useLengthCart = arrLocaleStore.length
 				if (!arrLocaleStore || arrLocaleStore.length <= 0) {
 					this.arrLocale = []
 					this.arrLocale = arrLocaleStore
