@@ -286,7 +286,11 @@ export default {
       // this.deliveryOptions = newArr;
       if (this.useactivePvzMail) {
         const addressPvzMail = await this.setNormalizeAddress();
-        if (addressPvzMail === "errorSearch") {
+        if (
+          addressPvzMail === "errorSearch" ||
+          !addressPvzMail["street"] ||
+          !addressPvzMail["house"]
+        ) {
           alert("На выбранный адрес доставка не осуществляется");
           return;
         }
