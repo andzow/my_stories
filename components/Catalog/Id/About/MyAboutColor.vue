@@ -109,6 +109,7 @@ export default {
   height: 40px;
   border-radius: 100%;
   padding: 5px;
+  cursor: pointer;
 }
 .about__color_outline {
   width: 100%;
