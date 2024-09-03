@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import MailServices from '~/http/services/MailServices'
 import PromoServices from '~/http/services/PromoServices'
 
 export default {

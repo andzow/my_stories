@@ -299,7 +299,6 @@ export default {
 	watch: {
 		useOrderInfo(val) {
 			if (val) {
-				console.log(val)
 				this.useOrderInfo.promocode = {
 					promocodeText: this.activePromocode,
 					summ: this.fullSumm,
