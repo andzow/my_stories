@@ -310,6 +310,9 @@ export default {
           ? addressPvzMail?.corpus
           : "";
       } else {
+        if (!this.useActiveAddress) {
+          return;
+        }
         this.useActiveAddress = this.activeObj;
         this.useBuyerAddress = this.useActiveAddress.location.address_full;
         this.usePvzCode = {
