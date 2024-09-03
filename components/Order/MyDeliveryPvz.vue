@@ -291,7 +291,7 @@ export default {
           !addressPvzMail["street"] ||
           !addressPvzMail["house"]
         ) {
-          alert("На выбранный адрес доставка не осуществляется");
+          alert("На выбранный адрес доставка временно не осуществляется");
           return;
         }
         if (addressPvzMail?.length <= 0) return;
