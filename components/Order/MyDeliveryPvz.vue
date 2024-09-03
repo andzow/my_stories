@@ -310,7 +310,10 @@ export default {
           ? addressPvzMail?.corpus
           : "";
       } else {
-        if (!this.useActiveAddress) {
+        if (!this.activeObj) {
+          this.useActiveAddress = null;
+          this.usePvzCode = null;
+          this.useBuyerAddress = "";
           return;
         }
         this.useActiveAddress = this.activeObj;
@@ -357,6 +360,9 @@ export default {
     // document.addEventListener("mouseup", this.checkClick);
   },
   unmounted() {
+    this.useActiveAddress = null;
+    this.usePvzCode = null;
+    this.useBuyerAddress = "";
     document.body.style.overflow = "auto";
     // document.removeEventListener("mouseup", this.checkClick);
   },
