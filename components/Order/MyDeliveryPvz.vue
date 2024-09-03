@@ -124,10 +124,9 @@
 </template>
 
 <script>
-import CdekController from "~/http/controllers/CdekController";
+import debounce from "lodash.debounce";
 import CdekService from "~/http/services/Cdek.service";
 import MailServices from "~/http/services/MailServices";
-import debounce from "lodash.debounce";
 
 export default {
   data() {
@@ -172,7 +171,7 @@ export default {
           this.getPvzMail = data;
           this.activeDropdown = true;
         } catch {}
-      }, 500),
+      }, 300),
     };
   },
 
@@ -221,12 +220,24 @@ export default {
     async setNormalizeAddress() {
       try {
         const region = this.useActiveRegion;
-        const address = `г ${region.settlement}, ${region.region}, ${this.pvzInputVal}`;
+        // console.log(this.activeObj)
+        const address = `г ${region.settlement}, ${region.region}, ${this.activeObj["address-source"]}`;
+        // const address = `${this.activeObj?.region}, ${this.activeObj['address-source']}`
         const {
           data: [data],
         } = await MailServices.normalizeAddress({
           originalAddress: address,
         });
+        const errorQualityCode = "GOOD POSTAL_BOX ON_DEMAND UNDEF_05".includes(
+          data["quality-code"]
+        );
+        const errorValidationCode =
+          "VALIDATED OVERRIDDEN CONFIRMED_MANUALLY".includes(
+            data["validation-code"]
+          );
+        if (!errorQualityCode || !errorValidationCode) {
+          return "errorSearch";
+        }
         return data;
       } catch {
         return [];
@@ -275,16 +286,23 @@ export default {
       // this.deliveryOptions = newArr;
       if (this.useactivePvzMail) {
         const addressPvzMail = await this.setNormalizeAddress();
+        if (addressPvzMail === "errorSearch") {
+          alert("На выбранный адрес доставка не осуществляется");
+          return;
+        }
         if (addressPvzMail?.length <= 0) return;
         const region = this.useActiveRegion;
         const address = `г ${region.settlement}, ${region.region}, ${this.pvzInputVal}`;
-
         this.useBuyerAddress =
           this.inputDisableRegion !== ""
             ? this.inputDisableRegion
             : this.pvzInputVal;
-        this.useInputStreet = addressPvzMail["street"];
-        this.useInputHouse = addressPvzMail["house"];
+        this.useInputStreet = addressPvzMail["street"]
+          ? addressPvzMail["street"]
+          : "";
+        this.useInputHouse = addressPvzMail["house"]
+          ? addressPvzMail["house"]
+          : "";
         this.useInputApartment = addressPvzMail?.room
           ? addressPvzMail?.room
           : "";
