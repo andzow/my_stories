@@ -360,9 +360,6 @@ export default {
     // document.addEventListener("mouseup", this.checkClick);
   },
   unmounted() {
-    this.useActiveAddress = null;
-    this.usePvzCode = null;
-    this.useBuyerAddress = "";
     document.body.style.overflow = "auto";
     // document.removeEventListener("mouseup", this.checkClick);
   },
