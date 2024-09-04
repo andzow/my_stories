@@ -219,6 +219,14 @@ export default {
     },
     async setNormalizeAddress() {
       try {
+        const objAct = this.activeObj;
+        if (
+          objAct["is-closed"] ||
+          objAct["is-private-category"] ||
+          objAct["is-temporary-closed"]
+        ) {
+          return "errorSearch";
+        }
         const region = this.useActiveRegion;
         // console.log(this.activeObj)
         const address = `г ${region.settlement}, ${region.region}, ${this.activeObj["address-source"]}`;
