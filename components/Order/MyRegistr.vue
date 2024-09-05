@@ -69,23 +69,17 @@ export default {
     };
   },
   methods: {
-    async createMailDocument(item, arr) {
+    async createMailDocument(item, arr, splitNumberN) {
       try {
         const { inputVal: fullName } = item.buyer.inputsInfo[0];
         const [firstName, middleName, surName] = fullName.split(" ");
-        if (this.useInputMobile.length > 18) {
-          let splitNumber = this.useInputMobile.split("");
-          splitNumber.splice(this.useInputMobile.length - 1, 1);
-          this.useInputMobile = splitNumber.join("");
-        }
-        const cleanedPhoneNumber = this.useInputMobile.replace(/\D/g, "");
         const getItemsAmount = this.summItems(arr, item);
         const setObj = {
           name: fullName,
           firstName: firstName,
           middleName: middleName,
           surName: surName,
-          phone: cleanedPhoneNumber,
+          phone: splitNumberN,
           items: getItemsAmount.items,
           ...item.buyer.codeCity,
           index_to: item.buyer.codeCity.index,
@@ -131,18 +125,13 @@ export default {
         this.loadingButton = false;
       }
     },
-    async createCdekDocument(item, arr) {
+    async createCdekDocument(item, arr, splitNumberN) {
       try {
         const codePvzCdek = item?.buyer?.codeCity?.code;
         let { inputVal: fullName } = codePvzCdek
           ? item.buyer.inputsInfo[0]
           : item.buyer[0];
-        if (this.useInputMobile.length > 18) {
-          let splitNumber = this.useInputMobile.split("");
-          splitNumber.splice(this.useInputMobile.length - 1, 1);
-          this.useInputMobile = splitNumber.join("");
-        }
-        const cleanedPhoneNumber = this.useInputMobile.replace(/\D/g, "");
+
         const regionAddress =
           "г. " +
           this.useActiveRegion.settlement +
@@ -153,7 +142,7 @@ export default {
 
         const setObj = {
           name: fullName,
-          phone: cleanedPhoneNumber,
+          phone: splitNumberN,
           items: getItemsAmount.items,
           promocode: item.promocode.promocodeText,
           amount: getItemsAmount.amountAllPrice,
@@ -202,6 +191,19 @@ export default {
       const checkPromocode = await this.checkPromocode(
         item.promocode.promocodeText
       );
+      let splitNumberN = this.useInputMobile;
+      if (this.useInputMobile.length > 18) {
+        splitNumberN = this.useInputMobile.split("");
+        splitNumberN.splice(this.useInputMobile.length - 1, 1);
+        splitNumberN = splitNumberN.join("");
+      }
+      splitNumberN = splitNumberN.replace(/\D/g, "");
+      const checkLiveNumber = await this.checkAtLiveNumber(splitNumberN);
+      if (!checkLiveNumber) {
+        alert("Указанный номер телефона не зарегистрирован");
+        this.loadingButton = false;
+        return;
+      }
       if (checkPromocode !== "success") {
         alert(checkPromocode);
       } else {
@@ -215,10 +217,23 @@ export default {
               : el.price,
         }));
         if (this.useactivePvzMail) {
-          await this.createMailDocument(item, newArrProducts);
+          await this.createMailDocument(item, newArrProducts, splitNumberN);
         } else {
-          await this.createCdekDocument(item, newArrProducts);
+          await this.createCdekDocument(item, newArrProducts, splitNumberN);
         }
+      }
+    },
+    async checkAtLiveNumber(num) {
+      try {
+        const response = await MailServices.checkLivePhone({
+          phone: num,
+        });
+        if (response) {
+          return true;
+        }
+        return false;
+      } catch {
+        return false;
       }
     },
     async checkPromocode(name) {
@@ -231,6 +246,7 @@ export default {
           splitNumber.splice(this.useInputMobile.length - 1, 1);
           this.useInputMobile = splitNumber.join("");
         }
+
         const { data } = await PromoServices.setPromo({
           promo: name,
           phone: this.useInputMobile,
@@ -277,6 +293,9 @@ export default {
       this.useOrderInfo = {};
       this.loadingButton = true;
     },
+  },
+  unmounted() {
+    this.useInputMobile = "";
   },
   mounted() {
     // const elButton = document.querySelector(".button__btn_disable");
