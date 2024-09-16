@@ -2,7 +2,7 @@
   <!-- <Transition>
     <UIMyPreloader v-if="!preloader" />
   </Transition> -->
-  <NuxtLoadingIndicator :height="2" color="#af9280" />
+  <NuxtLoadingIndicator :height="3" color="#af9280" />
   <UIMyHeader v-if="headerVisible" />
   <main class="page" v-lazy-hydrate="() => (checkHydrate = true)">
     <NuxtPage />
