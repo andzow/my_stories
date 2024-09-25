@@ -174,7 +174,7 @@ export default {
           behavior: "smooth",
         });
       }, 100);
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         const scrollInterval = setInterval(() => {
           if (document.documentElement.scrollTop <= 120) {
             clearInterval(scrollInterval);
@@ -183,14 +183,14 @@ export default {
         }, 100);
       });
     },
-    async resetQuery(min,max) {
+    async resetQuery(min, max) {
       await this.$router.push({
-        query:{
+        query: {
           ...this.$route.query,
-          min:min,
-          max:max
-        }
-      })
+          min: min,
+          max: max,
+        },
+      });
     },
     async sendFilter(checkFilter) {
       if (window.innerWidth <= 836) {
@@ -201,8 +201,8 @@ export default {
         this.useCheckPrice = true;
         await this.scrollToTop();
         await this.initFilter();
+        await this.resetQuery(this.minVal, this.maxVal);
         await this.initItems(checkFilter);
-        await this.resetQuery(this.minVal, this.maxVal)
         this.filterReadyCheck = false;
         this.useOpenFilter = false;
         this.useMenuChapter = false;
@@ -211,8 +211,8 @@ export default {
       this.useCheckPrice = true;
       await this.scrollToTop();
       await this.initFilter();
+      await this.resetQuery(this.minVal, this.maxVal);
       await this.initItems(checkFilter);
-      await this.resetQuery(this.minVal, this.maxVal)
       this.filterReadyCheck = false;
       this.checkResetBtn();
       this.useMenuChapter = false;
@@ -237,10 +237,12 @@ export default {
       try {
         const customQuery = {
           ...this.$route.query,
-          min:String(this.minVal),
-          max:String(this.maxVal)
-        }
-        const res = await ProductController.getFilter(checkFilter === true ? customQuery : this.$route.query);
+          min: String(this.minVal),
+          max: String(this.maxVal),
+        };
+        const res = await ProductController.getFilter(
+          checkFilter === true ? customQuery : this.$route.query
+        );
         this.useCatalogItems = res;
       } catch {}
     },

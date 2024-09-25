@@ -97,6 +97,22 @@ export default {
   },
   methods: {
     async replaceRoute(arr) {
+      if (arr.length <= 0) {
+        const newObj = {};
+        for (let key in this.$route.query) {
+          if (key !== "size") {
+            newObj[key] = this.$route.query[key];
+          }
+        }
+        await this.$router.replace({
+          path: "/catalog",
+          query: {
+            ...newObj,
+          },
+        });
+        this.$emit("openMethod");
+        return;
+      }
       await this.$router.replace({
         path: "/catalog",
         query: {
@@ -111,7 +127,7 @@ export default {
       if (queryParams?.size) {
         const setArrQuery = queryParams.size
           .split(";")
-          .map((el) => el.toLowerCase());
+          .map(el => el.toLowerCase());
         this.arrFilterQuery = setArrQuery;
         this.checkFilter = true;
         return;
@@ -120,7 +136,7 @@ export default {
       this.useCursor = true;
     },
     checkDelBtn() {
-      const filtered = this.arrFilterSize.filter((el) =>
+      const filtered = this.arrFilterSize.filter(el =>
         this.arrFilterQuery.includes(el.toLowerCase())
       );
       if (filtered.length <= 0) {

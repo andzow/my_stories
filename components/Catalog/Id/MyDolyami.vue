@@ -68,12 +68,17 @@ export default {
   },
   created() {
     if (this.priceProduct) {
-      this.fullPrice = this.priceProduct?.product[0].price;
+      console.log(this.priceProduct?.product[0]);
+      this.fullPrice = !this.priceProduct?.product[0]?.discount
+        ? this.priceProduct?.product[0].price
+        : this.priceProduct?.product[0]?.discount;
     }
   },
   mounted() {
     if (this.priceProduct) {
-      this.fullPrice = this.priceProduct?.product[0].price;
+      this.fullPrice = !this.priceProduct?.product[0]?.discount
+        ? this.priceProduct?.product[0].price
+        : this.priceProduct?.product[0]?.discount;
     }
   },
   watch: {
