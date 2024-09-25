@@ -157,6 +157,7 @@ export default {
       this.checkFilter = false;
       await this.replaceRoute([]);
       this.$emit("openMethod");
+      this.$emit("setMinMax");
     },
   },
   created() {

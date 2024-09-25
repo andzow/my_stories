@@ -37,6 +37,7 @@
       <div class="filter__bl">
         <div class="filter__bl_name">Фильтр</div>
         <CatalogIndexFilterMySize
+          @setMinMax="setMinMax"
           @openMethod="
             () => {
               checkResetBtn();
@@ -201,8 +202,8 @@ export default {
         this.useCheckPrice = true;
         await this.scrollToTop();
         await this.initFilter();
-        await this.resetQuery(this.minVal, this.maxVal);
         await this.initItems(checkFilter);
+        await this.resetQuery(this.minVal, this.maxVal);
         this.filterReadyCheck = false;
         this.useOpenFilter = false;
         this.useMenuChapter = false;
@@ -211,8 +212,8 @@ export default {
       this.useCheckPrice = true;
       await this.scrollToTop();
       await this.initFilter();
-      await this.resetQuery(this.minVal, this.maxVal);
       await this.initItems(checkFilter);
+      await this.resetQuery(this.minVal, this.maxVal);
       this.filterReadyCheck = false;
       this.checkResetBtn();
       this.useMenuChapter = false;
@@ -231,6 +232,22 @@ export default {
         this.minVal = !res.minPrice ? 0 : res.minPrice;
         this.maxVal = !res.maxPrice ? 35000 : res.maxPrice;
         // this.resetQuery(this.minVal,this.maxVal)
+      } catch {}
+    },
+    async setMinMax() {
+      try {
+        const { minPrice, maxPrice } = await CategoryController.getCategory(
+          this.$route.query
+        );
+        this.minVal = minPrice;
+        this.maxVal = maxPrice;
+        await this.$router.replace({
+          query: {
+            ...this.$route.query,
+            min: this.minVal,
+            max: this.maxVal,
+          },
+        });
       } catch {}
     },
     async initItems(checkFilter) {
