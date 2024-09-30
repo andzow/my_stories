@@ -39,6 +39,10 @@ export default defineNuxtConfig({
           name: "yandex-verification",
           content: "5a131032bb264c6a",
         },
+        {
+          name: "google-site-verification",
+          content: "NR92c5qUhMC4FIIKMI1j_tARazWwxOMpdg23B0KEBnI",
+        },
       ],
       //   htmlAttrs: { lang: "ru-RU" },
     },
