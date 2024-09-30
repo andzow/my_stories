@@ -37,7 +37,7 @@ export default defineNuxtConfig({
       meta: [
         {
           name: "yandex-verification",
-          content: "6322280b4536da2c",
+          content: "5a131032bb264c6a",
         },
       ],
       //   htmlAttrs: { lang: "ru-RU" },
