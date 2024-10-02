@@ -68,7 +68,6 @@ export default {
   },
   created() {
     if (this.priceProduct) {
-      console.log(this.priceProduct?.product[0]);
       this.fullPrice = !this.priceProduct?.product[0]?.discount
         ? this.priceProduct?.product[0].price
         : this.priceProduct?.product[0]?.discount;
