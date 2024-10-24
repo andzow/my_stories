@@ -80,6 +80,8 @@ export default {
           middleName: middleName,
           surName: surName,
           phone: splitNumberN,
+          mail: item.buyer.inputsInfo[item.buyer.inputsInfo.length - 2]
+            .inputVal,
           items: getItemsAmount.items,
           ...item.buyer.codeCity,
           index_to: item.buyer.codeCity.index,
@@ -146,6 +148,8 @@ export default {
           items: getItemsAmount.items,
           promocode: item.promocode.promocodeText,
           amount: getItemsAmount.amountAllPrice,
+          mail: item.buyer.inputsInfo[item.buyer.inputsInfo.length - 2]
+            .inputVal,
           place: codePvzCdek
             ? item.buyer.codeCity.city
             : this.useActiveRegion.settlement,
@@ -166,6 +170,7 @@ export default {
         if (codePvzCdek) {
           setObj.delivery_point = codePvzCdek;
         }
+
         if (item.payment === "yookassa") {
           const { data } = await MailServices.payment(setObj);
           window.open(data.confirmation.confirmation_url, "_self");
