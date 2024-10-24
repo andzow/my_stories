@@ -93,7 +93,7 @@ export default {
           placeholder: "ул. Азовская, дом. 35 корп. 3 подъезд 8",
         },
         {
-          name: "Почта",
+          name: "почта*",
           regExp: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
           regExpWord: "Почта должна быть корректна",
           mask: false,
